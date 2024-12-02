@@ -241,3 +241,11 @@ table.dataTable tbody td {
   display: block;
   margin: auto;
 }
+.dot-red {
+  background-color: #ED1C24;
+  height: 22px;
+  width: 22px;
+  border-radius: 50%;
+  display: block;
+  margin: auto;
+}
