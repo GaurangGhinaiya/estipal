@@ -6,6 +6,11 @@ import MainLayout from "../components/layout/MainLayout";
 import WatchHistory from "../pages/admin/watchHistory/WatchHistory";
 import StaffUser from "../pages/admin/staff/StaffUser";
 import ReadActivity from "../pages/admin/home/ReadActivity";
+import Estimators from "../pages/admin/estimators/Estimators";
+import AdminRevanueAnalysis from "../pages/admin/revenue_analysis/revenue_analysis_admin/AdminRevanueAnalysis";
+import EstimatorRevanueAnalysis from "../pages/admin/revenue_analysis/revenue_analysis_estimator/EstimatorRevanueAnalysis";
+import AdminPerformanceAnalysis from "../pages/admin/performance_analysis/performance_analysis_admin/AdminPerformanceAnalysis";
+import EstimatorPerformanceAnalysis from "../pages/admin/performance_analysis/performance_analysis_estimator/EstimatorPerformanceAnalysis";
 // import ProtectedRoute from "./protectedRoute";
 
 const AppRoute = () => {
@@ -31,6 +36,12 @@ const AppRoute = () => {
 
             <Route path="staff/staff_user" element={<StaffUser />} />
             <Route path="home/readActivity" element={<ReadActivity />} />
+            <Route path="home/readActivity" element={<ReadActivity />} />
+            <Route path="estimator/estimator_user" element={<Estimators />} />
+            <Route path="analysis/revenue_analysis/admin" element={<AdminRevanueAnalysis />} />
+            <Route path="analysis/revenue_analysis/estimator" element={<EstimatorRevanueAnalysis />} />
+            <Route path="analysis/performance_analysis/admin" element={<AdminPerformanceAnalysis />} />
+            <Route path="analysis/performance_analysis/estimator" element={<EstimatorPerformanceAnalysis />} />
             {/* <Route path="edit" element={<EditUser />} />  */}
           </Route>
         </Route>
