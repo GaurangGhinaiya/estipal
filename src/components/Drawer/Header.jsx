@@ -124,7 +124,7 @@ const Header = () => {
           </Button>
           <Button
             className="text-white !normal-case !text-[14px] !p-[0] !m-[0]"
-            sx={{ color: "white" }}
+            sx={{ color: "white", fontWeight: pathname.includes("/admin/panel/settings") ? "bold" : "normal" }}
             onClick={() => navigate("/admin/panel/settings")}
           >
             General Settings
