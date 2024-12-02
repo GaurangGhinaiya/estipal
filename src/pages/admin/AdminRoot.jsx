@@ -4,6 +4,7 @@ import Admin from "./Admin";
 import WatchHistory from "./watchHistory/WatchHistory";
 import StaffUser from "./staff/StaffUser";
 import ReadActivity from "./home/ReadActivity";
+import Settings from "./generalSetting/Setting";
 
 const AdminRoot = () => {
   return (
@@ -13,6 +14,7 @@ const AdminRoot = () => {
         <Route path="/watch_details/watch_history" element={<WatchHistory />} />
         <Route path="/staff/staff_user" element={<StaffUser />} />
         <Route path="/home/readActivity" element={<ReadActivity />} />
+        <Route path="/panel/settings" element={<Settings />} />
 
         {/* <Route path="/edit" element={<EditUser />} />  */}
       </Routes>

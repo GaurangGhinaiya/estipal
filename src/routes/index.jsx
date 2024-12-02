@@ -6,6 +6,7 @@ import MainLayout from "../components/layout/MainLayout";
 import WatchHistory from "../pages/admin/watchHistory/WatchHistory";
 import StaffUser from "../pages/admin/staff/StaffUser";
 import ReadActivity from "../pages/admin/home/ReadActivity";
+import Settings from "../pages/admin/generalSetting/Setting";
 // import ProtectedRoute from "./protectedRoute";
 
 const AppRoute = () => {
@@ -31,6 +32,7 @@ const AppRoute = () => {
 
             <Route path="staff/staff_user" element={<StaffUser />} />
             <Route path="home/readActivity" element={<ReadActivity />} />
+            <Route path="panel/settings" element={<Settings />} />
             {/* <Route path="edit" element={<EditUser />} />  */}
           </Route>
         </Route>

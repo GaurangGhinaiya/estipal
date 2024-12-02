@@ -2,7 +2,7 @@ import React from "react";
 
 const ReadActivity = () => {
   return (
-    <div className="  mx-auto p-[15px]">
+    <div className="mx-auto p-[15px]">
       <h1 className="text-center text-xl font-semibold mb-4">
         Message History - ID W10015 : Rolex, Daytona, Stainless Steel - Bracelet
         (116500)

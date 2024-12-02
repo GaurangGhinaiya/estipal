@@ -30,14 +30,14 @@ const Header = () => {
           >
             <MenuIcon sx={{ color: "#888" }} />
           </Button>
-          <a href="" className="pr-[15px]">
+          <a href="/" className="pr-[15px]">
             <img
               alt="Logo"
               src="https://www.estipal.com/assets/dist/images/img-logo-bar-admin.svg"
               className="h-[50px]"
             />
           </a>
-          <div class="text-[#ffff] font-bold text-[15px]">
+          <div className="text-[#ffff] font-bold text-[15px]">
             ESTIPAL ADMINISTRATION{" "}
           </div>
         </div>
@@ -124,6 +124,7 @@ const Header = () => {
           <Button
             className="text-white !normal-case !text-[14px] !p-[0] !m-[0]"
             sx={{ color: "white" }}
+            onClick={() => navigate("/admin/panel/settings")}
           >
             General Settings
           </Button>
