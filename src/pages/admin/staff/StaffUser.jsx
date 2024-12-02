@@ -1,11 +1,7 @@
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import { Button } from "@mui/material";
 import React, { useState } from "react";
 import PaginationComponent from "../../../components/common/PaginationComponent";
 import SearchBar from "../../../components/common/SearchBar";
-
-const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 const staffUserData = [
   {
@@ -88,28 +84,8 @@ const staffUserData = [
 ];
 
 const StaffUser = () => {
-  const [sortColumn, setSortColumn] = useState("");
-  const [sortDirection, setSortDirection] = useState("asc");
-  const [status, setStatus] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
 
-  const handleSort = (column) => {
-    if (sortColumn === column) {
-      setSortDirection(sortDirection === "asc" ? "desc" : "asc");
-    } else {
-      setSortColumn(column);
-      setSortDirection("asc");
-    }
-  };
-
-  const renderSortIcon = (column) => {
-    if (sortColumn !== column) return null;
-    return sortDirection === "asc" ? (
-      <ArrowUpwardIcon sx={{ fontSize: "16px" }} />
-    ) : (
-      <ArrowDownwardIcon sx={{ fontSize: "16px" }} />
-    );
-  };
   return (
     <div className="p-[15px] h-[100vh]">
       <div className="px-0 sm:px-[15px] flex justify-between flex-wrap">
