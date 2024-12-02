@@ -5,12 +5,16 @@ import PersonIcon from "@mui/icons-material/Person";
 import { Box, Button, Menu, MenuItem } from "@mui/material";
 import React from "react";
 import Profile from "./components/Profile";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Header = () => {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openMenu, setOpenMenu] = React.useState(false);
+  const [openRevanueMenu, setOpenRevanueMenu] = React.useState(false);
+  const [openPerformanceMenu, setOpenPerformanceMenu] = React.useState(false);
+  const pathName = useLocation();
+  const { pathname } = pathName
 
   const handleMenuClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -18,6 +22,16 @@ const Header = () => {
 
   const handleMenuClose = () => {
     setAnchorEl(null);
+  };
+  const handleRevanueMenuClick = (event) => {
+    setOpenRevanueMenu(!openRevanueMenu);
+  };
+  const handlePerformanceMenuClick = (event) => {
+    setOpenPerformanceMenu(!openPerformanceMenu);
+  };
+
+  const handleRevanueMenuClose = () => {
+    setOpenRevanueMenu(false);
   };
 
   return (
@@ -30,14 +44,14 @@ const Header = () => {
           >
             <MenuIcon sx={{ color: "#888" }} />
           </Button>
-          <a href="" className="pr-[15px]">
+          <a href="/" className="pr-[15px]">
             <img
               alt="Logo"
               src="https://www.estipal.com/assets/dist/images/img-logo-bar-admin.svg"
               className="h-[50px]"
             />
           </a>
-          <div class="text-[#ffff] font-bold text-[15px]">
+          <div className="text-[#ffff] font-bold text-[15px]">
             ESTIPAL ADMINISTRATION{" "}
           </div>
         </div>
@@ -47,73 +61,60 @@ const Header = () => {
 
       {/* Navigation Bar Desktop*/}
       <Box
-        className="bg-[#0060aa] text-white flex items-center px-[38px] py-[11px] "
+        className="bg-[#0060aa] text-white flex items-center px-[38px] py-[11px]"
         sx={{ display: { xs: "none", md: "block" } }}
       >
         {/* Navigation Links */}
         <div className="flex gap-[12px] flex-wrap">
           <Button
             className="text-white !normal-case !text-[14px] !p-[0] !m-[0] "
-            sx={{ color: "white" }}
+            sx={{ color: "white", fontWeight: pathname === "/admin" ? "bold" : "normal" }}
             onClick={() => navigate("/admin")}
           >
             Activities
           </Button>
           <Button
             className="text-white !normal-case !text-[14px] !p-[0] !m-[0]"
-            sx={{ color: "white" }}
+            sx={{ color: "white", fontWeight: pathname.includes("/admin/watch_details/watch_history") ? "bold" : "normal" }}
             onClick={() => navigate("/admin/watch_details/watch_history")}
           >
             Watches History
           </Button>
           <Button
             className="text-white !normal-case !text-[14px] !p-[0] !m-[0]"
-            sx={{ color: "white" }}
+            sx={{ color: "white", fontWeight: pathname.includes("/admin/staff/staff_user") ? "bold" : "normal" }}
             onClick={() => navigate("/admin/staff/staff_user")}
           >
             Merchants & Staff
           </Button>
           <Button
             className="text-white !normal-case !text-[14px] !p-[0] !m-[0]"
-            sx={{ color: "white" }}
+            sx={{ color: "white", fontWeight: pathname.includes("/admin/estimator/estimator_user") ? "bold" : "normal" }}
+            onClick={() => navigate("/admin/estimator/estimator_user")}
           >
             Estimators
           </Button>
-
-          <div>
-            <Button
-              className="text-white !normal-case !text-[14px] !p-[0] !m-[0]"
-              sx={{ color: "white" }}
-              onClick={handleMenuClick}
-            >
+          <div className="relative">
+            <button style={{ fontSize:"14px",fontWeight: (pathname.includes("/admin/analysis/revenue_analysis/admin") || pathname.includes("/admin/analysis/revenue_analysis/estimator")) ? "bold" : "normal" }} onClick={() => handleRevanueMenuClick()} className="">
               Revenue Analysis <ArrowDropDownIcon />
-            </Button>
-            <Menu
-              anchorEl={anchorEl}
-              open={Boolean(anchorEl)}
-              onClose={handleMenuClose}
-            >
-              <MenuItem onClick={handleMenuClose}>Merchant</MenuItem>
-              <MenuItem onClick={handleMenuClose}>Estimator</MenuItem>
-            </Menu>
+            </button>
+            {openRevanueMenu && (
+              <div className="absolute bg-[#0060aa] border border-white mt-3 rounded-lg">
+                <a href="/admin/analysis/revenue_analysis/admin" className="block rounded-lg px-4 py-2 hover:bg-[#b3c1c5]">Merchant</a>
+                <a href="/admin/analysis/revenue_analysis/estimator" className="block rounded-lg  px-4 py-2 hover:bg-[#b3c1c5]">Estimator</a>
+              </div>
+            )}
           </div>
-
-          <div>
-            <Button
-              className="text-white !normal-case !text-[14px] !p-[0] !m-[0]"
-              sx={{ color: "white" }}
-              onClick={handleMenuClick}
-            >
-              Performance Analysis <ArrowDropDownIcon />
-            </Button>
-            <Menu
-              anchorEl={anchorEl}
-              open={Boolean(anchorEl)}
-              onClose={handleMenuClose}
-            >
-              <MenuItem onClick={handleMenuClose}>Merchant</MenuItem>
-              <MenuItem onClick={handleMenuClose}>Estimator</MenuItem>
-            </Menu>
+          <div className="relative">
+            <button style={{ fontSize:"14px",fontWeight: (pathname.includes("/admin/analysis/performance_analysis/admin") || pathname.includes("/admin/analysis/performance_analysis/estimator")) ? "bold" : "normal" }} onClick={() => handlePerformanceMenuClick()} className="">
+            Performance Analysis <ArrowDropDownIcon />
+            </button>
+            {openPerformanceMenu && (
+              <div className="absolute bg-[#0060aa] border border-white mt-3 rounded-lg">
+                <a href="/admin/analysis/performance_analysis/admin" className="block rounded-lg px-4 py-2 hover:bg-[#b3c1c5]">Merchant</a>
+                <a href="/admin/analysis/performance_analysis/estimator" className="block rounded-lg  px-4 py-2 hover:bg-[#b3c1c5]">Estimator</a>
+              </div>
+            )}
           </div>
           <Button
             className="text-white !normal-case !text-[14px] !p-[0] !m-[0]"
@@ -123,7 +124,8 @@ const Header = () => {
           </Button>
           <Button
             className="text-white !normal-case !text-[14px] !p-[0] !m-[0]"
-            sx={{ color: "white" }}
+            sx={{ color: "white", fontWeight: pathname.includes("/admin/panel/settings") ? "bold" : "normal" }}
+            onClick={() => navigate("/admin/panel/settings")}
           >
             General Settings
           </Button>

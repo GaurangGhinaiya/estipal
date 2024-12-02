@@ -60,11 +60,9 @@ body {
   font-weight: 300;
   line-height: 1.42857143;
 }
-
 .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
   font-family: 'Source Sans Pro',sans-serif !important;
 }
-
 .login-container {
   position: relative;
   display: -webkit-box;
@@ -267,4 +265,12 @@ table.dataTable tbody td {
   color: #000 !important;
   font-weight: 500;
   box-shadow: rgb(0 0 0 / 25%) 0px 14px 28px, rgb(0 0 0 / 22%) 0px 10px 10px;
+}
+.dot-red {
+  background-color: #ED1C24;
+  height: 22px;
+  width: 22px;
+  border-radius: 50%;
+  display: block;
+  margin: auto;
 }

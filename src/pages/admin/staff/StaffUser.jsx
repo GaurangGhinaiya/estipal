@@ -113,36 +113,36 @@ const StaffUser = () => {
         <table className="table-auto w-full text-left">
           <thead style={{ borderBottom: "2px solid #111111" }}>
             <tr>
-              <th class="p-2 text-[#ffff] text-center cursor-pointer">
+              <th className="p-2 text-[#ffff] text-center cursor-pointer">
                 Active
               </th>
-              <th class="p-2 text-[#ffff] text-center cursor-pointer">Id</th>
-              <th class="p-2 text-[#ffff] text-center cursor-pointer">
+              <th className="p-2 text-[#ffff] text-center cursor-pointer">Id</th>
+              <th className="p-2 text-[#ffff] text-center cursor-pointer">
                 Company
               </th>
-              <th class="p-2 text-[#ffff] text-center cursor-pointer">
+              <th className="p-2 text-[#ffff] text-center cursor-pointer">
                 Contact
               </th>
-              <th class="p-2 text-[#ffff] text-center cursor-pointer">Email</th>
-              <th class="p-2 text-[#ffff] text-center cursor-pointer">
+              <th className="p-2 text-[#ffff] text-center cursor-pointer">Email</th>
+              <th className="p-2 text-[#ffff] text-center cursor-pointer">
                 Username
               </th>
-              <th class="p-2 text-[#ffff] text-center cursor-pointer">
+              <th className="p-2 text-[#ffff] text-center cursor-pointer">
                 Added on
               </th>
-              <th class="p-2 text-[#ffff] text-center cursor-pointer">Staff</th>
-              <th class="p-2 text-[#ffff] text-center cursor-pointer">
+              <th className="p-2 text-[#ffff] text-center cursor-pointer">Staff</th>
+              <th className="p-2 text-[#ffff] text-center cursor-pointer">
                 Sent/Accepted
               </th>
-              <th class="p-2 text-[#ffff] text-center cursor-pointer"></th>
+              <th className="p-2 text-[#ffff] text-center cursor-pointer"></th>
             </tr>
           </thead>
           <tbody>
             {staffUserData.map((item, index) => (
               <tr key={index} className="border-b border-[#202b34]">
                 <td className="px-[18px] py-[0px] text-[#ffff] text-center">
-                  <div class="require_vaild_list text-center">
-                    <span class="dot-green"></span>
+                  <div className="require_vaild_list text-center">
+                    <span className="dot-green"></span>
                   </div>
                 </td>
 
@@ -173,7 +173,7 @@ const StaffUser = () => {
                   {item.sentAccepted}
                 </td>
                 <td className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap">
-                  <div class="flex gap-[10px]">
+                  <div className="flex gap-[10px]">
                     <a href="https://www.estipal.com//admin/watch_details/watch_history?seller_id=1000">
                       <img
                         id="star"
