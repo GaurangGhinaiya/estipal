@@ -1,12 +1,32 @@
-import React, { useState } from "react";
-import SearchIcon from "@mui/icons-material/Search";
-import Checkbox from "@mui/material/Checkbox";
-import StarOutlineIcon from "@mui/icons-material/StarOutline";
-import GradeIcon from "@mui/icons-material/Grade";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
-import Pagination from "@mui/material/Pagination";
-import TablePagination from "@mui/material/TablePagination";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import GradeIcon from "@mui/icons-material/Grade";
+import StarOutlineIcon from "@mui/icons-material/StarOutline";
+import Checkbox from "@mui/material/Checkbox";
+import React, { useState } from "react";
+import PaginationComponent from "../../../components/common/PaginationComponent";
+import SearchBar from "../../../components/common/SearchBar";
+import SelectDropdown from "../../../components/common/SelectDropdown";
+import { Tooltip } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+
+export const statusOptions = [
+  "All",
+  "Active Only",
+  "Not Active Only",
+  "Waiting for Quotation",
+  "Quotation Received",
+  "Accepted",
+  "Rejected by Staff",
+  "Pass by Estimator",
+  "Cancel",
+  "Expired",
+  "Pending Estipal Payment",
+  "Paid / Pending Shipping",
+  "Shipped",
+  "Sold",
+  "Completed",
+];
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -214,8 +234,11 @@ const activities = [
 ];
 
 const ActivitiesTable = () => {
+  const navigate = useNavigate();
   const [sortColumn, setSortColumn] = useState("");
-  const [sortDirection, setSortDirection] = useState("asc"); // 'asc' or 'desc'
+  const [sortDirection, setSortDirection] = useState("asc");
+  const [status, setStatus] = useState("All");
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleSort = (column) => {
     if (sortColumn === column) {
@@ -236,34 +259,24 @@ const ActivitiesTable = () => {
   };
   return (
     <div className="p-[15px]">
-      <div className="px-[15px] flex justify-between ">
-        <h1 className="text-[30px] font-medium mb-4 px-[15px] font-sans text-white">
+      <div className="px-0 sm:px-[15px] flex justify-between flex-wrap">
+        <h1 className="text-[30px] font-medium mb-4 px-0 sm:px-[15px] font-sans text-white">
           Activities
         </h1>
 
-        <div className="flex justify-between items-center mb-4 gap-8">
-          <div className="flex items-center ">
-            <label className="mr-2 !mb-0 text-[#ffff] text-center !font-normal">
-              Filter by Status :
-            </label>
-            <select className="bg-[#1e252b] text-white p-2 rounded w-[237px]">
-              <option>All</option>
-            </select>
-          </div>
-          <div className="flex items-center">
-            <form class="input-group estipal-input-group pull-right !bg-[#1e252b] rounded-[5px]">
-              <span class="input-group-addon estipal-input-group-icon">
-                <SearchIcon sx={{ fontSize: "20px" }} />
-              </span>
-              <input
-                type="text"
-                id="search_activity"
-                name="sr"
-                className="search-box estipal-input-group-control !border-none !bg-transparent w-[240px]"
-                placeholder="Search"
-              />
-            </form>
-          </div>
+        <div className="flex justify-between items-center mb-4 gap-4 sm:gap-8 flex-wrap ">
+          <SelectDropdown
+            title=" Filter by Status :"
+            status={status}
+            setStatus={setStatus}
+            options={statusOptions}
+          />
+
+          <SearchBar
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            placeholder={"Search"}
+          />
         </div>
       </div>
 
@@ -325,7 +338,11 @@ const ActivitiesTable = () => {
           </thead>
           <tbody>
             {activities.map((activity, index) => (
-              <tr key={index} className="border-b border-[#202b34]">
+              <tr
+                key={index}
+                className="border-b border-[#202b34]"
+                onClick={() => navigate("/admin/home/readActivity")}
+              >
                 <td className="px-[18px] py-[0px] text-[#ffff] text-center">
                   <div className="w-[35px]">
                     <a href="">
@@ -353,15 +370,22 @@ const ActivitiesTable = () => {
                 <td className="px-[18px] py-[10px] text-[#ffff] text-center">
                   {activity.who}
                 </td>
-                <td className="px-[18px] py-[10px] text-[#ffff]">
-                  <div className="w-[97px] truncate">{activity.from}</div>
-                  {/* {activity.from} */}
+                <td className="px-[18px] py-[10px] text-[#ffff] cursor-pointer">
+                  <Tooltip title={activity.from} placement="top" arrow>
+                    <div className="w-[97px] truncate">{activity.from}</div>
+                  </Tooltip>
                 </td>
                 <td className="px-[18px] py-[10px] text-[#ffff] text-center">
                   {activity.id}
                 </td>
-                <td className="px-[18px] py-[10px] text-[#ffff] whitespace-nowrap ">
-                  {activity.message}
+                <td className="px-[18px] py-[10px] text-[#ffff] whitespace-nowrap cursor-pointer">
+                  <Tooltip
+                    title="Rolex Daytona Stainless Steel - Bracelet - Serial: 43141331 - Year: 2019 - Last requested/quoted price: USD "
+                    placement="top"
+                    arrow
+                  >
+                    {activity.message}
+                  </Tooltip>
                 </td>
                 <td className="px-[18px] py-[10px] text-[#ffff] text-center">
                   {activity.watchId}
@@ -377,56 +401,7 @@ const ActivitiesTable = () => {
           </tbody>
         </table>
       </div>
-      <div className="flex justify-end items-center gap-5">
-        <div className="text-[#ffff]">
-          {/* <TablePagination
-            showFirstButton={false}
-            showLastButton={false}
-            sx={{
-              "& .css-s09cke-MuiTablePagination-selectLabel": {
-                display: "none",
-              },
-              "& .css-oegngy-MuiInputBase-root-MuiTablePagination-select": {
-                display: "none",
-              },
-              "& .css-1gak8h1-MuiToolbar-root-MuiTablePagination-toolbar .MuiTablePagination-actions":
-                {
-                  display: "none",
-                },
-
-              "& .MuiTablePagination-root": {
-                border: "none  ",
-              },
-              "& .css-1gak8h1-MuiToolbar-root-MuiTablePagination-toolbar": {
-                minHeight: "25px",
-              },
-            }}
-
-            
-          /> */}
-          1 - 20 of 90
-        </div>
-        <div className="flex items-center pt-[5px]">
-          <Pagination
-            count={10}
-            variant="outlined"
-            shape="rounded"
-            sx={{
-              "& .css-ptck8z-MuiButtonBase-root-MuiPaginationItem-root": {
-                border: "none",
-                color: "#ffff",
-              },
-              "& .css-ptck8z-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected":
-                {
-                  backgroundColor: "#0060aa",
-                },
-              "& .css-btxnvc-MuiPaginationItem-root": {
-                color: "#ffff",
-              },
-            }}
-          />
-        </div>
-      </div>
+      <PaginationComponent totalPages={5} />
     </div>
   );
 };

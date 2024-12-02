@@ -19,7 +19,13 @@ export default function Profile() {
   };
   return (
     <React.Fragment>
-      <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
+      <Box
+        sx={{
+          display: { xs: "none", md: "flex" },
+          alignItems: "center",
+          textAlign: "center",
+        }}
+      >
         <Tooltip>
           <IconButton
             onClick={handleClick}

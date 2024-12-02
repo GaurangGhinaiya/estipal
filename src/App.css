@@ -171,9 +171,10 @@ label {
   color: white;
 }
 
-.estipal-input-group {
+/* .estipal-input-group {
   max-width: 280px;
-}
+} */
+
 .estipal-input-group-icon {
   border: none;
 }
@@ -228,4 +229,13 @@ table.dataTable tbody td {
   flex-wrap: wrap;
   background: #1d272e;
   color: #fff;
+}
+
+.dot-green {
+  background-color: #009245;
+  height: 22px;
+  width: 22px;
+  border-radius: 50%;
+  display: block;
+  margin: auto;
 }

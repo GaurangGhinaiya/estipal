@@ -1,7 +1,11 @@
 import React from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import AdminRoot from "../pages/admin/AdminRoot";
 import Login from "../pages/auth/login/Login";
-import Admin from "../pages/admin/Admin";
+import MainLayout from "../components/layout/MainLayout";
+import WatchHistory from "../pages/admin/watchHistory/WatchHistory";
+import StaffUser from "../pages/admin/staff/StaffUser";
+import ReadActivity from "../pages/admin/home/ReadActivity";
 // import ProtectedRoute from "./protectedRoute";
 
 const AppRoute = () => {
@@ -15,12 +19,21 @@ const AppRoute = () => {
             <Login />
             // </ProtectedRoute>
           }
-        />{" "}
-        <Route path="/admin" element={<Admin />} />
-        {/* <Route path="/forgotPassword" element={<ForgotPassword />} />
-        <Route path="/resetPassword" element={<ResetPassword />} />
+        />
+
         <Route path="/" element={<MainLayout />}>
-          <Route path="/dashboard" element={<Dashboard />} /> */}
+          {/* Admin Routes */}
+          <Route path="/admin" element={<AdminRoot />}>
+            <Route
+              path="watch_details/watch_history"
+              element={<WatchHistory />}
+            />
+
+            <Route path="staff/staff_user" element={<StaffUser />} />
+            <Route path="home/readActivity" element={<ReadActivity />} />
+            {/* <Route path="edit" element={<EditUser />} />  */}
+          </Route>
+        </Route>
       </Routes>
     </Router>
   );
