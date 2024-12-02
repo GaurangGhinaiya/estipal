@@ -1,5 +1,4 @@
 import React from 'react'
-import ReactSpeedometer from 'react-d3-speedometer'
 
 const merchantData = [
     {
@@ -95,7 +94,6 @@ const AdminRevanueAnalysis = () => {
                                 <td className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap">
                                     {item.Total_partner_with_Estipal}
                                 </td>
-                                
                             </tr>
                         ))}
                     </tbody>

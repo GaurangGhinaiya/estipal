@@ -8,7 +8,7 @@ const estimatorPerformanceData = [
   { company: "Estimator", email: "nielsc59@gmail.com", totalReceived: 0, repliedWithQuotation: 0, repliedWithPass: 0, missedQuotation: 0, acceptedQuotation: 0, successRate: "0", responseTime: "0" },
   { company: "Karan Company", email: "ks6890551@gmail.com", totalReceived: 2, repliedWithQuotation: 2, repliedWithPass: 0, missedQuotation: 0, acceptedQuotation: 1, successRate: "50", responseTime: "2" },
   { company: "MLA", email: "robert@mlathai.com", totalReceived: 46, repliedWithQuotation: 12, repliedWithPass: 1, missedQuotation: 34, acceptedQuotation: 0, successRate: "0", responseTime: "6.5" },
-  { company: "MLA Thai", email: "roberto.omini@gmail.com", totalReceived: 9, repliedWithQuotation: 5, repliedWithPass: 0, missedQuotation: 4, acceptedQuotation: 2, successRate: "22.2", responseTime: "125.8" }
+  { company: "MLA Thai", email: "roberto.omini@gmail.com", totalReceived: 9, repliedWithQuotation: 5, repliedWithPass: 0, missedQuotation: 4, acceptedQuotation: 2, successRate: "22.2", responseTime: "45.8" }
 
 ]
 
@@ -50,7 +50,7 @@ const EstimatorPerformanceAnalysis = () => {
       </div>
       <div className="w-[95.5%] overflow-auto mx-auto pt-[10px]">
         <table className="table-auto w-full text-left">
-          <thead style={{ borderBottom: "2px solid #111111" ,color:"white"}}>
+          <thead style={{ borderBottom: "2px solid #111111", color: "white" }}>
             <tr>
               <th className="py-2 px-4 border-b border-gray-600">Company</th>
               <th className="py-2 px-4 border-b border-gray-600">Email</th>
@@ -66,60 +66,61 @@ const EstimatorPerformanceAnalysis = () => {
             </tr>
           </thead>
           <tbody>
-            {estimatorPerformanceData?.map((item, index) => (
-              <tr key={index} className="border-b border-[#202b34] text-white">
-                <td className="py-2 px-4">{item.company}</td>
-                <td className="py-2 px-4">{item.email}</td>
-                <td className="py-2 px-4">{item.totalReceived}</td>
-                <td className="py-2 px-4">{item.repliedWithQuotation}</td>
-                <td className="py-2 px-4">{item.repliedWithPass}</td>
-                <td className="py-2 px-4">{item.missedQuotation}</td>
-                <td className="py-2 px-4">{item.acceptedQuotation}</td>
-                <td className="py-2 px-4 ">
-                  {/* <Gauge value={item.successRate} /> */}
+            {estimatorPerformanceData?.map((item, index) => {
+              const segmentStops = [0, 15, 30, 45, 60];
+              const maxTime = segmentStops[segmentStops.length - 1];
+              return (
+                <tr key={index} className="border-b border-[#202b34] text-white">
+                  <td className="py-2 px-4">{item.company}</td>
+                  <td className="py-2 px-4">{item.email}</td>
+                  <td className="py-2 px-4">{item.totalReceived}</td>
+                  <td className="py-2 px-4">{item.repliedWithQuotation}</td>
+                  <td className="py-2 px-4">{item.repliedWithPass}</td>
+                  <td className="py-2 px-4">{item.missedQuotation}</td>
+                  <td className="py-2 px-4">{item.acceptedQuotation}</td>
+                  <td className="py-2 px-4 ">
+                    <span className="ml-2">{item.successRate}%</span>
+                  </td>
+                  <td className="py-2 px-4 w-[120px]">
+                    <ReactSpeedometer
+                      maxValue={100}
+                      value={item.successRate}
+                      valueFormat={"d"}
+                      customSegmentStops={[0, 25, 50, 75, 100]}
+                      segmentColors={["#B13338", "#E87A31", "#FFFF00", "#4FE000"]}
+                      textColor={"black"}
+                      width={160}
+                      height={110}
+                      ringWidth={10}
+                      needleHeightRatio={0.8}
+                      showPercentage={false}
+                      currentValueText={""}
+                    />
+                  </td>
+                  <td className="py-2 px-4 ">
+                    <span className="ml-2">{item.responseTime}Min</span>
+                  </td>
+                  <td className="py-[12px] text-[#ffff] flex justify-center text-center items-center whitespace-nowrap">
+                    <ReactSpeedometer
+                      maxValue={maxTime}
+                      value={item.responseTime}
+                      valueFormat={"d"}
+                      customSegmentStops={segmentStops}
+                      segmentColors={["#B13338", "#E87A31", "#FFFF00", "#4FE000"]}
+                      textColor={"black"}
+                      width={160}
+                      height={110}
+                      ringWidth={10}
+                      needleHeightRatio={0.8}
+                      showPercentage={false}
+                      currentValueText={""}
+                    />
 
-                  <span className="ml-2">{item.successRate}</span>
-                </td>
-                <td className="py-2 px-4 w-[120px]">
+                  </td>
 
-                  <ReactSpeedometer
-                    maxValue={100}
-                    value={item.successRate}
-                    valueFormat={"d"}
-                    customSegmentStops={[0, 25, 50, 75, 100]}
-                    segmentColors={["#B13338", "#E87A31", "#FFFF00", "#4FE000"]}
-                    textColor={"black"}
-                    width={160}
-                    height={110}
-                    ringWidth={10}
-                    needleHeightRatio={0.8}
-                    showPercentage={false}
-                    currentValueText={""}
-                  />
-                </td>
-                <td className="py-2 px-4 ">
-                  <span className="ml-2">{item.responseTime}</span>
-                </td>
-                <td className="py-[12px] text-[#ffff] flex justify-center text-center items-center whitespace-nowrap">
-                  <ReactSpeedometer
-                    maxValue={100}
-                    value={item.responseTime}
-                    valueFormat={"d"}
-                    customSegmentStops={[0, 25, 50, 75, 100]}
-                    segmentColors={["#B13338", "#E87A31", "#FFFF00", "#4FE000"]}
-                    textColor={"black"}
-                    width={160}
-                    height={110}
-                    ringWidth={10}
-                    needleHeightRatio={0.8}
-                    showPercentage={false}
-                    currentValueText={""}
-                  />
-
-                </td>
-
-              </tr>
-            ))}
+                </tr>
+              )
+            })}
           </tbody>
         </table>
       </div>

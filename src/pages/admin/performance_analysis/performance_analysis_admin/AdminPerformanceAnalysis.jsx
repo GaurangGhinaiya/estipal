@@ -83,8 +83,8 @@ const AdminPerformanceAnalysis = () => {
                     segmentColors={["#B13338", "#E87A31", "#FFFF00", "#4FE000"]}
                     textColor={"black"}
                     width={160}
-                    height={110} 
-                    ringWidth={10} 
+                    height={110}
+                    ringWidth={10}
                     needleHeightRatio={0.8}
                     showPercentage={false}
                     currentValueText={""}
