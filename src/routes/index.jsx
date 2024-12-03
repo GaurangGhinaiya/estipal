@@ -14,6 +14,7 @@ import EstimatorRevanueAnalysis from "../pages/admin/revenue_analysis/revenue_an
 import AdminPerformanceAnalysis from "../pages/admin/performance_analysis/performance_analysis_admin/AdminPerformanceAnalysis";
 import EstimatorPerformanceAnalysis from "../pages/admin/performance_analysis/performance_analysis_estimator/EstimatorPerformanceAnalysis";
 import BrandList from "../pages/admin/brandList/BrandList";
+import Language from "../pages/admin/language/Language";
 // import ProtectedRoute from "./protectedRoute";
 
 const AppRoute = () => {
@@ -51,6 +52,7 @@ const AppRoute = () => {
             <Route path="analysis/performance_analysis/admin" element={<AdminPerformanceAnalysis />} />
             <Route path="analysis/performance_analysis/estimator" element={<EstimatorPerformanceAnalysis />} />
             <Route path="watch_details/brand_list" element={<BrandList />} />
+            <Route path="language" element={<Language />} />
 
             {/* <Route path="edit" element={<EditUser />} />  */}
           </Route>

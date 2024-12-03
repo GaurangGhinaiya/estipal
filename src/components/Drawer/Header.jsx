@@ -95,7 +95,7 @@ const Header = () => {
             Estimators
           </Button>
           <div className="relative">
-            <button style={{ fontSize:"14px",fontWeight: (pathname.includes("/admin/analysis/revenue_analysis/admin") || pathname.includes("/admin/analysis/revenue_analysis/estimator")) ? "bold" : "normal" }} onClick={() => handleRevanueMenuClick()} className="">
+            <button style={{ fontSize: "14px", fontWeight: (pathname.includes("/admin/analysis/revenue_analysis/admin") || pathname.includes("/admin/analysis/revenue_analysis/estimator")) ? "bold" : "normal" }} onClick={() => handleRevanueMenuClick()} className="">
               Revenue Analysis <ArrowDropDownIcon />
             </button>
             {openRevanueMenu && (
@@ -106,8 +106,8 @@ const Header = () => {
             )}
           </div>
           <div className="relative">
-            <button style={{ fontSize:"14px",fontWeight: (pathname.includes("/admin/analysis/performance_analysis/admin") || pathname.includes("/admin/analysis/performance_analysis/estimator")) ? "bold" : "normal" }} onClick={() => handlePerformanceMenuClick()} className="">
-            Performance Analysis <ArrowDropDownIcon />
+            <button style={{ fontSize: "14px", fontWeight: (pathname.includes("/admin/analysis/performance_analysis/admin") || pathname.includes("/admin/analysis/performance_analysis/estimator")) ? "bold" : "normal" }} onClick={() => handlePerformanceMenuClick()} className="">
+              Performance Analysis <ArrowDropDownIcon />
             </button>
             {openPerformanceMenu && (
               <div className="absolute bg-[#0060aa] border border-white mt-3 rounded-lg">
@@ -118,7 +118,7 @@ const Header = () => {
           </div>
           <Button
             className="text-white !normal-case !text-[14px] !p-[0] !m-[0]"
-            sx={{ color: "white",fontWeight: pathname.includes("/admin/watch_details/brand_list") ? "bold" : "normal"  }}
+            sx={{ color: "white", fontWeight: pathname.includes("/admin/watch_details/brand_list") ? "bold" : "normal" }}
             onClick={() => navigate("/admin/watch_details/brand_list")}
           >
             Brands, Collection and Models
@@ -132,7 +132,8 @@ const Header = () => {
           </Button>
           <Button
             className="text-white !normal-case !text-[14px] !p-[0] !m-[0]"
-            sx={{ color: "white" }}
+            sx={{ color: "white", fontWeight: pathname.includes("/admin/language") ? "bold" : "normal" }}
+            onClick={() => navigate("/admin/language")}
           >
             Languages
           </Button>
