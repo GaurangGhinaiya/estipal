@@ -2,6 +2,7 @@ import { Button } from "@mui/material";
 import React, { useState } from "react";
 import PaginationComponent from "../../../components/common/PaginationComponent";
 import SearchBar from "../../../components/common/SearchBar";
+import { useNavigate } from "react-router-dom";
 
 const staffUserData = [
   {
@@ -84,6 +85,7 @@ const staffUserData = [
 ];
 
 const StaffUser = () => {
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
 
   return (
@@ -116,21 +118,27 @@ const StaffUser = () => {
               <th className="p-2 text-[#ffff] text-center cursor-pointer">
                 Active
               </th>
-              <th className="p-2 text-[#ffff] text-center cursor-pointer">Id</th>
+              <th className="p-2 text-[#ffff] text-center cursor-pointer">
+                Id
+              </th>
               <th className="p-2 text-[#ffff] text-center cursor-pointer">
                 Company
               </th>
               <th className="p-2 text-[#ffff] text-center cursor-pointer">
                 Contact
               </th>
-              <th className="p-2 text-[#ffff] text-center cursor-pointer">Email</th>
+              <th className="p-2 text-[#ffff] text-center cursor-pointer">
+                Email
+              </th>
               <th className="p-2 text-[#ffff] text-center cursor-pointer">
                 Username
               </th>
               <th className="p-2 text-[#ffff] text-center cursor-pointer">
                 Added on
               </th>
-              <th className="p-2 text-[#ffff] text-center cursor-pointer">Staff</th>
+              <th className="p-2 text-[#ffff] text-center cursor-pointer">
+                Staff
+              </th>
               <th className="p-2 text-[#ffff] text-center cursor-pointer">
                 Sent/Accepted
               </th>
@@ -146,30 +154,54 @@ const StaffUser = () => {
                   </div>
                 </td>
 
-                <td className="px-[18px] py-[12px] text-[#ffff] text-center">
+                <td
+                  className="px-[18px] py-[12px] text-[#ffff] text-center cursor-pointer"
+                  onClick={() => navigate("/admin/seller/seller_edit")}
+                >
                   {item.id}
                 </td>
-                <td className="px-[18px] py-[12px] text-[#ffff] cursor-pointer">
+                <td
+                  className="px-[18px] py-[12px] text-[#ffff] cursor-pointer"
+                  onClick={() => navigate("/admin/seller/seller_edit")}
+                >
                   <div className="whitespace-nowrap text-center">
                     {item.company}
                   </div>
                 </td>
-                <td className="px-[18px] py-[12px] text-[#ffff] whitespace-nowrap text-center">
+                <td
+                  className="px-[18px] py-[12px] text-[#ffff] whitespace-nowrap text-center cursor-pointer"
+                  onClick={() => navigate("/admin/seller/seller_edit")}
+                >
                   {item.contact}
                 </td>
-                <td className="px-[18px] py-[12px] text-[#ffff] whitespace-nowrap text-center cursor-pointer">
+                <td
+                  className="px-[18px] py-[12px] text-[#ffff] whitespace-nowrap text-center cursor-pointer"
+                  onClick={() => navigate("/admin/seller/seller_edit")}
+                >
                   {item.email}
                 </td>
-                <td className="px-[18px] py-[12px] text-[#ffff] text-center">
+                <td
+                  className="px-[18px] py-[12px] text-[#ffff] text-center cursor-pointer"
+                  onClick={() => navigate("/admin/seller/seller_edit")}
+                >
                   {item.username}
                 </td>
-                <td className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap">
+                <td
+                  className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap cursor-pointer"
+                  onClick={() => navigate("/admin/seller/seller_edit")}
+                >
                   {item.addedOn}
                 </td>
-                <td className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap">
+                <td
+                  className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap cursor-pointer"
+                  onClick={() => navigate("/admin/seller/seller_edit")}
+                >
                   {item.staff}
                 </td>
-                <td className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap">
+                <td
+                  className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap cursor-pointer"
+                  onClick={() => navigate("/admin/seller/seller_edit")}
+                >
                   {item.sentAccepted}
                 </td>
                 <td className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap">

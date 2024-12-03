@@ -9,6 +9,7 @@ import SearchBar from "../../../components/common/SearchBar";
 import SelectDropdown from "../../../components/common/SelectDropdown";
 import { Tooltip } from "@mui/material";
 import { statusOptions } from "../components/ActivitiesTable";
+import { useNavigate } from "react-router-dom";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -244,6 +245,7 @@ const history = [
 ];
 
 const WatchHistory = () => {
+  const navigate = useNavigate();
   const [sortColumn, setSortColumn] = useState("");
   const [sortDirection, setSortDirection] = useState("asc");
   const [status, setStatus] = useState("All");
@@ -275,7 +277,7 @@ const WatchHistory = () => {
 
         <div className="flex justify-between items-center mb-4 gap-4 sm:gap-8 flex-wrap ">
           <SelectDropdown
-            title=" Filter by Status :"
+            title="Filter by Status :"
             status={status}
             setStatus={setStatus}
             options={statusOptions}
@@ -339,9 +341,9 @@ const WatchHistory = () => {
           <tbody>
             {history.map((item, index) => (
               <tr key={index} className="border-b border-[#202b34]">
-                <td className="px-[18px] py-[0px] text-[#ffff] text-center">
+                <td className="px-[18px] py-[0px] text-[#ffff] text-center cursor-pointer">
                   <div className="w-[35px]">
-                    <a href="">
+                    <a onClick={() => navigate("/admin/home/readActivity")}>
                       <img
                         src="https://www.estipal.com/assets/dist/images/icons/icn-mai-light.svg"
                         width="25px"
@@ -363,37 +365,64 @@ const WatchHistory = () => {
                     }
                   />
                 </td>
-                <td className="px-[18px] py-[10px] text-[#ffff] text-center">
+                <td
+                  className="px-[18px] py-[10px] text-[#ffff] text-center cursor-pointer"
+                  onClick={() => navigate("/admin/watch_details/watch_status")}
+                >
                   {item.id}
                 </td>
-                <td className="px-[18px] py-[10px] text-[#ffff] cursor-pointer">
+                <td
+                  className="px-[18px] py-[10px] text-[#ffff] cursor-pointer"
+                  onClick={() => navigate("/admin/watch_details/watch_status")}
+                >
                   <Tooltip title={item.brand} placement="top" arrow>
                     <div className="whitespace-nowrap text-center">
                       {item.brand}
                     </div>
                   </Tooltip>
                 </td>
-                <td className="px-[18px] py-[10px] text-[#ffff] whitespace-nowrap text-center">
+                <td
+                  className="px-[18px] py-[10px] text-[#ffff] whitespace-nowrap text-center cursor-pointer"
+                  onClick={() => navigate("/admin/watch_details/watch_status")}
+                >
                   {item.collection}
                 </td>
-                <td className="px-[18px] py-[10px] text-[#ffff] whitespace-nowrap text-center cursor-pointer">
+                <td
+                  className="px-[18px] py-[10px] text-[#ffff] whitespace-nowrap text-center cursor-pointer"
+                  onClick={() => navigate("/admin/watch_details/watch_status")}
+                >
                   <Tooltip title={item.model} placement="top" arrow>
                     {item.model}
                   </Tooltip>
                 </td>
-                <td className="px-[18px] py-[10px] text-[#ffff] text-center">
+                <td
+                  className="px-[18px] py-[10px] text-[#ffff] text-center cursor-pointer"
+                  onClick={() => navigate("/admin/watch_details/watch_status")}
+                >
                   {item.serial}
                 </td>
-                <td className="px-[18px] py-[10px] text-[#ffff] text-center whitespace-nowrap">
+                <td
+                  className="px-[18px] py-[10px] text-[#ffff] text-center whitespace-nowrap cursor-pointer"
+                  onClick={() => navigate("/admin/watch_details/watch_status")}
+                >
                   {item.addedBy}
                 </td>
-                <td className="px-[18px] py-[10px] text-[#ffff] text-center whitespace-nowrap">
+                <td
+                  className="px-[18px] py-[10px] text-[#ffff] text-center whitespace-nowrap cursor-pointer"
+                  onClick={() => navigate("/admin/watch_details/watch_status")}
+                >
                   {item.asking}
                 </td>
-                <td className="px-[18px] py-[10px] text-[#ffff] text-center whitespace-nowrap">
+                <td
+                  className="px-[18px] py-[10px] text-[#ffff] text-center whitespace-nowrap cursor-pointer"
+                  onClick={() => navigate("/admin/watch_details/watch_status")}
+                >
                   {item.addedOn}
                 </td>
-                <td className="px-[18px] py-[10px] text-[#ffff] text-center whitespace-nowrap">
+                <td
+                  className="px-[18px] py-[10px] text-[#ffff] text-center whitespace-nowrap cursor-pointer"
+                  onClick={() => navigate("/admin/watch_details/watch_status")}
+                >
                   {item.status}
                 </td>
               </tr>
