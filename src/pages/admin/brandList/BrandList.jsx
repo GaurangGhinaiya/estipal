@@ -191,7 +191,6 @@ const brands = [
   }
 ];
 
-
 const ModalBrand = ({ isVisible, content, onClose, onSubmit }) => {
   // console.log("isvisible",isVisible,content)
   const [inputValue, setInputValue] = useState(content);
@@ -359,16 +358,13 @@ const BrandList = () => {
   const [modelSwitch, setModelSwitch] = useState(false)
   const [isModalVisible, setModalVisible] = useState(false);
   const [modalContent, setModalContent] = useState("");
-  const [switchState, setSwitchState] = useState({
-    brandActive: true,
-    collectionActive: false,
-    modelActive: true,
-  });
+  const [switchState, setSwitchState] = useState({});
 
-  const handleSwitchChange = (name) => (e) => {
+  const handleSwitchChange = (name, index) => (e) => {
+    const dynamicKey = `${name}${index}`;
     setSwitchState((prev) => ({
       ...prev,
-      [name]: e.target.checked,
+      [dynamicKey]: e.target.checked,
     }));
   };
 
@@ -403,9 +399,9 @@ const BrandList = () => {
 
   return (
 
-    <div className="p-6 h-[83vh]">
+    <div className="p-6 min-h-[83vh]">
       <h1 className="text-2xl font-bold mb-4 text-white">Brands, Collections, and Models</h1>
-      <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 w-full">
         {/* Box 1: Brands */}
         <div className="bg-[#1E252B] p-4 rounded-lg">
           <div className='flex justify-between flex-col md:flex-row'>
@@ -436,12 +432,13 @@ const BrandList = () => {
                   <button className="text-yellow-500" onClick={(e) => e.stopPropagation()}>
                     <FaEdit size={25} onClick={() => openModal(`${brand.brand_name}`)} />
                   </button>
-                  <CustomSwitch
-                    name={`brandActive${index}`}
-                    checked={brand?.activeBrand}
-                    onChange={handleSwitchChange("brandActive")}
-                    onClick={(e) => e.stopPropagation()}
-                  />
+                  <div onClick={(e) => e.stopPropagation()}>
+                    <CustomSwitch
+                      name={`brandActive${index}`}
+                      checked={switchState[`brandActive${index}`] ?? brand?.activeBrand}
+                      onChange={handleSwitchChange("brandActive", index)}
+                    />
+                  </div>
                   <button className="text-white">
                     <FaArrowCircleRight size={25} color={`${selectedBrand === brand ? "#FCA31E" : "white"}`} />
                   </button>
@@ -453,7 +450,7 @@ const BrandList = () => {
 
         {/* Box 2: Collections */}
         {selectedBrand && <div className="bg-[#1E252B] p-4 rounded-lg">
-          <div className='flex justify-between'>
+          <div className='flex justify-between flex-col md:flex-row'>
             <div>
               <IoCloseCircleOutline color='white' size={20} onClick={(e) => {
                 setSelectedCollection(null)
@@ -485,12 +482,13 @@ const BrandList = () => {
                   <button className="text-yellow-500" onClick={(e) => e.stopPropagation()}>
                     <FaEdit size={25} onClick={() => openModal(`${collection.collection_name}`)} />
                   </button>
-                  <CustomSwitch
-                    name="modelActive"
-                    checked={collection?.activeCollection}
-                    onChange={handleSwitchChange("modelActive")}
-                    onClick={(e) => e.stopPropagation()}
-                  />
+                  <div onClick={(e) => e.stopPropagation()}>
+                    <CustomSwitch
+                      name={`collectionActive${index}`}
+                      checked={switchState[`collectionActive${index}`] ?? collection?.activeCollection}
+                      onChange={handleSwitchChange("collectionActive", index)}
+                    />
+                  </div>
                   <button className="text-white">
                     <FaArrowCircleRight size={25} color={`${selectedCollection === collection ? "#FCA31E" : "white"}`} />
                   </button>
@@ -503,7 +501,7 @@ const BrandList = () => {
 
         {/* Box 3: Models */}
         {selectedCollection && <div className="bg-[#1E252B] p-4 rounded-lg">
-          <div className='flex justify-between'>
+          <div className='flex justify-between flex-col md:flex-row'>
             <div>
               <IoCloseCircleOutline color='white' size={20} onClick={() => setSelectedCollection(null)} />
               <h2 className="text-xl font-semibold text-white mb-4">Models</h2>
@@ -531,8 +529,13 @@ const BrandList = () => {
                   <button className="text-yellow-500" onClick={(e) => e.stopPropagation()}>
                     <FaEdit size={25} onClick={() => openModal(`${model.model_name}`)} />
                   </button>
-                  <CustomSwitch name="isActive" onClick={(e) => e.stopPropagation()} checked={model?.activeModel} onChange={(e) => { setModelSwitch(e.target.value) }} />
-                 
+                  <div onClick={(e) => e.stopPropagation()}>
+                    <CustomSwitch
+                      name={`modelActive${index}`}
+                      checked={switchState[`modelActive${index}`] ?? model?.activeModel}
+                      onChange={handleSwitchChange("modelActive", index)}
+                    />
+                  </div>
                 </div>
               </li>
             ))}

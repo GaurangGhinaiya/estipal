@@ -61,8 +61,8 @@ const IOSSwitch = styled((props) => (
   },
 }));
 
-const CustomSwitch = ({ checked, onChange,onClick, ...props }) => {
-  return <IOSSwitch onChange={onChange} {...props} checked={checked} onClick={onClick}/>;
+const CustomSwitch = ({ checked, onChange, ...props }) => {
+  return <IOSSwitch onChange={onChange} {...props} checked={checked}/>;
 };
 
 export default CustomSwitch;
