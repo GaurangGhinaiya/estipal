@@ -13,6 +13,7 @@ import AdminRevanueAnalysis from "../pages/admin/revenue_analysis/revenue_analys
 import EstimatorRevanueAnalysis from "../pages/admin/revenue_analysis/revenue_analysis_estimator/EstimatorRevanueAnalysis";
 import AdminPerformanceAnalysis from "../pages/admin/performance_analysis/performance_analysis_admin/AdminPerformanceAnalysis";
 import EstimatorPerformanceAnalysis from "../pages/admin/performance_analysis/performance_analysis_estimator/EstimatorPerformanceAnalysis";
+import BrandList from "../pages/admin/brandList/BrandList";
 // import ProtectedRoute from "./protectedRoute";
 
 const AppRoute = () => {
@@ -49,6 +50,8 @@ const AppRoute = () => {
             <Route path="analysis/revenue_analysis/estimator" element={<EstimatorRevanueAnalysis />} />
             <Route path="analysis/performance_analysis/admin" element={<AdminPerformanceAnalysis />} />
             <Route path="analysis/performance_analysis/estimator" element={<EstimatorPerformanceAnalysis />} />
+            <Route path="watch_details/brand_list" element={<BrandList />} />
+
             {/* <Route path="edit" element={<EditUser />} />  */}
           </Route>
         </Route>

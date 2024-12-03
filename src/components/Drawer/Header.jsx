@@ -118,7 +118,8 @@ const Header = () => {
           </div>
           <Button
             className="text-white !normal-case !text-[14px] !p-[0] !m-[0]"
-            sx={{ color: "white" }}
+            sx={{ color: "white",fontWeight: pathname.includes("/admin/watch_details/brand_list") ? "bold" : "normal"  }}
+            onClick={() => navigate("/admin/watch_details/brand_list")}
           >
             Brands, Collection and Models
           </Button>
