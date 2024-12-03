@@ -12,6 +12,8 @@ import EstimatorRevanueAnalysis from "./revenue_analysis/revenue_analysis_estima
 import AdminPerformanceAnalysis from "./performance_analysis/performance_analysis_admin/AdminPerformanceAnalysis";
 import EstimatorPerformanceAnalysis from "./performance_analysis/performance_analysis_estimator/EstimatorPerformanceAnalysis";
 import SellerEdit from "./seller/SellerEdit";
+import BrandList from "./brandList/BrandList";
+import Language from "./language/Language";
 
 const AdminRoot = () => {
   return (
@@ -42,6 +44,13 @@ const AdminRoot = () => {
           element={<EstimatorPerformanceAnalysis />}
         />
         <Route path="/seller/seller_edit" element={<SellerEdit />} />
+        <Route path="/analysis/revenue_analysis/admin" element={<AdminRevanueAnalysis />} />
+        <Route path="/analysis/revenue_analysis/estimator" element={<EstimatorRevanueAnalysis />} />
+        <Route path="/analysis/performance_analysis/admin" element={<AdminPerformanceAnalysis />} />
+        <Route path="/analysis/performance_analysis/estimator" element={<EstimatorPerformanceAnalysis />} />
+        <Route path="/watch_details/brand_list" element={<BrandList />} />
+        <Route path="language" element={<Language />} />
+        {/* <Route path="/edit" element={<EditUser />} />  */}
       </Routes>
     </div>
   );

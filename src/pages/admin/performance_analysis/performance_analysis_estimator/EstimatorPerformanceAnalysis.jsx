@@ -1,5 +1,9 @@
 import React from "react";
 import ReactSpeedometer from "react-d3-speedometer";
+import React, { useState } from 'react';
+import ReactSpeedometer from 'react-d3-speedometer';
+import PaginationComponent from '../../../../components/common/PaginationComponent';
+
 
 const estimatorPerformanceData = [
   {
@@ -70,14 +74,198 @@ const estimatorPerformanceData = [
   },
 ];
 
+const transactionData = [
+  {
+    date: "Nov 15, 2023",
+    company: "Stein Diamonds",
+    firstName: "Kia",
+    lastName: "Zoghi",
+    watchId: "W1421",
+    model: "Rolex / Daytona / 40mm, Black Dial, Ceramic Bezel, Oyster Bracelet, Stainless Steel 116500LN",
+    estimate: "- / -",
+    status: "New Estimate Request"
+  },
+  {
+    date: "Nov 15, 2023",
+    company: "Karan Company",
+    firstName: "Bob",
+    lastName: "Karan",
+    watchId: "W1422",
+    model: "Rolex / Daytona / 40mm, Black Dial, Ceramic Bezel, Oyster Bracelet, Stainless Steel 116500LN",
+    estimate: "USD 18,000 / -",
+    status: "Estimated"
+  },
+  {
+    date: "Nov 15, 2023",
+    company: "MLA",
+    firstName: "Robert",
+    lastName: "MLA",
+    watchId: "W1418",
+    model: "Rolex / Daytona / 40mm, Black Dial, Ceramic Bezel, Oyster Bracelet, Stainless Steel 116500LN",
+    estimate: "- / -",
+    status: "New Estimate Request"
+  },
+  {
+    date: "Nov 15, 2023",
+    company: "test est",
+    firstName: "nopp",
+    lastName: "w",
+    watchId: "W1419",
+    model: "Rolex / Daytona / 40mm, Black Dial, Ceramic Bezel, Oyster Bracelet, Stainless Steel 116500LN",
+    estimate: "- / -",
+    status: "New Estimate Request"
+  },
+  {
+    date: "Nov 15, 2023",
+    company: "MLA Thai",
+    firstName: "Robert",
+    lastName: "MLA Thai",
+    watchId: "W1420",
+    model: "Rolex / Daytona / 40mm, Black Dial, Ceramic Bezel, Oyster Bracelet, Stainless Steel 116500LN",
+    estimate: "- / -",
+    status: "New Estimate Request"
+  },
+  {
+    date: "Nov 15, 2023",
+    company: "My company",
+    firstName: "Paolo",
+    lastName: "Manzoli",
+    watchId: "W1413",
+    model: "Rolex / Daytona / 40mm, Black Dial, Ceramic Bezel, Oyster Bracelet, Stainless Steel 116500LN",
+    estimate: "- / -",
+    status: "New Estimate Request"
+  },
+  {
+    date: "Nov 15, 2023",
+    company: "test",
+    firstName: "nopp",
+    lastName: "ice",
+    watchId: "W1414",
+    model: "Rolex / Daytona / 40mm, Black Dial, Ceramic Bezel, Oyster Bracelet, Stainless Steel 116500LN",
+    estimate: "- / -",
+    status: "New Estimate Request"
+  },
+  {
+    date: "Nov 15, 2023",
+    company: "test1",
+    firstName: "test1",
+    lastName: "test1",
+    watchId: "W1415",
+    model: "Rolex / Daytona / 40mm, Black Dial, Ceramic Bezel, Oyster Bracelet, Stainless Steel 116500LN",
+    estimate: "- / -",
+    status: "New Estimate Request"
+  },
+  {
+    date: "Nov 15, 2023",
+    company: "Quoter Inc",
+    firstName: "Albert",
+    lastName: "Quotes",
+    watchId: "W1416",
+    model: "Rolex / Daytona / 40mm, Black Dial, Ceramic Bezel, Oyster Bracelet, Stainless Steel 116500LN",
+    estimate: "- / -",
+    status: "New Estimate Request"
+  },
+  {
+    date: "Nov 15, 2023",
+    company: "Est Corp",
+    firstName: "Albert",
+    lastName: "Einstein",
+    watchId: "W1417",
+    model: "Rolex / Daytona / 40mm, Black Dial, Ceramic Bezel, Oyster Bracelet, Stainless Steel 116500LN",
+    estimate: "- / -",
+    status: "New Estimate Request"
+  },
+  {
+    date: "Nov 11, 2023",
+    company: "Stein Diamonds",
+    firstName: "Kia",
+    lastName: "Zoghi",
+    watchId: "W1411",
+    model: "Patek Philippe / Complications / World Time - 36mm, Green Dial, Green Leather Strap, Rose Gold 7130R-014",
+    estimate: "- / -",
+    status: "New Estimate Request"
+  },
+  {
+    date: "Nov 11, 2023",
+    company: "Karan Company",
+    firstName: "Bob",
+    lastName: "Karan",
+    watchId: "W1412",
+    model: "Patek Philippe / Complications / World Time - 36mm, Green Dial, Green Leather Strap, Rose Gold 7130R-014",
+    estimate: "USD 20,000 / -",
+    status: "Estimated"
+  },
+  {
+    date: "Nov 11, 2023",
+    company: "MLA",
+    firstName: "Robert",
+    lastName: "MLA",
+    watchId: "W1408",
+    model: "Patek Philippe / Complications / World Time - 36mm, Green Dial, Green Leather Strap, Rose Gold 7130R-014",
+    estimate: "- / -",
+    status: "New Estimate Request"
+  },
+  {
+    date: "Nov 11, 2023",
+    company: "test est",
+    firstName: "nopp",
+    lastName: "w",
+    watchId: "W1409",
+    model: "Patek Philippe / Complications / World Time - 36mm, Green Dial, Green Leather Strap, Rose Gold 7130R-014",
+    estimate: "- / -",
+    status: "New Estimate Request"
+  },
+  {
+    date: "Nov 11, 2023",
+    company: "MLA Thai",
+    firstName: "Robert",
+    lastName: "MLA Thai",
+    watchId: "W1410",
+    model: "Patek Philippe / Complications / World Time - 36mm, Green Dial, Green Leather Strap, Rose Gold 7130R-014",
+    estimate: "- / -",
+    status: "New Estimate Request"
+  }
+]
+
+// Utility function for dynamic sorting
+const sortData = (data, key, order) => {
+  return [...data].sort((a, b) => {
+    const valueA = a[key] || "";
+    const valueB = b[key] || "";
+
+    if (typeof valueA === "number" && typeof valueB === "number") {
+      return order === "asc" ? valueA - valueB : valueB - valueA;
+    }
+
+    return order === "asc"
+      ? valueA.toString().localeCompare(valueB.toString())
+      : valueB.toString().localeCompare(valueA.toString());
+  });
+};
+
 const EstimatorPerformanceAnalysis = () => {
+  const [data, setData] = useState(transactionData);
+
+  const [sortField, setSortField] = useState(null);
+  const [sortOrder, setSortOrder] = useState("asc");
+
+  const handleSort = (key) => {
+    const newOrder = sortField === key && sortOrder === "asc" ? "desc" : "asc";
+    setSortField(key);
+    setSortOrder(newOrder);
+
+    // Sort data and update state
+    const sortedData = sortData(data, key, newOrder);
+    setData(sortedData);
+  };
+
   return (
     <div className="p-[15px]">
       <div className="px-0 sm:px-[15px] flex flex-col justify-between flex-wrap">
         <h1 className="text-[26px] font-medium mb-4 mt-5 px-0 sm:px-[15px] font-sans text-white">
           Performance Analysis (Estimator)
         </h1>
-        <div className="flex items-center sm:flex-row flex-col gap-4 space-x-4 mb-1 px-4">
+        <div className="flex items-center sm:flex-row flex-col gap-4 space-x-4 mb-1 px-10">
           <div className="flex items-center space-x-2">
             <label htmlFor="fromDate" className="text-md text-white">
               From
@@ -126,7 +314,7 @@ const EstimatorPerformanceAnalysis = () => {
             Clear Filter
           </button>
         </div>
-        <h1 className="text-[20px] font-medium mb-4 mt-5 px-0 sm:px-[15px] font-sans text-white">
+        <h1 className="text-[20px] font-medium mb-4 mt-5 px-0 sm:px-[40px] font-sans text-white">
           Summary
         </h1>
       </div>
@@ -231,6 +419,89 @@ const EstimatorPerformanceAnalysis = () => {
           </tbody>
         </table>
       </div>
+
+      <h1 className=" text-[20px] font-medium mb-4 mt-5 px-0 sm:px-[48px] font-sans text-white">
+        Transactions
+      </h1>
+      <div class="flex items-center space-x-2 text-white px-14">
+        <span>Select Status:</span>
+        <div class="relative inline-block text-left">
+          <select class="block appearance-none w-full bg-gray-700 border border-gray-600 text-white py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-gray-600 focus:border-gray-500">
+            <option>All</option>
+            <option>New Estimated Request</option>
+            <option>Estimated</option>
+            <option>Pass</option>
+          </select>
+          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
+            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" /></svg>
+          </div>
+        </div>
+      </div>
+      <div className="w-[95.5%] overflow-auto mx-auto pt-[10px] mt-8">
+        <table className="table-auto w-full text-left">
+          <thead style={{ borderBottom: "2px solid #111111" }}>
+            <tr>
+              <th onClick={() => handleSort("date")} className="p-2 text-[#ffff] text-center sorting cursor-pointer">
+                Date
+              </th>
+              <th className="p-2 text-[#ffff] text-center sorting cursor-pointer" onClick={() => handleSort("company")}>
+                Company
+              </th>
+              <th className="p-2 text-[#ffff] text-center sorting cursor-pointer" onClick={() => handleSort("firstName")}>
+                First Name
+              </th>
+              <th className="p-2 text-[#ffff] text-center sorting cursor-pointer" onClick={() => handleSort("lastName")}>
+                Last Name
+              </th>
+              <th className="p-2 text-[#ffff] text-center sorting cursor-pointer" onClick={() => handleSort("watchId")}>
+                Watch ID
+              </th>
+              <th className="p-2 text-[#ffff] text-center sorting cursor-pointer" onClick={() => handleSort("model")}>
+                Brand / Collection / Model
+              </th>
+              <th className="p-2 text-[#ffff] text-center sorting cursor-pointer" onClick={() => handleSort("estimate")}>
+                Current Estimate / Accepted
+              </th>
+              <th className="p-2 text-[#ffff] text-center sorting cursor-pointer" onClick={() => handleSort("status")}>
+                Watch Status
+              </th>
+
+            </tr>
+          </thead>
+          <tbody>
+            {data?.map((item, index) => (
+              <tr key={index} className="border-b border-[#202b34]">
+
+                <td className="px-[18px] py-[10px] text-[#ffff] text-center">
+                  {item.date}
+                </td>
+                <td className="px-[18px] py-[10px] text-[#ffff] whitespace-nowrap text-center">
+                  {item.company}
+                </td>
+                <td className="px-[18px] py-[10px] text-[#ffff] text-center">
+                  {item.firstName}
+                </td>
+                <td className="px-[18px] py-[10px] text-[#ffff] text-center whitespace-nowrap">
+                  {item.lastName}
+                </td>
+                <td className="px-[18px] py-[10px] text-[#ffff] text-center whitespace-nowrap">
+                  {item.watchId}
+                </td>
+                <td className="px-[18px] py-[10px] text-[#ffff] text-center whitespace-nowrap">
+                  {item.model}
+                </td>
+                <td className="px-[18px] py-[10px] text-[#ffff] text-center whitespace-nowrap">
+                  {item.estimate}
+                </td>
+                <td className="px-[18px] py-[10px] text-[#ffff] text-center whitespace-nowrap">
+                  {item.status}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <PaginationComponent totalPages={5} />
     </div>
   );
 };

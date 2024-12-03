@@ -7,6 +7,39 @@ import ResponseTimeLimits from "./ResponseTimeLimits";
 const Settings = () => {
   const [isEditable, setIsEditable] = useState(false);
 
+  const [emailList, setEmailList] = useState([
+    {
+      name: "email1",
+      label: "Email 1",
+      isActive: true,
+      switchName: "isActive1",
+    },
+    {
+      name: "email2",
+      label: "Email 2",
+      isActive: true,
+      switchName: "isActive2",
+    },
+    {
+      name: "email3",
+      label: "Email 3",
+      isActive: false,
+      switchName: "isActive3",
+    },
+    {
+      name: "email4",
+      label: "Email 4",
+      isActive: true,
+      switchName: "isActive4",
+    },
+  ]);
+
+  const handleSwitchChange = (index) => {
+    const updatedList = [...emailList];
+    updatedList[index].isActive = !updatedList[index].isActive;
+    setEmailList(updatedList);
+  };
+
   return (
     <div className="mx-auto px-[20px] sm:px-[45px] py-[20px]">
       <div className="">
@@ -78,66 +111,29 @@ const Settings = () => {
       <h1 className="text-[22px] sm:text-[28px] pt-[16px] text-white font-medium mb-2">
         Secondary email recepients (BCC)
       </h1>
-      <div className="w-full lg:w-[70%] pr-[12.5px] flex sm:flex-row flex-col items-end sm:items-center gap-[10px] sm:gap-[25px] mb-[15px]">
-        <div className="w-full sm:w-1/2">
-          <TextInputField
-            rightTextValue=""
-            type="text"
-            placeholder="Enter email 1"
-            label="Email 1"
-            name="email1"
-            //   value=""
-            readOnly={!isEditable}
-            bgColor={"#1e252b"}
+      {emailList?.map((email, index) => (
+        <div
+          key={email.name}
+          className="w-full lg:w-[70%] pr-[12.5px] flex sm:flex-row flex-col items-end sm:items-center gap-[10px] sm:gap-[25px] mb-[15px]"
+        >
+          <div className="w-full sm:w-1/2">
+            <TextInputField
+              rightTextValue=""
+              type="text"
+              placeholder={`Enter ${email.label.toLowerCase()}`}
+              label={email.label}
+              name={email.name}
+              readOnly={!isEditable}
+              bgColor="#1e252b"
+            />
+          </div>
+          <CustomSwitch
+            name={email.switchName}
+            checked={email.isActive}
+            onChange={() => handleSwitchChange(index)}
           />
         </div>
-        <CustomSwitch name="isActive" checked={true} onChange={() => {}} />
-      </div>
-      <div className="w-full lg:w-[70%] pr-[12.5px] flex sm:flex-row flex-col items-end sm:items-center gap-[10px] sm:gap-[25px] mb-[15px]">
-        <div className="w-full sm:w-1/2">
-          <TextInputField
-            rightTextValue=""
-            type="text"
-            placeholder="Enter email 2"
-            label="Email 2"
-            name="email2"
-            //   value=""
-            readOnly={!isEditable}
-            bgColor={"#1e252b"}
-          />
-        </div>
-        <CustomSwitch name="isActive" checked={true} onChange={() => {}} />
-      </div>
-      <div className="w-full lg:w-[70%] pr-[12.5px] flex sm:flex-row flex-col items-end sm:items-center gap-[10px] sm:gap-[25px] mb-[15px]">
-        <div className="w-full sm:w-1/2">
-          <TextInputField
-            rightTextValue=""
-            type="text"
-            placeholder="Enter email 3"
-            label="Email 3"
-            name="email3"
-            //   value=""
-            readOnly={!isEditable}
-            bgColor={"#1e252b"}
-          />
-        </div>
-        <CustomSwitch name="isActive" checked={true} onChange={() => {}} />
-      </div>
-      <div className="w-full lg:w-[70%] pr-[12.5px] flex sm:flex-row flex-col items-end sm:items-center gap-[10px] sm:gap-[25px] mb-[15px]">
-        <div className="w-full sm:w-1/2">
-          <TextInputField
-            rightTextValue=""
-            type="text"
-            placeholder="Enter email 4"
-            label="Email 4"
-            name="email 4"
-            //   value=""
-            readOnly={!isEditable}
-            bgColor={"#1e252b"}
-          />
-        </div>
-        <CustomSwitch name="isActive" checked={true} onChange={() => {}} />
-      </div>
+      ))}
       <h1 className="text-[22px] sm:text-[28px] text-white font-medium mb-2 my-[22px]">
         Response time limits
       </h1>
