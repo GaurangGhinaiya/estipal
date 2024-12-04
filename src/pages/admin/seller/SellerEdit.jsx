@@ -30,12 +30,6 @@ const SellerEdit = () => {
     signUpDate: new Date().toLocaleDateString(),
     companyLogo: null,
   });
-  console.log("formData: ", formData);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
 
   // Handle file upload for the logo
   const handleFileUpload = (e) => {
@@ -47,15 +41,6 @@ const SellerEdit = () => {
         companyLogoPreview: URL.createObjectURL(file),
       });
     }
-  };
-
-  // Remove uploaded image
-  const handleRemoveImage = () => {
-    setFormData({
-      ...formData,
-      companyLogo: null,
-      companyLogoPreview: null,
-    });
   };
 
   return (

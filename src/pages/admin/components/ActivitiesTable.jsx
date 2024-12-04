@@ -1,5 +1,3 @@
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import GradeIcon from "@mui/icons-material/Grade";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import Checkbox from "@mui/material/Checkbox";
@@ -9,6 +7,9 @@ import SearchBar from "../../../components/common/SearchBar";
 import SelectDropdown from "../../../components/common/SelectDropdown";
 import { Tooltip } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import ArrowDropUpRoundedIcon from '@mui/icons-material/ArrowDropUpRounded';
+import ArrowDropDownRoundedIcon from '@mui/icons-material/ArrowDropDownRounded';
+import { sortData } from "../../../components/common/Sort";
 
 export const statusOptions = [
   "All",
@@ -235,28 +236,21 @@ const activities = [
 
 const ActivitiesTable = () => {
   const navigate = useNavigate();
-  const [sortColumn, setSortColumn] = useState("");
-  const [sortDirection, setSortDirection] = useState("asc");
+  const [data, setData] = useState(activities);
   const [status, setStatus] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
+  const [sortField, setSortField] = useState(null);
+  const [sortOrder, setSortOrder] = useState("asc");
+  const handleSort = (key) => {
+    const newOrder = sortField === key && sortOrder === "asc" ? "desc" : "asc";
+    setSortField(key);
+    setSortOrder(newOrder);
 
-  const handleSort = (column) => {
-    if (sortColumn === column) {
-      setSortDirection(sortDirection === "asc" ? "desc" : "asc");
-    } else {
-      setSortColumn(column);
-      setSortDirection("asc");
-    }
+    // Sort data and update state
+    const sortedData = sortData(data, key, newOrder);
+    setData(sortedData);
   };
 
-  const renderSortIcon = (column) => {
-    if (sortColumn !== column) return null;
-    return sortDirection === "asc" ? (
-      <ArrowUpwardIcon sx={{ fontSize: "16px" }} />
-    ) : (
-      <ArrowDownwardIcon sx={{ fontSize: "16px" }} />
-    );
-  };
   return (
     <div className="p-[15px]">
       <div className="px-0 sm:px-[15px] flex justify-between flex-wrap">
@@ -282,7 +276,7 @@ const ActivitiesTable = () => {
 
       <div className="w-[95.5%] overflow-auto mx-auto pt-[10px]">
         <table className="table-auto w-full text-left">
-          <thead style={{ borderBottom: "2px solid #111111" }}>
+          {/* <thead style={{ borderBottom: "2px solid #111111" }}>
             <tr>
               <th className="p-2 text-[#ffff] text-center "></th>
               <th className="p-2 text-[#ffff] text-center ">
@@ -335,9 +329,44 @@ const ActivitiesTable = () => {
                 Received {renderSortIcon("received")}
               </th>
             </tr>
+          </thead> */}
+          <thead style={{ borderBottom: "2px solid #111111" }}>
+            <tr>
+              {[
+                { key: "", label: "" },
+                {
+                  key: "checkbox",
+                  label: <StarOutlineIcon sx={{ color: "#9b9b9b", fontSize: "21px" }} />,
+                  render: () => (
+                    <Checkbox
+                      icon={<StarOutlineIcon sx={{ color: "#9b9b9b", fontSize: "21px" }} />}
+                      checkedIcon={<GradeIcon sx={{ color: "#ff9300", fontSize: "21px" }} />}
+                    />
+                  ),
+                },
+                { key: "who", label: "Who", isSortable: true },
+                { key: "from", label: "From", isSortable: true },
+                { key: "id", label: "ID", isSortable: true },
+                { key: "message", label: "Message", isSortable: false },
+                { key: "watchId", label: "Watch Id", isSortable: true },
+                { key: "status", label: "Status", isSortable: true },
+                { key: "received", label: "Received", isSortable: true },
+              ].map((column) => (
+                <th
+                  key={column.key}
+                  onClick={column.isSortable ? () => handleSort(column.key) : undefined}
+                  className={`p-2 text-[#ffff] text-center ${column.isSortable ? "cursor-pointer" : ""} ${column.isSortable && sortField === column.key ? "active-sorting" : ""} ${column.isSortable && sortField !== column.key ? "sorting" : ""}`}
+                >
+                  {column.label}{" "}
+                  {column.isSortable && sortField === column.key && (
+                    sortOrder === "asc" ? <ArrowDropUpRoundedIcon /> : <ArrowDropDownRoundedIcon />
+                  )}
+                </th>
+              ))}
+            </tr>
           </thead>
           <tbody>
-            {activities.map((activity, index) => (
+            {data.map((activity, index) => (
               <tr
                 key={index}
                 className="border-b border-[#202b34]"
@@ -345,8 +374,9 @@ const ActivitiesTable = () => {
               >
                 <td className="px-[18px] py-[0px] text-[#ffff] text-center">
                   <div className="w-[35px]">
-                    <a href="">
+                    <a href="#" role="button">
                       <img
+                        alt="img"
                         src="https://www.estipal.com/assets/dist/images/icons/Alarm_watch_light.png"
                         width="35px"
                       />

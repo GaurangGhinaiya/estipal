@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import CloseIcon from "@mui/icons-material/Close";
 import { Button, Dialog, IconButton } from "@mui/material";
-import { Swiper, SwiperSlide } from "swiper/react";
+import React from "react";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
-import CloseIcon from "@mui/icons-material/Close";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 const ImageDialog = ({
   open,

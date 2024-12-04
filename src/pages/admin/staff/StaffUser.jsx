@@ -208,6 +208,7 @@ const StaffUser = () => {
                   <div className="flex gap-[10px]">
                     <a href="https://www.estipal.com//admin/watch_details/watch_history?seller_id=1000">
                       <img
+                        alt="start"
                         id="star"
                         width="30px"
                         height="30px"
@@ -217,6 +218,7 @@ const StaffUser = () => {
                     </a>
                     <a href="#">
                       <img
+                        alt="revanue"
                         width="30px"
                         height="30px"
                         style={{ filter: "invert(1)" }}
@@ -225,6 +227,7 @@ const StaffUser = () => {
                     </a>
                     <a href="https://www.estipal.com/admin/analysis/performance_analysis/seller/1000">
                       <img
+                        alt="performance"
                         width="30px"
                         height="30px"
                         style={{ filter: "invert(1)" }}

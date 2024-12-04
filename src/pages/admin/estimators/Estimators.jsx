@@ -261,6 +261,7 @@ const Estimators = () => {
                                     <div class="flex gap-[10px]">
                                         <a href="/admin/watch_details/watch_history">
                                             <img
+                                                alt='star'
                                                 id="star"
                                                 width="30px"
                                                 height="30px"
@@ -270,6 +271,7 @@ const Estimators = () => {
                                         </a>
                                         <a href="/admin">
                                             <img
+                                                alt='revanue'
                                                 width="30px"
                                                 height="30px"
                                                 style={{ filter: "invert(1)" }}
@@ -278,6 +280,7 @@ const Estimators = () => {
                                         </a>
                                         <a href="/admin/analysis/performance_analysis/estimator">
                                             <img
+                                                alt='performance'
                                                 width="30px"
                                                 height="30px"
                                                 style={{ filter: "invert(1)" }}

@@ -175,6 +175,7 @@ const WatchStatus = () => {
               style={{ border: "5px solid #1e252b" }}
               class="img-border rounded-[8px]"
               src={item.image}
+              alt="img"
               className="w-[200px] h-[200px] mx-auto cursor-pointer"
             />
           </div>

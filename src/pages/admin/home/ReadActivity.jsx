@@ -23,6 +23,7 @@ const ReadActivity = () => {
       <div className="flex flex-col md:flex-row items-center md:items-start">
         <div className="flex-[1] mb-4 md:mb-0">
           <img
+            alt="img"
             className="max-w-[350px] w-full object-cover mx-auto rounded-[8px]"
             style={{ border: "5px solid #1e252b" }}
             src="https://cdn.estipal.com/production/2022/12/06/RYbhS159nO6DAhgQrA6O7TrmK49QZWIg767nDzEWggl0OTiL1Amd7l7Sj01S7n7Z.jpg"
@@ -96,6 +97,7 @@ const ReadActivity = () => {
               <p className="flex items-center gap-[10px] mb-[10px]">
                 <span>
                   <img
+                    alt="urgent"
                     src="https://www.estipal.com/assets/dist/images/icons/Urgent 1.png"
                     className="max-w-[40px]"
                   />
