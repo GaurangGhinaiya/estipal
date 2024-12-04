@@ -1,7 +1,7 @@
 import React from "react";
 import SearchIcon from "@mui/icons-material/Search";
 
-const SearchBar = ({ searchQuery, setSearchQuery, placeholder }) => {
+const SearchBar = ({ searchQuery, setSearchQuery, placeholder,setCurrentPage }) => {
   return (
     <form className="input-group estipal-input-group bg-[#1e252b] rounded-[5px] w-full sm:w-auto">
       <span className="input-group-addon estipal-input-group-icon">
@@ -10,7 +10,9 @@ const SearchBar = ({ searchQuery, setSearchQuery, placeholder }) => {
       <input
         type="text"
         value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
+        onChange={(e) => {setSearchQuery(e.target.value)
+          setCurrentPage(1)
+        }}
         className="search-box text-white estipal-input-group-control !border-none !bg-transparent w-full sm:w-[240px]"
         placeholder={placeholder}
       />
