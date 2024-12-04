@@ -81,9 +81,10 @@ const transactionData = [
     firstName: "Kia",
     lastName: "Zoghi",
     watchId: "W1421",
-    model: "Rolex / Daytona / 40mm, Black Dial, Ceramic Bezel, Oyster Bracelet, Stainless Steel 116500LN",
+    model:
+      "Rolex / Daytona / 40mm, Black Dial, Ceramic Bezel, Oyster Bracelet, Stainless Steel 116500LN",
     estimate: "- / -",
-    status: "New Estimate Request"
+    status: "New Estimate Request",
   },
   {
     date: "Nov 15, 2023",
@@ -91,9 +92,10 @@ const transactionData = [
     firstName: "Bob",
     lastName: "Karan",
     watchId: "W1422",
-    model: "Rolex / Daytona / 40mm, Black Dial, Ceramic Bezel, Oyster Bracelet, Stainless Steel 116500LN",
+    model:
+      "Rolex / Daytona / 40mm, Black Dial, Ceramic Bezel, Oyster Bracelet, Stainless Steel 116500LN",
     estimate: "USD 18,000 / -",
-    status: "Estimated"
+    status: "Estimated",
   },
   {
     date: "Nov 15, 2023",
@@ -101,9 +103,10 @@ const transactionData = [
     firstName: "Robert",
     lastName: "MLA",
     watchId: "W1418",
-    model: "Rolex / Daytona / 40mm, Black Dial, Ceramic Bezel, Oyster Bracelet, Stainless Steel 116500LN",
+    model:
+      "Rolex / Daytona / 40mm, Black Dial, Ceramic Bezel, Oyster Bracelet, Stainless Steel 116500LN",
     estimate: "- / -",
-    status: "New Estimate Request"
+    status: "New Estimate Request",
   },
   {
     date: "Nov 15, 2023",
@@ -111,9 +114,10 @@ const transactionData = [
     firstName: "nopp",
     lastName: "w",
     watchId: "W1419",
-    model: "Rolex / Daytona / 40mm, Black Dial, Ceramic Bezel, Oyster Bracelet, Stainless Steel 116500LN",
+    model:
+      "Rolex / Daytona / 40mm, Black Dial, Ceramic Bezel, Oyster Bracelet, Stainless Steel 116500LN",
     estimate: "- / -",
-    status: "New Estimate Request"
+    status: "New Estimate Request",
   },
   {
     date: "Nov 15, 2023",
@@ -121,9 +125,10 @@ const transactionData = [
     firstName: "Robert",
     lastName: "MLA Thai",
     watchId: "W1420",
-    model: "Rolex / Daytona / 40mm, Black Dial, Ceramic Bezel, Oyster Bracelet, Stainless Steel 116500LN",
+    model:
+      "Rolex / Daytona / 40mm, Black Dial, Ceramic Bezel, Oyster Bracelet, Stainless Steel 116500LN",
     estimate: "- / -",
-    status: "New Estimate Request"
+    status: "New Estimate Request",
   },
   {
     date: "Nov 15, 2023",
@@ -131,9 +136,10 @@ const transactionData = [
     firstName: "Paolo",
     lastName: "Manzoli",
     watchId: "W1413",
-    model: "Rolex / Daytona / 40mm, Black Dial, Ceramic Bezel, Oyster Bracelet, Stainless Steel 116500LN",
+    model:
+      "Rolex / Daytona / 40mm, Black Dial, Ceramic Bezel, Oyster Bracelet, Stainless Steel 116500LN",
     estimate: "- / -",
-    status: "New Estimate Request"
+    status: "New Estimate Request",
   },
   {
     date: "Nov 15, 2023",
@@ -141,9 +147,10 @@ const transactionData = [
     firstName: "nopp",
     lastName: "ice",
     watchId: "W1414",
-    model: "Rolex / Daytona / 40mm, Black Dial, Ceramic Bezel, Oyster Bracelet, Stainless Steel 116500LN",
+    model:
+      "Rolex / Daytona / 40mm, Black Dial, Ceramic Bezel, Oyster Bracelet, Stainless Steel 116500LN",
     estimate: "- / -",
-    status: "New Estimate Request"
+    status: "New Estimate Request",
   },
   {
     date: "Nov 15, 2023",
@@ -151,9 +158,10 @@ const transactionData = [
     firstName: "test1",
     lastName: "test1",
     watchId: "W1415",
-    model: "Rolex / Daytona / 40mm, Black Dial, Ceramic Bezel, Oyster Bracelet, Stainless Steel 116500LN",
+    model:
+      "Rolex / Daytona / 40mm, Black Dial, Ceramic Bezel, Oyster Bracelet, Stainless Steel 116500LN",
     estimate: "- / -",
-    status: "New Estimate Request"
+    status: "New Estimate Request",
   },
   {
     date: "Nov 15, 2023",
@@ -161,9 +169,10 @@ const transactionData = [
     firstName: "Albert",
     lastName: "Quotes",
     watchId: "W1416",
-    model: "Rolex / Daytona / 40mm, Black Dial, Ceramic Bezel, Oyster Bracelet, Stainless Steel 116500LN",
+    model:
+      "Rolex / Daytona / 40mm, Black Dial, Ceramic Bezel, Oyster Bracelet, Stainless Steel 116500LN",
     estimate: "- / -",
-    status: "New Estimate Request"
+    status: "New Estimate Request",
   },
   {
     date: "Nov 15, 2023",
@@ -171,9 +180,10 @@ const transactionData = [
     firstName: "Albert",
     lastName: "Einstein",
     watchId: "W1417",
-    model: "Rolex / Daytona / 40mm, Black Dial, Ceramic Bezel, Oyster Bracelet, Stainless Steel 116500LN",
+    model:
+      "Rolex / Daytona / 40mm, Black Dial, Ceramic Bezel, Oyster Bracelet, Stainless Steel 116500LN",
     estimate: "- / -",
-    status: "New Estimate Request"
+    status: "New Estimate Request",
   },
   {
     date: "Nov 11, 2023",
@@ -181,9 +191,10 @@ const transactionData = [
     firstName: "Kia",
     lastName: "Zoghi",
     watchId: "W1411",
-    model: "Patek Philippe / Complications / World Time - 36mm, Green Dial, Green Leather Strap, Rose Gold 7130R-014",
+    model:
+      "Patek Philippe / Complications / World Time - 36mm, Green Dial, Green Leather Strap, Rose Gold 7130R-014",
     estimate: "- / -",
-    status: "New Estimate Request"
+    status: "New Estimate Request",
   },
   {
     date: "Nov 11, 2023",
@@ -191,9 +202,10 @@ const transactionData = [
     firstName: "Bob",
     lastName: "Karan",
     watchId: "W1412",
-    model: "Patek Philippe / Complications / World Time - 36mm, Green Dial, Green Leather Strap, Rose Gold 7130R-014",
+    model:
+      "Patek Philippe / Complications / World Time - 36mm, Green Dial, Green Leather Strap, Rose Gold 7130R-014",
     estimate: "USD 20,000 / -",
-    status: "Estimated"
+    status: "Estimated",
   },
   {
     date: "Nov 11, 2023",
@@ -201,9 +213,10 @@ const transactionData = [
     firstName: "Robert",
     lastName: "MLA",
     watchId: "W1408",
-    model: "Patek Philippe / Complications / World Time - 36mm, Green Dial, Green Leather Strap, Rose Gold 7130R-014",
+    model:
+      "Patek Philippe / Complications / World Time - 36mm, Green Dial, Green Leather Strap, Rose Gold 7130R-014",
     estimate: "- / -",
-    status: "New Estimate Request"
+    status: "New Estimate Request",
   },
   {
     date: "Nov 11, 2023",
@@ -211,9 +224,10 @@ const transactionData = [
     firstName: "nopp",
     lastName: "w",
     watchId: "W1409",
-    model: "Patek Philippe / Complications / World Time - 36mm, Green Dial, Green Leather Strap, Rose Gold 7130R-014",
+    model:
+      "Patek Philippe / Complications / World Time - 36mm, Green Dial, Green Leather Strap, Rose Gold 7130R-014",
     estimate: "- / -",
-    status: "New Estimate Request"
+    status: "New Estimate Request",
   },
   {
     date: "Nov 11, 2023",
@@ -221,11 +235,12 @@ const transactionData = [
     firstName: "Robert",
     lastName: "MLA Thai",
     watchId: "W1410",
-    model: "Patek Philippe / Complications / World Time - 36mm, Green Dial, Green Leather Strap, Rose Gold 7130R-014",
+    model:
+      "Patek Philippe / Complications / World Time - 36mm, Green Dial, Green Leather Strap, Rose Gold 7130R-014",
     estimate: "- / -",
-    status: "New Estimate Request"
-  }
-]
+    status: "New Estimate Request",
+  },
+];
 
 const EstimatorPerformanceAnalysis = () => {
   const [data, setData] = useState(transactionData);
@@ -417,7 +432,13 @@ const EstimatorPerformanceAnalysis = () => {
             <option>Pass</option>
           </select>
           <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
-            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" /></svg>
+            <svg
+              class="fill-current h-4 w-4"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+            >
+              <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+            </svg>
           </div>
         </div>
       </div>
@@ -452,7 +473,6 @@ const EstimatorPerformanceAnalysis = () => {
           <tbody>
             {data?.map((item, index) => (
               <tr key={index} className="border-b border-[#202b34]">
-
                 <td className="px-[18px] py-[10px] text-[#ffff] text-center">
                   {item.date}
                 </td>
