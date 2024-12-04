@@ -2,36 +2,24 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import Logout from "@mui/icons-material/Logout";
 import MenuIcon from "@mui/icons-material/Menu";
 import PersonIcon from "@mui/icons-material/Person";
-import { Box, Button, Menu, MenuItem } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import React from "react";
-import Profile from "./components/Profile";
 import { useLocation, useNavigate } from "react-router-dom";
+import Profile from "./components/Profile";
 
 const Header = () => {
   const navigate = useNavigate();
-  const [anchorEl, setAnchorEl] = React.useState(null);
   const [openMenu, setOpenMenu] = React.useState(false);
   const [openRevanueMenu, setOpenRevanueMenu] = React.useState(false);
   const [openPerformanceMenu, setOpenPerformanceMenu] = React.useState(false);
   const pathName = useLocation();
   const { pathname } = pathName
 
-  const handleMenuClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
   const handleRevanueMenuClick = (event) => {
     setOpenRevanueMenu(!openRevanueMenu);
   };
   const handlePerformanceMenuClick = (event) => {
     setOpenPerformanceMenu(!openPerformanceMenu);
-  };
-
-  const handleRevanueMenuClose = () => {
-    setOpenRevanueMenu(false);
   };
 
   return (
@@ -240,7 +228,10 @@ const Header = () => {
           </Button>
           <Button
             className="text-white !normal-case !text-left !justify-start !text-[14px] !py-[5px] !px-[15px] !m-[0] !font-bold"
-            sx={{ color: "white" }}
+            sx={{ color: "white", fontWeight: pathname.includes("/admin/language") ? "bold" : "normal" }}
+            onClick={() => {
+              navigate("/admin/language")
+              setOpenMenu(false)}}
           >
             Languages
           </Button>

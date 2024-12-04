@@ -1,5 +1,5 @@
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDropUpRoundedIcon from '@mui/icons-material/ArrowDropUpRounded';
+import ArrowDropDownRoundedIcon from '@mui/icons-material/ArrowDropDownRounded';
 import GradeIcon from "@mui/icons-material/Grade";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import Checkbox from "@mui/material/Checkbox";
@@ -10,6 +10,7 @@ import SelectDropdown from "../../../components/common/SelectDropdown";
 import { Tooltip } from "@mui/material";
 import { statusOptions } from "../components/ActivitiesTable";
 import { useNavigate } from "react-router-dom";
+import { sortData } from "../../../components/common/Sort";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -246,27 +247,20 @@ const history = [
 
 const WatchHistory = () => {
   const navigate = useNavigate();
-  const [sortColumn, setSortColumn] = useState("");
-  const [sortDirection, setSortDirection] = useState("asc");
+  const [data, setData] = useState(history);
   const [status, setStatus] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
+  const [sortField, setSortField] = useState(null);
+  const [sortOrder, setSortOrder] = useState("asc");
 
-  const handleSort = (column) => {
-    if (sortColumn === column) {
-      setSortDirection(sortDirection === "asc" ? "desc" : "asc");
-    } else {
-      setSortColumn(column);
-      setSortDirection("asc");
-    }
-  };
+  const handleSort = (key) => {
+    const newOrder = sortField === key && sortOrder === "asc" ? "desc" : "asc";
+    setSortField(key);
+    setSortOrder(newOrder);
 
-  const renderSortIcon = (column) => {
-    if (sortColumn !== column) return null;
-    return sortDirection === "asc" ? (
-      <ArrowUpwardIcon sx={{ fontSize: "16px" }} />
-    ) : (
-      <ArrowDownwardIcon sx={{ fontSize: "16px" }} />
-    );
+    // Sort data and update state
+    const sortedData = sortData(data, key, newOrder);
+    setData(sortedData);
   };
   return (
     <div className="p-[15px]">
@@ -293,7 +287,7 @@ const WatchHistory = () => {
 
       <div className="w-[95.5%] overflow-auto mx-auto pt-[10px]">
         <table className="table-auto w-full text-left">
-          <thead style={{ borderBottom: "2px solid #111111" }}>
+          {/* <thead style={{ borderBottom: "2px solid #111111" }}>
             <tr>
               <th className="p-2 text-[#ffff] text-center "></th>
               <th className="p-2 text-[#ffff] text-center ">
@@ -337,16 +331,54 @@ const WatchHistory = () => {
                 Status
               </th>
             </tr>
+          </thead> */}
+          <thead style={{ borderBottom: "2px solid #111111" }}>
+            <tr>
+              {[
+                { key: "", label: "" },
+                {
+                  key: "checkbox",
+                  label: <StarOutlineIcon sx={{ color: "#9b9b9b", fontSize: "21px" }} />,
+                  render: () => (
+                    <Checkbox
+                      icon={<StarOutlineIcon sx={{ color: "#9b9b9b", fontSize: "21px" }} />}
+                      checkedIcon={<GradeIcon sx={{ color: "#ff9300", fontSize: "21px" }} />}
+                    />
+                  ),
+                },
+                { key: "id", label: "ID", isSortable: true },
+                { key: "brand", label: "Brand", isSortable: true },
+                { key: "collection", label: "Collection", isSortable: true },
+                { key: "model", label: "Model", isSortable: false },
+                { key: "serial", label: "Serial", isSortable: true },
+                { key: "addedBy", label: "Added By", isSortable: true },
+                { key: "asking", label: "Asking", isSortable: true },
+                { key: "addedOn", label: "Added On", isSortable: true },
+                { key: "status", label: "Status", isSortable: true },
+              ].map((column) => (
+                <th
+                  key={column.key}
+                  onClick={column.isSortable ? () => handleSort(column.key) : undefined}
+                  className={`p-2 text-[#ffff] text-center ${column.isSortable ? "cursor-pointer" : ""} ${column.isSortable && sortField === column.key ? "active-sorting" : ""} ${column.isSortable && sortField !== column.key ? "sorting" : ""}`}
+                >
+                  {column.label}{" "}
+                  {column.isSortable && sortField === column.key && (
+                    sortOrder === "asc" ? <ArrowDropUpRoundedIcon /> : <ArrowDropDownRoundedIcon />
+                  )}
+                </th>
+              ))}
+            </tr>
           </thead>
           <tbody>
-            {history.map((item, index) => (
+            {data.map((item, index) => (
               <tr key={index} className="border-b border-[#202b34]">
                 <td className="px-[18px] py-[0px] text-[#ffff] text-center cursor-pointer">
                   <div className="w-[35px]">
-                    <a onClick={() => navigate("/admin/home/readActivity")}>
+                    <a href='#' role="button" onClick={() => navigate("/admin/home/readActivity")}>
                       <img
                         src="https://www.estipal.com/assets/dist/images/icons/icn-mai-light.svg"
                         width="25px"
+                        alt='img'
                       />
                     </a>
                   </div>

@@ -1,6 +1,9 @@
 import ReactSpeedometer from "react-d3-speedometer";
-import React, { useState } from "react";
-import PaginationComponent from "../../../../components/common/PaginationComponent";
+import React, { useState } from 'react';
+import PaginationComponent from '../../../../components/common/PaginationComponent';
+import ArrowDropUpRoundedIcon from '@mui/icons-material/ArrowDropUpRounded';
+import ArrowDropDownRoundedIcon from '@mui/icons-material/ArrowDropDownRounded';
+import { sortData } from "../../../../components/common/Sort";
 
 const estimatorPerformanceData = [
   {
@@ -239,22 +242,6 @@ const transactionData = [
   },
 ];
 
-// Utility function for dynamic sorting
-const sortData = (data, key, order) => {
-  return [...data].sort((a, b) => {
-    const valueA = a[key] || "";
-    const valueB = b[key] || "";
-
-    if (typeof valueA === "number" && typeof valueB === "number") {
-      return order === "asc" ? valueA - valueB : valueB - valueA;
-    }
-
-    return order === "asc"
-      ? valueA.toString().localeCompare(valueB.toString())
-      : valueB.toString().localeCompare(valueA.toString());
-  });
-};
-
 const EstimatorPerformanceAnalysis = () => {
   const [data, setData] = useState(transactionData);
 
@@ -459,54 +446,28 @@ const EstimatorPerformanceAnalysis = () => {
         <table className="table-auto w-full text-left">
           <thead style={{ borderBottom: "2px solid #111111" }}>
             <tr>
-              <th
-                onClick={() => handleSort("date")}
-                className="p-2 text-[#ffff] text-center sorting cursor-pointer"
-              >
-                Date
-              </th>
-              <th
-                className="p-2 text-[#ffff] text-center sorting cursor-pointer"
-                onClick={() => handleSort("company")}
-              >
-                Company
-              </th>
-              <th
-                className="p-2 text-[#ffff] text-center sorting cursor-pointer"
-                onClick={() => handleSort("firstName")}
-              >
-                First Name
-              </th>
-              <th
-                className="p-2 text-[#ffff] text-center sorting cursor-pointer"
-                onClick={() => handleSort("lastName")}
-              >
-                Last Name
-              </th>
-              <th
-                className="p-2 text-[#ffff] text-center sorting cursor-pointer"
-                onClick={() => handleSort("watchId")}
-              >
-                Watch ID
-              </th>
-              <th
-                className="p-2 text-[#ffff] text-center sorting cursor-pointer"
-                onClick={() => handleSort("model")}
-              >
-                Brand / Collection / Model
-              </th>
-              <th
-                className="p-2 text-[#ffff] text-center sorting cursor-pointer"
-                onClick={() => handleSort("estimate")}
-              >
-                Current Estimate / Accepted
-              </th>
-              <th
-                className="p-2 text-[#ffff] text-center sorting cursor-pointer"
-                onClick={() => handleSort("status")}
-              >
-                Watch Status
-              </th>
+              {[
+                { key: "date", label: "Date" },
+                { key: "company", label: "Company" },
+                { key: "firstName", label: "First Name" },
+                { key: "lastName", label: "Last Name" },
+                { key: "watchId", label: "Watch ID" },
+                { key: "model", label: "Brand / Collection / Model" },
+                { key: "estimate", label: "Current Estimate / Accepted" },
+                { key: "status", label: "Watch Status" },
+              ].map((column) => (
+                <th
+                  key={column.key}
+                  onClick={() => handleSort(column.key)}
+                  className={`p-2 text-[#ffff] text-center cursor-pointer ${sortField === column.key ? "active-sorting" : "sorting"
+                    }`}
+                >
+                  {column.label}{" "}
+                  {sortField === column.key && (
+                    sortOrder === "asc" ? <ArrowDropUpRoundedIcon /> : <ArrowDropDownRoundedIcon />
+                  )}
+                </th>
+              ))}
             </tr>
           </thead>
           <tbody>
