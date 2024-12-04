@@ -330,6 +330,7 @@ const WatchHistory = () => {
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
             placeholder={"Search"}
+            setCurrentPage={setCurrentPage}
           />
         </div>
       </div>
