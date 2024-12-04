@@ -228,7 +228,10 @@ const Header = () => {
           </Button>
           <Button
             className="text-white !normal-case !text-left !justify-start !text-[14px] !py-[5px] !px-[15px] !m-[0] !font-bold"
-            sx={{ color: "white" }}
+            sx={{ color: "white", fontWeight: pathname.includes("/admin/language") ? "bold" : "normal" }}
+            onClick={() => {
+              navigate("/admin/language")
+              setOpenMenu(false)}}
           >
             Languages
           </Button>
