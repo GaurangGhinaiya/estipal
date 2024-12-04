@@ -4,15 +4,15 @@ import Header from "../Drawer/Header";
 
 const MainLayout = () => {
   const { pathname } = useLocation();
-  const token = true;
+  // const token = true;
 
-  if (token && pathname === "/") {
+  if (pathname === "/") {
     return <Navigate to={"/admin"} />;
   }
 
-  if (!token) {
-    return <Navigate to={"/login"} />;
-  }
+  // if (!token) {
+  //   return <Navigate to={"/login"} />;
+  // }
 
   return (
     <>
