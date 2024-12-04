@@ -287,17 +287,17 @@ const EstimatorPerformanceAnalysis = () => {
               className="p-2 border rounded-md text-black"
             />
           </div>
-          <div class="flex items-center space-x-2 text-white">
+          <div className="flex items-center space-x-2 text-white">
             <span>Group By:</span>
-            <div class="relative inline-block text-left">
-              <select class="block appearance-none w-full bg-gray-700 border border-gray-600 text-white py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-gray-600 focus:border-gray-500">
+            <div className="relative inline-block text-left">
+              <select className="block appearance-none w-full bg-gray-700 border border-gray-600 text-white py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-gray-600 focus:border-gray-500">
                 <option>All</option>
                 <option>Option 1</option>
                 <option>Option 2</option>
               </select>
-              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
                 <svg
-                  class="fill-current h-4 w-4"
+                  className="fill-current h-4 w-4"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
                 >
@@ -422,18 +422,18 @@ const EstimatorPerformanceAnalysis = () => {
       <h1 className=" text-[20px] font-medium mb-4 mt-5 px-0 sm:px-[48px] font-sans text-white">
         Transactions
       </h1>
-      <div class="flex items-center space-x-2 text-white px-14">
+      <div className="flex items-center space-x-2 text-white px-14">
         <span>Select Status:</span>
-        <div class="relative inline-block text-left">
-          <select class="block appearance-none w-full bg-gray-700 border border-gray-600 text-white py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-gray-600 focus:border-gray-500">
+        <div className="relative inline-block text-left">
+          <select className="block appearance-none w-full bg-gray-700 border border-gray-600 text-white py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-gray-600 focus:border-gray-500">
             <option>All</option>
             <option>New Estimated Request</option>
             <option>Estimated</option>
             <option>Pass</option>
           </select>
-          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
+          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
             <svg
-              class="fill-current h-4 w-4"
+              className="fill-current h-4 w-4"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
             >

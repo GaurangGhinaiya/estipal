@@ -7,8 +7,8 @@ import SearchBar from "../../../components/common/SearchBar";
 import SelectDropdown from "../../../components/common/SelectDropdown";
 import { Tooltip } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import ArrowDropUpRoundedIcon from '@mui/icons-material/ArrowDropUpRounded';
-import ArrowDropDownRoundedIcon from '@mui/icons-material/ArrowDropDownRounded';
+import ArrowDropUpRoundedIcon from "@mui/icons-material/ArrowDropUpRounded";
+import ArrowDropDownRoundedIcon from "@mui/icons-material/ArrowDropDownRounded";
 import { sortData } from "../../../components/common/Sort";
 
 export const statusOptions = [
@@ -336,11 +336,23 @@ const ActivitiesTable = () => {
                 { key: "", label: "" },
                 {
                   key: "checkbox",
-                  label: <StarOutlineIcon sx={{ color: "#9b9b9b", fontSize: "21px" }} />,
+                  label: (
+                    <StarOutlineIcon
+                      sx={{ color: "#9b9b9b", fontSize: "21px" }}
+                    />
+                  ),
                   render: () => (
                     <Checkbox
-                      icon={<StarOutlineIcon sx={{ color: "#9b9b9b", fontSize: "21px" }} />}
-                      checkedIcon={<GradeIcon sx={{ color: "#ff9300", fontSize: "21px" }} />}
+                      icon={
+                        <StarOutlineIcon
+                          sx={{ color: "#9b9b9b", fontSize: "21px" }}
+                        />
+                      }
+                      checkedIcon={
+                        <GradeIcon
+                          sx={{ color: "#ff9300", fontSize: "21px" }}
+                        />
+                      }
                     />
                   ),
                 },
@@ -354,13 +366,29 @@ const ActivitiesTable = () => {
               ].map((column) => (
                 <th
                   key={column.key}
-                  onClick={column.isSortable ? () => handleSort(column.key) : undefined}
-                  className={`p-2 text-[#ffff] text-center ${column.isSortable ? "cursor-pointer" : ""} ${column.isSortable && sortField === column.key ? "active-sorting" : ""} ${column.isSortable && sortField !== column.key ? "sorting" : ""}`}
+                  onClick={
+                    column.isSortable ? () => handleSort(column.key) : undefined
+                  }
+                  className={`p-2 text-[#ffff] text-center ${
+                    column.isSortable ? "cursor-pointer" : ""
+                  } ${
+                    column.isSortable && sortField === column.key
+                      ? "active-sorting"
+                      : ""
+                  } ${
+                    column.isSortable && sortField !== column.key
+                      ? "sorting"
+                      : ""
+                  }`}
                 >
                   {column.label}{" "}
-                  {column.isSortable && sortField === column.key && (
-                    sortOrder === "asc" ? <ArrowDropUpRoundedIcon /> : <ArrowDropDownRoundedIcon />
-                  )}
+                  {column.isSortable &&
+                    sortField === column.key &&
+                    (sortOrder === "asc" ? (
+                      <ArrowDropUpRoundedIcon />
+                    ) : (
+                      <ArrowDropDownRoundedIcon />
+                    ))}
                 </th>
               ))}
             </tr>
@@ -414,7 +442,7 @@ const ActivitiesTable = () => {
                     placement="top"
                     arrow
                   >
-                    {activity.message}
+                    <div>{activity?.message}</div>
                   </Tooltip>
                 </td>
                 <td className="px-[18px] py-[10px] text-[#ffff] text-center">

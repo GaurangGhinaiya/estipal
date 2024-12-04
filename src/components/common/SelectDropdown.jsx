@@ -11,7 +11,7 @@ const SelectDropdown = ({ status, setStatus, options, title }) => {
         value={status}
         onChange={(e) => setStatus(e.target.value)}
       >
-        {options.map((option, index) => (
+        {options?.map((option, index) => (
           <option key={index} value={option}>
             {option}
           </option>

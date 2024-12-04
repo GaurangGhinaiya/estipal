@@ -185,49 +185,49 @@ const Estimators = () => {
                 <table className="table-auto w-full text-left">
                     <thead style={{ borderBottom: "2px solid #111111" }}>
                         <tr>
-                            <th class="p-2 text-[#ffff] text-center cursor-pointer">
+                            <th className="p-2 text-[#ffff] text-center cursor-pointer">
                                 Online
                             </th>
-                            <th class="p-2 text-[#ffff] text-center cursor-pointer">
+                            <th className="p-2 text-[#ffff] text-center cursor-pointer">
                                 Active
                             </th>
-                            <th class="p-2 text-[#ffff] text-center cursor-pointer">
+                            <th className="p-2 text-[#ffff] text-center cursor-pointer">
                                 Requires Validation
                             </th>
-                            <th class="p-2 text-[#ffff] text-center cursor-pointer">Id</th>
-                            <th class="p-2 text-[#ffff] text-center cursor-pointer">
+                            <th className="p-2 text-[#ffff] text-center cursor-pointer">Id</th>
+                            <th className="p-2 text-[#ffff] text-center cursor-pointer">
                                 First
                             </th>
-                            <th class="p-2 text-[#ffff] text-center cursor-pointer">
+                            <th className="p-2 text-[#ffff] text-center cursor-pointer">
                                 Last
                             </th>
-                            <th class="p-2 text-[#ffff] text-center cursor-pointer">Email</th>
-                            <th class="p-2 text-[#ffff] text-center cursor-pointer">
+                            <th className="p-2 text-[#ffff] text-center cursor-pointer">Email</th>
+                            <th className="p-2 text-[#ffff] text-center cursor-pointer">
                                 Added on
                             </th>
-                            <th class="p-2 text-[#ffff] text-center cursor-pointer">
+                            <th className="p-2 text-[#ffff] text-center cursor-pointer">
                                 Sent/Accepted
                             </th>
-                            <th class="p-2 text-[#ffff] text-center cursor-pointer">Paid/Outstanding</th>
-                            <th class="p-2 text-[#ffff] text-center cursor-pointer"></th>
+                            <th className="p-2 text-[#ffff] text-center cursor-pointer">Paid/Outstanding</th>
+                            <th className="p-2 text-[#ffff] text-center cursor-pointer"></th>
                         </tr>
                     </thead>
                     <tbody>
                         {estimatorData?.map((item, index) => (
                             <tr key={index} className="border-b border-[#202b34]">
                                 <td className="px-[18px] py-[0px] text-[#ffff] text-center">
-                                    <div class="require_vaild_list text-center">
-                                        {item?.online ? <span class="dot-green"></span> : <span class="dot-red"></span>}
+                                    <div className="require_vaild_list text-center">
+                                        {item?.online ? <span className="dot-green"></span> : <span className="dot-red"></span>}
                                     </div>
                                 </td>
                                 <td className="px-[18px] py-[0px] text-[#ffff] text-center">
-                                    <div class="require_vaild_list text-center">
-                                        {item?.active ? <span class="dot-green"></span> : <span class="dot-red"></span>}
+                                    <div className="require_vaild_list text-center">
+                                        {item?.active ? <span className="dot-green"></span> : <span className="dot-red"></span>}
                                     </div>
                                 </td>
                                 <td className="px-[18px] py-[0px] text-[#ffff] text-center">
-                                    <div class="require_vaild_list text-center">
-                                        {item?.requiresValidation ? <span class="dot-green"></span> : <span class="dot-red"></span>}
+                                    <div className="require_vaild_list text-center">
+                                        {item?.requiresValidation ? <span className="dot-green"></span> : <span className="dot-red"></span>}
                                     </div>
                                 </td>
 
@@ -258,7 +258,7 @@ const Estimators = () => {
                                 </td>
                               
                                 <td className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap">
-                                    <div class="flex gap-[10px]">
+                                    <div className="flex gap-[10px]">
                                         <a href="/admin/watch_details/watch_history">
                                             <img
                                                 alt='star'

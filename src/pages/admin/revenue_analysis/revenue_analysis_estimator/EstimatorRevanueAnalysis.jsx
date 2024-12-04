@@ -94,23 +94,23 @@ const EstimatorRevanueAnalysis = () => {
         <table className="table-auto w-full text-left">
           <thead style={{ borderBottom: "2px solid #111111" }}>
             <tr>
-              <th class="p-2 text-[#ffff] text-center cursor-pointer">
+              <th className="p-2 text-[#ffff] text-center cursor-pointer">
                 Comapny
               </th>
-              <th class="p-2 text-[#ffff] text-center cursor-pointer">Email</th>
-              <th class="p-2 text-[#ffff] text-center cursor-pointer">
+              <th className="p-2 text-[#ffff] text-center cursor-pointer">Email</th>
+              <th className="p-2 text-[#ffff] text-center cursor-pointer">
                 Total Completed deal
               </th>
-              <th class="p-2 text-[#ffff] text-center cursor-pointer">
+              <th className="p-2 text-[#ffff] text-center cursor-pointer">
                 Total Bought
               </th>
-              <th class="p-2 text-[#ffff] text-center cursor-pointer">
+              <th className="p-2 text-[#ffff] text-center cursor-pointer">
                 Total Sold
               </th>
-              <th class="p-2 text-[#ffff] text-center cursor-pointer">
+              <th className="p-2 text-[#ffff] text-center cursor-pointer">
                 Total Profit
               </th>
-              <th class="p-2 text-[#ffff] text-center cursor-pointer">
+              <th className="p-2 text-[#ffff] text-center cursor-pointer">
                 Total Commission Payable / Paid
               </th>
             </tr>

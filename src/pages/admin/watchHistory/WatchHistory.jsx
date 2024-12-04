@@ -1,16 +1,19 @@
-import ArrowDropUpRoundedIcon from '@mui/icons-material/ArrowDropUpRounded';
-import ArrowDropDownRoundedIcon from '@mui/icons-material/ArrowDropDownRounded';
+import ArrowDropUpRoundedIcon from "@mui/icons-material/ArrowDropUpRounded";
+import ArrowDropDownRoundedIcon from "@mui/icons-material/ArrowDropDownRounded";
 import GradeIcon from "@mui/icons-material/Grade";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import Checkbox from "@mui/material/Checkbox";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PaginationComponent from "../../../components/common/PaginationComponent";
 import SearchBar from "../../../components/common/SearchBar";
 import SelectDropdown from "../../../components/common/SelectDropdown";
-import { Tooltip } from "@mui/material";
+import { CircularProgress, Tooltip } from "@mui/material";
 import { statusOptions } from "../components/ActivitiesTable";
 import { useNavigate } from "react-router-dom";
 import { sortData } from "../../../components/common/Sort";
+import axiosInstance from "../../../services";
+import moment from "moment/moment";
+import useDebounce from "../../../components/common/UseDebounce";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -252,6 +255,16 @@ const WatchHistory = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortField, setSortField] = useState(null);
   const [sortOrder, setSortOrder] = useState("asc");
+  const [loading, setLoading] = useState(false);
+  const [watchActivityData, setWatchActivityData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [recordsPerPage, setRecordsPerPage] = useState(10);
+  const [totalRecords, setTotalRecords] = useState(0);
+  const debouncedSearchTerm = useDebounce(searchQuery, 500);
+  
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
 
   const handleSort = (key) => {
     const newOrder = sortField === key && sortOrder === "asc" ? "desc" : "asc";
@@ -262,8 +275,44 @@ const WatchHistory = () => {
     const sortedData = sortData(data, key, newOrder);
     setData(sortedData);
   };
+
+  const getWatchActivityList = async () => {
+    setLoading(true);
+    const searchValue =
+      debouncedSearchTerm || status
+        ? JSON.stringify(
+            debouncedSearchTerm
+              ? {
+                  watch_id: debouncedSearchTerm ? debouncedSearchTerm : "",
+                  watch_status: status,
+                }
+              : { watch_status: status }
+          )
+        : "";
+
+    try {
+      const response = await axiosInstance.get(
+        `/staffWatchActivities?page=${currentPage}&search=${searchValue}`
+      );
+      if (response?.status === 200) {
+        setTotalRecords(response?.pager?.total_records);
+        setRecordsPerPage(response?.pager?.records_per_page);
+        setWatchActivityData(response?.payload?.data);
+        setLoading(false);
+      }
+    } catch (error) {
+      console.log(error?.response?.data?.message);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getWatchActivityList();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentPage, debouncedSearchTerm ,status]);
+
   return (
-    <div className="p-[15px]">
+    <div className="p-[15px] min-h-[100vh]">
       <div className="px-0 sm:px-[15px] flex justify-between flex-wrap">
         <h1 className="text-[30px] font-medium mb-4 px-0 sm:px-[15px] font-sans text-white">
           Watches History
@@ -287,62 +336,29 @@ const WatchHistory = () => {
 
       <div className="w-[95.5%] overflow-auto mx-auto pt-[10px]">
         <table className="table-auto w-full text-left">
-          {/* <thead style={{ borderBottom: "2px solid #111111" }}>
-            <tr>
-              <th className="p-2 text-[#ffff] text-center "></th>
-              <th className="p-2 text-[#ffff] text-center ">
-                <Checkbox
-                  icon={
-                    <StarOutlineIcon
-                      sx={{ color: "#9b9b9b", fontSize: "21px" }}
-                    />
-                  }
-                  checkedIcon={
-                    <GradeIcon sx={{ color: "#ff9300", fontSize: "21px" }} />
-                  }
-                />
-              </th>
-
-              <th className="p-2 text-[#ffff] text-center sorting cursor-pointer">
-                Id
-              </th>
-              <th className="p-2 text-[#ffff] text-center sorting cursor-pointer">
-                Brand
-              </th>
-              <th className="p-2 text-[#ffff] text-center sorting cursor-pointer">
-                Collection
-              </th>
-              <th className="p-2 text-[#ffff] text-center sorting cursor-pointer">
-                Model
-              </th>
-              <th className="p-2 text-[#ffff] text-center sorting cursor-pointer">
-                Serial
-              </th>
-              <th className="p-2 text-[#ffff] text-center sorting cursor-pointer">
-                Added by
-              </th>
-              <th className="p-2 text-[#ffff] text-center sorting cursor-pointer">
-                Asking / Estimate
-              </th>
-              <th className="p-2 text-[#ffff] text-center sorting cursor-pointer">
-                Added on
-              </th>
-              <th className="p-2 text-[#ffff] text-center sorting cursor-pointer">
-                Status
-              </th>
-            </tr>
-          </thead> */}
           <thead style={{ borderBottom: "2px solid #111111" }}>
             <tr>
               {[
                 { key: "", label: "" },
                 {
                   key: "checkbox",
-                  label: <StarOutlineIcon sx={{ color: "#9b9b9b", fontSize: "21px" }} />,
+                  label: (
+                    <StarOutlineIcon
+                      sx={{ color: "#9b9b9b", fontSize: "21px" }}
+                    />
+                  ),
                   render: () => (
                     <Checkbox
-                      icon={<StarOutlineIcon sx={{ color: "#9b9b9b", fontSize: "21px" }} />}
-                      checkedIcon={<GradeIcon sx={{ color: "#ff9300", fontSize: "21px" }} />}
+                      icon={
+                        <StarOutlineIcon
+                          sx={{ color: "#9b9b9b", fontSize: "21px" }}
+                        />
+                      }
+                      checkedIcon={
+                        <GradeIcon
+                          sx={{ color: "#ff9300", fontSize: "21px" }}
+                        />
+                      }
                     />
                   ),
                 },
@@ -350,119 +366,182 @@ const WatchHistory = () => {
                 { key: "brand", label: "Brand", isSortable: true },
                 { key: "collection", label: "Collection", isSortable: true },
                 { key: "model", label: "Model", isSortable: false },
-                { key: "serial", label: "Serial", isSortable: true },
-                { key: "addedBy", label: "Added By", isSortable: true },
-                { key: "asking", label: "Asking", isSortable: true },
+                { key: "serial_no", label: "Serial", isSortable: true },
+                { key: "compnay_name", label: "Added By", isSortable: true },
+                { key: "asking", label: "Asking / Estimate", isSortable: true },
                 { key: "addedOn", label: "Added On", isSortable: true },
-                { key: "status", label: "Status", isSortable: true },
-              ].map((column) => (
+                { key: "watch_status", label: "Status", isSortable: true },
+              ]?.map((column) => (
                 <th
                   key={column.key}
-                  onClick={column.isSortable ? () => handleSort(column.key) : undefined}
-                  className={`p-2 text-[#ffff] text-center ${column.isSortable ? "cursor-pointer" : ""} ${column.isSortable && sortField === column.key ? "active-sorting" : ""} ${column.isSortable && sortField !== column.key ? "sorting" : ""}`}
+                  onClick={
+                    column.isSortable ? () => handleSort(column.key) : undefined
+                  }
+                  className={`p-2 text-[#ffff] text-center ${
+                    column.isSortable ? "cursor-pointer" : ""
+                  } ${
+                    column.isSortable && sortField === column.key
+                      ? "active-sorting"
+                      : ""
+                  } ${
+                    column.isSortable && sortField !== column.key
+                      ? "sorting"
+                      : ""
+                  }`}
                 >
                   {column.label}{" "}
-                  {column.isSortable && sortField === column.key && (
-                    sortOrder === "asc" ? <ArrowDropUpRoundedIcon /> : <ArrowDropDownRoundedIcon />
-                  )}
+                  {column.isSortable &&
+                    sortField === column.key &&
+                    (sortOrder === "asc" ? (
+                      <ArrowDropUpRoundedIcon />
+                    ) : (
+                      <ArrowDropDownRoundedIcon />
+                    ))}
                 </th>
               ))}
             </tr>
           </thead>
           <tbody>
-            {data.map((item, index) => (
-              <tr key={index} className="border-b border-[#202b34]">
-                <td className="px-[18px] py-[0px] text-[#ffff] text-center cursor-pointer">
-                  <div className="w-[35px]">
-                    <a href='#' role="button" onClick={() => navigate("/admin/home/readActivity")}>
-                      <img
-                        src="https://www.estipal.com/assets/dist/images/icons/icn-mai-light.svg"
-                        width="25px"
-                        alt='img'
-                      />
-                    </a>
-                  </div>
-                </td>
-                <td className="px-[18px] py-[10px] text-[#ffff] text-center">
-                  {" "}
-                  <Checkbox
-                    {...label}
-                    icon={
-                      <StarOutlineIcon
-                        sx={{ color: "#494a4b", fontSize: "21px" }}
-                      />
-                    }
-                    checkedIcon={
-                      <GradeIcon sx={{ color: "#ff9300", fontSize: "21px" }} />
-                    }
-                  />
-                </td>
-                <td
-                  className="px-[18px] py-[10px] text-[#ffff] text-center cursor-pointer"
-                  onClick={() => navigate("/admin/watch_details/watch_status")}
-                >
-                  {item.id}
-                </td>
-                <td
-                  className="px-[18px] py-[10px] text-[#ffff] cursor-pointer"
-                  onClick={() => navigate("/admin/watch_details/watch_status")}
-                >
-                  <Tooltip title={item.brand} placement="top" arrow>
-                    <div className="whitespace-nowrap text-center">
-                      {item.brand}
-                    </div>
-                  </Tooltip>
-                </td>
-                <td
-                  className="px-[18px] py-[10px] text-[#ffff] whitespace-nowrap text-center cursor-pointer"
-                  onClick={() => navigate("/admin/watch_details/watch_status")}
-                >
-                  {item.collection}
-                </td>
-                <td
-                  className="px-[18px] py-[10px] text-[#ffff] whitespace-nowrap text-center cursor-pointer"
-                  onClick={() => navigate("/admin/watch_details/watch_status")}
-                >
-                  <Tooltip title={item.model} placement="top" arrow>
-                    {item.model}
-                  </Tooltip>
-                </td>
-                <td
-                  className="px-[18px] py-[10px] text-[#ffff] text-center cursor-pointer"
-                  onClick={() => navigate("/admin/watch_details/watch_status")}
-                >
-                  {item.serial}
-                </td>
-                <td
-                  className="px-[18px] py-[10px] text-[#ffff] text-center whitespace-nowrap cursor-pointer"
-                  onClick={() => navigate("/admin/watch_details/watch_status")}
-                >
-                  {item.addedBy}
-                </td>
-                <td
-                  className="px-[18px] py-[10px] text-[#ffff] text-center whitespace-nowrap cursor-pointer"
-                  onClick={() => navigate("/admin/watch_details/watch_status")}
-                >
-                  {item.asking}
-                </td>
-                <td
-                  className="px-[18px] py-[10px] text-[#ffff] text-center whitespace-nowrap cursor-pointer"
-                  onClick={() => navigate("/admin/watch_details/watch_status")}
-                >
-                  {item.addedOn}
-                </td>
-                <td
-                  className="px-[18px] py-[10px] text-[#ffff] text-center whitespace-nowrap cursor-pointer"
-                  onClick={() => navigate("/admin/watch_details/watch_status")}
-                >
-                  {item.status}
+            {loading && watchActivityData?.length === 0 ? (
+              <tr>
+                <td colSpan={12} className="py-[200px] px-4  text-center">
+                  <CircularProgress />
                 </td>
               </tr>
-            ))}
+            ) : watchActivityData?.length > 0 ? (
+              watchActivityData?.map((item, index) => (
+                <tr key={index} className="border-b border-[#202b34]">
+                  <td className="px-[18px] py-[0px] text-[#ffff] text-center cursor-pointer">
+                    <div className="w-[35px]">
+                      <div
+                        role="button"
+                        onClick={() => navigate("/admin/home/readActivity")}
+                      >
+                        <img
+                          src="https://www.estipal.com/assets/dist/images/icons/icn-mai-light.svg"
+                          width="25px"
+                          alt="img"
+                        />
+                      </div>
+                    </div>
+                  </td>
+                  <td className="px-[18px] py-[10px] text-[#ffff] text-center">
+                    {" "}
+                    <Checkbox
+                      {...label}
+                      icon={
+                        <StarOutlineIcon
+                          sx={{ color: "#494a4b", fontSize: "21px" }}
+                        />
+                      }
+                      checkedIcon={
+                        <GradeIcon
+                          sx={{ color: "#ff9300", fontSize: "21px" }}
+                        />
+                      }
+                    />
+                  </td>
+                  <td
+                    className="px-[18px] py-[10px] text-[#ffff] text-center cursor-pointer"
+                    onClick={() =>
+                      navigate("/admin/watch_details/watch_status")
+                    }
+                  >
+                    W{item?.id}
+                  </td>
+                  <td
+                    className="px-[18px] py-[10px] text-[#ffff] cursor-pointer"
+                    onClick={() =>
+                      navigate("/admin/watch_details/watch_status")
+                    }
+                  >
+                    <Tooltip title={item?.brand} placement="top" arrow>
+                      <div className="whitespace-nowrap text-center">
+                        {item?.brand}
+                      </div>
+                    </Tooltip>
+                  </td>
+                  <td
+                    className="px-[18px] py-[10px] text-[#ffff] whitespace-nowrap text-center cursor-pointer"
+                    onClick={() =>
+                      navigate("/admin/watch_details/watch_status")
+                    }
+                  >
+                    {item?.collection}
+                  </td>
+                  <td
+                    className="px-[18px] py-[10px] text-[#ffff] whitespace-nowrap text-center cursor-pointer"
+                    onClick={() =>
+                      navigate("/admin/watch_details/watch_status")
+                    }
+                  >
+                    <Tooltip title={item?.model} placement="top" arrow>
+                      <div>{item?.model}</div>
+                    </Tooltip>
+                  </td>
+                  <td
+                    className="px-[18px] py-[10px] text-[#ffff] text-center cursor-pointer"
+                    onClick={() =>
+                      navigate("/admin/watch_details/watch_status")
+                    }
+                  >
+                    {item?.serial_no}
+                  </td>
+                  <td
+                    className="px-[18px] py-[10px] text-[#ffff] text-center whitespace-nowrap cursor-pointer"
+                    onClick={() =>
+                      navigate("/admin/watch_details/watch_status")
+                    }
+                  >
+                    {item?.compnay_name}
+                  </td>
+                  <td
+                    className="px-[18px] py-[10px] text-[#ffff] text-center whitespace-nowrap cursor-pointer"
+                    onClick={() =>
+                      navigate("/admin/watch_details/watch_status")
+                    }
+                  >
+                    USD {item?.counter_offer_price} / USD
+                    {item?.estimated_watch_price}
+                  </td>
+                  <td
+                    className="px-[18px] py-[10px] text-[#ffff] text-center whitespace-nowrap cursor-pointer"
+                    onClick={() =>
+                      navigate("/admin/watch_details/watch_status")
+                    }
+                  >
+                    {moment.unix(item?.created_on).format("MMM DD,YYYY")}
+                  </td>
+                  <td
+                    className="px-[18px] py-[10px] text-[#ffff] text-center whitespace-nowrap cursor-pointer"
+                    onClick={() =>
+                      navigate("/admin/watch_details/watch_status")
+                    }
+                  >
+                    {item?.watch_status}
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td
+                  colSpan={12}
+                  className="py-[200px] px-4  text-center text-nowrap text-white font-bold"
+                >
+                  No Data Found
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>
-      <PaginationComponent totalPages={5} />
+      <PaginationComponent
+        currentPage={currentPage}
+        totalPages={totalRecords}
+        recordsPerPage={recordsPerPage}
+        handlePageChange={handlePageChange}
+        data={watchActivityData}
+      />
     </div>
   );
 };

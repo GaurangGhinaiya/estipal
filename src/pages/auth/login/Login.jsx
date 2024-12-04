@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import bgImage from "../../../assets/images/img-bg-login.png";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { CircularProgress } from "@mui/material";
 
 const Login = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const {
     control,
     handleSubmit,
@@ -17,9 +19,9 @@ const Login = () => {
       password: "",
     },
   });
-
   // Login handler
   const onSubmit = async (data) => {
+    setLoading(true);
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_API_PUBLIC_BASE_URL}/login`,
@@ -29,9 +31,11 @@ const Login = () => {
         toast.success(response?.data?.message);
         localStorage.setItem("authToken", response?.data?.payload?.token);
         navigate("/admin");
+        setLoading(false);
       }
     } catch (error) {
       toast.error(error?.response?.data?.message);
+      setLoading(false);
     }
   };
 
@@ -111,7 +115,12 @@ const Login = () => {
                 className="btn bg-[#3c8dbc] w-full"
                 style={{ borderRadius: "20px" }}
               >
-                Sign In
+                <div className="flex items-center justify-center gap-4">
+                  Sign In{" "}
+                  {loading && (
+                    <CircularProgress size={15} className="!text-white" />
+                  )}
+                </div>
               </button>
             </div>
           </form>

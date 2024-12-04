@@ -67,14 +67,14 @@ const AdminRevanueAnalysis = () => {
                 <table className="table-auto w-full text-left">
                     <thead style={{ borderBottom: "2px solid #111111" }}>
                         <tr>
-                            <th class="p-2 text-[#ffff] text-center cursor-pointer">
+                            <th className="p-2 text-[#ffff] text-center cursor-pointer">
                                 Comapny
                             </th>
-                            <th class="p-2 text-[#ffff] text-center cursor-pointer">Email</th>
-                            <th class="p-2 text-[#ffff] text-center cursor-pointer">
+                            <th className="p-2 text-[#ffff] text-center cursor-pointer">Email</th>
+                            <th className="p-2 text-[#ffff] text-center cursor-pointer">
                                 Total sold to Estipal / Amount
                             </th>
-                            <th class="p-2 text-[#ffff] text-center cursor-pointer">
+                            <th className="p-2 text-[#ffff] text-center cursor-pointer">
                                 Total partner with Estipal / Amount
                             </th>
                         </tr>
