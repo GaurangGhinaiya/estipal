@@ -12,6 +12,8 @@ import ArrowDropDownRoundedIcon from "@mui/icons-material/ArrowDropDownRounded";
 import { sortData } from "../../../components/common/Sort";
 import axiosInstance from "../../../services/index";
 import moment from "moment/moment";
+import useDebounce from "../../../components/common/UseDebounce";
+
 
 export const statusOptions = [
   "All",
@@ -36,7 +38,7 @@ const label = { inputProps: { "aria-label": "Checkbox demo" } };
 const ActivitiesTable = () => {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
-  const [status, setStatus] = useState("All");
+  const [status, setStatus] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [sortField, setSortField] = useState(null);
   const [sortOrder, setSortOrder] = useState("asc");
@@ -45,18 +47,7 @@ const ActivitiesTable = () => {
   const [recordsPerPage, setRecordsPerPage] = useState(10);
   const [totalRecords, setTotalRecords] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
-
-  // Debounce the searchTerm
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedSearchTerm(searchQuery);
-    }, 500); // Adjust debounce delay as needed (e.g., 500ms)
-
-    return () => {
-      clearTimeout(handler); // Cleanup previous timeout
-    };
-  }, [searchQuery]);
+  const debouncedSearchTerm = useDebounce(searchQuery, 500);
 
   const handleSort = (key) => {
     const newOrder = sortField === key && sortOrder === "asc" ? "desc" : "asc";
@@ -70,7 +61,7 @@ const ActivitiesTable = () => {
 
   const getActivityData = async () => {
     try {
-      const searchValue = debouncedSearchTerm || status ? JSON.stringify(debouncedSearchTerm ? { watch_id: debouncedSearchTerm ? debouncedSearchTerm : "", watch_status: status } : { watch_status: status }) : '';
+      const searchValue = debouncedSearchTerm || status ? JSON.stringify(debouncedSearchTerm ? { search: debouncedSearchTerm ? debouncedSearchTerm : "", watch_status: status } : { watch_status: status }) : '';
 
       setIsLoading(true);
       const response = await axiosInstance.get(`/adminActivity?page=${currentPage}&records_per_page=${recordsPerPage}&search=${searchValue}&sort_order=${sortOrder}`);
@@ -157,17 +148,14 @@ const ActivitiesTable = () => {
                   onClick={
                     column.isSortable ? () => handleSort(column.key) : undefined
                   }
-                  className={`p-2 text-[#ffff] text-center ${
-                    column.isSortable ? "cursor-pointer" : ""
-                  } ${
-                    column.isSortable && sortField === column.key
+                  className={`p-2 text-[#ffff] text-center ${column.isSortable ? "cursor-pointer" : ""
+                    } ${column.isSortable && sortField === column.key
                       ? "active-sorting"
                       : ""
-                  } ${
-                    column.isSortable && sortField !== column.key
+                    } ${column.isSortable && sortField !== column.key
                       ? "sorting"
                       : ""
-                  }`}
+                    }`}
                 >
                   {column.label}{" "}
                   {column.isSortable &&
