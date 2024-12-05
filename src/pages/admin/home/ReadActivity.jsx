@@ -13,7 +13,6 @@ const ReadActivity = () => {
   const getDetailById = async () => {
     try {
       const response = await axiosInstance.get(`/adminActivity/detail?id=${id}`)
-      console.log("response", response?.payload?.data)
       setReadActivityData(response?.payload?.data)
     } catch (error) {
       console.log("error",error);

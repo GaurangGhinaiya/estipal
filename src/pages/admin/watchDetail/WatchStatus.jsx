@@ -1,6 +1,10 @@
 import { Button } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ImageDialog from "./components/ImageDialog";
+import { useParams } from "react-router-dom";
+import axiosInstance from "../../../services";
+import { extractImageUrls } from "../../../utils";
+import moment from "moment";
 
 const watchHistory = [
   {
@@ -47,44 +51,13 @@ const watchHistory = [
   },
 ];
 
-const imageData = [
-  {
-    image:
-      "https://cdn.estipal.com/production/2022/12/06/RYbhS159nO6DAhgQrA6O7TrmK49QZWIg767nDzEWggl0OTiL1Amd7l7Sj01S7n7Z.jpg",
-  },
-  {
-    image:
-      "https://cdn.estipal.com/production/2022/12/06/pOTO1gmWgUOTGEm90fPLc7eE2t4js960sH2DL4rN6dWnl6YaWDY1Cy6gCFwt0dxQ.jpg",
-  },
-  {
-    image:
-      "https://cdn.estipal.com/production/2022/12/06/rGs42n6j6IqhC8OBe2X86EB1ov6oCmqRJODN636rxm07fMWtE9kOq001CXRhdZ09.jpg",
-  },
-  {
-    image:
-      "https://cdn.estipal.com/production/2022/12/06/y5HwZcPMLSgaZbfFldp6zFIT929MU8Y1e4vdW6Qb7DjhSY6VVm2B4r8o08fkHoDH.jpg",
-  },
-  {
-    image:
-      "https://cdn.estipal.com/production/2022/12/06/Z8WpvHAW76Fa28mMwFlH9vv90G8IG7n17OMQFyJyXGCmt8F7Q2N2ltVlmAU4m7pa.jpg",
-  },
-  {
-    image:
-      "https://cdn.estipal.com/production/2022/12/06/clxEK3fP9dXEGAppybHGvBSJl0p7Z7o3Nn5DI6d7FgkYH8klu4HNv1A7HMlPg46L.jpg",
-  },
-  {
-    image:
-      "https://cdn.estipal.com/production/2022/12/06/ow7ICBarTYbzACeFFa6wC0XC4762tH5ImL2U8OYQx7jXA2CBSZSqZPy0p9x6T3BG.jpg",
-  },
-  {
-    image:
-      "https://cdn.estipal.com/production/2022/12/06/4D1D5KDbX0QOrLkZX19gFss2wZrBdyuWiK9s2zDhw5JYvZQ9H0QYUr0K7Ri6FG20.jpeg",
-  },
-];
-
 const WatchStatus = () => {
+  const { id } = useParams();
   const [open, setOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [watchDetailData, setWatchDetailData] = useState({});
+  const [loading, setLoading] = useState(false);
+  const imageUrls = watchDetailData?.watch_pic && extractImageUrls(watchDetailData?.watch_pic);
 
   const handleOpenDialog = (index) => {
     setSelectedIndex(index);
@@ -96,11 +69,35 @@ const WatchStatus = () => {
     setOpen(false);
   };
 
+  const getWatchDetail = async () => {
+    setLoading(true);
+
+    try {
+      const response = await axiosInstance.get(
+        `/staffWatchActivities/detail?id=${id}`
+      );
+      if (response?.status === 200) {
+        setWatchDetailData(response?.payload?.data);
+        setLoading(false);
+      }
+    } catch (error) {
+      console.log("error", error);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (id) {
+      getWatchDetail();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
+
   return (
     <div className="mx-auto px-[20px] sm:px-[45px] py-[20px]">
       <div className="flex justify-between items-center mb-[30px] flex-wrap gap-5">
         <h3 className="text-white text-[21px]">
-          Watch History - ID : W10015, Rolex, Daytona, Stainless Steel -
+          Watch History - ID : W{watchDetailData?.id}, {watchDetailData?.brand}, {watchDetailData?.model}, Stainless Steel -
           Bracelet (116500)
         </h3>
 
@@ -112,27 +109,27 @@ const WatchStatus = () => {
         </Button>
       </div>
 
-      <div className=" w-full flex-[2]">
+      <div className="w-full flex-[2]">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
           <div className="bg-[#1e252b] py-[12px] px-[24px] rounded items-center flex justify-between">
             <p className="text-white">ID</p>
-            <p className="text-white">W10015</p>
+            <p className="text-white">W{watchDetailData?.id}</p>
           </div>
           <div className="bg-[#1e252b] py-[12px] px-[24px] rounded items-center flex justify-between">
             <p className="text-white">Brand</p>
-            <p className="text-white">Rolex</p>
+            <p className="text-white">{watchDetailData?.brand}</p>
           </div>
-          <div className="bg-[#1e252b] py-[12px] px-[24px] rounded items-center flex justify-between">
+          <div className="bg-[#1e252b] py-[12px] px-[24px] rounded items-center flex justify-between gap-[25px]">
             <p className="text-white">Collection</p>
-            <p className="text-white">Daytona</p>
+            <p className="text-white line-clamp-1">{watchDetailData?.collection}</p>
           </div>
           <div className="bg-[#1e252b] py-[12px] px-[24px] rounded items-center flex justify-between">
             <p className="text-white">Model</p>
-            <p className="text-white">Stainless Steel - Bracelet (116500)</p>
+            <p className="text-white">{watchDetailData?.model}</p>
           </div>
           <div className="bg-[#1e252b] py-[12px] px-[24px] rounded items-center flex justify-between">
             <p className="text-white">Serial Number</p>
-            <p className="text-white">43141331</p>
+            <p className="text-white">{watchDetailData?.serial_no}</p>
           </div>
           <div className="bg-[#1e252b] py-[12px] px-[24px] rounded items-center flex justify-between">
             <p className="text-white">Condition</p>
@@ -144,15 +141,15 @@ const WatchStatus = () => {
           </div>
           <div className="bg-[#1e252b] py-[12px] px-[24px] rounded items-center flex justify-between">
             <p className="text-white">Year of production</p>
-            <p className="text-white">2019</p>
+            <p className="text-white">{watchDetailData?.year_of_prod}</p>
           </div>
           <div className="bg-[#1e252b] py-[12px] px-[24px] rounded items-center flex justify-between">
             <p className="text-white">Requested price</p>
-            <p className="text-white">USD 20,000.00</p>
+            <p className="text-white">USD {watchDetailData?.counter_offer_price}</p>
           </div>
           <div className="bg-[#1e252b] py-[12px] px-[24px] rounded items-center flex justify-between">
             <p className="text-white">Estimated price</p>
-            <p className="text-white">USD 18,500.00</p>
+            <p className="text-white">USD {watchDetailData?.estimated_watch_price}</p>
           </div>
           <div className="bg-[#1e252b] py-[12px] px-[24px] rounded items-center flex justify-between">
             <p className="text-white">Warranty date</p>
@@ -169,13 +166,13 @@ const WatchStatus = () => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-4 lg:grid-cols-6 gap-4 my-[25px] ">
-        {imageData?.map((item, index) => (
+        {imageUrls?.map((item, index) => (
           <div key={index} onClick={() => handleOpenDialog(index)}>
             <img
               style={{ border: "5px solid #1e252b" }}
-              src={item.image}
+              src={item}
               alt="img"
-              className="w-[200px] h-[200px] mx-auto cursor-pointer img-border rounded-[8px]"
+              className="img-border rounded-[8px] w-[200px] h-[200px] mx-auto cursor-pointer"
             />
           </div>
         ))}
@@ -190,10 +187,10 @@ const WatchStatus = () => {
             <tr>
               <th className="p-2 text-[#ffff] cursor-pointer whitespace-nowrap">
                 Added by
-              </th>{" "}
+              </th>
               <th className="p-2 text-[#ffff] cursor-pointer whitespace-nowrap">
                 Estimated by
-              </th>{" "}
+              </th>
               <th className="p-2 text-[#ffff] cursor-pointer whitespace-nowrap">
                 Estimate
               </th>
@@ -205,18 +202,19 @@ const WatchStatus = () => {
           <tbody>
             <tr>
               <td className="px-[14px] py-[10px] text-[#ffff] whitespace-nowrap">
-                M - demo staff1
-              </td>{" "}
+                {watchDetailData?.addedByDetail?.company_name} - {watchDetailData?.addedByDetail?.username}
+              </td>
               <td className="px-[14px] py-[10px] text-[#ffff] whitespace-nowrap">
                 test - nopp ice
-              </td>{" "}
+              </td>
               <td className="px-[14px] py-[10px] text-[#ffff] whitespace-nowrap">
-                USD 17,500.00 (Selected)
-              </td>{" "}
+                USD {watchDetailData?.estimated_watch_price} (Selected)
+              </td>
               <td className="px-[14px] py-[10px] text-[#ffff] whitespace-nowrap">
-                December 06, 2022 08:43 AM
+                {moment.unix(watchDetailData?.created_on).format('MMM DD ,YYYY HH:mm:ss')}
               </td>
             </tr>
+
           </tbody>
         </table>
       </div>
@@ -229,19 +227,19 @@ const WatchStatus = () => {
       >
         <table className="table-auto w-full text-left">
           <tbody>
-            {watchHistory.map((item, index) => (
-              <tr>
+            {watchDetailData?.adminActivities?.map((item, index) => (
+              <tr key={index}>
                 <td className="px-[14px] py-[10px] text-[#ffff] whitespace-nowrap">
-                  {item.time}
-                </td>{" "}
+                  {moment.unix(item?.created_on).format('MMM DD ,YYYY HH:mm:ss')}
+                </td>
                 <td className="px-[14px] py-[10px] text-[#ffff] whitespace-nowrap">
-                  {item.name}
-                </td>{" "}
+                  {item?.admin_group}
+                </td>
                 <td className="px-[14px] py-[10px] text-[#ffff] whitespace-nowrap">
-                  {item.text}
-                </td>{" "}
+                  {item?.watch_status}
+                </td>
                 <td className="px-[14px] py-[10px] text-[#ffff] whitespace-nowrap">
-                  {item.val}
+                  USD {watchDetailData?.accepted_usd_price}
                 </td>
               </tr>
             ))}
@@ -254,7 +252,7 @@ const WatchStatus = () => {
         handleCloseDialog={handleCloseDialog}
         selectedIndex={selectedIndex}
         setSelectedIndex={setSelectedIndex}
-        imageData={imageData}
+        imageData={imageUrls}
       />
     </div>
   );
