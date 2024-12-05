@@ -27,7 +27,7 @@ const CommissionPlan = (props) => {
       >
         <div className="w-full">
           {commissionData.map((row, index) => (
-            <div className="grid grid-cols-1 lg:grid-cols-4 lg:gap-[25px]">
+            <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-[25px]">
               <TextInputField
                 rightTextValue="(USD)"
                 type="number"

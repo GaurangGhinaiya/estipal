@@ -18,6 +18,7 @@ import BrandList from "../pages/admin/brandList/BrandList";
 import Language from "../pages/admin/language/Language";
 import ProtectedRoute from "./protectedRoute";
 import PublicRoute from "./PublicRoute";
+import SellerUserCreate from "../pages/admin/seller/SellerUserCreate";
 
 const AppRoute = () => {
   return (
@@ -72,6 +73,10 @@ const AppRoute = () => {
               element={<EstimatorPerformanceAnalysis />}
             />
             <Route path="seller/seller_edit" element={<SellerEdit />} />
+            <Route
+              path="seller/seller_user_create"
+              element={<SellerUserCreate />}
+            />
             <Route
               path="analysis/revenue_analysis/admin"
               element={<AdminRevanueAnalysis />}
