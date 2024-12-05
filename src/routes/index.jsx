@@ -49,7 +49,7 @@ const AppRoute = () => {
             <Route path="staff/staff_user" element={<StaffUser />} />
             <Route path="home/readActivity" element={<ReadActivity />} />
             <Route
-              path="watch_details/watch_status"
+              path="watch_details/watch_status/:id"
               element={<WatchStatus />}
             />
             <Route path="panel/settings" element={<Settings />} />

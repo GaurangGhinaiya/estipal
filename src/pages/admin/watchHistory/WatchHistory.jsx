@@ -261,7 +261,7 @@ const WatchHistory = () => {
   const [recordsPerPage, setRecordsPerPage] = useState(10);
   const [totalRecords, setTotalRecords] = useState(0);
   const debouncedSearchTerm = useDebounce(searchQuery, 500);
-  
+
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
@@ -283,7 +283,7 @@ const WatchHistory = () => {
         ? JSON.stringify(
             debouncedSearchTerm
               ? {
-                  watch_id: debouncedSearchTerm ? debouncedSearchTerm : "",
+                  search: debouncedSearchTerm ? debouncedSearchTerm : "",
                   watch_status: status,
                 }
               : { watch_status: status }
@@ -309,7 +309,7 @@ const WatchHistory = () => {
   useEffect(() => {
     getWatchActivityList();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPage, debouncedSearchTerm ,status]);
+  }, [currentPage, debouncedSearchTerm, status]);
 
   return (
     <div className="p-[15px] min-h-[100vh]">
@@ -445,7 +445,7 @@ const WatchHistory = () => {
                   <td
                     className="px-[18px] py-[10px] text-[#ffff] text-center cursor-pointer"
                     onClick={() =>
-                      navigate("/admin/watch_details/watch_status")
+                      navigate(`/admin/watch_details/watch_status/${item?.id}`)
                     }
                   >
                     W{item?.id}
@@ -453,7 +453,7 @@ const WatchHistory = () => {
                   <td
                     className="px-[18px] py-[10px] text-[#ffff] cursor-pointer"
                     onClick={() =>
-                      navigate("/admin/watch_details/watch_status")
+                      navigate(`/admin/watch_details/watch_status/${item?.id}`)
                     }
                   >
                     <Tooltip title={item?.brand} placement="top" arrow>
@@ -465,7 +465,7 @@ const WatchHistory = () => {
                   <td
                     className="px-[18px] py-[10px] text-[#ffff] whitespace-nowrap text-center cursor-pointer"
                     onClick={() =>
-                      navigate("/admin/watch_details/watch_status")
+                      navigate(`/admin/watch_details/watch_status/${item?.id}`)
                     }
                   >
                     {item?.collection}
@@ -473,7 +473,7 @@ const WatchHistory = () => {
                   <td
                     className="px-[18px] py-[10px] text-[#ffff] whitespace-nowrap text-center cursor-pointer"
                     onClick={() =>
-                      navigate("/admin/watch_details/watch_status")
+                      navigate(`/admin/watch_details/watch_status/${item?.id}`)
                     }
                   >
                     <Tooltip title={item?.model} placement="top" arrow>
@@ -483,7 +483,7 @@ const WatchHistory = () => {
                   <td
                     className="px-[18px] py-[10px] text-[#ffff] text-center cursor-pointer"
                     onClick={() =>
-                      navigate("/admin/watch_details/watch_status")
+                      navigate(`/admin/watch_details/watch_status/${item?.id}`)
                     }
                   >
                     {item?.serial_no}
@@ -491,7 +491,7 @@ const WatchHistory = () => {
                   <td
                     className="px-[18px] py-[10px] text-[#ffff] text-center whitespace-nowrap cursor-pointer"
                     onClick={() =>
-                      navigate("/admin/watch_details/watch_status")
+                      navigate(`/admin/watch_details/watch_status/${item?.id}`)
                     }
                   >
                     {item?.compnay_name}
@@ -499,7 +499,7 @@ const WatchHistory = () => {
                   <td
                     className="px-[18px] py-[10px] text-[#ffff] text-center whitespace-nowrap cursor-pointer"
                     onClick={() =>
-                      navigate("/admin/watch_details/watch_status")
+                      navigate(`/admin/watch_details/watch_status/${item?.id}`)
                     }
                   >
                     USD {item?.counter_offer_price} / USD
@@ -508,7 +508,7 @@ const WatchHistory = () => {
                   <td
                     className="px-[18px] py-[10px] text-[#ffff] text-center whitespace-nowrap cursor-pointer"
                     onClick={() =>
-                      navigate("/admin/watch_details/watch_status")
+                      navigate(`/admin/watch_details/watch_status/${item?.id}`)
                     }
                   >
                     {moment.unix(item?.created_on).format("MMM DD,YYYY")}
@@ -516,7 +516,7 @@ const WatchHistory = () => {
                   <td
                     className="px-[18px] py-[10px] text-[#ffff] text-center whitespace-nowrap cursor-pointer"
                     onClick={() =>
-                      navigate("/admin/watch_details/watch_status")
+                      navigate(`/admin/watch_details/watch_status/${item?.id}`)
                     }
                   >
                     {item?.watch_status}
