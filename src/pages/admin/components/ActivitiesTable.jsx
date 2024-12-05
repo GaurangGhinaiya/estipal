@@ -170,18 +170,18 @@ const ActivitiesTable = () => {
             </tr>
           </thead>
           <tbody>
-            {isLoading && activitesData.length === 0 ?
+            {isLoading && activitesData?.length === 0 ?
               <tr>
                 <td colSpan={12} className="py-[200px] px-4  text-center">
                   <CircularProgress />
                 </td>
               </tr>
               :
-              (activitesData.length > 0 ? activitesData?.map((activity, index) => (
+              (activitesData?.length > 0 ? activitesData?.map((activity, index) => (
                 <tr
                   key={index}
                   className="border-b border-[#202b34]"
-                  onClick={() => navigate("/admin/home/readActivity")}
+                  onClick={() => navigate(`/admin/home/readActivity/${activity?.watch_details?.serial_no}`)}
                 >
                   <td className="px-[18px] py-[0px] text-[#ffff] text-center">
                     <div className="w-[35px]">
