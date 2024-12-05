@@ -23,6 +23,7 @@ const ReadActivity = () => {
       <div className="flex flex-col md:flex-row items-center md:items-start">
         <div className="flex-[1] mb-4 md:mb-0">
           <img
+            alt="img"
             className="max-w-[350px] w-full object-cover mx-auto rounded-[8px]"
             style={{ border: "5px solid #1e252b" }}
             src="https://cdn.estipal.com/production/2022/12/06/RYbhS159nO6DAhgQrA6O7TrmK49QZWIg767nDzEWggl0OTiL1Amd7l7Sj01S7n7Z.jpg"
@@ -61,21 +62,21 @@ const ReadActivity = () => {
         </div>
       </div>
 
-      <div class="message_box mt-[20px]">
-        <div class="border_bottom">
-          <h3 class="mb-[5px]  ">
+      <div className="message_box mt-[20px]">
+        <div className="border_bottom">
+          <h3 className="mb-[5px]  ">
             <strong className="font-bold">Subject:</strong> Action Required!!
             Seller has sent invoice for watch (Rolex Daytona Stainless Steel -
             Bracelet 43141331 - USD 18,500.00)
           </h3>
-          <div class="flex justify-between items-center flex-wrap">
-            <h3 class="mb-[5px]">
+          <div className="flex justify-between items-center flex-wrap">
+            <h3 className="mb-[5px]">
               <strong className="font-bold">From: </strong>M - Mayawizard{" "}
               <b className="font-bold">( Seller - ID: SCA1000 )</b>
             </h3>{" "}
-            <h3 class="mb-[5px]">
+            <h3 className="mb-[5px]">
               <strong className="font-bold">Received: </strong>
-              <span class="created_at" id="2023-04-21T00:25:19+07:00">
+              <span className="created_at" id="2023-04-21T00:25:19+07:00">
                 April 20, 2023 10:55 PM
               </span>
             </h3>
@@ -85,32 +86,33 @@ const ReadActivity = () => {
           className="my-[20px]"
           style={{ borderTopColor: "#ffffff1a", borderTopWidth: "2px" }}
         />
-        <div class="message_box_inner">
+        <div className="message_box_inner">
           <h3 className="mb-[5px]">
             Seller has selected 'Sell to Estipal'. The payment of USD 20,720.00
             is required before receiving the watch.
           </h3>
           <h3 className="mb-[5px]">Status: Pending Estipal Payment</h3>
-          <div class="select_box text-center mt-20" data-select-box="0">
-            <div class="select_box_inner">
+          <div className="select_box text-center mt-20" data-select-box="0">
+            <div className="select_box_inner">
               <p className="flex items-center gap-[10px] mb-[10px]">
                 <span>
                   <img
+                    alt="urgent"
                     src="https://www.estipal.com/assets/dist/images/icons/Urgent 1.png"
                     className="max-w-[40px]"
                   />
                 </span>
-                <span class="pending_status">Pending Action:</span>
+                <span className="pending_status">Pending Action:</span>
                 <span>Confirmation is required</span>
               </p>
-              <ul class="list-unstyled list-inline">
+              <ul className="list-unstyled list-inline">
                 <li
                   id="confirmPaymentToSeller"
                   name="10015"
                   value="1000"
-                  class=""
+                  className=""
                 >
-                  <a href="javascript:void(0)" class="btn dark_yellow">
+                  <a href="javascript:void(0)" className="btn dark_yellow">
                     Confirm payment to Seller
                   </a>
                 </li>

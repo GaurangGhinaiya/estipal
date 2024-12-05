@@ -1,6 +1,9 @@
 import ReactSpeedometer from "react-d3-speedometer";
-import React, { useState } from "react";
-import PaginationComponent from "../../../../components/common/PaginationComponent";
+import React, { useState } from 'react';
+import PaginationComponent from '../../../../components/common/PaginationComponent';
+import ArrowDropUpRoundedIcon from '@mui/icons-material/ArrowDropUpRounded';
+import ArrowDropDownRoundedIcon from '@mui/icons-material/ArrowDropDownRounded';
+import { sortData } from "../../../../components/common/Sort";
 
 const estimatorPerformanceData = [
   {
@@ -239,22 +242,6 @@ const transactionData = [
   },
 ];
 
-// Utility function for dynamic sorting
-const sortData = (data, key, order) => {
-  return [...data].sort((a, b) => {
-    const valueA = a[key] || "";
-    const valueB = b[key] || "";
-
-    if (typeof valueA === "number" && typeof valueB === "number") {
-      return order === "asc" ? valueA - valueB : valueB - valueA;
-    }
-
-    return order === "asc"
-      ? valueA.toString().localeCompare(valueB.toString())
-      : valueB.toString().localeCompare(valueA.toString());
-  });
-};
-
 const EstimatorPerformanceAnalysis = () => {
   const [data, setData] = useState(transactionData);
 
@@ -300,17 +287,17 @@ const EstimatorPerformanceAnalysis = () => {
               className="p-2 border rounded-md text-black"
             />
           </div>
-          <div class="flex items-center space-x-2 text-white">
+          <div className="flex items-center space-x-2 text-white">
             <span>Group By:</span>
-            <div class="relative inline-block text-left">
-              <select class="block appearance-none w-full bg-gray-700 border border-gray-600 text-white py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-gray-600 focus:border-gray-500">
+            <div className="relative inline-block text-left">
+              <select className="block appearance-none w-full bg-gray-700 border border-gray-600 text-white py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-gray-600 focus:border-gray-500">
                 <option>All</option>
                 <option>Option 1</option>
                 <option>Option 2</option>
               </select>
-              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
                 <svg
-                  class="fill-current h-4 w-4"
+                  className="fill-current h-4 w-4"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
                 >
@@ -435,18 +422,18 @@ const EstimatorPerformanceAnalysis = () => {
       <h1 className=" text-[20px] font-medium mb-4 mt-5 px-0 sm:px-[48px] font-sans text-white">
         Transactions
       </h1>
-      <div class="flex items-center space-x-2 text-white px-14">
+      <div className="flex items-center space-x-2 text-white px-14">
         <span>Select Status:</span>
-        <div class="relative inline-block text-left">
-          <select class="block appearance-none w-full bg-gray-700 border border-gray-600 text-white py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-gray-600 focus:border-gray-500">
+        <div className="relative inline-block text-left">
+          <select className="block appearance-none w-full bg-gray-700 border border-gray-600 text-white py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-gray-600 focus:border-gray-500">
             <option>All</option>
             <option>New Estimated Request</option>
             <option>Estimated</option>
             <option>Pass</option>
           </select>
-          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
+          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
             <svg
-              class="fill-current h-4 w-4"
+              className="fill-current h-4 w-4"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
             >
@@ -459,54 +446,28 @@ const EstimatorPerformanceAnalysis = () => {
         <table className="table-auto w-full text-left">
           <thead style={{ borderBottom: "2px solid #111111" }}>
             <tr>
-              <th
-                onClick={() => handleSort("date")}
-                className="p-2 text-[#ffff] text-center sorting cursor-pointer"
-              >
-                Date
-              </th>
-              <th
-                className="p-2 text-[#ffff] text-center sorting cursor-pointer"
-                onClick={() => handleSort("company")}
-              >
-                Company
-              </th>
-              <th
-                className="p-2 text-[#ffff] text-center sorting cursor-pointer"
-                onClick={() => handleSort("firstName")}
-              >
-                First Name
-              </th>
-              <th
-                className="p-2 text-[#ffff] text-center sorting cursor-pointer"
-                onClick={() => handleSort("lastName")}
-              >
-                Last Name
-              </th>
-              <th
-                className="p-2 text-[#ffff] text-center sorting cursor-pointer"
-                onClick={() => handleSort("watchId")}
-              >
-                Watch ID
-              </th>
-              <th
-                className="p-2 text-[#ffff] text-center sorting cursor-pointer"
-                onClick={() => handleSort("model")}
-              >
-                Brand / Collection / Model
-              </th>
-              <th
-                className="p-2 text-[#ffff] text-center sorting cursor-pointer"
-                onClick={() => handleSort("estimate")}
-              >
-                Current Estimate / Accepted
-              </th>
-              <th
-                className="p-2 text-[#ffff] text-center sorting cursor-pointer"
-                onClick={() => handleSort("status")}
-              >
-                Watch Status
-              </th>
+              {[
+                { key: "date", label: "Date" },
+                { key: "company", label: "Company" },
+                { key: "firstName", label: "First Name" },
+                { key: "lastName", label: "Last Name" },
+                { key: "watchId", label: "Watch ID" },
+                { key: "model", label: "Brand / Collection / Model" },
+                { key: "estimate", label: "Current Estimate / Accepted" },
+                { key: "status", label: "Watch Status" },
+              ].map((column) => (
+                <th
+                  key={column.key}
+                  onClick={() => handleSort(column.key)}
+                  className={`p-2 text-[#ffff] text-center cursor-pointer ${sortField === column.key ? "active-sorting" : "sorting"
+                    }`}
+                >
+                  {column.label}{" "}
+                  {sortField === column.key && (
+                    sortOrder === "asc" ? <ArrowDropUpRoundedIcon /> : <ArrowDropDownRoundedIcon />
+                  )}
+                </th>
+              ))}
             </tr>
           </thead>
           <tbody>

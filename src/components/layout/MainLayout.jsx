@@ -1,20 +1,18 @@
-import { styled } from "@mui/material";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import Footer from "../Drawer/Footer";
 import Header from "../Drawer/Header";
 
 const MainLayout = () => {
   const { pathname } = useLocation();
-  // const token = localStorage.getItem("token");
-  const token = true;
+  // const token = true;
 
-  if (token && pathname === "/") {
+  if (pathname === "/") {
     return <Navigate to={"/admin"} />;
   }
 
-  if (!token) {
-    return <Navigate to={"/login"} />;
-  }
+  // if (!token) {
+  //   return <Navigate to={"/login"} />;
+  // }
 
   return (
     <>

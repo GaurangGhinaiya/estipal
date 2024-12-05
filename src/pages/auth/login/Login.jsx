@@ -1,7 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
+import { useForm, Controller } from "react-hook-form";
 import bgImage from "../../../assets/images/img-bg-login.png";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { CircularProgress } from "@mui/material";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      username: "",
+      password: "",
+    },
+  });
+  // Login handler
+  const onSubmit = async (data) => {
+    setLoading(true);
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_PUBLIC_BASE_URL}/login`,
+        data
+      );
+      if (response?.status === 200) {
+        toast.success(response?.data?.message);
+        localStorage.setItem("authToken", response?.data?.payload?.token);
+        navigate("/admin");
+        setLoading(false);
+      }
+    } catch (error) {
+      toast.error(error?.response?.data?.message);
+      setLoading(false);
+    }
+  };
+
   return (
     <div
       className="login-container"
@@ -17,27 +54,56 @@ const Login = () => {
             />
           </div>
           <div className="title text-center">Sign in Estipal</div>
-          <form>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="form-group">
-              <label for="username">Username</label>
-              <input
-                type="text"
+              <label htmlFor="username">Username</label>
+              <Controller
                 name="username"
-                value=""
-                id="username"
-                className="form-control"
+                control={control}
+                rules={{
+                  required: "Username is required",
+                }}
+                render={({ field }) => (
+                  <input
+                    {...field}
+                    id="username"
+                    className="form-control"
+                    placeholder="Enter your username"
+                  />
+                )}
               />
-            </div>{" "}
+              {errors?.username && (
+                <p className="text-red-500 text-sm">
+                  {errors?.username?.message}
+                </p>
+              )}
+            </div>
+
             <div className="form-group">
-              <label for="password">Password</label>
-              <input
-                type="password"
+              <label htmlFor="password">Password</label>
+              <Controller
                 name="password"
-                value=""
-                id="password"
-                className="form-control"
+                control={control}
+                rules={{
+                  required: "Password is required",
+                }}
+                render={({ field }) => (
+                  <input
+                    {...field}
+                    id="password"
+                    type="password"
+                    className="form-control"
+                    placeholder="Enter your password"
+                  />
+                )}
               />
-            </div>{" "}
+              {errors?.password && (
+                <p className="text-red-500 text-sm">
+                  {errors?.password?.message}
+                </p>
+              )}
+            </div>
+
             <div>
               <a href="/" className="text-[#039be5]">
                 Forgot password?
@@ -49,7 +115,12 @@ const Login = () => {
                 className="btn bg-[#3c8dbc] w-full"
                 style={{ borderRadius: "20px" }}
               >
-                Sign In
+                <div className="flex items-center justify-center gap-4">
+                  Sign In{" "}
+                  {loading && (
+                    <CircularProgress size={15} className="!text-white" />
+                  )}
+                </div>
               </button>
             </div>
           </form>

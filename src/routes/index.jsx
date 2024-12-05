@@ -16,7 +16,8 @@ import EstimatorPerformanceAnalysis from "../pages/admin/performance_analysis/pe
 import SellerEdit from "../pages/admin/seller/SellerEdit";
 import BrandList from "../pages/admin/brandList/BrandList";
 import Language from "../pages/admin/language/Language";
-// import ProtectedRoute from "./protectedRoute";
+import ProtectedRoute from "./protectedRoute";
+import PublicRoute from "./PublicRoute";
 
 const AppRoute = () => {
   return (
@@ -25,20 +26,26 @@ const AppRoute = () => {
         <Route
           path="/login"
           element={
-            // <ProtectedRoute>
-            <Login />
-            // </ProtectedRoute>
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
           }
         />
 
-        <Route path="/" element={<MainLayout />}>
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <MainLayout />
+            </ProtectedRoute>
+          }
+        >
           {/* Admin Routes */}
           <Route path="/admin" element={<AdminRoot />}>
             <Route
               path="watch_details/watch_history"
               element={<WatchHistory />}
             />
-
             <Route path="staff/staff_user" element={<StaffUser />} />
             <Route path="home/readActivity" element={<ReadActivity />} />
             <Route

@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FaArrowCircleRight, FaEdit } from "react-icons/fa";
-import CustomSwitch from '../../../components/common/CustomSwitch';
 import { IoCloseCircleOutline } from "react-icons/io5";
-
-
+import CustomSwitch from '../../../components/common/CustomSwitch';
 
 const brands = [
   {
@@ -353,9 +351,6 @@ const BrandList = () => {
   const [selectedBrand, setSelectedBrand] = useState(null);
   const [selectedCollection, setSelectedCollection] = useState(null);
   const [selectedModel, setSelectedModel] = useState(null);
-  const [brandSwitch, setBrandSwitch] = useState(false)
-  const [collectionSwitch, setCollectionSwitch] = useState(false)
-  const [modelSwitch, setModelSwitch] = useState(false)
   const [isModalVisible, setModalVisible] = useState(false);
   const [modalContent, setModalContent] = useState("");
   const [switchState, setSwitchState] = useState({});
@@ -377,10 +372,6 @@ const BrandList = () => {
   const handleCollectionClick = (collection) => {
     setSelectedCollection(collection);
     setSelectedModel(null); // Reset model selection
-  };
-
-  const handleModelClick = (model) => {
-    setSelectedModel(model);
   };
 
   const openModal = (content) => {

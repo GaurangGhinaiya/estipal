@@ -2,36 +2,24 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import Logout from "@mui/icons-material/Logout";
 import MenuIcon from "@mui/icons-material/Menu";
 import PersonIcon from "@mui/icons-material/Person";
-import { Box, Button, Menu, MenuItem } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import React from "react";
-import Profile from "./components/Profile";
 import { useLocation, useNavigate } from "react-router-dom";
+import Profile from "./components/Profile";
 
 const Header = () => {
   const navigate = useNavigate();
-  const [anchorEl, setAnchorEl] = React.useState(null);
   const [openMenu, setOpenMenu] = React.useState(false);
   const [openRevanueMenu, setOpenRevanueMenu] = React.useState(false);
   const [openPerformanceMenu, setOpenPerformanceMenu] = React.useState(false);
   const pathName = useLocation();
-  const { pathname } = pathName
+  const { pathname } = pathName;
 
-  const handleMenuClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
   const handleRevanueMenuClick = (event) => {
     setOpenRevanueMenu(!openRevanueMenu);
   };
   const handlePerformanceMenuClick = (event) => {
     setOpenPerformanceMenu(!openPerformanceMenu);
-  };
-
-  const handleRevanueMenuClose = () => {
-    setOpenRevanueMenu(false);
   };
 
   return (
@@ -68,71 +56,154 @@ const Header = () => {
         <div className="flex gap-[12px] flex-wrap">
           <Button
             className="text-white !normal-case !text-[14px] !p-[0] !m-[0] "
-            sx={{ color: "white", fontWeight: pathname === "/admin" ? "bold" : "normal" }}
+            sx={{
+              color: "white",
+              fontWeight: pathname === "/admin" ? "bold" : "normal",
+            }}
             onClick={() => navigate("/admin")}
           >
             Activities
           </Button>
           <Button
             className="text-white !normal-case !text-[14px] !p-[0] !m-[0]"
-            sx={{ color: "white", fontWeight: pathname.includes("/admin/watch_details/watch_history") ? "bold" : "normal" }}
+            sx={{
+              color: "white",
+              fontWeight: pathname.includes(
+                "/admin/watch_details/watch_history"
+              )
+                ? "bold"
+                : "normal",
+            }}
             onClick={() => navigate("/admin/watch_details/watch_history")}
           >
             Watches History
           </Button>
           <Button
             className="text-white !normal-case !text-[14px] !p-[0] !m-[0]"
-            sx={{ color: "white", fontWeight: pathname.includes("/admin/staff/staff_user") ? "bold" : "normal" }}
+            sx={{
+              color: "white",
+              fontWeight: pathname.includes("/admin/staff/staff_user")
+                ? "bold"
+                : "normal",
+            }}
             onClick={() => navigate("/admin/staff/staff_user")}
           >
             Merchants & Staff
           </Button>
           <Button
             className="text-white !normal-case !text-[14px] !p-[0] !m-[0]"
-            sx={{ color: "white", fontWeight: pathname.includes("/admin/estimator/estimator_user") ? "bold" : "normal" }}
+            sx={{
+              color: "white",
+              fontWeight: pathname.includes("/admin/estimator/estimator_user")
+                ? "bold"
+                : "normal",
+            }}
             onClick={() => navigate("/admin/estimator/estimator_user")}
           >
             Estimators
           </Button>
           <div className="relative">
-            <button style={{ fontSize: "14px", fontWeight: (pathname.includes("/admin/analysis/revenue_analysis/admin") || pathname.includes("/admin/analysis/revenue_analysis/estimator")) ? "bold" : "normal" }} onClick={() => handleRevanueMenuClick()} className="">
+            <button
+              style={{
+                fontSize: "14px",
+                fontWeight:
+                  pathname.includes("/admin/analysis/revenue_analysis/admin") ||
+                  pathname.includes(
+                    "/admin/analysis/revenue_analysis/estimator"
+                  )
+                    ? "bold"
+                    : "normal",
+              }}
+              onClick={() => handleRevanueMenuClick()}
+              className=""
+            >
               Revenue Analysis <ArrowDropDownIcon />
             </button>
             {openRevanueMenu && (
               <div className="absolute bg-[#0060aa] border border-white mt-3 rounded-lg">
-                <a href="/admin/analysis/revenue_analysis/admin" className="block rounded-lg px-4 py-2 hover:bg-[#b3c1c5]">Merchant</a>
-                <a href="/admin/analysis/revenue_analysis/estimator" className="block rounded-lg  px-4 py-2 hover:bg-[#b3c1c5]">Estimator</a>
+                <a
+                  href="/admin/analysis/revenue_analysis/admin"
+                  className="block rounded-lg px-4 py-2 hover:bg-[#b3c1c5]"
+                >
+                  Merchant
+                </a>
+                <a
+                  href="/admin/analysis/revenue_analysis/estimator"
+                  className="block rounded-lg  px-4 py-2 hover:bg-[#b3c1c5]"
+                >
+                  Estimator
+                </a>
               </div>
             )}
           </div>
           <div className="relative">
-            <button style={{ fontSize: "14px", fontWeight: (pathname.includes("/admin/analysis/performance_analysis/admin") || pathname.includes("/admin/analysis/performance_analysis/estimator")) ? "bold" : "normal" }} onClick={() => handlePerformanceMenuClick()} className="">
+            <button
+              style={{
+                fontSize: "14px",
+                fontWeight:
+                  pathname.includes(
+                    "/admin/analysis/performance_analysis/admin"
+                  ) ||
+                  pathname.includes(
+                    "/admin/analysis/performance_analysis/estimator"
+                  )
+                    ? "bold"
+                    : "normal",
+              }}
+              onClick={() => handlePerformanceMenuClick()}
+              className=""
+            >
               Performance Analysis <ArrowDropDownIcon />
             </button>
             {openPerformanceMenu && (
               <div className="absolute bg-[#0060aa] border border-white mt-3 rounded-lg">
-                <a href="/admin/analysis/performance_analysis/admin" className="block rounded-lg px-4 py-2 hover:bg-[#b3c1c5]">Merchant</a>
-                <a href="/admin/analysis/performance_analysis/estimator" className="block rounded-lg  px-4 py-2 hover:bg-[#b3c1c5]">Estimator</a>
+                <a
+                  href="/admin/analysis/performance_analysis/admin"
+                  className="block rounded-lg px-4 py-2 hover:bg-[#b3c1c5]"
+                >
+                  Merchant
+                </a>
+                <a
+                  href="/admin/analysis/performance_analysis/estimator"
+                  className="block rounded-lg  px-4 py-2 hover:bg-[#b3c1c5]"
+                >
+                  Estimator
+                </a>
               </div>
             )}
           </div>
           <Button
             className="text-white !normal-case !text-[14px] !p-[0] !m-[0]"
-            sx={{ color: "white", fontWeight: pathname.includes("/admin/watch_details/brand_list") ? "bold" : "normal" }}
+            sx={{
+              color: "white",
+              fontWeight: pathname.includes("/admin/watch_details/brand_list")
+                ? "bold"
+                : "normal",
+            }}
             onClick={() => navigate("/admin/watch_details/brand_list")}
           >
             Brands, Collection and Models
           </Button>
           <Button
             className="text-white !normal-case !text-[14px] !p-[0] !m-[0]"
-            sx={{ color: "white", fontWeight: pathname.includes("/admin/panel/settings") ? "bold" : "normal" }}
+            sx={{
+              color: "white",
+              fontWeight: pathname.includes("/admin/panel/settings")
+                ? "bold"
+                : "normal",
+            }}
             onClick={() => navigate("/admin/panel/settings")}
           >
             General Settings
           </Button>
           <Button
             className="text-white !normal-case !text-[14px] !p-[0] !m-[0]"
-            sx={{ color: "white", fontWeight: pathname.includes("/admin/language") ? "bold" : "normal" }}
+            sx={{
+              color: "white",
+              fontWeight: pathname.includes("/admin/language")
+                ? "bold"
+                : "normal",
+            }}
             onClick={() => navigate("/admin/language")}
           >
             Languages
@@ -157,97 +228,194 @@ const Header = () => {
           <hr style={{ borderTopColor: "#ffffff1a", borderTopWidth: "2px" }} />
           <Button
             className="text-white !normal-case !text-left !justify-start !text-[14px] !py-[5px] !px-[15px] !m-[0] !font-bold "
-            sx={{ color: "white", fontWeight: pathname === "/admin" ? "bold" : "normal" }}
+            sx={{
+              color: "white",
+              fontWeight: pathname === "/admin" ? "bold" : "normal",
+            }}
             onClick={() => {
-              navigate("/admin")
-              setOpenMenu(false)
+              navigate("/admin");
+              setOpenMenu(false);
             }}
           >
             Activities
           </Button>
           <Button
             className="text-white !normal-case !text-left !justify-start !text-[14px] !py-[5px] !px-[15px] !m-[0] !font-bold"
-            sx={{ color: "white", fontWeight: pathname.includes("/admin/watch_details/watch_history") ? "bold" : "normal" }}
+            sx={{
+              color: "white",
+              fontWeight: pathname.includes(
+                "/admin/watch_details/watch_history"
+              )
+                ? "bold"
+                : "normal",
+            }}
             onClick={() => {
-              navigate("/admin/watch_details/watch_history")
-              setOpenMenu(false)
+              navigate("/admin/watch_details/watch_history");
+              setOpenMenu(false);
             }}
           >
             Watches History
           </Button>
           <Button
             className="text-white !normal-case !text-left !justify-start !text-[14px] !py-[5px] !px-[15px] !m-[0] !font-bold"
-            sx={{ color: "white", fontWeight: pathname.includes("/admin/staff/staff_user") ? "bold" : "normal" }}
+            sx={{
+              color: "white",
+              fontWeight: pathname.includes("/admin/staff/staff_user")
+                ? "bold"
+                : "normal",
+            }}
             onClick={() => {
-              navigate("/admin/staff/staff_user")
-              setOpenMenu(false)
+              navigate("/admin/staff/staff_user");
+              setOpenMenu(false);
             }}
           >
             Merchants & Staff
           </Button>
           <Button
             className="text-white !normal-case !text-left !justify-start !text-[14px] !py-[5px] !px-[15px] !m-[0] !font-bold"
-            sx={{ color: "white", fontWeight: pathname.includes("/admin/estimator/estimator_user") ? "bold" : "normal" }}
+            sx={{
+              color: "white",
+              fontWeight: pathname.includes("/admin/estimator/estimator_user")
+                ? "bold"
+                : "normal",
+            }}
             onClick={() => {
-              navigate("/admin/estimator/estimator_user")
-              setOpenMenu(false)
+              navigate("/admin/estimator/estimator_user");
+              setOpenMenu(false);
             }}
           >
             Estimators
           </Button>
 
           <div className="relative">
-            <button style={{ fontSize: "14px", fontWeight: (pathname.includes("/admin/analysis/revenue_analysis/admin") || pathname.includes("/admin/analysis/revenue_analysis/estimator")) ? "bold" : "normal" }} onClick={() => handleRevanueMenuClick()} className="px-4 text-[14px]">
+            <button
+              style={{
+                fontSize: "14px",
+                fontWeight:
+                  pathname.includes("/admin/analysis/revenue_analysis/admin") ||
+                  pathname.includes(
+                    "/admin/analysis/revenue_analysis/estimator"
+                  )
+                    ? "bold"
+                    : "normal",
+              }}
+              onClick={() => handleRevanueMenuClick()}
+              className="px-4 text-[14px]"
+            >
               Revenue Analysis <ArrowDropDownIcon />
             </button>
             {openRevanueMenu && (
               <div className="absolute bg-[#0060aa] border border-white mt-3 rounded-lg z-20">
-                <a href="/admin/analysis/revenue_analysis/admin" onClick={() => setOpenMenu(false)} className="block rounded-lg px-4 py-2 hover:bg-[#b3c1c5]">Merchant</a>
-                <a href="/admin/analysis/revenue_analysis/estimator" onClick={() => setOpenMenu(false)} className="block rounded-lg  px-4 py-2 hover:bg-[#b3c1c5]">Estimator</a>
+                <a
+                  href="/admin/analysis/revenue_analysis/admin"
+                  onClick={() => setOpenMenu(false)}
+                  className="block rounded-lg px-4 py-2 hover:bg-[#b3c1c5]"
+                >
+                  Merchant
+                </a>
+                <a
+                  href="/admin/analysis/revenue_analysis/estimator"
+                  onClick={() => setOpenMenu(false)}
+                  className="block rounded-lg  px-4 py-2 hover:bg-[#b3c1c5]"
+                >
+                  Estimator
+                </a>
               </div>
             )}
           </div>
           <div className="relative">
-            <button style={{ fontSize: "14px", fontWeight: (pathname.includes("/admin/analysis/performance_analysis/admin") || pathname.includes("/admin/analysis/performance_analysis/estimator")) ? "bold" : "normal" }} onClick={() => handlePerformanceMenuClick()} className="px-4 text-[14px]">
+            <button
+              style={{
+                fontSize: "14px",
+                fontWeight:
+                  pathname.includes(
+                    "/admin/analysis/performance_analysis/admin"
+                  ) ||
+                  pathname.includes(
+                    "/admin/analysis/performance_analysis/estimator"
+                  )
+                    ? "bold"
+                    : "normal",
+              }}
+              onClick={() => handlePerformanceMenuClick()}
+              className="px-4 text-[14px]"
+            >
               Performance Analysis <ArrowDropDownIcon />
             </button>
             {openPerformanceMenu && (
               <div className="absolute bg-[#0060aa] border border-white mt-3 rounded-lg z-20">
-                <a href="/admin/analysis/performance_analysis/admin" onClick={() => setOpenMenu(false)} className="block rounded-lg px-4 py-2 hover:bg-[#b3c1c5]">Merchant</a>
-                <a href="/admin/analysis/performance_analysis/estimator" onClick={() => setOpenMenu(false)} className="block rounded-lg  px-4 py-2 hover:bg-[#b3c1c5]">Estimator</a>
+                <a
+                  href="/admin/analysis/performance_analysis/admin"
+                  onClick={() => setOpenMenu(false)}
+                  className="block rounded-lg px-4 py-2 hover:bg-[#b3c1c5]"
+                >
+                  Merchant
+                </a>
+                <a
+                  href="/admin/analysis/performance_analysis/estimator"
+                  onClick={() => setOpenMenu(false)}
+                  className="block rounded-lg  px-4 py-2 hover:bg-[#b3c1c5]"
+                >
+                  Estimator
+                </a>
               </div>
             )}
           </div>
           <Button
             className="text-white !normal-case !text-left !justify-start !text-[14px] !py-[5px] !px-[15px] !m-[0] !font-bold"
-            sx={{ color: "white", fontWeight: pathname.includes("/admin/watch_details/brand_list") ? "bold" : "normal" }}
+            sx={{
+              color: "white",
+              fontWeight: pathname.includes("/admin/watch_details/brand_list")
+                ? "bold"
+                : "normal",
+            }}
             onClick={() => {
-              navigate("/admin/watch_details/brand_list")
-              setOpenMenu(false)
+              navigate("/admin/watch_details/brand_list");
+              setOpenMenu(false);
             }}
           >
             Brands, Collection and Models
           </Button>
           <Button
             className="text-white !normal-case !text-left !justify-start !text-[14px] !py-[5px] !px-[15px] !m-[0] !font-bold"
-            sx={{ color: "white", fontWeight: pathname.includes("/admin/panel/settings") ? "bold" : "normal" }}
+            sx={{
+              color: "white",
+              fontWeight: pathname.includes("/admin/panel/settings")
+                ? "bold"
+                : "normal",
+            }}
             onClick={() => {
-              navigate("/admin/panel/settings")
-              setOpenMenu(false)
+              navigate("/admin/panel/settings");
+              setOpenMenu(false);
             }}
           >
             General Settings
           </Button>
           <Button
             className="text-white !normal-case !text-left !justify-start !text-[14px] !py-[5px] !px-[15px] !m-[0] !font-bold"
-            sx={{ color: "white" }}
+            sx={{
+              color: "white",
+              fontWeight: pathname.includes("/admin/language")
+                ? "bold"
+                : "normal",
+            }}
+            onClick={() => {
+              navigate("/admin/language");
+              setOpenMenu(false);
+            }}
           >
             Languages
           </Button>
 
           <hr style={{ borderTopColor: "#ffffff1a", borderTopWidth: "2px" }} />
 
-          <Button className="!text-white !normal-case !text-left !justify-start !px-[15px] !py-[10px] !font-bold">
+          <Button
+            onClick={() => {
+              localStorage.clear();
+              navigate("/login");
+            }}
+            className="!text-white !normal-case !text-left !justify-start !px-[15px] !py-[10px] !font-bold"
+          >
             <Logout fontSize="medium" sx={{ color: "#ffff", mr: "10px" }} />
             Logout
           </Button>
