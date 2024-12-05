@@ -65,10 +65,22 @@ const AppRoute = () => {
               element={<EstimatorPerformanceAnalysis />}
             />
             <Route path="seller/seller_edit" element={<SellerEdit />} />
-            <Route path="analysis/revenue_analysis/admin" element={<AdminRevanueAnalysis />} />
-            <Route path="analysis/revenue_analysis/estimator" element={<EstimatorRevanueAnalysis />} />
-            <Route path="analysis/performance_analysis/admin" element={<AdminPerformanceAnalysis />} />
-            <Route path="analysis/performance_analysis/estimator" element={<EstimatorPerformanceAnalysis />} />
+            <Route
+              path="analysis/revenue_analysis/admin"
+              element={<AdminRevanueAnalysis />}
+            />
+            <Route
+              path="analysis/revenue_analysis/estimator"
+              element={<EstimatorRevanueAnalysis />}
+            />
+            <Route
+              path="analysis/performance_analysis/admin"
+              element={<AdminPerformanceAnalysis />}
+            />
+            <Route
+              path="analysis/performance_analysis/estimator"
+              element={<EstimatorPerformanceAnalysis />}
+            />
             <Route path="watch_details/brand_list" element={<BrandList />} />
             <Route path="language" element={<Language />} />
 
