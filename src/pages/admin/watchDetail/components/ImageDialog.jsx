@@ -33,13 +33,13 @@ const ImageDialog = ({
           initialSlide={selectedIndex}
           onSlideChange={(swiper) => setSelectedIndex(swiper.activeIndex)}
         >
-          {imageData.map((item, index) => (
+          {imageData?.map((item, index) => (
             <SwiperSlide
               key={index}
               style={{ display: "flex", alignItems: "center" }}
             >
               <img
-                src={item.image}
+                src={item}
                 alt={`Slide ${index + 1}`}
                 className="h-[250px] sm:h-[600px] mx-auto align-middle !select-none"
               />

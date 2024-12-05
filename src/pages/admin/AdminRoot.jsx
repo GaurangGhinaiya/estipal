@@ -23,8 +23,8 @@ const AdminRoot = () => {
         <Route path="/" element={<Admin />} />
         <Route path="/watch_details/watch_history" element={<WatchHistory />} />
         <Route path="/staff/staff_user" element={<StaffUser />} />
-        <Route path="/home/readActivity" element={<ReadActivity />} />
-        <Route path="/watch_details/watch_status" element={<WatchStatus />} />
+        <Route path="/home/readActivity/:id" element={<ReadActivity />} />
+        <Route path="/watch_details/watch_status/:id" element={<WatchStatus />} />
 
         <Route path="/panel/settings" element={<Settings />} />
         <Route path="/estimator/estimator_user" element={<Estimators />} />

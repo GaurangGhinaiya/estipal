@@ -190,7 +190,6 @@ const brands = [
 ];
 
 const ModalBrand = ({ isVisible, content, onClose, onSubmit }) => {
-  // console.log("isvisible",isVisible,content)
   const [inputValue, setInputValue] = useState(content);
 
   if (!isVisible) return null;
