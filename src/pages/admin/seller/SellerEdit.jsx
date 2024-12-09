@@ -9,8 +9,10 @@ import PhoneInput, { formatPhoneNumber } from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import { getCountryCallingCode } from "react-phone-number-input";
 import CommissionPlan from "./components/Commission";
+import { useNavigate } from "react-router-dom";
 
 const SellerEdit = () => {
+  const navigate = useNavigate();
   const [isEditable, setIsEditable] = useState(false);
   const [states, setStates] = useState([]);
   const [selectCountry, setSelectCountry] = useState("IN");
@@ -119,6 +121,7 @@ const SellerEdit = () => {
           <Button
             variant="contained"
             className="!bg-[#3c8dbc] !normal-case !py-[10px] !px-[40px] !rounded-[50px]"
+            onClick={() => navigate("/admin/watch_details/watch_history")}
           >
             View watches history
           </Button>
@@ -127,6 +130,7 @@ const SellerEdit = () => {
           <Button
             variant="contained"
             className="!bg-[#3c8dbc] !normal-case !py-[10px] !px-[40px] !rounded-[50px]"
+            onClick={() => navigate("/admin/analysis/revenue_analysis/admin")}
           >
             View revenue analysis
           </Button>
@@ -135,6 +139,7 @@ const SellerEdit = () => {
           <Button
             variant="contained"
             className="!bg-[#3c8dbc] !normal-case !py-[10px] !px-[40px] !rounded-[50px]"
+            onClick={() => navigate("/admin/watch_details/watch_history")}
           >
             View performance analysis
           </Button>
