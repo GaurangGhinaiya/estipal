@@ -433,6 +433,7 @@ const BrandList = () => {
                 type="text"
                 placeholder="Type brand"
                 className="flex-grow p-2 rounded-l-lg"
+                value={brandName} 
                 onChange={(e) => setBrandName(e.target.value)}
               />
               <button onClick={handleBrandAdd} className="bg-blue-500 text-white px-4 py-2 rounded-r-lg">
@@ -489,6 +490,7 @@ const BrandList = () => {
                 type="text"
                 placeholder="Type collection"
                 className="flex-grow p-2 rounded-l-lg"
+                value={collectionName} 
                 onChange={(e) => setCollectionName(e.target.value)}
               />
               <button onClick={handleCollectionAdd} className="bg-blue-500 text-white px-4 py-2 rounded-r-lg">
@@ -541,6 +543,7 @@ const BrandList = () => {
                 type="text"
                 placeholder="Type model"
                 className="flex-grow p-2 rounded-l-lg"
+                value={modelName}
                 onChange={(e) => setModelName(e.target.value)}
               />
               <button onClick={() => {
