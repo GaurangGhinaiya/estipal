@@ -2,205 +2,37 @@ import React, { useEffect, useState } from 'react';
 import { FaArrowCircleRight, FaEdit } from "react-icons/fa";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import CustomSwitch from '../../../components/common/CustomSwitch';
+import axiosInstance from '../../../services';
 
-const brands = [
-  {
-    "brand_name": "BrandA",
-    "activeBrand": true,
-    "collections": [
-      {
-        "collection_name": "Urban Wear",
-        "activeCollection": false,
-        "models": [
-          { "model_name": "UrbanX1", "price": 50, "activeModel": false },
-          { "model_name": "UrbanX2", "price": 60, "activeModel": false }
-        ]
-      },
-      {
-        "collection_name": "Active Fit",
-        "activeCollection": false,
-        "models": [
-          { "model_name": "ActivePro1", "price": 70, "activeModel": false }
-        ]
-      }
-    ]
-  },
-  {
-    "brand_name": "BrandB",
-    "activeBrand": false,
-    "collections": [
-      {
-        "collection_name": "Luxury Line",
-        "activeCollection": false,
-        "models": [
-          { "model_name": "Luxe1", "price": 200, "activeModel": false },
-          { "model_name": "Luxe2", "price": 250, "activeModel": false },
-          { "model_name": "Luxe3", "price": 300, "activeModel": false }
-        ]
-      }
-    ]
-  },
-  {
-    "brand_name": "BrandC",
-    "activeBrand": false,
-    "collections": [
-      {
-        "collection_name": "Eco Series",
-        "activeCollection": false,
-        "models": [
-          { "model_name": "EcoGreen1", "price": 40, "activeModel": false },
-          { "model_name": "EcoGreen2", "price": 45, "activeModel": false }
-        ]
-      },
-      {
-        "collection_name": "Nature Collection",
-        "activeCollection": false,
-        "models": [
-          { "model_name": "NatureX", "price": 50, "activeModel": false }
-        ]
-      }
-    ]
-  },
-  {
-    "brand_name": "BrandD",
-    "activeBrand": false,
-    "collections": [
-      {
-        "collection_name": "Adventure Gear",
-        "activeCollection": false,
-        "models": [
-          { "model_name": "AdvX1", "price": 100, "activeModel": false }
-        ]
-      }
-    ]
-  },
-  {
-    "brand_name": "BrandE",
-    "activeBrand": false,
-    "collections": [
-      {
-        "collection_name": "Minimal",
-        "activeCollection": false,
-        "models": [
-          { "model_name": "Min1", "price": 30, "activeModel": false },
-          { "model_name": "Min2", "price": 35, "activeModel": false },
-          { "model_name": "Min3", "price": 40, "activeModel": false }
-        ]
-      },
-      {
-        "collection_name": "Essential",
-        "activeCollection": false,
-        "models": [
-          { "model_name": "Ess1", "price": 25, "activeModel": false }
-        ]
-      },
-      {
-        "collection_name": "Lightweight",
-        "activeCollection": false,
-        "models": [
-          { "model_name": "Light1", "price": 20, "activeModel": false },
-          { "model_name": "Light2", "price": 22, "activeModel": false }
-        ]
-      }
-    ]
-  },
-  {
-    "brand_name": "BrandF",
-    "activeBrand": false,
-    "collections": [
-      {
-        "collection_name": "Classic",
-        "activeCollection": false,
-        "models": [
-          { "model_name": "ClassA", "price": 90, "activeModel": false }
-        ]
-      }
-    ]
-  },
-  {
-    "brand_name": "BrandG",
-    "activeBrand": false,
-    "collections": [
-      {
-        "collection_name": "Smart Series",
-        "activeCollection": false,
-        "models": [
-          { "model_name": "Smart1", "price": 120, "activeModel": false },
-          { "model_name": "Smart2", "price": 130, "activeModel": false }
-        ]
-      },
-      {
-        "collection_name": "Tech Advanced",
-        "activeCollection": false,
-        "models": [
-          { "model_name": "TechA1", "price": 140, "activeModel": false }
-        ]
-      }
-    ]
-  },
-  {
-    "brand_name": "BrandH",
-    "activeBrand": false,
-    "collections": [
-      {
-        "collection_name": "Tech Gear",
-        "activeCollection": false,
-        "models": [
-          { "model_name": "TechX1", "price": 150, "activeModel": false },
-          { "model_name": "TechX2", "price": 160, "activeModel": false },
-          { "model_name": "TechX3", "price": 170, "activeModel": false }
-        ]
-      }
-    ]
-  },
-  {
-    "brand_name": "BrandI",
-    "activeBrand": false,
-    "collections": [
-      {
-        "collection_name": "Vintage Line",
-        "activeCollection": false,
-        "models": [
-          { "model_name": "VintageA", "price": 75, "activeModel": false }
-        ]
-      },
-      {
-        "collection_name": "Retro Series",
-        "activeCollection": false,
-        "models": [
-          { "model_name": "RetroB", "price": 85, "activeModel": false },
-          { "model_name": "RetroC", "price": 95, "activeModel": false }
-        ]
-      }
-    ]
-  },
-  {
-    "brand_name": "BrandJ",
-    "activeBrand": false,
-    "collections": [
-      {
-        "collection_name": "Performance Series",
-        "activeCollection": false,
-        "models": [
-          { "model_name": "Perform1", "price": 140, "activeModel": false }
-        ]
-      }
-    ]
-  }
-];
-
-const ModalBrand = ({ isVisible, content, onClose, onSubmit }) => {
+const ModalBrand = ({ brandDetails, isModalVisibleBrand, content, onClose, handleBrandModalSubmit }) => {
   const [inputValue, setInputValue] = useState(content);
 
-  if (!isVisible) return null;
-
   const handleInputChange = (e) => setInputValue(e.target.value);
+
+  const getBrandDetailsById = async () => {
+    try {
+      const response = await axiosInstance.get(`watchBrands/detail?id=${brandDetails?.id}`)
+      setInputValue(response?.payload?.data?.brand)
+    } catch (error) {
+      console.log("error", error)
+    }
+  }
+
+  useEffect(() => {
+    if (isModalVisibleBrand) {
+      getBrandDetailsById();
+    }
+  }, [brandDetails?.id, isModalVisibleBrand]);
+
+  // If modal is not visible, render nothing
+  if (!isModalVisibleBrand) return null;
+
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-bold">Edit</h2>
+          <h2 className="text-xl font-bold">Edit Brand</h2>
           <button
             onClick={onClose}
             className="text-red-500 font-bold text-lg hover:text-red-700"
@@ -226,34 +58,48 @@ const ModalBrand = ({ isVisible, content, onClose, onSubmit }) => {
           </button>
           <button
             onClick={() => {
-              onSubmit(inputValue);
-              setInputValue("");
+              handleBrandModalSubmit(inputValue);
+              // setInputValue("");
             }}
             className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
           >
-            Submit
+            Update
           </button>
         </div>
       </div>
     </div>
   );
 };
-const ModalCollection = ({ isVisible, content, onClose, onSubmit }) => {
-  const [inputValue, setInputValue] = useState("");
 
-  useEffect(() => {
-    content && setInputValue(content)
-  }, [content])
+const ModalCollection = ({ collectionDetails, isModalVisibleCollection, content, onClose, handleCollectionSubmit }) => {
+  const [inputValue, setInputValue] = useState(content);
 
-  if (!isVisible) return null;
+  const getCollectionDetailsById = async () => {
+    try {
+      const response = await axiosInstance.get(`watchModel/detail?id=${collectionDetails?.id}`)
+      setInputValue(response?.payload?.data?.model_no)
+    } catch (error) {
+      console.log("error", error)
+    }
+  }
 
   const handleInputChange = (e) => setInputValue(e.target.value);
+
+  useEffect(() => {
+    if (isModalVisibleCollection) {
+      getCollectionDetailsById();
+    }
+  }, [collectionDetails?.id, isModalVisibleCollection]);
+
+  // If modal is not visible, render nothing
+  if (!isModalVisibleCollection) return null;
+
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-bold">Edit</h2>
+          <h2 className="text-xl font-bold">Edit Collection</h2>
           <button
             onClick={onClose}
             className="text-red-500 font-bold text-lg hover:text-red-700"
@@ -279,34 +125,47 @@ const ModalCollection = ({ isVisible, content, onClose, onSubmit }) => {
           </button>
           <button
             onClick={() => {
-              onSubmit(inputValue);
+              handleCollectionSubmit(inputValue);
               setInputValue("");
             }}
             className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
           >
-            Submit
+            Update
           </button>
         </div>
       </div>
     </div>
   );
 };
-const SubModalCollection = ({ isVisible, content, onClose, onSubmit }) => {
-  const [inputValue, setInputValue] = useState("");
+
+const SubModalCollection = ({ isVisible, content, onClose, handleModelSubmit, modelDetails }) => {
+  const [inputValue, setInputValue] = useState(content);
+  const handleInputChange = (e) => setInputValue(e.target.value);
+
+  const getModelDetailsById = async () => {
+    try {
+      const response = await axiosInstance.get(`watchSerialNo/detail?id=${modelDetails?.id}`)
+      setInputValue(response?.payload?.data?.serial_no + "-" + response?.payload?.data?.serial_desc)
+    } catch (error) {
+      console.log("error", error)
+    }
+  }
 
   useEffect(() => {
-    content && setInputValue(content)
-  }, [content])
+    if (isVisible) {
+      getModelDetailsById();
+    }
+  }, [modelDetails?.id, isVisible]);
 
+  // If modal is not visible, render nothing
   if (!isVisible) return null;
 
-  const handleInputChange = (e) => setInputValue(e.target.value);
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-bold">Edit</h2>
+          <h2 className="text-xl font-bold">Edit Model</h2>
           <button
             onClick={onClose}
             className="text-red-500 font-bold text-lg hover:text-red-700"
@@ -332,12 +191,12 @@ const SubModalCollection = ({ isVisible, content, onClose, onSubmit }) => {
           </button>
           <button
             onClick={() => {
-              onSubmit(inputValue);
-              setInputValue("");
+              handleModelSubmit(inputValue);
+              // setInputValue("");
             }}
             className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
           >
-            Submit
+            Update
           </button>
         </div>
       </div>
@@ -347,11 +206,22 @@ const SubModalCollection = ({ isVisible, content, onClose, onSubmit }) => {
 
 const BrandList = () => {
 
+  const [brandData, setBrandData] = useState([])
+  const [brandDetails, setBrandDetails] = useState({})
+  const [brandName, setBrandName] = useState("")
   const [selectedBrand, setSelectedBrand] = useState(null);
   const [selectedCollection, setSelectedCollection] = useState(null);
+  const [collectionName, setCollectionName] = useState("");
+  const [collectionData, setCollectionData] = useState([])
+  const [collectionDetails, setCollectionDetails] = useState({})
   const [selectedModel, setSelectedModel] = useState(null);
-  const [isModalVisible, setModalVisible] = useState(false);
+  const [modelName, setModelName] = useState("")
+  const [modelDetails, setModelDetails] = useState("")
   const [modalContent, setModalContent] = useState("");
+  const [modelData, setModelData] = useState([]);
+  const [isModalVisibleBrand, setModalVisibleBrand] = useState(false);
+  const [isModalVisibleCollection, setModalVisibleCollection] = useState(false);
+  const [isModalVisible, setModalVisible] = useState(false);
   const [switchState, setSwitchState] = useState({});
 
   const handleSwitchChange = (name, index) => (e) => {
@@ -363,14 +233,36 @@ const BrandList = () => {
   };
 
   const handleBrandClick = (brand) => {
-    setSelectedBrand(brand);
+    setSelectedBrand(brand?.brand);
+    setBrandDetails(brand)
     setSelectedCollection(null); // Reset collection selection when a new brand is selected
     setSelectedModel(null); // Reset model selection
   };
 
   const handleCollectionClick = (collection) => {
-    setSelectedCollection(collection);
+    setCollectionDetails(collection)
+    setSelectedCollection(collection?.model_no);
     setSelectedModel(null); // Reset model selection
+  };
+
+  const openModalBrand = (content) => {
+    setModalContent(content);
+    setModalVisibleBrand(true);
+  };
+
+  const closeModalBrand = () => {
+    setModalVisibleBrand(false);
+    setModalContent("");
+  };
+
+  const openModalCollection = (content) => {
+    setModalContent(content);
+    setModalVisibleCollection(true);
+  };
+
+  const closeModalCollection = () => {
+    setModalVisibleCollection(false);
+    setModalContent("");
   };
 
   const openModal = (content) => {
@@ -383,9 +275,149 @@ const BrandList = () => {
     setModalContent("");
   };
 
-  const handleModalSubmit = (value) => {
-    closeModal();
+  const handleBrandModalSubmit = async (value) => {
+    try {
+      const updatedBrand = {
+        "brand": value,
+        "active": brandDetails?.active
+      }
+      const response = await axiosInstance.put(`watchBrands?id=${brandDetails?.id}`, updatedBrand);
+      getBrandList();
+      closeModalBrand();
+    } catch (error) {
+      console.log("error", error)
+    }
   };
+
+  const getBrandList = async () => {
+    try {
+      const response = await axiosInstance.get(`watchBrands?records_per_page=${50}`)
+      setBrandData(response?.payload?.data)
+    } catch (error) {
+      console.log("error")
+    }
+  }
+
+  useEffect(() => {
+    getBrandList();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleBrandAdd = async () => {
+    try {
+      const newBrandValue = {
+        "brand": brandName
+      }
+      const response = await axiosInstance.post(`watchBrands`, newBrandValue);
+      setBrandName("")
+      getBrandList();
+    } catch (error) {
+      console.log("error", error)
+    }
+  }
+
+  const getCollectionList = async () => {
+    try {
+      const searchValue = JSON.stringify({ brand_id: brandDetails?.id });
+      const response = await axiosInstance.get(`/watchModel?page=${1}&records_per_page=${25}&search=${searchValue}`)
+      setCollectionData(response?.payload?.data)
+    } catch (error) {
+      console.log("errrorr", error)
+    }
+  }
+
+  useEffect(() => {
+    if (selectedBrand) {
+      getCollectionList()
+    }
+  }, [selectedBrand])
+
+  const newCollectionValue = {
+    "brand_id": brandDetails?.id,
+    "model_no": collectionName,
+    "active": true
+  }
+  const handleCollectionAdd = async () => {
+    try {
+
+      const response = await axiosInstance.post(`watchModel`, newCollectionValue);
+      getCollectionList();
+      setCollectionName("")
+    } catch (error) {
+      console.log("error", error)
+    }
+  }
+
+  const handleCollectionSubmit = async (value) => {
+    try {
+      const updatedCollection = {
+        "brand_id": collectionDetails?.brand_id,
+        "model_no": value,
+        "serial_no": value,
+        "active": true
+      }
+      const response = await axiosInstance.put(`watchModel?id=${collectionDetails?.id}`, updatedCollection);
+      getCollectionList();
+      closeModalCollection();
+    } catch (error) {
+      console.log("error", error)
+    }
+  }
+
+
+  const getModelList = async () => {
+    try {
+      const searchValue = JSON.stringify({ model_id: collectionDetails?.id });
+      const response = await axiosInstance.get(`watchSerialNo?page=${1}&records_per_page=${50}&search=${searchValue}`)
+      setModelData(response?.payload?.data)
+
+    } catch (error) {
+      console.log("error", error);
+    }
+
+  }
+
+  useEffect(() => {
+    if (selectedCollection) {
+      getModelList();
+    }
+  }, [selectedCollection])
+
+
+  const handleAddModel = async () => {
+
+    try {
+      const newModelValue = {
+        "brand_id": modelDetails?.brand_id,
+        "model_id": collectionDetails?.id,
+        "serial_no": modelName,
+        "serial_desc": modelName,
+        "active": true
+      }
+      const response = await axiosInstance.post(`watchSerialNo`, newModelValue);
+      getModelList();
+      setModelName("")
+    } catch (error) {
+      console.log("error", error)
+    }
+  }
+
+  const handleModelSubmit = async (value) => {
+    try {
+      const newModelValue = {
+        "brand_id": modelDetails?.brand_id,
+        "model_id": modelDetails?.model_id,
+        "serial_no": value,
+        "active": true
+      }
+      const response = await axiosInstance.put(`watchSerialNo?id=${modelDetails?.id}`, newModelValue);
+      console.log("response", response);
+      getModelList();
+      closeModal();
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
 
   return (
 
@@ -393,7 +425,7 @@ const BrandList = () => {
       <h1 className="text-2xl font-bold mb-4 text-white">Brands, Collections, and Models</h1>
       <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 w-full">
         {/* Box 1: Brands */}
-        <div className="bg-[#1E252B] p-4 rounded-lg">
+        <div className="bg-[#1E252B] p-4 rounded-lg h-[700px] overflow-hidden">
           <div className='flex justify-between flex-col md:flex-row'>
             <h2 className="text-xl font-semibold text-white mb-4">Brands</h2>
             <div className="flex mb-4">
@@ -401,36 +433,40 @@ const BrandList = () => {
                 type="text"
                 placeholder="Type brand"
                 className="flex-grow p-2 rounded-l-lg"
+                onChange={(e) => setBrandName(e.target.value)}
               />
-              <button className="bg-blue-500 text-white px-4 py-2 rounded-r-lg">
+              <button onClick={handleBrandAdd} className="bg-blue-500 text-white px-4 py-2 rounded-r-lg">
                 Add
               </button>
             </div>
           </div>
-          <ul>
-            {brands.map((brand, index) => (
+          <ul className='h-[630px] overflow-y-scroll'>
+            {brandData?.map((brand, index) => (
               <li
                 key={index}
-                className={`flex items-center justify-between p-2 mb-2 rounded-lg cursor-pointer ${selectedBrand === brand ? "bg-black text-white" : "bg-gray-800 text-white"
+                className={`flex items-center justify-between p-2 mb-2 rounded-lg cursor-pointer ${selectedBrand === brand?.brand ? "bg-black text-white" : "bg-gray-800 text-white"
                   }`}
                 onClick={(e) => {
                   handleBrandClick(brand)
                 }}
               >
-                <span>{brand.brand_name}</span>
+                <span>{brand.brand}</span>
                 <div className="flex items-center space-x-2">
                   <button className="text-yellow-500" onClick={(e) => e.stopPropagation()}>
-                    <FaEdit size={25} onClick={() => openModal(`${brand.brand_name}`)} />
+                    <FaEdit size={25} onClick={() => {
+                      openModalBrand(`${brand?.brand}`)
+                      setBrandDetails(brand)
+                    }} />
                   </button>
                   <div onClick={(e) => e.stopPropagation()}>
                     <CustomSwitch
-                      name={`brandActive${index}`}
-                      checked={switchState[`brandActive${index}`] ?? brand?.activeBrand}
-                      onChange={handleSwitchChange("brandActive", index)}
+                      name={`brandActive${brand?.id}`}
+                      checked={switchState[`brandActive${brand?.id}`] ?? brand?.active}
+                      onChange={handleSwitchChange("brandActive", brand?.id)}
                     />
                   </div>
                   <button className="text-white">
-                    <FaArrowCircleRight size={25} color={`${selectedBrand === brand ? "#FCA31E" : "white"}`} />
+                    <FaArrowCircleRight size={25} color={`${selectedBrand === brand?.active ? "#FCA31E" : "white"}`} />
                   </button>
                 </div>
               </li>
@@ -439,7 +475,7 @@ const BrandList = () => {
         </div>
 
         {/* Box 2: Collections */}
-        {selectedBrand && <div className="bg-[#1E252B] p-4 rounded-lg">
+        {selectedBrand && <div className="bg-[#1E252B] p-4 rounded-lg h-[700px] overflow-hidden">
           <div className='flex justify-between flex-col md:flex-row'>
             <div>
               <IoCloseCircleOutline color='white' size={20} onClick={(e) => {
@@ -453,34 +489,38 @@ const BrandList = () => {
                 type="text"
                 placeholder="Type collection"
                 className="flex-grow p-2 rounded-l-lg"
+                onChange={(e) => setCollectionName(e.target.value)}
               />
-              <button className="bg-blue-500 text-white px-4 py-2 rounded-r-lg">
+              <button onClick={handleCollectionAdd} className="bg-blue-500 text-white px-4 py-2 rounded-r-lg">
                 Add
               </button>
             </div>
           </div>
-          <ul>
-            {selectedBrand?.collections.map((collection, index) => (
+          <ul className='h-[620px] overflow-y-scroll'>
+            {collectionData?.map((collection, index) => (
               <li
                 key={index}
-                className={`flex items-center justify-between p-2 mb-2 rounded-lg cursor-pointer ${selectedCollection === collection ? "bg-black text-white" : "bg-gray-800 text-white"
+                className={`flex items-center justify-between p-2 mb-2 rounded-lg cursor-pointer ${selectedCollection === collection.model_no ? "bg-black text-white" : "bg-gray-800 text-white"
                   }`}
                 onClick={() => handleCollectionClick(collection)}
               >
-                <span>{collection.collection_name}</span>
+                <span>{collection?.model_no}</span>
                 <div className="flex items-center space-x-2">
                   <button className="text-yellow-500" onClick={(e) => e.stopPropagation()}>
-                    <FaEdit size={25} onClick={() => openModal(`${collection.collection_name}`)} />
+                    <FaEdit size={25} onClick={() => {
+                      openModalCollection(`${collection?.model_no}`)
+                      setCollectionDetails(collection)
+                    }} />
                   </button>
                   <div onClick={(e) => e.stopPropagation()}>
                     <CustomSwitch
-                      name={`collectionActive${index}`}
-                      checked={switchState[`collectionActive${index}`] ?? collection?.activeCollection}
-                      onChange={handleSwitchChange("collectionActive", index)}
+                      name={`collectionActive${collection?.id}`}
+                      checked={switchState[`collectionActive${collection?.id}`] ?? collection?.model_no}
+                      onChange={handleSwitchChange("collectionActive", collection?.id)}
                     />
                   </div>
                   <button className="text-white">
-                    <FaArrowCircleRight size={25} color={`${selectedCollection === collection ? "#FCA31E" : "white"}`} />
+                    <FaArrowCircleRight size={25} color={`${selectedCollection === collection.model_no ? "#FCA31E" : "white"}`} />
                   </button>
                 </div>
               </li>
@@ -490,7 +530,7 @@ const BrandList = () => {
         </div>}
 
         {/* Box 3: Models */}
-        {selectedCollection && <div className="bg-[#1E252B] p-4 rounded-lg">
+        {selectedCollection && <div className="bg-[#1E252B] p-4 rounded-lg h-[700px] overflow-hidden">
           <div className='flex justify-between flex-col md:flex-row'>
             <div>
               <IoCloseCircleOutline color='white' size={20} onClick={() => setSelectedCollection(null)} />
@@ -501,29 +541,36 @@ const BrandList = () => {
                 type="text"
                 placeholder="Type model"
                 className="flex-grow p-2 rounded-l-lg"
+                onChange={(e) => setModelName(e.target.value)}
               />
-              <button className="bg-blue-500 text-white px-4 py-2 rounded-r-lg">
+              <button onClick={() => {
+                handleAddModel()
+                // setModelDetails(model)
+              }} className="bg-blue-500 text-white px-4 py-2 rounded-r-lg">
                 Add
               </button>
             </div>
           </div>
-          <ul>
-            {selectedCollection?.models.map((model, index) => (
+          <ul className='h-[620px] overflow-y-scroll'>
+            {modelData?.map((model, index) => (
               <li
                 key={index}
-                className={`flex items-center justify-between p-2 mb-2 rounded-lg cursor-pointer ${selectedModel === model ? "bg-black text-white" : "bg-gray-800 text-white"
+                className={`flex items-center justify-between p-2 mb-2 rounded-lg cursor-pointer ${selectedModel === model?.serial_no ? "bg-black text-white" : "bg-gray-800 text-white"
                   }`}
               >
-                <span>{model.model_name} - ${model.price}</span>
+                <span>{model?.serial_no} - ${model?.serial_desc}</span>
                 <div className="flex items-center space-x-2">
                   <button className="text-yellow-500" onClick={(e) => e.stopPropagation()}>
-                    <FaEdit size={25} onClick={() => openModal(`${model.model_name}`)} />
+                    <FaEdit size={25} onClick={() => {
+                      openModal(`${model?.serial_no}`)
+                      setModelDetails(model)
+                    }} />
                   </button>
                   <div onClick={(e) => e.stopPropagation()}>
                     <CustomSwitch
-                      name={`modelActive${index}`}
-                      checked={switchState[`modelActive${index}`] ?? model?.activeModel}
-                      onChange={handleSwitchChange("modelActive", index)}
+                      name={`modelActive${model?.id}`}
+                      checked={switchState[`modelActive${model?.id}`] ?? model?.active}
+                      onChange={handleSwitchChange("modelActive", model?.id)}
                     />
                   </div>
                 </div>
@@ -534,22 +581,25 @@ const BrandList = () => {
         </div>}
       </div>
       <ModalBrand
-        isVisible={isModalVisible}
+        isModalVisibleBrand={isModalVisibleBrand}
         content={modalContent}
-        onClose={closeModal}
-        onSubmit={handleModalSubmit}
+        onClose={closeModalBrand}
+        handleBrandModalSubmit={handleBrandModalSubmit}
+        brandDetails={brandDetails}
       />
       <ModalCollection
-        isVisible={isModalVisible}
+        isModalVisibleCollection={isModalVisibleCollection}
         content={modalContent}
-        onClose={closeModal}
-        onSubmit={handleModalSubmit}
+        onClose={closeModalCollection}
+        handleCollectionSubmit={handleCollectionSubmit}
+        collectionDetails={collectionDetails}
       />
       <SubModalCollection
         isVisible={isModalVisible}
         content={modalContent}
         onClose={closeModal}
-        onSubmit={handleModalSubmit}
+        modelDetails={modelDetails}
+        handleModelSubmit={handleModelSubmit}
       />
     </div>
   )
