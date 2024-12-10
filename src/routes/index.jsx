@@ -19,6 +19,7 @@ import Language from "../pages/admin/language/Language";
 import ProtectedRoute from "./protectedRoute";
 import PublicRoute from "./PublicRoute";
 import SellerUserCreate from "../pages/admin/seller/SellerUserCreate";
+import EstimatorEdit from "../pages/admin/estimators/EstimatorEdit";
 
 const AppRoute = () => {
   return (
@@ -57,6 +58,14 @@ const AppRoute = () => {
             <Route path="home/readActivity" element={<ReadActivity />} />
             <Route path="estimator/estimator_user" element={<Estimators />} />
             <Route
+              path="estimator/estimator_edit/:id"
+              element={<EstimatorEdit />}
+            />
+            <Route
+              path="estimator/estimator_user_create"
+              element={<EstimatorEdit />}
+            />
+            <Route
               path="analysis/revenue_analysis/admin"
               element={<AdminRevanueAnalysis />}
             />
@@ -72,7 +81,7 @@ const AppRoute = () => {
               path="analysis/performance_analysis/estimator"
               element={<EstimatorPerformanceAnalysis />}
             />
-            <Route path="seller/seller_edit" element={<SellerEdit />} />
+            <Route path="seller/seller_edit/:id" element={<SellerEdit />} />
             <Route
               path="seller/seller_user_create"
               element={<SellerUserCreate />}

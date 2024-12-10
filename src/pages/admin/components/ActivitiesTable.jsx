@@ -14,7 +14,6 @@ import axiosInstance from "../../../services/index";
 import moment from "moment/moment";
 import useDebounce from "../../../components/common/UseDebounce";
 
-
 export const statusOptions = [
   "All",
   "Active Only",
@@ -37,14 +36,13 @@ const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 const ActivitiesTable = () => {
   const navigate = useNavigate();
-  const [data, setData] = useState([]);
   const [status, setStatus] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [sortField, setSortField] = useState(null);
   const [sortOrder, setSortOrder] = useState("asc");
-  const [activitesData, setActivitiesData] = useState([]);
+  const [activitiesData, setActivitiesData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [recordsPerPage, setRecordsPerPage] = useState(10);
+  const [recordsPerPage, setRecordsPerPage] = useState(20);
   const [totalRecords, setTotalRecords] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const debouncedSearchTerm = useDebounce(searchQuery, 500);
@@ -55,28 +53,39 @@ const ActivitiesTable = () => {
     setSortOrder(newOrder);
 
     // Sort data and update state
-    const sortedData = sortData(activitesData, key, newOrder);
-    setData(sortedData);
+    const sortedData = sortData(activitiesData, key, newOrder);
+    setActivitiesData(sortedData);
   };
 
   const getActivityData = async () => {
     try {
-      const searchValue = debouncedSearchTerm || status ? JSON.stringify(debouncedSearchTerm ? { search: debouncedSearchTerm ? debouncedSearchTerm : "", watch_status: status } : { watch_status: status }) : '';
+      const searchValue =
+        debouncedSearchTerm || status
+          ? JSON.stringify(
+              debouncedSearchTerm
+                ? {
+                    search: debouncedSearchTerm ? debouncedSearchTerm : "",
+                    watch_status: status,
+                  }
+                : { watch_status: status }
+            )
+          : "";
 
       setIsLoading(true);
-      const response = await axiosInstance.get(`/adminActivity?page=${currentPage}&records_per_page=${recordsPerPage}&search=${searchValue}&sort_order=${sortOrder}`);
-      setData(response.payload.data)
-      setActivitiesData(response.payload.data)
-      setTotalRecords(response?.pager?.total_records)
-      setIsLoading(false)
+      const response = await axiosInstance.get(
+        `/adminActivity?page=${currentPage}&records_per_page=${recordsPerPage}&search=${searchValue}&sort_order=${sortOrder}`
+      );
+      setActivitiesData(response.payload.data);
+      setTotalRecords(response?.pager?.total_records);
+      setIsLoading(false);
     } catch (error) {
-      console.log("error", error)
-      setIsLoading(false)
+      console.log("error", error);
+      setIsLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
-    getActivityData()
+    getActivityData();
   }, [currentPage, sortOrder, debouncedSearchTerm, status]);
 
   const handlePageChange = (page) => {
@@ -92,7 +101,7 @@ const ActivitiesTable = () => {
 
         <div className="flex justify-between items-center mb-4 gap-4 sm:gap-8 flex-wrap ">
           <SelectDropdown
-            title=" Filter by Status :"
+            title="Filter by Status :"
             status={status}
             setStatus={setStatus}
             options={statusOptions}
@@ -135,10 +144,10 @@ const ActivitiesTable = () => {
                     />
                   ),
                 },
-                { key: "who", label: "Who", isSortable: true },
+                { key: "admin_group", label: "Who", isSortable: true },
                 { key: "from", label: "From", isSortable: true },
-                { key: "id", label: "ID", isSortable: true },
-                { key: "message", label: "Message", isSortable: false },
+                { key: "user1_id", label: "ID", isSortable: true },
+                { key: "message", label: "Message", isSortable: true },
                 { key: "watchId", label: "Watch Id", isSortable: true },
                 { key: "status", label: "Status", isSortable: true },
                 { key: "received", label: "Received", isSortable: true },
@@ -148,14 +157,17 @@ const ActivitiesTable = () => {
                   onClick={
                     column.isSortable ? () => handleSort(column.key) : undefined
                   }
-                  className={`p-2 text-[#ffff] text-center ${column.isSortable ? "cursor-pointer" : ""
-                    } ${column.isSortable && sortField === column.key
+                  className={`p-2 text-[#ffff] text-center whitespace-nowrap ${
+                    column.isSortable ? "cursor-pointer" : ""
+                  } ${
+                    column.isSortable && sortField === column.key
                       ? "active-sorting"
                       : ""
-                    } ${column.isSortable && sortField !== column.key
+                  } ${
+                    column.isSortable && sortField !== column.key
                       ? "sorting"
                       : ""
-                    }`}
+                  }`}
                 >
                   {column.label}{" "}
                   {column.isSortable &&
@@ -170,18 +182,20 @@ const ActivitiesTable = () => {
             </tr>
           </thead>
           <tbody>
-            {isLoading && activitesData?.length === 0 ?
+            {isLoading && activitiesData?.length === 0 ? (
               <tr>
-                <td colSpan={12} className="py-[200px] px-4  text-center">
+                <td colSpan={12} className="py-[200px] px-4 text-center">
                   <CircularProgress />
                 </td>
               </tr>
-              :
-              (activitesData?.length > 0 ? activitesData?.map((activity, index) => (
+            ) : activitiesData?.length > 0 ? (
+              activitiesData?.map((activity, index) => (
                 <tr
                   key={index}
                   className="border-b border-[#202b34]"
-                  onClick={() => navigate(`/admin/home/readActivity/${activity?.watch_details?.serial_no}`)}
+                  onClick={() =>
+                    navigate(`/admin/home/readActivity/${activity?.id}`)
+                  }
                 >
                   <td className="px-[18px] py-[0px] text-[#ffff] text-center">
                     <div className="w-[35px]">
@@ -204,7 +218,9 @@ const ActivitiesTable = () => {
                         />
                       }
                       checkedIcon={
-                        <GradeIcon sx={{ color: "#ff9300", fontSize: "21px" }} />
+                        <GradeIcon
+                          sx={{ color: "#ff9300", fontSize: "21px" }}
+                        />
                       }
                     />
                   </td>
@@ -212,8 +228,14 @@ const ActivitiesTable = () => {
                     {activity?.admin_group}
                   </td>
                   <td className="px-[18px] py-[10px] text-[#ffff] cursor-pointer">
-                    <Tooltip title={activity.from ? activity.from : "-"} placement="top" arrow>
-                      <div className="w-[77px] text-center">{activity.from ? activity.from : "-"}</div>
+                    <Tooltip
+                      title={activity.from ? activity.from : "-"}
+                      placement="top"
+                      arrow
+                    >
+                      <div className="w-[77px] text-center">
+                        {activity.from ? activity.from : "-"}
+                      </div>
                     </Tooltip>
                   </td>
                   <td className="px-[18px] py-[10px] text-[#ffff] text-center">
@@ -225,7 +247,18 @@ const ActivitiesTable = () => {
                       placement="top"
                       arrow
                     >
-                      {activity.message} {activity?.watch_details?.brand && "( "}{activity?.watch_details?.brand} {activity?.watch_details?.model_no} {activity?.watch_details?.model_no && "Serial -"} {activity?.watch_details?.serial_no}{activity?.watch_details?.model_no && "- Year :"} {activity?.watch_details?.year_of_production} {activity?.watch_details?.model_no && "- Last requested/quoted price: USD"} {activity?.watch_details?.price}{activity?.watch_details?.brand && ")"}
+                      {activity.message}{" "}
+                      {activity?.watch_details?.brand && "( "}
+                      {activity?.watch_details?.brand}{" "}
+                      {activity?.watch_details?.model_no}{" "}
+                      {activity?.watch_details?.model_no && "Serial -"}{" "}
+                      {activity?.watch_details?.serial_no}
+                      {activity?.watch_details?.model_no && "- Year :"}{" "}
+                      {activity?.watch_details?.year_of_production}{" "}
+                      {activity?.watch_details?.model_no &&
+                        "- Last requested/quoted price: USD"}{" "}
+                      {activity?.watch_details?.price}
+                      {activity?.watch_details?.brand && ")"}
                     </Tooltip>
                   </td>
                   <td className="px-[18px] py-[10px] text-[#ffff] text-center">
@@ -235,22 +268,36 @@ const ActivitiesTable = () => {
                     {activity?.watch_status}
                   </td>
                   <td className="px-[18px] py-[10px] text-[#ffff] text-center whitespace-nowrap">
-                    {`${activity.quot_receive_date ? moment().unix(activity.quot_receive_date).format("DD-MM-YYYY") : "-"}  `}
+                    {`${
+                      activity.quot_receive_date
+                        ? moment()
+                            .unix(activity.quot_receive_date)
+                            .format("DD-MM-YYYY")
+                        : "-"
+                    }  `}
                   </td>
                 </tr>
               ))
-                :
-                <tr>
-                  <td colSpan={12} className="py-[200px] px-4  text-center text-nowrap text-white font-bold">
-                    No Data Found
-                  </td>
-                </tr>)
-            }
+            ) : (
+              <tr>
+                <td
+                  colSpan={12}
+                  className="py-[200px] px-4  text-center text-nowrap text-white font-bold"
+                >
+                  No Data Found
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
-
       </div>
-      <PaginationComponent currentPage={currentPage} totalPages={totalRecords} recordsPerPage={recordsPerPage} handlePageChange={handlePageChange} data={activitesData} />
+      <PaginationComponent
+        currentPage={currentPage}
+        totalPages={totalRecords}
+        recordsPerPage={recordsPerPage}
+        handlePageChange={handlePageChange}
+        data={activitiesData}
+      />
     </div>
   );
 };

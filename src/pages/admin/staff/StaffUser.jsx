@@ -1,95 +1,61 @@
-import { Button } from "@mui/material";
-import React, { useState } from "react";
+import { Button, CircularProgress } from "@mui/material";
+import moment from "moment";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import PaginationComponent from "../../../components/common/PaginationComponent";
 import SearchBar from "../../../components/common/SearchBar";
-import { useNavigate } from "react-router-dom";
-
-const staffUserData = [
-  {
-    active: true,
-    id: "SCA1000",
-    company: "M",
-    contact: "John wewe",
-    email: "nopparat_sat@maya-wizard.com",
-    username: "mayawizard",
-    addedOn: "11 Nov 2022",
-    staff: 3,
-    sentAccepted: "45/16",
-  },
-  {
-    active: true,
-    id: "SCA1001",
-    company: "MLA Thai",
-    contact: "paolo M",
-    email: "admin@mlathai.com",
-    username: "paolom",
-    addedOn: "28 Nov 2022",
-    staff: 5,
-    sentAccepted: "7/1",
-  },
-  {
-    active: true,
-    id: "SCA1009",
-    company: "Estipal, LLC",
-    contact: "Niels Christensen",
-    email: "niels@estipal.com",
-    username: "nielschristensen",
-    addedOn: "08 Dec 2022",
-    staff: 4,
-    sentAccepted: "35/8",
-  },
-  {
-    active: true,
-    id: "SCA1010",
-    company: "Test",
-    contact: "test3 test3",
-    email: "nopparat@scouse.tech",
-    username: "test3test3",
-    addedOn: "08 Dec 2022",
-    staff: 2,
-    sentAccepted: "0/0",
-  },
-  {
-    active: true,
-    id: "SCA1011",
-    company: "maya",
-    contact: "nopparat w",
-    email: "nopparat.mayawizard2@gmail.com",
-    username: "nopparatw",
-    addedOn: "24 Apr 2023",
-    staff: 0,
-    sentAccepted: "0/0",
-  },
-  {
-    active: true,
-    id: "SCA1012",
-    company: "maya",
-    contact: "Nopparat W",
-    email: "info.icenetwork@gmail.com",
-    username: "nopparatw",
-    addedOn: "24 Apr 2023",
-    staff: 2,
-    sentAccepted: "7/3",
-  },
-  {
-    active: true,
-    id: "SCA1013",
-    company: "test2",
-    contact: "test2 maya",
-    email: "nopparat.mayawizard@gmail.com",
-    username: "test2maya",
-    addedOn: "03 May 2023",
-    staff: 0,
-    sentAccepted: "0/0",
-  },
-];
+import useDebounce from "../../../components/common/UseDebounce";
+import axiosInstance from "../../../services/index";
 
 const StaffUser = () => {
   const navigate = useNavigate();
+  const [data, setData] = useState([]);
+  const [status, setStatus] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+  const [sortOrder, setSortOrder] = useState("asc");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [recordsPerPage, setRecordsPerPage] = useState(20);
+  const [totalRecords, setTotalRecords] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const debouncedSearchTerm = useDebounce(searchQuery, 500);
+
+  const getStaffUserData = async () => {
+    try {
+      const searchValue =
+        debouncedSearchTerm || status
+          ? JSON.stringify(
+              debouncedSearchTerm
+                ? {
+                    search: debouncedSearchTerm ? debouncedSearchTerm : "",
+                    watch_status: status,
+                  }
+                : { watch_status: status }
+            )
+          : "";
+
+      setIsLoading(true);
+      const response = await axiosInstance.get(
+        `/sellers?page=${currentPage}&records_per_page=${recordsPerPage}&search=${searchValue}&sort_order=${sortOrder}`
+      );
+      setData(response.payload.data);
+      setTotalRecords(response?.pager?.total_records);
+      setIsLoading(false);
+    } catch (error) {
+      console.log("error", error);
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getStaffUserData();
+  }, [currentPage, sortOrder, debouncedSearchTerm, status, searchQuery]);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
 
   return (
-    <div className="p-[15px] h-[100vh]">
+    <div className="p-[15px] min-h-[100vh]">
       <div className="px-0 sm:px-[15px] flex justify-between flex-wrap">
         <h1 className="text-[30px] font-medium mb-4 px-0 sm:px-[15px] font-sans text-white">
           Merchants & Staff
@@ -99,6 +65,7 @@ const StaffUser = () => {
           <SearchBar
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
+            setCurrentPage={setCurrentPage}
             placeholder={"Search sellers/staffs"}
           />
 
@@ -112,7 +79,7 @@ const StaffUser = () => {
         </div>
       </div>
 
-      <div className="w-[95.5%] overflow-auto mx-auto pt-[10px]">
+      <div className="w-[95.5%] overflow-auto mx-auto pt-[10px] ">
         <table className="table-auto w-full text-left">
           <thead style={{ borderBottom: "2px solid #111111" }}>
             <tr>
@@ -147,102 +114,143 @@ const StaffUser = () => {
             </tr>
           </thead>
           <tbody>
-            {staffUserData.map((item, index) => (
-              <tr key={index} className="border-b border-[#202b34]">
-                <td className="px-[18px] py-[0px] text-[#ffff] text-center">
-                  <div className="require_vaild_list text-center">
-                    <span className="dot-green"></span>
-                  </div>
-                </td>
-
-                <td
-                  className="px-[18px] py-[12px] text-[#ffff] text-center cursor-pointer"
-                  onClick={() => navigate("/admin/seller/seller_edit")}
-                >
-                  {item.id}
-                </td>
-                <td
-                  className="px-[18px] py-[12px] text-[#ffff] cursor-pointer"
-                  onClick={() => navigate("/admin/seller/seller_edit")}
-                >
-                  <div className="whitespace-nowrap text-center">
-                    {item.company}
-                  </div>
-                </td>
-                <td
-                  className="px-[18px] py-[12px] text-[#ffff] whitespace-nowrap text-center cursor-pointer"
-                  onClick={() => navigate("/admin/seller/seller_edit")}
-                >
-                  {item.contact}
-                </td>
-                <td
-                  className="px-[18px] py-[12px] text-[#ffff] whitespace-nowrap text-center cursor-pointer"
-                  onClick={() => navigate("/admin/seller/seller_edit")}
-                >
-                  {item.email}
-                </td>
-                <td
-                  className="px-[18px] py-[12px] text-[#ffff] text-center cursor-pointer"
-                  onClick={() => navigate("/admin/seller/seller_edit")}
-                >
-                  {item.username}
-                </td>
-                <td
-                  className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap cursor-pointer"
-                  onClick={() => navigate("/admin/seller/seller_edit")}
-                >
-                  {item.addedOn}
-                </td>
-                <td
-                  className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap cursor-pointer"
-                  onClick={() => navigate("/admin/seller/seller_edit")}
-                >
-                  {item.staff}
-                </td>
-                <td
-                  className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap cursor-pointer"
-                  onClick={() => navigate("/admin/seller/seller_edit")}
-                >
-                  {item.sentAccepted}
-                </td>
-                <td className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap">
-                  <div className="flex gap-[10px]">
-                    <a href="https://www.estipal.com//admin/watch_details/watch_history?seller_id=1000">
-                      <img
-                        alt="start"
-                        id="star"
-                        width="30px"
-                        height="30px"
-                        style={{ filter: "invert(1)" }}
-                        src="https://www.estipal.com/assets/dist/images/icons/Watch history 2.png"
-                      />
-                    </a>
-                    <a href="#">
-                      <img
-                        alt="revanue"
-                        width="30px"
-                        height="30px"
-                        style={{ filter: "invert(1)" }}
-                        src="https://www.estipal.com/assets/dist/images/icons/Revenue.png"
-                      />
-                    </a>
-                    <a href="https://www.estipal.com/admin/analysis/performance_analysis/seller/1000">
-                      <img
-                        alt="performance"
-                        width="30px"
-                        height="30px"
-                        style={{ filter: "invert(1)" }}
-                        src="https://www.estipal.com/assets/dist/images/icons/performance.png"
-                      />
-                    </a>
-                  </div>
+            {isLoading && data?.length === 0 ? (
+              <tr>
+                <td colSpan={12} className="py-[200px] px-4  text-center">
+                  <CircularProgress />
                 </td>
               </tr>
-            ))}
+            ) : data?.length > 0 ? (
+              data.map((item, index) => (
+                <tr key={index} className="border-b border-[#202b34]">
+                  <td className="px-[18px] py-[0px] text-[#ffff] text-center">
+                    <div className="require_vaild_list text-center">
+                      <span
+                        className={`${item?.active ? "dot-green" : "dot-red"}`}
+                      ></span>
+                    </div>
+                  </td>
+
+                  <td
+                    className="px-[18px] py-[12px] text-[#ffff] text-center cursor-pointer"
+                    onClick={() =>
+                      navigate(`/admin/seller/seller_edit/${item?.id}`)
+                    }
+                  >
+                    SCA{item.id}
+                  </td>
+                  <td
+                    className="px-[18px] py-[12px] text-[#ffff] cursor-pointer"
+                    onClick={() =>
+                      navigate(`/admin/seller/seller_edit/${item?.id}`)
+                    }
+                  >
+                    <div className="whitespace-nowrap text-center">
+                      {item.cmp_name}
+                    </div>
+                  </td>
+                  <td
+                    className="px-[18px] py-[12px] text-[#ffff] whitespace-nowrap text-center cursor-pointer"
+                    onClick={() =>
+                      navigate(`/admin/seller/seller_edit/${item?.id}`)
+                    }
+                  >
+                    {item.first_name + " " + item.last_name}
+                  </td>
+                  <td
+                    className="px-[18px] py-[12px] text-[#ffff] whitespace-nowrap text-center cursor-pointer"
+                    onClick={() =>
+                      navigate(`/admin/seller/seller_edit/${item?.id}`)
+                    }
+                  >
+                    {item.email}
+                  </td>
+                  <td
+                    className="px-[18px] py-[12px] text-[#ffff] text-center cursor-pointer"
+                    onClick={() =>
+                      navigate(`/admin/seller/seller_edit/${item?.id}`)
+                    }
+                  >
+                    {item.username}
+                  </td>
+                  <td
+                    className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap cursor-pointer"
+                    onClick={() =>
+                      navigate(`/admin/seller/seller_edit/${item?.id}`)
+                    }
+                  >
+                    {moment.unix(item?.created_on).format("MMM DD,YYYY")}
+                  </td>
+                  <td
+                    className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap cursor-pointer"
+                    onClick={() =>
+                      navigate(`/admin/seller/seller_edit/${item?.id}`)
+                    }
+                  >
+                    {item.staff}
+                  </td>
+                  <td
+                    className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap cursor-pointer"
+                    onClick={() =>
+                      navigate(`/admin/seller/seller_edit/${item?.id}`)
+                    }
+                  >
+                    {item.sentAccepted}
+                  </td>
+                  <td className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap">
+                    <div className="flex gap-[10px]">
+                      <a href="https://www.estipal.com//admin/watch_details/watch_history?seller_id=1000">
+                        <img
+                          alt="start"
+                          id="star"
+                          width="30px"
+                          height="30px"
+                          style={{ filter: "invert(1)" }}
+                          src="https://www.estipal.com/assets/dist/images/icons/Watch history 2.png"
+                        />
+                      </a>
+                      <a href="#">
+                        <img
+                          alt="revanue"
+                          width="30px"
+                          height="30px"
+                          style={{ filter: "invert(1)" }}
+                          src="https://www.estipal.com/assets/dist/images/icons/Revenue.png"
+                        />
+                      </a>
+                      <a href="https://www.estipal.com/admin/analysis/performance_analysis/seller/1000">
+                        <img
+                          alt="performance"
+                          width="30px"
+                          height="30px"
+                          style={{ filter: "invert(1)" }}
+                          src="https://www.estipal.com/assets/dist/images/icons/performance.png"
+                        />
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td
+                  colSpan={12}
+                  className="py-[200px] px-4  text-center text-nowrap text-white font-bold"
+                >
+                  No Data Found
+                </td>
+              </tr>
+            )}
           </tbody>
-        </table>
+        </table>{" "}
       </div>
-      <PaginationComponent totalPages={1} />
+      <PaginationComponent
+        currentPage={currentPage}
+        totalPages={totalRecords}
+        recordsPerPage={recordsPerPage}
+        handlePageChange={handlePageChange}
+        data={data}
+      />
     </div>
   );
 };

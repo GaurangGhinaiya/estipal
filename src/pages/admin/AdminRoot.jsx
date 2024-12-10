@@ -15,6 +15,7 @@ import SellerEdit from "./seller/SellerEdit";
 import BrandList from "./brandList/BrandList";
 import Language from "./language/Language";
 import SellerUserCreate from "./seller/SellerUserCreate";
+import EstimatorEdit from "./estimators/EstimatorEdit";
 
 const AdminRoot = () => {
   return (
@@ -24,10 +25,21 @@ const AdminRoot = () => {
         <Route path="/watch_details/watch_history" element={<WatchHistory />} />
         <Route path="/staff/staff_user" element={<StaffUser />} />
         <Route path="/home/readActivity/:id" element={<ReadActivity />} />
-        <Route path="/watch_details/watch_status/:id" element={<WatchStatus />} />
+        <Route
+          path="/watch_details/watch_status/:id"
+          element={<WatchStatus />}
+        />
 
         <Route path="/panel/settings" element={<Settings />} />
         <Route path="/estimator/estimator_user" element={<Estimators />} />
+        <Route
+          path="/estimator/estimator_edit/:id"
+          element={<EstimatorEdit />}
+        />
+        <Route
+          path="/estimator/estimator_user_create"
+          element={<EstimatorEdit />}
+        />
         <Route
           path="/analysis/revenue_analysis/admin"
           element={<AdminRevanueAnalysis />}
@@ -44,7 +56,7 @@ const AdminRoot = () => {
           path="/analysis/performance_analysis/estimator"
           element={<EstimatorPerformanceAnalysis />}
         />
-        <Route path="/seller/seller_edit" element={<SellerEdit />} />
+        <Route path="/seller/seller_edit/:id" element={<SellerEdit />} />
         <Route
           path="/seller/seller_user_create"
           element={<SellerUserCreate />}

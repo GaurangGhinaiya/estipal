@@ -6,58 +6,14 @@ import axiosInstance from "../../../services";
 import { extractImageUrls } from "../../../utils";
 import moment from "moment";
 
-const watchHistory = [
-  {
-    time: "April 20, 2023 10:55 PM ",
-    name: "mayawizard",
-    text: "Pending Estipal Payment",
-    val: "USD 20,720.00",
-  },
-  {
-    time: "December 06, 2022 09:06 AM",
-    name: "test - nopp ice",
-    text: "Accepted - Deal in progress",
-    val: "USD 18,500.00",
-  },
-  {
-    time: "December 06, 2022 09:05 AM",
-    name: "M - demo staff1",
-    text: "Pending second counter offer",
-    val: "USD 18,500.00",
-  },
-  {
-    time: "December 06, 2022 08:59 AM",
-    name: "test - nopp ice",
-    text: "Re-estimate",
-    val: "USD 18,000.00",
-  },
-  {
-    time: "December 06, 2022 08:58 AM",
-    name: "M - demo staff1",
-    text: "Pending first counter offer",
-    val: "USD 19,000.00",
-  },
-  {
-    time: "December 06, 2022 08:47 AM",
-    name: "test - nopp ice",
-    text: "Estimated",
-    val: "USD 17,500.00",
-  },
-  {
-    time: "December 06, 2022 08:43 AM",
-    name: "M - demo staff1",
-    text: "Waiting for Quotation",
-    val: "USD 20,000.00",
-  },
-];
-
 const WatchStatus = () => {
   const { id } = useParams();
   const [open, setOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [watchDetailData, setWatchDetailData] = useState({});
   const [loading, setLoading] = useState(false);
-  const imageUrls = watchDetailData?.watch_pic && extractImageUrls(watchDetailData?.watch_pic);
+  const imageUrls =
+    watchDetailData?.watch_pic && extractImageUrls(watchDetailData?.watch_pic);
 
   const handleOpenDialog = (index) => {
     setSelectedIndex(index);
@@ -97,8 +53,8 @@ const WatchStatus = () => {
     <div className="mx-auto px-[20px] sm:px-[45px] py-[20px]">
       <div className="flex justify-between items-center mb-[30px] flex-wrap gap-5">
         <h3 className="text-white text-[21px]">
-          Watch History - ID : W{watchDetailData?.id}, {watchDetailData?.brand}, {watchDetailData?.model}, Stainless Steel -
-          Bracelet (116500)
+          Watch History - ID : W{watchDetailData?.id}, {watchDetailData?.brand},{" "}
+          {watchDetailData?.model}, Stainless Steel - Bracelet (116500)
         </h3>
 
         <Button
@@ -121,7 +77,9 @@ const WatchStatus = () => {
           </div>
           <div className="bg-[#1e252b] py-[12px] px-[24px] rounded items-center flex justify-between gap-[25px]">
             <p className="text-white">Collection</p>
-            <p className="text-white line-clamp-1">{watchDetailData?.collection}</p>
+            <p className="text-white line-clamp-1">
+              {watchDetailData?.collection}
+            </p>
           </div>
           <div className="bg-[#1e252b] py-[12px] px-[24px] rounded items-center flex justify-between">
             <p className="text-white">Model</p>
@@ -145,11 +103,15 @@ const WatchStatus = () => {
           </div>
           <div className="bg-[#1e252b] py-[12px] px-[24px] rounded items-center flex justify-between">
             <p className="text-white">Requested price</p>
-            <p className="text-white">USD {watchDetailData?.counter_offer_price}</p>
+            <p className="text-white">
+              USD {watchDetailData?.counter_offer_price}
+            </p>
           </div>
           <div className="bg-[#1e252b] py-[12px] px-[24px] rounded items-center flex justify-between">
             <p className="text-white">Estimated price</p>
-            <p className="text-white">USD {watchDetailData?.estimated_watch_price}</p>
+            <p className="text-white">
+              USD {watchDetailData?.estimated_watch_price}
+            </p>
           </div>
           <div className="bg-[#1e252b] py-[12px] px-[24px] rounded items-center flex justify-between">
             <p className="text-white">Warranty date</p>
@@ -202,7 +164,8 @@ const WatchStatus = () => {
           <tbody>
             <tr>
               <td className="px-[14px] py-[10px] text-[#ffff] whitespace-nowrap">
-                {watchDetailData?.addedByDetail?.company_name} - {watchDetailData?.addedByDetail?.username}
+                {watchDetailData?.addedByDetail?.company_name} -{" "}
+                {watchDetailData?.addedByDetail?.username}
               </td>
               <td className="px-[14px] py-[10px] text-[#ffff] whitespace-nowrap">
                 test - nopp ice
@@ -211,10 +174,11 @@ const WatchStatus = () => {
                 USD {watchDetailData?.estimated_watch_price} (Selected)
               </td>
               <td className="px-[14px] py-[10px] text-[#ffff] whitespace-nowrap">
-                {moment.unix(watchDetailData?.created_on).format('MMM DD ,YYYY HH:mm:ss')}
+                {moment
+                  .unix(watchDetailData?.created_on)
+                  .format("MMM DD ,YYYY HH:mm:ss")}
               </td>
             </tr>
-
           </tbody>
         </table>
       </div>
@@ -230,7 +194,9 @@ const WatchStatus = () => {
             {watchDetailData?.adminActivities?.map((item, index) => (
               <tr key={index}>
                 <td className="px-[14px] py-[10px] text-[#ffff] whitespace-nowrap">
-                  {moment.unix(item?.created_on).format('MMM DD ,YYYY HH:mm:ss')}
+                  {moment
+                    .unix(item?.created_on)
+                    .format("MMM DD ,YYYY HH:mm:ss")}
                 </td>
                 <td className="px-[14px] py-[10px] text-[#ffff] whitespace-nowrap">
                   {item?.admin_group}
