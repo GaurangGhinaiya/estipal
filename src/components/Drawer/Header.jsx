@@ -6,6 +6,8 @@ import { Box, Button } from "@mui/material";
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Profile from "./components/Profile";
+import LightLogo from "../../assets/images/img-logo-bar-admin.png";
+import DarkLogo from "../../assets/images/img-logo-login.png";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -14,7 +16,7 @@ const Header = () => {
   const [openPerformanceMenu, setOpenPerformanceMenu] = React.useState(false);
   const pathName = useLocation();
   const { pathname } = pathName;
-
+  const staffUser = false;
   const handleRevanueMenuClick = (event) => {
     setOpenRevanueMenu(!openRevanueMenu);
   };
@@ -24,7 +26,7 @@ const Header = () => {
 
   return (
     <>
-      <header className="px-[15px] flex justify-between bg-[#1d272e] h-[66px] items-center sticky top-0 left-0 bottom-0 z-[1]">
+      <header className={`px-[15px] flex justify-between bg-white dark:bg-[#1d272e] h-[66px] items-center sticky top-0 left-0 bottom-0 z-[1]`}>
         <div className="flex items-center">
           <Button
             sx={{ display: { xs: "block", md: "none" } }}
@@ -35,12 +37,12 @@ const Header = () => {
           <a href="/" className="pr-[15px]">
             <img
               alt="Logo"
-              src="https://www.estipal.com/assets/dist/images/img-logo-bar-admin.svg"
+              src={staffUser ? DarkLogo : LightLogo}
               className="h-[50px]"
             />
           </a>
-          <div className="text-[#ffff] font-bold text-[15px]">
-            ESTIPAL ADMINISTRATION{" "}
+          <div className=" text-black dark:text-[#ffff] font-bold text-[15px]">
+            {staffUser ? "ESTIPAL MERCHANT ADMIN CONSOLE" : "ESTIPAL ADMINISTRATION"}
           </div>
         </div>
 
@@ -49,7 +51,7 @@ const Header = () => {
 
       {/* Navigation Bar Desktop*/}
       <Box
-        className="bg-[#0060aa] text-white flex items-center px-[38px] py-[11px]"
+        className="bg-[#0060aa] shadow-xl dark:shadow-transparent text-white flex items-center px-[38px] py-[11px]"
         sx={{ display: { xs: "none", md: "block" } }}
       >
         {/* Navigation Links */}
@@ -78,7 +80,7 @@ const Header = () => {
           >
             Watches History
           </Button>
-          <Button
+          {!staffUser && <Button
             className="text-white !normal-case !text-[14px] !p-[0] !m-[0]"
             sx={{
               color: "white",
@@ -89,8 +91,8 @@ const Header = () => {
             onClick={() => navigate("/admin/staff/staff_user")}
           >
             Merchants & Staff
-          </Button>
-          <Button
+          </Button>}
+          {!staffUser && <Button
             className="text-white !normal-case !text-[14px] !p-[0] !m-[0]"
             sx={{
               color: "white",
@@ -101,16 +103,28 @@ const Header = () => {
             onClick={() => navigate("/admin/estimator/estimator_user")}
           >
             Estimators
-          </Button>
-          <div className="relative">
+          </Button>}
+          {staffUser && <div className="relative">
+            <Button
+              className="text-white !normal-case !text-[14px] !p-[0] !m-[0] "
+              sx={{
+                color: "white",
+                fontWeight: pathname.includes("/admin/analysis/revenue_analysis/seller") ? "bold" : "normal",
+              }}
+              onClick={() => navigate("/admin/analysis/revenue_analysis/seller")}
+            >
+              Revenue Analysis
+            </Button>
+          </div>}
+          {!staffUser && <div className="relative">
             <button
               style={{
                 fontSize: "14px",
                 fontWeight:
                   pathname.includes("/admin/analysis/revenue_analysis/admin") ||
-                  pathname.includes(
-                    "/admin/analysis/revenue_analysis/estimator"
-                  )
+                    pathname.includes(
+                      "/admin/analysis/revenue_analysis/estimator"
+                    )
                     ? "bold"
                     : "normal",
               }}
@@ -135,8 +149,20 @@ const Header = () => {
                 </a>
               </div>
             )}
-          </div>
-          <div className="relative">
+          </div>}
+          {staffUser && <div className="relative">
+            <Button
+              className="text-white !normal-case !text-[14px] !p-[0] !m-[0] "
+              sx={{
+                color: "white",
+                fontWeight: pathname.includes("/admin/analysis/performance_analysis/seller") ? "bold" : "normal",
+              }}
+              onClick={() => navigate("/admin/analysis/performance_analysis/seller")}
+            >
+              Performance Analysis
+            </Button>
+          </div>}
+          {!staffUser && <div className="relative">
             <button
               style={{
                 fontSize: "14px",
@@ -144,9 +170,9 @@ const Header = () => {
                   pathname.includes(
                     "/admin/analysis/performance_analysis/admin"
                   ) ||
-                  pathname.includes(
-                    "/admin/analysis/performance_analysis/estimator"
-                  )
+                    pathname.includes(
+                      "/admin/analysis/performance_analysis/estimator"
+                    )
                     ? "bold"
                     : "normal",
               }}
@@ -171,8 +197,8 @@ const Header = () => {
                 </a>
               </div>
             )}
-          </div>
-          <Button
+          </div>}
+          {!staffUser && <Button
             className="text-white !normal-case !text-[14px] !p-[0] !m-[0]"
             sx={{
               color: "white",
@@ -183,8 +209,8 @@ const Header = () => {
             onClick={() => navigate("/admin/watch_details/brand_list")}
           >
             Brands, Collection and Models
-          </Button>
-          <Button
+          </Button>}
+          {!staffUser && <Button
             className="text-white !normal-case !text-[14px] !p-[0] !m-[0]"
             sx={{
               color: "white",
@@ -195,8 +221,8 @@ const Header = () => {
             onClick={() => navigate("/admin/panel/settings")}
           >
             General Settings
-          </Button>
-          <Button
+          </Button>}
+          {!staffUser && <Button
             className="text-white !normal-case !text-[14px] !p-[0] !m-[0]"
             sx={{
               color: "white",
@@ -207,7 +233,31 @@ const Header = () => {
             onClick={() => navigate("/admin/language")}
           >
             Languages
-          </Button>
+          </Button>}
+          {staffUser && <Button
+            className="text-white !normal-case !text-[14px] !p-[0] !m-[0]"
+            sx={{
+              color: "white",
+              fontWeight: pathname.includes("/admin/staff/staff_user")
+                ? "bold"
+                : "normal",
+            }}
+            onClick={() => navigate("/admin/staff/staff_user")}
+          >
+            Manage Staff
+          </Button>}
+          {staffUser && <Button
+            className="text-white !normal-case !text-[14px] !p-[0] !m-[0]"
+            sx={{
+              color: "white",
+              fontWeight: pathname.includes("/admin/panel/account")
+                ? "bold"
+                : "normal",
+            }}
+            onClick={() => navigate("/admin/panel/account")}
+          >
+            Account Profile
+          </Button>}
         </div>
       </Box>
 
@@ -293,9 +343,9 @@ const Header = () => {
                 fontSize: "14px",
                 fontWeight:
                   pathname.includes("/admin/analysis/revenue_analysis/admin") ||
-                  pathname.includes(
-                    "/admin/analysis/revenue_analysis/estimator"
-                  )
+                    pathname.includes(
+                      "/admin/analysis/revenue_analysis/estimator"
+                    )
                     ? "bold"
                     : "normal",
               }}
@@ -331,9 +381,9 @@ const Header = () => {
                   pathname.includes(
                     "/admin/analysis/performance_analysis/admin"
                   ) ||
-                  pathname.includes(
-                    "/admin/analysis/performance_analysis/estimator"
-                  )
+                    pathname.includes(
+                      "/admin/analysis/performance_analysis/estimator"
+                    )
                     ? "bold"
                     : "normal",
               }}

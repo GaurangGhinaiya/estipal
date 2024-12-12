@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import TextInputField from "../../../../components/common/TextInputField";
 
 const CommissionPlan = (props) => {
-  const { isEditable } = props;
+  const { isEditable, staffUser } = props;
   const [commissionData, setCommissionData] = useState([
     { from: 1000, to: 5000, commission: 14 },
     { from: 5000, to: 10000, commission: 13 },
@@ -19,13 +19,13 @@ const CommissionPlan = (props) => {
     setCommissionData(newData);
   };
   return (
-    <div>
-      <h3 className="text-[24px] text-white mb-2">Commission Plan</h3>
+    <div className="px-0 sm:px-[20px] ">
+      <h3 className="text-[24px] dark:text-[#ffff] text-black mb-2">Commission Plan</h3>
       <div
-        className="bg-[#1E252B] p-6 rounded-lg w-full mb-[15px]"
+        className="dark:bg-[#1E252B] bg-[#F8F8F8] p-6 rounded-lg w-full mb-[15px]"
         style={{ border: "1px solid #ccc" }}
       >
-        <div className="w-full">
+        <div className="w-full ">
           {commissionData.map((row, index) => (
             <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-[25px]">
               <TextInputField
@@ -36,7 +36,8 @@ const CommissionPlan = (props) => {
                 name="from"
                 value={row.from}
                 readOnly={!isEditable}
-                bgColor={"#283641"}
+                bgColor={staffUser ? "#ffffff" : "#283641"}
+                border={staffUser ? "1px solid white" : "none"}
                 onChange={(e) =>
                   handleChange(index, "from", parseInt(e.target.value))
                 }
@@ -51,7 +52,8 @@ const CommissionPlan = (props) => {
                 name="to"
                 value={row.to}
                 readOnly={!isEditable}
-                bgColor={"#283641"}
+                bgColor={staffUser ? "#ffffff" : "#283641"}
+                border={staffUser ? "1px solid black" : "none"}
                 onChange={(e) =>
                   handleChange(index, "to", parseInt(e.target.value))
                 }
@@ -66,7 +68,8 @@ const CommissionPlan = (props) => {
                 name="to"
                 value={row.commission}
                 readOnly={!isEditable}
-                bgColor={"#283641"}
+                bgColor={staffUser ? "#ffffff" : "#283641"}
+                border={staffUser ? "1px solid black" : "none"}
                 onChange={(e) =>
                   handleChange(index, "commission", parseInt(e.target.value))
                 }

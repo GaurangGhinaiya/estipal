@@ -19,8 +19,13 @@ import Language from "../pages/admin/language/Language";
 import ProtectedRoute from "./protectedRoute";
 import PublicRoute from "./PublicRoute";
 import SellerUserCreate from "../pages/admin/seller/SellerUserCreate";
-
+import SellerRevenueAnalysis from "../pages/staff/revenue_analysis/revenue_analysis_seller/SellerRevenueAnalysis";
+import SellerPerformanceAnalysis from "../pages/staff/performance_analysis/performance_analysis_seller/SellerPerformanceAnalysis";
+import AccountProfile from "../pages/staff/account_profile/AccountProfile";
+import ManageStaff from "../pages/staff/manage_staff/ManageStaff";
 const AppRoute = () => {
+  const staffUser = false;
+
   return (
     <Router>
       <Routes>
@@ -47,7 +52,7 @@ const AppRoute = () => {
               path="watch_details/watch_history"
               element={<WatchHistory />}
             />
-            <Route path="staff/staff_user" element={<StaffUser />} />
+            {!staffUser && <Route path="staff/staff_user" element={<StaffUser />} />}
             <Route path="home/readActivity/:id" element={<ReadActivity />} />
             <Route
               path="watch_details/watch_status/:id"
@@ -61,12 +66,20 @@ const AppRoute = () => {
               element={<AdminRevanueAnalysis />}
             />
             <Route
+              path="analysis/revenue_analysis/seller"
+              element={<SellerRevenueAnalysis />}
+            />
+            <Route
               path="analysis/revenue_analysis/estimator"
               element={<EstimatorRevanueAnalysis />}
             />
             <Route
               path="analysis/performance_analysis/admin"
               element={<AdminPerformanceAnalysis />}
+            />
+            <Route
+              path="analysis/performance_analysis/seller"
+              element={<SellerPerformanceAnalysis />}
             />
             <Route
               path="analysis/performance_analysis/estimator"
@@ -94,6 +107,14 @@ const AppRoute = () => {
               element={<EstimatorPerformanceAnalysis />}
             />
             <Route path="watch_details/brand_list" element={<BrandList />} />
+            <Route
+              path="panel/account"
+              element={<AccountProfile />}
+            />
+            {staffUser && <Route
+              path="staff/staff_user"
+              element={<ManageStaff />}
+            />}
             <Route path="language" element={<Language />} />
 
             {/* <Route path="edit" element={<EditUser />} />  */}
