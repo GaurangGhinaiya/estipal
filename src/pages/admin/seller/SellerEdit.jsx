@@ -9,47 +9,53 @@ import PhoneInput, { formatPhoneNumber } from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import { getCountryCallingCode } from "react-phone-number-input";
 import CommissionPlan from "./components/Commission";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import axiosInstance from "../../../services";
+import moment from "moment";
 
 const SellerEdit = () => {
   const navigate = useNavigate();
+  const params = useParams();
+  const { id } = params;
+  const [sellerData, setSellerData] = useState();
   const [isEditable, setIsEditable] = useState(false);
-  const [states, setStates] = useState([]);
-  const [selectCountry, setSelectCountry] = useState("IN");
-  const [phone, setPhone] = useState("IN");
+  // const [states, setStates] = useState([]);
+  // const [selectCountry, setSelectCountry] = useState("IN");
+  // const [phone, setPhone] = useState("IN");
 
   const [formData, setFormData] = useState({
-    active: true,
-    company: "MLA Thai",
-    bankName: "000000",
-    bankAddress: "00000",
-    bankAccountName: "00000000000",
-    accountNumber: "000000",
-    swiftCode: "00000",
-    id: "SCA1001",
-    firstName: "paolo",
-    lastName: "M",
-    streetAddress: "athenee tower 707/3",
-    city: "bangkok",
-    state: "Bangkok",
-    zipCode: "10330",
-    country: "TH",
-    email: "admin@mlathai.com",
-    username: "paolom",
+    active: false,
+    company: "",
+    bankName: "",
+    bankAddress: "",
+    bankAccountName: "",
+    accountNumber: "",
+    swiftCode: "",
+    id: "",
+    firstName: "",
+    lastName: "",
+    streetAddress: "",
+    city: "",
+    state: "",
+    zipCode: "",
+    country: "",
+    email: "",
+    username: "",
     dial: "",
-    mobileNumber: "+66-926656637",
-    currency: "USD",
-    tier: "Tier 1",
-    signUpDate: "November 28, 2022",
+    mobileNumber: "",
+    currency: "",
+    tier: "",
+    signUpDate: "",
     companyLogo: null,
-    companyLogoPreview:
-      "https://cdn.estipal.com/production/2023/01/05/6Z6nsIGd43423OfjX02lYZ26gHQHEVUv9su37Y22meg26YnN33hOGO63L44zFy1I.jpg",
+    companyLogoPreview: "",
   });
 
-  useEffect(() => {
-    const formatNumber = formatPhoneNumber(phone);
-    const dial = getCountryCallingCode(selectCountry);
-  }, [phone]);
+  console.log("formData: ", formData);
+
+  // useEffect(() => {
+  //   const formatNumber = formatPhoneNumber(phone);
+  //   const dial = getCountryCallingCode(selectCountry);
+  // }, [phone]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -67,6 +73,45 @@ const SellerEdit = () => {
       });
     }
   };
+
+  const getDetailById = async () => {
+    try {
+      const response = await axiosInstance.get(`/sellers/detail?id=${id}`);
+      const seller = response?.payload?.data;
+      setSellerData(seller);
+
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        active: seller?.active,
+        email: seller?.email,
+        username: seller?.username,
+        currency: seller?.currency,
+        firstName: seller?.first_name,
+        lastName: seller?.last_name,
+        bankName: seller?.bank_name,
+        bankAddress: seller?.bank_address,
+        bankAccountName: seller?.bank_account,
+        accountNumber: seller?.account_number,
+        swiftCode: seller?.bank_swift,
+        companyLogoPreview: seller?.seller_logo,
+        id: `SCA${seller?.id}`,
+        streetAddress: seller?.address,
+        city: seller?.city,
+        country: seller?.country,
+        zipCode: seller?.zip,
+        state: seller?.state,
+        tier: `Tier ${seller?.payment_tier}`,
+        mobileNumber: `+${seller?.cnt_code} ${seller?.cnt_no}`,
+        signUpDate: moment.unix(seller?.created_on).format("MMM DD,YYYY"),
+      }));
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
+  useEffect(() => {
+    getDetailById();
+  }, []);
 
   return (
     <div className="mx-auto px-[20px] sm:px-[45px] py-[20px]">
@@ -390,46 +435,44 @@ const SellerEdit = () => {
             component={
               <>
                 {isEditable ? (
-                  <div class="flex flex-col w-full">
-                    <div class="flex items-center !cursor-pointer mb-1">
+                  <div className="flex flex-col w-full">
+                    <div className="flex items-center !cursor-pointer mb-1">
                       <input
                         type="radio"
                         id="tier1"
                         name="tier"
-                        class="mr-2 !cursor-pointer"
+                        className="mr-2 !cursor-pointer"
                         checked={formData.tier == "Tier 1"}
-                        onChange={() =>
-                          setFormData({ ...formData, tier: "Tier 1" })
-                        }
+                        onChange={() => setFormData({ ...formData, tier: 1 })}
                       />
                       <label
                         for="tier1"
-                        class="text-white !font-normal !cursor-pointer !mb-0"
+                        className="text-white !font-normal !cursor-pointer !mb-0"
                       >
                         Tier 1: before shipping the watch
                       </label>
                     </div>
-                    <div class="flex items-center !cursor-pointer">
+                    <div className="flex items-center !cursor-pointer">
                       <input
                         type="radio"
                         id="tier2"
                         name="tier"
-                        class="mr-2 !cursor-pointer"
+                        className="mr-2 !cursor-pointer"
                         checked={formData.tier == "Tier 2"}
-                        onChange={() =>
-                          setFormData({ ...formData, tier: "Tier 2" })
-                        }
+                        onChange={() => setFormData({ ...formData, tier: 2 })}
                       />
                       <label
                         for="tier2"
-                        class="text-white !font-normal !cursor-pointer !mb-0"
+                        className="text-white !font-normal !cursor-pointer !mb-0"
                       >
                         Tier 2: after shipping the watch
                       </label>
                     </div>
                   </div>
                 ) : (
-                  <p className="text-right w-full">{formData.tier}</p>
+                  <p className="text-right w-full text-[#fea31e]">
+                    {formData.tier}
+                  </p>
                 )}
               </>
             }
@@ -455,7 +498,7 @@ const SellerEdit = () => {
             bgColor={"#1e252b"}
             className="mb-[15px] "
             onChange={handleChange}
-            inputClass="cursor-not-allowed"
+            inputClassName="cursor-not-allowed"
           />
           <TextInputField
             rightTextValue=""

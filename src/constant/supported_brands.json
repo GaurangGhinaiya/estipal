@@ -1,0 +1,27 @@
+[
+     { "value": "a_lange_sohne", "label": "A. Lange & Sohne" },
+    { "value": "audemars_piguet", "label": "Audemars Piguet" },
+    { "value": "blancpain", "label": "Blancpain" },
+    { "value": "breguet", "label": "Breguet" },
+    { "value": "breitling", "label": "Breitling" },
+    { "value": "bulgari", "label": "Bvlgari" },
+    { "value": "cartier", "label": "Cartier" },
+    { "value": "chanel", "label": "Chanel" },
+    { "value": "chopard", "label": "Chopard" },
+    { "value": "hublot", "label": "Hublot" },
+    { "value": "iwc", "label": "IWC" },
+    { "value": "jaeger_lecoultre", "label": "Jaeger LeCoultre" },
+    { "value": "longines", "label": "Longines" },
+    { "value": "omega", "label": "Omega" },
+    { "value": "panerai", "label": "Panerai" },
+    { "value": "patek_philippe", "label": "Patek Philippe" },
+    { "value": "piaget", "label": "Piaget" },
+    { "value": "richard_mille", "label": "Richard Mille" },
+    { "value": "roger_dubuis", "label": "Roger Dubuis" },
+    { "value": "rolex", "label": "Rolex" },
+    { "value": "tag_heuer", "label": "Tag Heuer" },
+    { "value": "tissot", "label": "Tissot" },
+    { "value": "tudor", "label": "Tudor" },
+    { "value": "vacheron_constantin", "label": "Vacheron Constantin" }
+  ]
+  

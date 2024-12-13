@@ -23,8 +23,10 @@ import SellerRevenueAnalysis from "../pages/staff/revenue_analysis/revenue_analy
 import SellerPerformanceAnalysis from "../pages/staff/performance_analysis/performance_analysis_seller/SellerPerformanceAnalysis";
 import AccountProfile from "../pages/staff/account_profile/AccountProfile";
 import ManageStaff from "../pages/staff/manage_staff/ManageStaff";
+import EstimatorEdit from "../pages/admin/estimators/EstimatorEdit";
+
 const AppRoute = () => {
-  const staffUser = false;
+  const staffUser = true;
 
   return (
     <Router>
@@ -62,6 +64,14 @@ const AppRoute = () => {
             <Route path="home/readActivity" element={<ReadActivity />} />
             <Route path="estimator/estimator_user" element={<Estimators />} />
             <Route
+              path="estimator/estimator_edit/:id"
+              element={<EstimatorEdit />}
+            />
+            <Route
+              path="estimator/estimator_user_create"
+              element={<EstimatorEdit />}
+            />
+            <Route
               path="analysis/revenue_analysis/admin"
               element={<AdminRevanueAnalysis />}
             />
@@ -85,7 +95,7 @@ const AppRoute = () => {
               path="analysis/performance_analysis/estimator"
               element={<EstimatorPerformanceAnalysis />}
             />
-            <Route path="seller/seller_edit" element={<SellerEdit />} />
+            <Route path="seller/seller_edit/:id" element={<SellerEdit />} />
             <Route
               path="seller/seller_user_create"
               element={<SellerUserCreate />}

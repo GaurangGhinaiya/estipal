@@ -17,240 +17,8 @@ import useDebounce from "../../../components/common/UseDebounce";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
-const history = [
-  {
-    id: "W10090",
-    brand: "Rolex",
-    collection: "Daytona",
-    model: "40mm, Black Dial, Ceramic Bezel, Oyster Bracelet, Stainless Steel",
-    serial: "12356",
-    addedBy: "MLA Thai - Bob",
-    asking: "USD 20,000 / USD 18,000",
-    addedOn: "Nov 15, 2023",
-    status: "Rejected",
-  },
-  {
-    id: "W10090",
-    brand: "Rolex",
-    collection: "Daytona",
-    model: "40mm, Black Dial, Ceramic Bezel, Oyster Bracelet, Stainless Steel",
-    serial: "12356",
-    addedBy: "MLA Thai - Bob",
-    asking: "USD 20,000 / USD 18,000",
-    addedOn: "Nov 15, 2023",
-    status: "Rejected",
-  },
-  {
-    id: "W10089",
-    brand: "Patek Philippe",
-    collection: "Complications",
-    model: "World Time - 36mm, Green Dial, Green Leather Strap, Rose Gold",
-    serial: "123456",
-    addedBy: "MLA Thai - Bob",
-    asking: "USD 30,000 / USD 27,000",
-    addedOn: "Nov 11, 2023",
-    status: "Accepted - Deal in progress",
-  },
-  {
-    id: "W10088",
-    brand: "Rolex",
-    collection: "Air-King",
-    model: "40mm, Black Dial, Bracelet, Stainless Steel",
-    serial: "12345678",
-    addedBy: "MLA Thai - Robert",
-    asking: "USD 10,000 / USD 9,500",
-    addedOn: "Nov 09, 2023",
-    status: "Pending first counter offer",
-  },
-  {
-    id: "W10087",
-    brand: "Rolex",
-    collection: "Yacht-Master",
-    model:
-      "42 mm, Black Dial, Ceramic Bezel, Black Rubber Bracelet, White Gold",
-    serial: "23456709",
-    addedBy: "Estipal, LLC - Jack Dawson",
-    asking: "USD 15,000 / USD 14,000",
-    addedOn: "Jul 30, 2023",
-    status: "Completed",
-  },
-  {
-    id: "W10086",
-    brand: "Rolex",
-    collection: "Daytona",
-    model: "40mm, Black Dial, Ceramic Bezel, Bracelet, Stainless Steel",
-    serial: "xxx",
-    addedBy: "maya - test_staff1",
-    asking: "USD 20,000 / USD 18,000",
-    addedOn: "May 03, 2023",
-    status: "Expired",
-  },
-  {
-    id: "W10085",
-    brand: "A. Lange & Sohne",
-    collection: "1815",
-    model: "Honeygold",
-    serial: "xxxp",
-    addedBy: "maya - test_staff1",
-    asking: "USD 18,000 / USD 16,000",
-    addedOn: "May 03, 2023",
-    status: "Expired",
-  },
-  {
-    id: "W10084",
-    brand: "Cartier",
-    collection: "Baignoire",
-    model: "Large - Pink Gold",
-    serial: "yyyy",
-    addedBy: "maya - test_staff1",
-    asking: "USD 20,000 / USD 19,180",
-    addedOn: "Apr 27, 2023",
-    status: "Expired",
-  },
-  {
-    id: "W10083",
-    brand: "Audemars Piguet",
-    collection: "Code 11.59 by Audemars Piguet",
-    model: "Selfwinding - White Gold, Blue Dial",
-    serial: "xxxx",
-    addedBy: "maya - test_staff1",
-    asking: "USD 20,000 / USD 19,250",
-    addedOn: "Apr 27, 2023",
-    status: "Expired",
-  },
-  {
-    id: "W10082",
-    brand: "A. Lange & Sohne",
-    collection: "1815",
-    model: "Honeygold",
-    serial: "xxxx",
-    addedBy: "maya - test_staff1",
-    asking: "USD 20,000 / USD 18,900",
-    addedOn: "Apr 27, 2023",
-    status: "Completed",
-  },
-  {
-    id: "W10081",
-    brand: "Rolex",
-    collection: "Daytona",
-    model: "40mm, Black Dial, Ceramic Bezel, Bracelet, Stainless Steel",
-    serial: "xxxxx",
-    addedBy: "maya - test_staff1",
-    asking: "USD 20,000 / USD 18,900",
-    addedOn: "Apr 27, 2023",
-    status: "Completed",
-  },
-  {
-    id: "W10080",
-    brand: "Rolex",
-    collection: "Submariner",
-    model:
-      "41 mm, Black Dial, Ceramic Bezel, Bracelet, Stainless Steel and Yellow Gold",
-    serial: "12345",
-    addedBy: "maya - test_staff1",
-    asking: "USD 18,000 / USD 16,300",
-    addedOn: "Apr 27, 2023",
-    status: "Completed",
-  },
-  {
-    id: "W10079",
-    brand: "Rolex",
-    collection: "Yacht-Master",
-    model:
-      "42 mm, Black Dial, Ceramic Bezel, Black Rubber Bracelet, White Gold",
-    serial: "2345678",
-    addedBy: "Estipal, LLC - Jack Dawson",
-    asking: "USD 18,000 / USD 17,400",
-    addedOn: "Apr 24, 2023",
-    status: "Completed",
-  },
-  {
-    id: "W10078",
-    brand: "Rolex",
-    collection: "Yacht-Master",
-    model:
-      "42 mm, Black Dial, Ceramic Bezel, Black Rubber Bracelet, White Gold",
-    serial: "123456789",
-    addedBy: "Estipal, LLC - Jack Dawson",
-    asking: "USD 20,000 / USD 18,000",
-    addedOn: "Apr 19, 2023",
-    status: "Completed",
-  },
-  {
-    id: "W10077",
-    brand: "Rolex",
-    collection: "GMT-Master II",
-    model:
-      "40 mm, Black Dial, Ceramic Bezel, Oyster Bracelet, Stainless Steel, 2022",
-    serial: "1234567",
-    addedBy: "Estipal, LLC - Jack Dawson",
-    asking: "USD 20,000 / USD 18,500",
-    addedOn: "Apr 19, 2023",
-    status: "Sold",
-  },
-  {
-    id: "W10076",
-    brand: "A. Lange & Sohne",
-    collection: "1815",
-    model: "Honeygold",
-    serial: "123456789",
-    addedBy: "Estipal, LLC - Jack Dawson",
-    asking: "USD 10,000 / USD 9,600",
-    addedOn: "Mar 30, 2023",
-    status: "Completed",
-  },
-  {
-    id: "W10075",
-    brand: "Rolex",
-    collection: "Yacht-Master",
-    model:
-      "42 mm, Falcon's Eye Dial, Ceramic Bezel, Black Rubber Bracelet, White Gold",
-    serial: "1234567",
-    addedBy: "Estipal, LLC - Jack Dawson",
-    asking: "USD 15,000 / ",
-    addedOn: "Mar 24, 2023",
-    status: "Cancel",
-  },
-  {
-    id: "W10074",
-    brand: "Rolex",
-    collection: "Yacht-Master",
-    model:
-      "42 mm, Black Dial, Ceramic Bezel, Black Rubber Bracelet, White Gold",
-    serial: "1234567",
-    addedBy: "Estipal, LLC - Jack Dawson",
-    asking: "USD 21,000 / ",
-    addedOn: "Mar 08, 2023",
-    status: "Cancel",
-  },
-  {
-    id: "W10073",
-    brand: "Bvlgari",
-    collection: "Bulgari Aluminium",
-    model: "40 mm - Aluminum And Titanium",
-    serial: "2345678",
-    addedBy: "Estipal, LLC - Jack Dawson",
-    asking: "USD 19,000 / ",
-    addedOn: "Mar 08, 2023",
-    status: "Cancel",
-  },
-  {
-    id: "W10072",
-    brand: "Rolex",
-    collection: "Daytona",
-    model:
-      "40mm, Black Diamonds Dial, Bracelet, Stainless Steel and Yellow Gold",
-    serial: "dfjghjk",
-    addedBy: "MLA Thai - Robert",
-    asking: "USD 0 / USD",
-    addedOn: "Feb 23, 2023",
-    status: "Cancel",
-  },
-];
-
 const WatchHistory = () => {
   const navigate = useNavigate();
-  const [data, setData] = useState(history);
   const [status, setStatus] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [sortField, setSortField] = useState(null);
@@ -258,7 +26,7 @@ const WatchHistory = () => {
   const [loading, setLoading] = useState(false);
   const [watchActivityData, setWatchActivityData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [recordsPerPage, setRecordsPerPage] = useState(10);
+  const [recordsPerPage, setRecordsPerPage] = useState(20);
   const [totalRecords, setTotalRecords] = useState(0);
   const debouncedSearchTerm = useDebounce(searchQuery, 500);
   const staffUser = true;
@@ -273,8 +41,8 @@ const WatchHistory = () => {
     setSortOrder(newOrder);
 
     // Sort data and update state
-    const sortedData = sortData(data, key, newOrder);
-    setData(sortedData);
+    const sortedData = sortData(watchActivityData, key, newOrder);
+    setWatchActivityData(sortedData);
   };
 
   const getWatchActivityList = async () => {
@@ -282,13 +50,13 @@ const WatchHistory = () => {
     const searchValue =
       debouncedSearchTerm || status
         ? JSON.stringify(
-          debouncedSearchTerm
-            ? {
-              search: debouncedSearchTerm ? debouncedSearchTerm : "",
-              watch_status: status,
-            }
-            : { watch_status: status }
-        )
+            debouncedSearchTerm
+              ? {
+                  search: debouncedSearchTerm ? debouncedSearchTerm : "",
+                  watch_status: status,
+                }
+              : { watch_status: status }
+          )
         : "";
 
     try {

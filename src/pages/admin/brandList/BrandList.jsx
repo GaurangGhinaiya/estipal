@@ -364,7 +364,7 @@ const BrandList = () => {
                 className={`flex items-center justify-between p-2 mb-2 rounded-lg cursor-pointer ${selectedModel === model?.serial_no ? "bg-black text-white" : "bg-gray-800 text-white"
                   }`}
               >
-                <span>{model?.serial_no} - ${model?.serial_desc}</span>
+                <span>{model?.serial_no} {model?.serial_desc ? "-" : ""} {model?.serial_desc}</span>
                 <div className="flex items-center space-x-2">
                   <button className="text-yellow-500" onClick={(e) => e.stopPropagation()}>
                     <FaEdit size={25} onClick={() => {

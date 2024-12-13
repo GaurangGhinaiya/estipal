@@ -10,7 +10,7 @@ import countries from "../../../constant/country.json";
 import currency from "../../../constant/currency.json";
 
 const AccountProfile = () => {
-    const staffUser = true;
+    const staffUser = false;
     const styles = {
         input: {
           backgroundColor:staffUser ? "#FFFFFF": "#1e252b", // Style for the input
@@ -107,12 +107,13 @@ const AccountProfile = () => {
                 }
             </div>
 
-            <div className="px-0 sm:px-[20px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-[35px]">
+            <div className="px-0 sm:px-[20px] grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 w-full gap-4 my-[35px]">
                 <div className="">
                     <TextInputField
                         rightTextValue=""
                         type="text"
                         label="Active"
+                        readOnly={!isEditable}
                         //   value=""
                         bgColor={staffUser ? "#ffffff" : "#1e252b"}
                         border={staffUser ? "1px solid black" : "none"}
@@ -137,6 +138,7 @@ const AccountProfile = () => {
                         type="text"
                         label="Company"
                         placeholder="Company"
+                        readOnly={!isEditable}
                         name="company"
                         bgColor={staffUser ? "#ffffff" : "#1e252b"}
                         border={staffUser ? "1px solid black" : "none"}
@@ -150,6 +152,7 @@ const AccountProfile = () => {
                         label="Bank Name"
                         placeholder="Bank Name"
                         name="bankName"
+                        readOnly={!isEditable}
                         bgColor={staffUser ? "#ffffff" : "#1e252b"}
                         border={staffUser ? "1px solid black" : "none"}
                         className="mb-[15px]"
@@ -161,6 +164,7 @@ const AccountProfile = () => {
                         rightTextValue=""
                         type="text"
                         label="Bank Address"
+                        readOnly={!isEditable}
                         placeholder="Bank Address"
                         bgColor={staffUser ? "#ffffff" : "#1e252b"}
                         border={staffUser ? "1px solid black" : "none"}
@@ -173,6 +177,7 @@ const AccountProfile = () => {
                         rightTextValue=""
                         type="text"
                         label="Bank Account Name"
+                        readOnly={!isEditable}
                         placeholder="Bank Account Name"
                         bgColor={staffUser ? "#ffffff" : "#1e252b"}
                         border={staffUser ? "1px solid black" : "none"}
@@ -185,6 +190,7 @@ const AccountProfile = () => {
                         rightTextValue=""
                         type="text"
                         label="Account Number"
+                        readOnly={!isEditable}
                         placeholder="Account Number"
                         bgColor={staffUser ? "#ffffff" : "#1e252b"}
                         border={staffUser ? "1px solid black" : "none"}
@@ -197,6 +203,7 @@ const AccountProfile = () => {
                         rightTextValue=""
                         type="text"
                         label="Swift code/IBAN"
+                        readOnly={!isEditable}
                         placeholder="Swift code/IBAN"
                         bgColor={staffUser ? "#ffffff" : "#1e252b"}
                         border={staffUser ? "1px solid black" : "none"}
@@ -208,6 +215,7 @@ const AccountProfile = () => {
                         label="Company Logo"
                         bgColor={staffUser ? "#ffffff" : "#1e252b"}
                         border={staffUser ? "1px solid black" : "none"}
+                        readOnly={!isEditable}
                         className="mb-[15px]"
                         component={
                             <div className="flex justify-end w-full">
@@ -242,6 +250,7 @@ const AccountProfile = () => {
                         type="text"
                         label="ID"
                         placeholder="ID"
+                        readOnly={!isEditable}
                         bgColor={staffUser ? "#ffffff" : "#1e252b"}
                         border={staffUser ? "1px solid black" : "none"}
                         className="mb-[15px]"
@@ -266,6 +275,7 @@ const AccountProfile = () => {
                         type="text"
                         label="Last Name"
                         placeholder="Last Name"
+                        readOnly={!isEditable}
                         bgColor={staffUser ? "#ffffff" : "#1e252b"}
                         border={staffUser ? "1px solid black" : "none"}
                         className="mb-[15px]"
@@ -278,6 +288,7 @@ const AccountProfile = () => {
                         type="text"
                         label="Street Address"
                         placeholder="Street Address"
+                        readOnly={!isEditable}
                         bgColor={staffUser ? "#ffffff" : "#1e252b"}
                         border={staffUser ? "1px solid black" : "none"}
                         className="mb-[15px]"
@@ -290,6 +301,7 @@ const AccountProfile = () => {
                         type="text"
                         label="City"
                         placeholder="City"
+                        readOnly={!isEditable}
                         bgColor={staffUser ? "#ffffff" : "#1e252b"}
                         border={staffUser ? "1px solid black" : "none"}
                         className="mb-[15px]"
@@ -300,6 +312,7 @@ const AccountProfile = () => {
                         label="Country"
                         bgColor={staffUser ? "#ffffff" : "#1e252b"}
                         border={staffUser ? "1px solid black" : "none"}
+                        readOnly={!isEditable}
                         className="mb-[15px]"
                         onChange={handleChange}
                         component={
@@ -329,6 +342,7 @@ const AccountProfile = () => {
                         type="text"
                         label="Zip/Postal Code"
                         placeholder="Zip/Postal Code"
+                        readOnly={!isEditable}
                         bgColor={staffUser ? "#ffffff" : "#1e252b"}
                         border={staffUser ? "1px solid black" : "none"}
                         className="mb-[15px]"
@@ -340,6 +354,7 @@ const AccountProfile = () => {
                         name="state"
                         type="text"
                         label="State/Province"
+                        readOnly={!isEditable}
                         placeholder="State/Province"
                         bgColor={staffUser ? "#ffffff" : "#1e252b"}
                         border={staffUser ? "1px solid black" : "none"}
@@ -355,6 +370,7 @@ const AccountProfile = () => {
                         label="Seller Receives estipal payment"
                         bgColor={staffUser ? "#ffffff" : "#1e252b"}
                         border={staffUser ? "1px solid black" : "none"}
+                        readOnly={!isEditable}
                         className="mb-[15px]"
                         onChange={handleChange}
                         component={
@@ -406,6 +422,7 @@ const AccountProfile = () => {
                         name="email"
                         type="text"
                         label="Email"
+                        readOnly={!isEditable}
                         placeholder="Email"
                         bgColor={staffUser ? "#ffffff" : "#1e252b"}
                         border={staffUser ? "1px solid black" : "none"}
@@ -421,6 +438,7 @@ const AccountProfile = () => {
                         label="Mobile Number"
                         bgColor={staffUser ? "#ffffff" : "#1e252b"}
                         border={staffUser ? "1px solid black" : "none"}
+                        readOnly={!isEditable}
                         className="mb-[15px]"
                         onChange={handleChange}
                         component={
@@ -451,6 +469,7 @@ const AccountProfile = () => {
                         label="Currency of Trading"
                         bgColor={staffUser ? "#ffffff" : "#1e252b"}
                         border={staffUser ? "1px solid black" : "none"}
+                        readOnly={!isEditable}
                         className="mb-[15px]"
                         onChange={handleChange}
                         component={

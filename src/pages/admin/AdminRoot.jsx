@@ -19,9 +19,10 @@ import SellerRevenueAnalysis from "../staff/revenue_analysis/revenue_analysis_se
 import SellerPerformanceAnalysis from "../staff/performance_analysis/performance_analysis_seller/SellerPerformanceAnalysis";
 import AccountProfile from "../staff/account_profile/AccountProfile";
 import ManageStaff from "../staff/manage_staff/ManageStaff";
+import EstimatorEdit from "./estimators/EstimatorEdit";
 
 const AdminRoot = () => {
-  const staffUser = false;
+  const staffUser = true;
 
   return (
     <div>
@@ -30,10 +31,21 @@ const AdminRoot = () => {
         <Route path="/watch_details/watch_history" element={<WatchHistory />} />
         {!staffUser && <Route path="/staff/staff_user" element={<StaffUser />} />}
         <Route path="/home/readActivity/:id" element={<ReadActivity />} />
-        <Route path="/watch_details/watch_status/:id" element={<WatchStatus />} />
+        <Route
+          path="/watch_details/watch_status/:id"
+          element={<WatchStatus />}
+        />
 
         <Route path="/panel/settings" element={<Settings />} />
         <Route path="/estimator/estimator_user" element={<Estimators />} />
+        <Route
+          path="/estimator/estimator_edit/:id"
+          element={<EstimatorEdit />}
+        />
+        <Route
+          path="/estimator/estimator_user_create"
+          element={<EstimatorEdit />}
+        />
         <Route
           path="/analysis/revenue_analysis/admin"
           element={<AdminRevanueAnalysis />}
@@ -58,7 +70,7 @@ const AdminRoot = () => {
           path="/analysis/performance_analysis/estimator"
           element={<EstimatorPerformanceAnalysis />}
         />
-        <Route path="/seller/seller_edit" element={<SellerEdit />} />
+        <Route path="/seller/seller_edit/:id" element={<SellerEdit />} />
         <Route
           path="/seller/seller_user_create"
           element={<SellerUserCreate />}

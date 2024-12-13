@@ -14,7 +14,6 @@ import axiosInstance from "../../../services/index";
 import moment from "moment/moment";
 import useDebounce from "../../../components/common/UseDebounce";
 
-
 export const statusOptions = [
   "All",
   "Active Only",
@@ -37,14 +36,13 @@ const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 const ActivitiesTable = () => {
   const navigate = useNavigate();
-  const [data, setData] = useState([]);
   const [status, setStatus] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [sortField, setSortField] = useState(null);
   const [sortOrder, setSortOrder] = useState("asc");
   const [activitesData, setActivitiesData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [recordsPerPage, setRecordsPerPage] = useState(10);
+  const [recordsPerPage, setRecordsPerPage] = useState(20);
   const [totalRecords, setTotalRecords] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const debouncedSearchTerm = useDebounce(searchQuery, 500);
@@ -57,27 +55,38 @@ const ActivitiesTable = () => {
 
     // Sort data and update state
     const sortedData = sortData(activitesData, key, newOrder);
-    setData(sortedData);
+    setActivitiesData(sortedData);
   };
 
   const getActivityData = async () => {
     try {
-      const searchValue = debouncedSearchTerm || status ? JSON.stringify(debouncedSearchTerm ? { search: debouncedSearchTerm ? debouncedSearchTerm : "", watch_status: status } : { watch_status: status }) : '';
+      const searchValue =
+        debouncedSearchTerm || status
+          ? JSON.stringify(
+              debouncedSearchTerm
+                ? {
+                    search: debouncedSearchTerm ? debouncedSearchTerm : "",
+                    watch_status: status,
+                  }
+                : { watch_status: status }
+            )
+          : "";
 
       setIsLoading(true);
-      const response = await axiosInstance.get(`/adminActivity?page=${currentPage}&records_per_page=${recordsPerPage}&search=${searchValue}&sort_order=${sortOrder}`);
-      setData(response.payload.data)
-      setActivitiesData(response.payload.data)
-      setTotalRecords(response?.pager?.total_records)
-      setIsLoading(false)
+      const response = await axiosInstance.get(
+        `/adminActivity?page=${currentPage}&records_per_page=${recordsPerPage}&search=${searchValue}&sort_order=${sortOrder}`
+      );
+      setActivitiesData(response.payload.data);
+      setTotalRecords(response?.pager?.total_records);
+      setIsLoading(false);
     } catch (error) {
-      console.log("error", error)
-      setIsLoading(false)
+      console.log("error", error);
+      setIsLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
-    getActivityData()
+    getActivityData();
   }, [currentPage, sortOrder, debouncedSearchTerm, status]);
 
   const handlePageChange = (page) => {
@@ -93,7 +102,7 @@ const ActivitiesTable = () => {
 
         <div className="flex justify-between items-center mb-4 gap-4 sm:gap-8 flex-wrap ">
           <SelectDropdown
-            title=" Filter by Status :"
+            title="Filter by Status :"
             status={status}
             setStatus={setStatus}
             options={statusOptions}
