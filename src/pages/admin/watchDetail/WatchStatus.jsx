@@ -103,9 +103,7 @@ const WatchStatus = () => {
           </div>
           <div className="bg-[#1e252b] py-[12px] px-[24px] rounded items-center flex justify-between">
             <p className="text-white">Requested price</p>
-            <p className="text-white">
-              USD {watchDetailData?.counter_offer_price}
-            </p>
+            <p className="text-white">USD {watchDetailData?.watch_price}</p>
           </div>
           <div className="bg-[#1e252b] py-[12px] px-[24px] rounded items-center flex justify-between">
             <p className="text-white">Estimated price</p>
@@ -115,7 +113,10 @@ const WatchStatus = () => {
           </div>
           <div className="bg-[#1e252b] py-[12px] px-[24px] rounded items-center flex justify-between">
             <p className="text-white">Warranty date</p>
-            <p className="text-white">9 March 2022</p>
+            <p className="text-white">
+              {" "}
+              {moment.unix(watchDetailData?.updated_on).format("MMM DD,YYYY")}
+            </p>
           </div>
           <div className="bg-[#1e252b] py-[12px] px-[24px] rounded items-center flex justify-between">
             <p className="text-white">Box</p>

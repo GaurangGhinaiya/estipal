@@ -239,7 +239,7 @@ const ActivitiesTable = () => {
                     </Tooltip>
                   </td>
                   <td className="px-[18px] py-[10px] text-[#ffff] text-center">
-                    {activity?.user1_id && `UCA${activity?.user1_id}`}
+                    {activity?.user2_id && `UCA${activity?.user2_id}`}
                   </td>
                   <td className="px-[18px] py-[10px] text-[#ffff] whitespace-nowrap cursor-pointer">
                     <Tooltip
@@ -269,12 +269,12 @@ const ActivitiesTable = () => {
                   </td>
                   <td className="px-[18px] py-[10px] text-[#ffff] text-center whitespace-nowrap">
                     {`${
-                      activity.quot_receive_date
-                        ? moment()
-                            .unix(activity.quot_receive_date)
-                            .format("DD-MM-YYYY")
+                      activity.created_on
+                        ? moment
+                            .unix(activity.created_on)
+                            .format("MMMM D, YYYY h:mm A")
                         : "-"
-                    }  `}
+                    }`}
                   </td>
                 </tr>
               ))

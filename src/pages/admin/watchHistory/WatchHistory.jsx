@@ -268,7 +268,7 @@ const WatchHistory = () => {
                       navigate(`/admin/watch_details/watch_status/${item?.id}`)
                     }
                   >
-                    {item?.compnay_name}
+                    {item?.addedByDetail?.company_name}
                   </td>
                   <td
                     className="px-[18px] py-[10px] text-[#ffff] text-center whitespace-nowrap cursor-pointer"
@@ -276,7 +276,7 @@ const WatchHistory = () => {
                       navigate(`/admin/watch_details/watch_status/${item?.id}`)
                     }
                   >
-                    USD {item?.counter_offer_price} / USD
+                    USD {item?.watch_price} / USD
                     {item?.estimated_watch_price}
                   </td>
                   <td

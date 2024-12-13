@@ -17,26 +17,43 @@ import axiosInstance from "../../../services";
 import toast from "react-hot-toast";
 import AvailabilitySchedule from "./components/AvailabilitySchedule";
 import { LoadingButton } from "@mui/lab";
-import { fetchCountryList, fetchStateList } from "../../../utils/apiUtils";
+import {
+  fetchCountryList,
+  fetchNextEstimatorId,
+  fetchStateList,
+} from "../../../utils/apiUtils";
 
 const EstimatorEdit = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-
   const location = useLocation();
-  const actionType = location.state.type;
+  const actionType = location.state?.type || "add";
+
+  const today = new Date();
+  const formattedDate = today.toISOString().split("T")[0];
+
   // State variables
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
-  const [estimatorData, setEstimatorData] = useState(null);
   const [isEditable, setIsEditable] = useState(false);
   const [loading, setLoading] = useState(false);
   const [selectPhoneCountry, setSelectPhoneCountry] = useState("IN");
+  const [estimatorData, setEstimatorData] = useState(null);
   const [selectCountry, setSelectCountry] = useState("IN");
   const [phone, setPhone] = useState("");
   const [selectedYears, setSelectedYears] = useState([]);
   const [selectedBrands, setSelectedBrands] = useState([]);
-  const [availabilitySchedule, setAvailabilitySchedule] = useState([]);
+  const [availabilitySchedule, setAvailabilitySchedule] = useState(
+    Array(7).fill({
+      week_id: 0,
+      from_time_1: "",
+      to_time_1: "",
+      from_time_2: "",
+      to_time_2: "",
+      from_time_3: "",
+      to_time_3: "",
+    })
+  );
   const [formData, setFormData] = useState({
     active: 0,
     id: "",
@@ -52,25 +69,27 @@ const EstimatorEdit = () => {
     email: "",
     cnt_code: "",
     cnt_no: "",
-    created_on: "",
+    created_on: formattedDate,
     bank_account_name: "",
     bank_swift: "",
     account_number: "",
     bank_address: "",
     bank_name: "",
-    currency: "",
+    currency: "USD",
     year_of_production: "",
-    commission: "",
+    commission: "10",
     timezone: "",
     estimatorDayTimeDurations: [],
+    notify_link_flag: 0,
   });
 
+  console.log("formData: ", formData);
   // Fetch country data on mount
   useEffect(() => {
     const loadCountries = async () => {
       try {
         const countryData = await fetchCountryList();
-        setCountries(countryData || []);
+        setCountries(countryData);
       } catch (error) {
         console.error("Failed to fetch countries:", error);
       }
@@ -80,18 +99,19 @@ const EstimatorEdit = () => {
 
   // Fetch state data when the selected country changes
   useEffect(() => {
-    const fetchStates = async () => {
-      try {
-        const stateData = await fetchStateList(selectCountry);
-        setStates(stateData || []);
-      } catch (error) {
-        console.error("Failed to fetch states:", error);
-      }
-    };
-    if (selectCountry) fetchStates();
+    if (selectCountry) {
+      const fetchStatesData = async () => {
+        try {
+          const stateData = await fetchStateList(selectCountry);
+          setStates(stateData);
+        } catch (error) {
+          console.error("Failed to fetch states:", error);
+        }
+      };
+      fetchStatesData();
+    }
   }, [selectCountry]);
 
-  // Update phone and country code in formData when phone or phone country changes
   useEffect(() => {
     const formattedPhone = formatPhoneNumber(phone);
     const dialCode = getCountryCallingCode(selectPhoneCountry);
@@ -103,54 +123,69 @@ const EstimatorEdit = () => {
     }));
   }, [phone, selectPhoneCountry]);
 
-  // Fetch estimator details by ID
+  // Fetch estimator details by ID only in edit mode
   useEffect(() => {
-    const getDetailById = async () => {
-      try {
-        const response = await axiosInstance.get(`/estimator/detail?id=${id}`);
-        const estimator = response?.payload?.data;
+    const loadDetails = async () => {
+      if (actionType === "edit") {
+        try {
+          const response = await axiosInstance.get(
+            `/estimator/detail?id=${id}`
+          );
+          const estimator = response.payload?.data;
 
-        setEstimatorData(estimator);
-        setFormData({
-          ...formData,
-          active: estimator?.active,
-          id: `SCA${estimator?.id}`,
-          company_name: estimator?.company_name,
-          first_name: estimator?.first_name,
-          last_name: estimator?.last_name,
-          address: estimator?.address,
-          city: estimator?.city,
-          country: estimator?.country,
-          zip: estimator?.zip,
-          state: estimator?.state,
-          req_validate: estimator?.req_validate,
-          email: estimator?.email,
-          cnt_code: estimator?.cnt_code,
-          cnt_no: estimator?.cnt_no,
-          created_on: moment.unix(estimator?.created_on).format("MMM DD, YYYY"),
-          bank_account_name: estimator?.bank_account_name,
-          bank_swift: estimator?.bank_swift,
-          account_number: estimator?.account_number,
-          bank_address: estimator?.bank_address,
-          bank_name: estimator?.bank_name,
-          currency: estimator?.currency,
-          year_of_production: estimator?.year_of_production,
-          commission: estimator?.commission,
-          timezone: estimator?.timezone,
-        });
-        setSelectedYears(
-          estimator?.year_of_production?.split(",").map(Number) || []
-        );
-        setSelectedBrands(estimator?.brands?.split(",") || []);
-        setPhone(`+${estimator?.cnt_code} ${estimator?.cnt_no}`);
-        setAvailabilitySchedule(estimator?.estimatorDayTimeDurations || []);
-        setSelectCountry(estimator?.country);
-      } catch (error) {
-        console.error("Error fetching estimator details:", error);
+          setFormData({
+            ...formData,
+            active: estimator?.active,
+            id: `SCA${estimator?.id}`,
+            company_name: estimator?.company_name,
+            first_name: estimator?.first_name,
+            last_name: estimator?.last_name,
+            address: estimator?.address,
+            city: estimator?.city,
+            country: estimator?.country,
+            zip: estimator?.zip,
+            state: estimator?.state,
+            req_validate: estimator?.req_validate,
+            email: estimator?.email,
+            cnt_code: estimator?.cnt_code,
+            cnt_no: estimator?.cnt_no,
+            created_on: moment
+              .unix(estimator?.created_on)
+              .format("MMM DD, YYYY"),
+            bank_account_name: estimator?.bank_account_name,
+            bank_swift: estimator?.bank_swift,
+            account_number: estimator?.account_number,
+            bank_address: estimator?.bank_address,
+            bank_name: estimator?.bank_name,
+            currency: estimator?.currency,
+            year_of_production: estimator?.year_of_production,
+            commission: estimator?.commission,
+            timezone: estimator?.timezone,
+          });
+
+          setEstimatorData(estimator);
+          setSelectedYears(
+            estimator?.year_of_production?.split(",").map(Number) || []
+          );
+          setSelectedBrands(estimator?.brands?.split(",") || []);
+          setPhone(`+${estimator?.cnt_code} ${estimator?.cnt_no}`);
+          setAvailabilitySchedule(estimator?.estimatorDayTimeDurations || []);
+          setSelectCountry(estimator?.country);
+        } catch (error) {
+          console.error("Error fetching estimator details:", error);
+        }
+      } else {
+        try {
+          const nextId = await fetchNextEstimatorId();
+          setFormData((prev) => ({ ...prev, id: nextId }));
+        } catch (error) {
+          console.error("Error fetching next estimator ID:", error);
+        }
+        setIsEditable(true);
       }
     };
-    getDetailById();
-  }, [id]);
+    loadDetails();
+  }, [id, actionType]);
 
   // Synchronize derived values with formData
   useEffect(() => {
@@ -181,9 +216,17 @@ const EstimatorEdit = () => {
   const save = async () => {
     setLoading(true);
     try {
-      const response = await axiosInstance.put(`/estimator?id=${id}`, formData);
+      const endpoint =
+        actionType === "edit" ? `/estimator?id=${id}` : `/estimator`;
+      const method = actionType === "edit" ? "put" : "post";
+
+      const response = await axiosInstance[method](endpoint, formData);
       if (response?.status === 200) {
-        toast.success("Estimator updated successfully!");
+        const message =
+          actionType === "edit"
+            ? "Estimator updated successfully!"
+            : "Estimator added successfully!";
+        toast.success(message);
         navigate("/admin/estimator/estimator_user");
       }
     } catch (error) {
@@ -192,7 +235,6 @@ const EstimatorEdit = () => {
       setLoading(false);
     }
   };
-
   return (
     <div className="mx-auto px-[20px] sm:px-[45px] py-[20px]">
       <div className="flex justify-between flex-wrap gap-2">
@@ -228,21 +270,25 @@ const EstimatorEdit = () => {
               </Button>
             </>
           ) : (
-            <Button
-              variant="contained"
-              className="!bg-[#3c8dbc] !normal-case !py-[5px] sm:!py-[10px] sm:!px-[40px] !px-[15px] !rounded-[50px]"
-              onClick={() => setIsEditable(true)}
-            >
-              Edit Estimator
-            </Button>
+            actionType !== "add" && (
+              <Button
+                variant="contained"
+                className="!bg-[#3c8dbc] !normal-case !py-[5px] sm:!py-[10px] sm:!px-[40px] !px-[15px] !rounded-[50px]"
+                onClick={() => setIsEditable(true)}
+              >
+                Edit Estimator
+              </Button>
+            )
           )}
 
-          <Button
-            variant="contained"
-            className="!bg-[#fea31e] !normal-case !py-[5px] sm:!py-[10px] sm:!px-[40px] !px-[15px] !rounded-[50px]"
-          >
-            Reset Password
-          </Button>
+          {actionType !== "add" && (
+            <Button
+              variant="contained"
+              className="!bg-[#fea31e] !normal-case !py-[5px] sm:!py-[10px] sm:!px-[40px] !px-[15px] !rounded-[50px]"
+            >
+              Reset Password
+            </Button>
+          )}
         </div>
       </div>
 
@@ -282,6 +328,7 @@ const EstimatorEdit = () => {
             rightTextValue=""
             type="text"
             label="Active"
+            placeholder="Active"
             //   value=""
             readOnly={!isEditable}
             bgColor={"#1e252b"}
@@ -308,6 +355,7 @@ const EstimatorEdit = () => {
             name="id"
             type="text"
             label="ID"
+            placeholder="ID"
             readOnly={!isEditable}
             bgColor={"#1e252b"}
             className="mb-[15px]"
@@ -318,6 +366,7 @@ const EstimatorEdit = () => {
             rightTextValue=""
             type="text"
             label="Company"
+            placeholder="Company"
             name="company_name"
             readOnly={!isEditable}
             bgColor={"#1e252b"}
@@ -330,6 +379,7 @@ const EstimatorEdit = () => {
             rightTextValue=""
             type="text"
             label="First Name"
+            placeholder="First Name"
             readOnly={!isEditable}
             bgColor={"#1e252b"}
             className="mb-[15px]"
@@ -341,6 +391,7 @@ const EstimatorEdit = () => {
             name="last_name"
             type="text"
             label="Last Name"
+            placeholder="Last Name"
             readOnly={!isEditable}
             bgColor={"#1e252b"}
             className="mb-[15px]"
@@ -353,7 +404,8 @@ const EstimatorEdit = () => {
             value={formData.address}
             name="address"
             type="text"
-            label="Street Address"
+            label="Address"
+            placeholder="Address"
             readOnly={!isEditable}
             bgColor={"#1e252b"}
             className="mb-[15px]"
@@ -365,6 +417,7 @@ const EstimatorEdit = () => {
             name="city"
             type="text"
             label="City"
+            placeholder="City"
             readOnly={!isEditable}
             bgColor={"#1e252b"}
             className="mb-[15px]"
@@ -373,6 +426,7 @@ const EstimatorEdit = () => {
           <TextInputField
             rightTextValue=""
             label="Country"
+            placeholder="Country"
             bgColor={"#1e252b"}
             className="mb-[15px]"
             component={
@@ -387,7 +441,7 @@ const EstimatorEdit = () => {
                     readOnly={!isEditable}
                     onChange={handleCountryChange}
                   >
-                    <option disabled selected>
+                    <option disabled selected value={""}>
                       Open to select country
                     </option>
                     {countries.map((item, index) => (
@@ -406,6 +460,7 @@ const EstimatorEdit = () => {
             name="zip"
             type="text"
             label="Zip/Postal Code"
+            placeholder="Zip"
             readOnly={!isEditable}
             bgColor={"#1e252b"}
             className="mb-[15px]"
@@ -413,6 +468,7 @@ const EstimatorEdit = () => {
           />
           <TextInputField
             label="State/Province"
+            placeholder="State/Province"
             bgColor="#1e252b"
             className="mb-[15px]"
             component={
@@ -448,6 +504,7 @@ const EstimatorEdit = () => {
             rightTextValue=""
             type="text"
             label="Requires validation"
+            placeholder="Requires validation"
             //   value=""
             readOnly={!isEditable}
             bgColor={"#1e252b"}
@@ -474,16 +531,18 @@ const EstimatorEdit = () => {
             name="email"
             type="text"
             label="Email"
-            readOnly={true}
+            placeholder="Email"
+            readOnly={actionType === "add" ? false : true}
             bgColor={"#1e252b"}
             className="mb-[15px] "
-            inputClass="cursor-not-allowed"
+            inputClass=""
             onChange={handleChange}
           />
 
           <TextInputField
             rightTextValue=""
             label="Mobile Number"
+            placeholder="Mobile Number"
             readOnly={!isEditable}
             bgColor={"#1e252b"}
             className="mb-[15px]"
@@ -519,6 +578,7 @@ const EstimatorEdit = () => {
             name="created_on"
             type="text"
             label="Added on"
+            placeholder="Added on"
             readOnly={true}
             bgColor={"#1e252b"}
             inputClass="cursor-not-allowed"
@@ -536,6 +596,7 @@ const EstimatorEdit = () => {
             rightTextValue=""
             type="text"
             label="Bank Account Name"
+            placeholder="Bank Account Name"
             readOnly={!isEditable}
             bgColor={"#1e252b"}
             className="mb-[15px]"
@@ -548,6 +609,7 @@ const EstimatorEdit = () => {
             rightTextValue=""
             type="text"
             label="Swift code/IBAN"
+            placeholder="Swift code/IBAN"
             readOnly={!isEditable}
             bgColor={"#1e252b"}
             className="mb-[15px]"
@@ -562,6 +624,7 @@ const EstimatorEdit = () => {
             rightTextValue=""
             type="text"
             label="Account Number"
+            placeholder="Account Number"
             readOnly={!isEditable}
             bgColor={"#1e252b"}
             className="mb-[15px]"
@@ -574,6 +637,7 @@ const EstimatorEdit = () => {
             rightTextValue=""
             type="text"
             label="Bank Address"
+            placeholder="Bank Address"
             readOnly={!isEditable}
             bgColor={"#1e252b"}
             className="mb-[15px]"
@@ -587,6 +651,7 @@ const EstimatorEdit = () => {
             rightTextValue=""
             type="text"
             label="Bank Name"
+            placeholder="Bank Name"
             name="bank_name"
             readOnly={!isEditable}
             bgColor={"#1e252b"}
@@ -602,6 +667,7 @@ const EstimatorEdit = () => {
           <TextInputField
             rightTextValue=""
             label="Provide estimate in"
+            placeholder="Provide estimate in"
             readOnly={!isEditable}
             bgColor={"#1e252b"}
             className="mb-[15px]"
@@ -635,18 +701,17 @@ const EstimatorEdit = () => {
             rightTextValue=""
             type="text"
             label="Year of production"
+            placeholder="Year of production"
             readOnly={!isEditable}
             bgColor={"#1e252b"}
             className="mb-[15px]"
             component={
               <div className="flex justify-end items-center w-full">
-                {formData?.year_of_production && (
-                  <YearDropdown
-                    disabled={!isEditable}
-                    selectedYears={selectedYears}
-                    setSelectedYears={setSelectedYears}
-                  />
-                )}
+                <YearDropdown
+                  disabled={!isEditable}
+                  selectedYears={selectedYears}
+                  setSelectedYears={setSelectedYears}
+                />
               </div>
             }
           />
@@ -656,9 +721,10 @@ const EstimatorEdit = () => {
           <TextInputField
             value={formData.commission}
             name="commission"
-            rightTextValue=""
+            rightTextValue="%"
             type="text"
             label="Commission (%)"
+            placeholder="Commission"
             readOnly={!isEditable}
             bgColor={"#1e252b"}
             className="mb-[15px]"
@@ -666,9 +732,8 @@ const EstimatorEdit = () => {
           />
 
           <TextInputField
-            rightTextValue=""
             label="Timezone"
-            readOnly={!isEditable}
+            placeholder="Timezone"
             bgColor={"#1e252b"}
             className="mb-[15px]"
             component={
@@ -676,15 +741,19 @@ const EstimatorEdit = () => {
                 <select
                   name="timezone"
                   id="timezone"
-                  className="bg-[#1e252b] max-sm:max-w-[100px] max-w-[250px] "
+                  className="bg-[#1e252b] max-sm:max-w-[100px] max-w-[250px]"
                   style={{ textAlignLast: "right" }}
                   value={formData.timezone}
-                  readOnly={!isEditable}
                   onChange={handleChange}
                   disabled={!isEditable}
                 >
+                  <option disabled value="">
+                    Open to select timezone
+                  </option>
                   {timeZone.map((item, index) => (
-                    <option value={item.value}>{item.label}</option>
+                    <option key={item.value} value={item.value}>
+                      {item.label}
+                    </option>
                   ))}
                 </select>
               </div>
@@ -698,6 +767,7 @@ const EstimatorEdit = () => {
             rightTextValue=""
             type="text"
             label="Supported brands"
+            placeholder="Supported brands"
             readOnly={!isEditable}
             bgColor={"#1e252b"}
             className="mb-[15px]"
