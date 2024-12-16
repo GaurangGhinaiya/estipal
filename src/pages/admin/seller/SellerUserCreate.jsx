@@ -1,49 +1,118 @@
 import { Button } from "@mui/material";
-import React, { useState } from "react";
-import PhoneInput from "react-phone-number-input";
+import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import PhoneInput, {
+  formatPhoneNumber,
+  getCountryCallingCode,
+} from "react-phone-number-input";
 import "react-phone-number-input/style.css";
+import { useNavigate } from "react-router-dom";
 import CustomSwitch from "../../../components/common/CustomSwitch";
 import TextInputField from "../../../components/common/TextInputField";
-import countries from "../../../constant/country.json";
 import currency from "../../../constant/currency.json";
+import axiosInstance from "../../../services";
+import {
+  fetchCountryList,
+  fetchNextSellerId,
+  fetchStateList,
+} from "../../../utils/apiUtils";
 import CommissionPlan from "./components/Commission";
-import { useNavigate } from "react-router-dom";
 
 const SellerUserCreate = () => {
   const navigate = useNavigate();
-  const [isEditable, setIsEditable] = useState(false);
+  const [isEditable, setIsEditable] = useState(true);
+  const [phone, setPhone] = useState("");
+  const [selectPhoneCountry, setSelectPhoneCountry] = useState("IN");
+  const [countries, setCountries] = useState([]);
+  const [states, setStates] = useState([]);
+  const [selectCountry, setSelectCountry] = useState("IN");
+  const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     active: false,
-    company: "",
-    bankName: "",
-    bankAddress: "",
-    bankAccountName: "",
-    accountNumber: "",
-    swiftCode: "",
+    company_name: "",
+    bank_name: "",
+    bank_address: "",
+    bank_account: "",
+    account_number: "",
+    bank_swift: "",
     id: "",
-    firstName: "",
-    lastName: "",
-    streetAddress: "",
+    first_name: "",
+    last_name: "",
+    address: "",
     city: "",
     state: "",
-    zipCode: "",
+    zip: "",
     country: "",
     email: "",
     username: "",
-    dial: "",
-    mobileNumber: "",
+    cnt_code: "",
+    cnt_no: "",
     currency: "USD",
-    tier: "",
-    signUpDate: "",
-    companyLogo: null,
+    payment_tier: "",
+    created_on: "",
+    seller_logo: null,
     companyLogoPreview: "",
+    staff_notify_flag: 0,
   });
+
+  // Fetch country data on mount
+  useEffect(() => {
+    const loadCountries = async () => {
+      try {
+        const countryData = await fetchCountryList();
+        setCountries(countryData);
+      } catch (error) {
+        console.error("Failed to fetch countries:", error);
+      }
+    };
+    loadCountries();
+  }, []);
+
+  // Fetch state data when the selected country changes
+  useEffect(() => {
+    if (selectCountry) {
+      const fetchStatesData = async () => {
+        try {
+          const stateData = await fetchStateList(selectCountry);
+          setStates(stateData);
+        } catch (error) {
+          console.error("Failed to fetch states:", error);
+        }
+      };
+      fetchStatesData();
+    }
+  }, [selectCountry]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+
+  useEffect(() => {
+    const formattedPhone = formatPhoneNumber(phone);
+    const dialCode = getCountryCallingCode(selectPhoneCountry);
+
+    setFormData((prev) => ({
+      ...prev,
+      cnt_code: dialCode,
+      cnt_no: formattedPhone,
+    }));
+  }, [phone, selectPhoneCountry]);
+
+  useEffect(() => {
+    const loadId = async () => {
+      try {
+        const nextId = await fetchNextSellerId();
+        setFormData((prev) => ({ ...prev, id: nextId }));
+      } catch (error) {
+        console.error("Error fetching next estimator ID:", error);
+      }
+      setIsEditable(true);
+    };
+
+    loadId();
+  }, []);
 
   // Handle file upload for the logo
   const handleFileUpload = (e) => {
@@ -51,9 +120,59 @@ const SellerUserCreate = () => {
     if (file) {
       setFormData({
         ...formData,
-        companyLogo: file,
+        seller_logo: file,
         companyLogoPreview: URL.createObjectURL(file),
       });
+    }
+  };
+
+  // Event handlers
+  const handleCountryChange = (e) => {
+    const country = e.target.value;
+    setFormData((prev) => ({ ...prev, country, state: "" }));
+    setSelectCountry(country);
+  };
+
+  const handleStateChange = (e) => {
+    setFormData((prev) => ({ ...prev, state: e.target.value }));
+  };
+
+  const save = async () => {
+    setLoading(true);
+
+    // Create FormData object to hold the data
+    const formDataToSend = new FormData();
+
+    // Append non-file fields to FormData
+    Object.keys(formData).forEach((key) => {
+      if (key !== "seller_logo" && formData[key]) {
+        // Exclude seller_logo as it's a file
+        formDataToSend.append(key, formData[key]);
+      }
+    });
+
+    // Append the seller_logo file if present
+    if (formData.seller_logo) {
+      formDataToSend.append("seller_logo", formData.seller_logo);
+    }
+
+    try {
+      const response = await axiosInstance["post"](`/sellers`, formDataToSend, {
+        headers: {
+          "Content-Type": "multipart/form-data", // Ensure that the request is treated as file upload
+        },
+      });
+
+      if (response?.status === 200) {
+        const message = "Estimator added successfully!";
+        toast.success(message);
+        navigate("/admin/staff/staff_user");
+      }
+    } catch (error) {
+      console.log("error: ", error);
+      toast.error(error?.response?.data?.payload?.error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -70,7 +189,7 @@ const SellerUserCreate = () => {
           <Button
             variant="contained"
             className="!bg-[#00a65a] !normal-case !py-[5px] sm:!py-[10px] sm:!px-[40px] !px-[15px] !rounded-[50px]"
-            onClick={() => navigate("/admin/staff/staff_user")}
+            onClick={save}
           >
             Save
           </Button>
@@ -108,30 +227,30 @@ const SellerUserCreate = () => {
             }
           />
           <TextInputField
-            value={formData.company}
+            value={formData.company_name}
             rightTextValue=""
             type="text"
             label="Company"
             placeholder="Company"
-            name="company"
+            name="company_name"
             bgColor={"#1e252b"}
             className="mb-[15px]"
             onChange={handleChange}
           />
           <TextInputField
-            value={formData.bankName}
+            value={formData.bank_name}
             rightTextValue=""
             type="text"
             label="Bank Name"
             placeholder="Bank Name"
-            name="bankName"
+            name="bank_name"
             bgColor={"#1e252b"}
             className="mb-[15px]"
             onChange={handleChange}
           />
           <TextInputField
-            value={formData.bankAddress}
-            name="bankAddress"
+            value={formData.bank_address}
+            name="bank_address"
             rightTextValue=""
             type="text"
             label="Bank Address"
@@ -141,8 +260,8 @@ const SellerUserCreate = () => {
             onChange={handleChange}
           />
           <TextInputField
-            value={formData.bankAccountName}
-            name="bankAccountName"
+            value={formData.bank_account}
+            name="bank_account"
             rightTextValue=""
             type="text"
             label="Bank Account Name"
@@ -152,8 +271,8 @@ const SellerUserCreate = () => {
             onChange={handleChange}
           />
           <TextInputField
-            value={formData.accountNumber}
-            name="accountNumber"
+            value={formData.account_number}
+            name="account_number"
             rightTextValue=""
             type="text"
             label="Account Number"
@@ -163,8 +282,8 @@ const SellerUserCreate = () => {
             onChange={handleChange}
           />
           <TextInputField
-            value={formData.swiftCode}
-            name="swiftCode"
+            value={formData.bank_swift}
+            name="bank_swift"
             rightTextValue=""
             type="text"
             label="Swift code/IBAN"
@@ -210,14 +329,15 @@ const SellerUserCreate = () => {
             name="id"
             type="text"
             label="ID"
+            readOnly={true}
             placeholder="ID"
             bgColor={"#1e252b"}
             className="mb-[15px]"
             onChange={handleChange}
           />
           <TextInputField
-            value={formData.firstName}
-            name="firstName"
+            value={formData.first_name}
+            name="first_name"
             rightTextValue=""
             type="text"
             label="First Name"
@@ -228,8 +348,8 @@ const SellerUserCreate = () => {
           />
           <TextInputField
             rightTextValue=""
-            value={formData.lastName}
-            name="lastName"
+            value={formData.last_name}
+            name="last_name"
             type="text"
             label="Last Name"
             placeholder="Last Name"
@@ -239,8 +359,8 @@ const SellerUserCreate = () => {
           />
           <TextInputField
             rightTextValue=""
-            value={formData.streetAddress}
-            name="streetAddress"
+            value={formData.address}
+            name="address"
             type="text"
             label="Street Address"
             placeholder="Street Address"
@@ -262,33 +382,38 @@ const SellerUserCreate = () => {
           <TextInputField
             rightTextValue=""
             label="Country"
+            placeholder="Country"
             bgColor={"#1e252b"}
             className="mb-[15px]"
-            onChange={handleChange}
             component={
               <div className="flex w-full justify-end">
-                <select
-                  name="country"
-                  id="country"
-                  className="bg-[#1e252b] max-sm:w-[100px]"
-                  style={{ textAlignLast: "right" }}
-                  value={formData.country}
-                  onChange={handleChange}
-                >
-                  <option disabled selected value={""}>
-                    Open to select country
-                  </option>
-                  {countries.map((item, index) => (
-                    <option value={item.code}>{item.name}</option>
-                  ))}
-                </select>
+                {isEditable ? (
+                  <select
+                    name="country"
+                    id="country"
+                    className="bg-[#1e252b] max-sm:w-[100px]"
+                    style={{ textAlignLast: "right" }}
+                    value={formData.country}
+                    readOnly={!isEditable}
+                    onChange={handleCountryChange}
+                  >
+                    <option disabled selected value={""}>
+                      Open to select country
+                    </option>
+                    {countries.map((item, index) => (
+                      <option value={item.iso}>{item.name}</option>
+                    ))}
+                  </select>
+                ) : (
+                  <p>{formData.country}</p>
+                )}
               </div>
             }
           />
           <TextInputField
             rightTextValue=""
-            value={formData.zipCode}
-            name="zipCode"
+            value={formData.zip}
+            name="zip"
             type="text"
             label="Zip/Postal Code"
             placeholder="Zip/Postal Code"
@@ -297,22 +422,43 @@ const SellerUserCreate = () => {
             onChange={handleChange}
           />
           <TextInputField
-            rightTextValue=""
-            value={formData.state}
-            name="state"
-            type="text"
             label="State/Province"
             placeholder="State/Province"
-            bgColor={"#1e252b"}
+            bgColor="#1e252b"
             className="mb-[15px]"
-            onChange={handleChange}
+            component={
+              <div className="flex w-full justify-end">
+                {isEditable ? (
+                  <select
+                    name="state"
+                    id="state"
+                    className="bg-[#1e252b] max-sm:w-[100px]"
+                    style={{ textAlignLast: "right" }}
+                    value={formData.state}
+                    onChange={handleStateChange}
+                    disabled={!isEditable}
+                  >
+                    <option disabled value="">
+                      Open to select state
+                    </option>
+                    {states.map((item) => (
+                      <option key={item.id} value={item.state}>
+                        {item.state}
+                      </option>
+                    ))}
+                  </select>
+                ) : (
+                  <p>{formData.state}</p>
+                )}
+              </div>
+            }
           />
         </div>
 
         <div className="">
           <TextInputField
             rightTextValue=""
-            value={formData.tier}
+            value={formData.payment_tier}
             label="Seller Receives estipal payment"
             bgColor={"#1e252b"}
             className="mb-[15px]"
@@ -326,9 +472,9 @@ const SellerUserCreate = () => {
                       id="tier1"
                       name="tier"
                       class="mr-2 !cursor-pointer"
-                      checked={formData.tier == "Tier 1"}
+                      checked={formData.payment_tier == "Tier 1"}
                       onChange={() =>
-                        setFormData({ ...formData, tier: "Tier 1" })
+                        setFormData({ ...formData, payment_tier: "Tier 1" })
                       }
                     />
                     <label
@@ -344,9 +490,9 @@ const SellerUserCreate = () => {
                       id="tier2"
                       name="tier"
                       class="mr-2 !cursor-pointer"
-                      checked={formData.tier == "Tier 2"}
+                      checked={formData.payment_tier == "Tier 2"}
                       onChange={() =>
-                        setFormData({ ...formData, tier: "Tier 2" })
+                        setFormData({ ...formData, payment_tier: "Tier 2" })
                       }
                     />
                     <label
@@ -374,8 +520,6 @@ const SellerUserCreate = () => {
 
           <TextInputField
             rightTextValue=""
-            value={formData.mobileNumber}
-            name="mobileNumber"
             type="text"
             label="Mobile Number"
             bgColor={"#1e252b"}
@@ -383,20 +527,25 @@ const SellerUserCreate = () => {
             onChange={handleChange}
             component={
               <div className="flex justify-end w-full">
-                <PhoneInput
-                  international
-                  defaultCountry="GB"
-                  countryCallingCodeEditable={false}
-                  className="mt-1 block w-auto rounded-md p-3 max-sm:flex-wrap"
-                  placeholder="Enter phone number"
-                  style={{
-                    backgroundColor: "#1e252b",
-                  }}
-                  value={formData.mobileNumber}
-                  onChange={(value) => {
-                    setFormData({ ...formData, mobileNumber: value });
-                  }}
-                />
+                {isEditable ? (
+                  <PhoneInput
+                    international
+                    defaultCountry="IN"
+                    countryCallingCodeEditable={false}
+                    className="mt-1 block w-auto rounded-md p-3 max-sm:flex-wrap"
+                    placeholder="Enter phone number"
+                    style={{
+                      backgroundColor: "#1e252b",
+                    }}
+                    value={phone}
+                    onChange={(value) => {
+                      setPhone(value);
+                    }}
+                    onCountryChange={(v) => setSelectPhoneCountry(v)}
+                  />
+                ) : (
+                  <p>{phone}</p>
+                )}
               </div>
             }
           />

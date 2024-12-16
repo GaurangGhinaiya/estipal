@@ -118,7 +118,7 @@ const ActivitiesTable = () => {
       </div>
 
       <div className="w-[95.5%] overflow-auto mx-auto pt-[10px]">
-        {staffUser ?
+        {staffUser ? (
           <table className="table-auto w-full text-left">
             <thead style={{ borderBottom: "2px solid #111111" }}>
               <tr>
@@ -154,16 +154,21 @@ const ActivitiesTable = () => {
                   <th
                     key={column.key}
                     onClick={
-                      column.isSortable ? () => handleSort(column.key) : undefined
+                      column.isSortable
+                        ? () => handleSort(column.key)
+                        : undefined
                     }
-                    className={`p-2 dark:text-[#ffff] text-black text-center ${column.isSortable ? "cursor-pointer" : ""
-                      } ${column.isSortable && sortField === column.key
+                    className={`p-2 dark:text-[#ffff] text-black text-center ${
+                      column.isSortable ? "cursor-pointer" : ""
+                    } ${
+                      column.isSortable && sortField === column.key
                         ? "active-sorting"
                         : ""
-                      } ${column.isSortable && sortField !== column.key
+                    } ${
+                      column.isSortable && sortField !== column.key
                         ? "sorting"
                         : ""
-                      }`}
+                    }`}
                   >
                     {column.label}{" "}
                     {column.isSortable &&
@@ -178,20 +183,23 @@ const ActivitiesTable = () => {
               </tr>
             </thead>
             <tbody>
-              {isLoading && activitesData?.length === 0 ?
+              {isLoading && activitesData?.length === 0 ? (
                 <tr>
                   <td colSpan={12} className="py-[200px] px-4  text-center">
                     <CircularProgress />
                   </td>
                 </tr>
-                :
-                (activitesData?.length > 0 ? activitesData?.map((activity, index) => (
+              ) : activitesData?.length > 0 ? (
+                activitesData?.map((activity, index) => (
                   <tr
                     key={index}
                     className="border-b border-[#202b34]"
-                    onClick={() => navigate(`/admin/home/readActivity/${activity?.watch_details?.serial_no}`)}
+                    onClick={() =>
+                      navigate(
+                        `/admin/home/readActivity/${activity?.watch_details?.serial_no}`
+                      )
+                    }
                   >
-                  
                     <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center">
                       {" "}
                       <Checkbox
@@ -202,24 +210,43 @@ const ActivitiesTable = () => {
                           />
                         }
                         checkedIcon={
-                          <GradeIcon sx={{ color: "#ff9300", fontSize: "21px" }} />
+                          <GradeIcon
+                            sx={{ color: "#ff9300", fontSize: "21px" }}
+                          />
                         }
                       />
                     </td>
-                   
+
                     <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black cursor-pointer">
-                      <Tooltip title={activity.from ? activity.from : "-"} placement="top" arrow>
-                        <div className="w-[77px] text-center">{activity.from ? activity.from : "-"}</div>
+                      <Tooltip
+                        title={activity.from ? activity.from : "-"}
+                        placement="top"
+                        arrow
+                      >
+                        <div className="w-[77px] text-center">
+                          {activity.from ? activity.from : "-"}
+                        </div>
                       </Tooltip>
                     </td>
-                    
+
                     <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap cursor-pointer">
                       <Tooltip
                         title="Rolex Daytona Stainless Steel - Bracelet - Serial: 43141331 - Year: 2019 - Last requested/quoted price: USD "
                         placement="top"
                         arrow
                       >
-                        {activity.message} {activity?.watch_details?.brand && "( "}{activity?.watch_details?.brand} {activity?.watch_details?.model_no} {activity?.watch_details?.model_no && "Serial -"} {activity?.watch_details?.serial_no}{activity?.watch_details?.model_no && "- Year :"} {activity?.watch_details?.year_of_production} {activity?.watch_details?.model_no && "- Last requested/quoted price: USD"} {activity?.watch_details?.price}{activity?.watch_details?.brand && ")"}
+                        {activity.message}{" "}
+                        {activity?.watch_details?.brand && "( "}
+                        {activity?.watch_details?.brand}{" "}
+                        {activity?.watch_details?.model_no}{" "}
+                        {activity?.watch_details?.model_no && "Serial -"}{" "}
+                        {activity?.watch_details?.serial_no}
+                        {activity?.watch_details?.model_no && "- Year :"}{" "}
+                        {activity?.watch_details?.year_of_production}{" "}
+                        {activity?.watch_details?.model_no &&
+                          "- Last requested/quoted price: USD"}{" "}
+                        {activity?.watch_details?.price}
+                        {activity?.watch_details?.brand && ")"}
                       </Tooltip>
                     </td>
                     <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center">
@@ -229,21 +256,30 @@ const ActivitiesTable = () => {
                       {activity?.watch_status}
                     </td>
                     <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap">
-                      {`${activity.quot_receive_date ? moment().unix(activity.quot_receive_date).format("DD-MM-YYYY") : "-"}  `}
+                      {`${
+                        activity.created_on
+                          ? moment
+                              .unix(activity.created_on)
+                              .format("MMMM D, YYYY h:mm A")
+                          : "-"
+                      }`}
                     </td>
                   </tr>
                 ))
-                  :
-                  <tr>
-                    <td colSpan={12} className="py-[200px] px-4  text-center text-nowrap dark:text-[#ffff] text-black font-bold">
-                      No Data Found
-                    </td>
-                  </tr>)
-              }
+              ) : (
+                <tr>
+                  <td
+                    colSpan={12}
+                    className="py-[200px] px-4  text-center text-nowrap dark:text-[#ffff] text-black font-bold"
+                  >
+                    No Data Found
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
-
-          : <table className="table-auto w-full text-left">
+        ) : (
+          <table className="table-auto w-full text-left">
             <thead style={{ borderBottom: "2px solid #111111" }}>
               <tr>
                 {[
@@ -281,16 +317,21 @@ const ActivitiesTable = () => {
                   <th
                     key={column.key}
                     onClick={
-                      column.isSortable ? () => handleSort(column.key) : undefined
+                      column.isSortable
+                        ? () => handleSort(column.key)
+                        : undefined
                     }
-                    className={`p-2 dark:text-[#ffff] text-black text-center ${column.isSortable ? "cursor-pointer" : ""
-                      } ${column.isSortable && sortField === column.key
+                    className={`p-2 dark:text-[#ffff] text-black text-center ${
+                      column.isSortable ? "cursor-pointer" : ""
+                    } ${
+                      column.isSortable && sortField === column.key
                         ? "active-sorting"
                         : ""
-                      } ${column.isSortable && sortField !== column.key
+                    } ${
+                      column.isSortable && sortField !== column.key
                         ? "sorting"
                         : ""
-                      }`}
+                    }`}
                   >
                     {column.label}{" "}
                     {column.isSortable &&
@@ -305,18 +346,22 @@ const ActivitiesTable = () => {
               </tr>
             </thead>
             <tbody>
-              {isLoading && activitesData?.length === 0 ?
+              {isLoading && activitesData?.length === 0 ? (
                 <tr>
                   <td colSpan={12} className="py-[200px] px-4  text-center">
                     <CircularProgress />
                   </td>
                 </tr>
-                :
-                (activitesData?.length > 0 ? activitesData?.map((activity, index) => (
+              ) : activitesData?.length > 0 ? (
+                activitesData?.map((activity, index) => (
                   <tr
                     key={index}
                     className="border-b border-[#202b34]"
-                    onClick={() => navigate(`/admin/home/readActivity/${activity?.watch_details?.serial_no}`)}
+                    onClick={() =>
+                      navigate(
+                        `/admin/home/readActivity/${activity?.watch_details?.serial_no}`
+                      )
+                    }
                   >
                     <td className="px-[18px] py-[0px] text-[#ffff] text-center">
                       <div className="w-[35px]">
@@ -339,7 +384,9 @@ const ActivitiesTable = () => {
                           />
                         }
                         checkedIcon={
-                          <GradeIcon sx={{ color: "#ff9300", fontSize: "21px" }} />
+                          <GradeIcon
+                            sx={{ color: "#ff9300", fontSize: "21px" }}
+                          />
                         }
                       />
                     </td>
@@ -347,8 +394,14 @@ const ActivitiesTable = () => {
                       {activity?.admin_group}
                     </td>
                     <td className="px-[18px] py-[10px] text-[#ffff] cursor-pointer">
-                      <Tooltip title={activity.from ? activity.from : "-"} placement="top" arrow>
-                        <div className="w-[77px] text-center">{activity.from ? activity.from : "-"}</div>
+                      <Tooltip
+                        title={activity.from ? activity.from : "-"}
+                        placement="top"
+                        arrow
+                      >
+                        <div className="w-[77px] text-center">
+                          {activity.from ? activity.from : "-"}
+                        </div>
                       </Tooltip>
                     </td>
                     <td className="px-[18px] py-[10px] text-[#ffff] text-center">
@@ -360,7 +413,18 @@ const ActivitiesTable = () => {
                         placement="top"
                         arrow
                       >
-                        {activity.message} {activity?.watch_details?.brand && "( "}{activity?.watch_details?.brand} {activity?.watch_details?.model_no} {activity?.watch_details?.model_no && "Serial -"} {activity?.watch_details?.serial_no}{activity?.watch_details?.model_no && "- Year :"} {activity?.watch_details?.year_of_production} {activity?.watch_details?.model_no && "- Last requested/quoted price: USD"} {activity?.watch_details?.price}{activity?.watch_details?.brand && ")"}
+                        {activity.message}{" "}
+                        {activity?.watch_details?.brand && "( "}
+                        {activity?.watch_details?.brand}{" "}
+                        {activity?.watch_details?.model_no}{" "}
+                        {activity?.watch_details?.model_no && "Serial -"}{" "}
+                        {activity?.watch_details?.serial_no}
+                        {activity?.watch_details?.model_no && "- Year :"}{" "}
+                        {activity?.watch_details?.year_of_production}{" "}
+                        {activity?.watch_details?.model_no &&
+                          "- Last requested/quoted price: USD"}{" "}
+                        {activity?.watch_details?.price}
+                        {activity?.watch_details?.brand && ")"}
                       </Tooltip>
                     </td>
                     <td className="px-[18px] py-[10px] text-[#ffff] text-center">
@@ -370,22 +434,38 @@ const ActivitiesTable = () => {
                       {activity?.watch_status}
                     </td>
                     <td className="px-[18px] py-[10px] text-[#ffff] text-center whitespace-nowrap">
-                      {`${activity.quot_receive_date ? moment().unix(activity.quot_receive_date).format("DD-MM-YYYY") : "-"}  `}
+                      {`${
+                        activity.created_on
+                          ? moment
+                              .unix(activity.created_on)
+                              .format("DD-MM-YYYY")
+                          : "-"
+                      }  `}
                     </td>
                   </tr>
                 ))
-                  :
-                  <tr>
-                    <td colSpan={12} className="py-[200px] px-4  text-center text-nowrap text-white font-bold">
-                      No Data Found
-                    </td>
-                  </tr>)
-              }
+              ) : (
+                <tr>
+                  <td
+                    colSpan={12}
+                    className="py-[200px] px-4  text-center text-nowrap text-white font-bold"
+                  >
+                    No Data Found
+                  </td>
+                </tr>
+              )}
             </tbody>
-          </table>}
-
+          </table>
+        )}
       </div>
-      <PaginationComponent staffUser={staffUser} currentPage={currentPage} totalPages={totalRecords} recordsPerPage={recordsPerPage} handlePageChange={handlePageChange} data={activitesData} />
+      <PaginationComponent
+        staffUser={staffUser}
+        currentPage={currentPage}
+        totalPages={totalRecords}
+        recordsPerPage={recordsPerPage}
+        handlePageChange={handlePageChange}
+        data={activitesData}
+      />
     </div>
   );
 };

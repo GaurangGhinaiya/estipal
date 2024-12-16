@@ -8,34 +8,43 @@ const ReadActivity = () => {
   const navigate = useNavigate();
   const params = useParams();
   const { id } = params;
-  const [readActivityData, setReadActivityData] = useState()
+  const [readActivityData, setReadActivityData] = useState();
   const staffUser = true;
 
   const getDetailById = async () => {
     try {
-      const response = await axiosInstance.get(`/adminActivity/detail?id=${id}`)
-      setReadActivityData(response?.payload?.data)
+      const response = await axiosInstance.get(
+        `/adminActivity/detail?id=${id}`
+      );
+      setReadActivityData(response?.payload?.data);
     } catch (error) {
-      console.log("error",error);
+      console.log("error", error);
     }
-  }
+  };
 
   useEffect(() => {
     getDetailById();
-  }, [])
-
+  }, []);
 
   return (
     <div className="mx-auto px-[20px] sm:px-[45px] py-[20px]">
       <div className="flex justify-between items-center mb-[30px] flex-wrap gap-5">
         <h3 className="dark:text-white text-black text-[21px]">
-          Message History - ID W{readActivityData?.watch_id} : {readActivityData?.watch_details?.brand}, {readActivityData?.watch_details?.collection}, {readActivityData?.watch_details?.model_no} ({readActivityData?.watch_details?.model_desc})
+          Message History - ID W{readActivityData?.watch_id} :{" "}
+          {readActivityData?.watch_details?.brand},{" "}
+          {readActivityData?.watch_details?.collection},{" "}
+          {readActivityData?.watch_details?.model_no} (
+          {readActivityData?.watch_details?.model_desc})
         </h3>
 
         <Button
           variant="contained"
           className="!bg-[#1760a9] !normal-case !py-[10px] !px-[40px] !rounded-[50px]"
-          onClick={() => navigate(`/admin/watch_details/watch_status/${readActivityData?.watch_id}`)}
+          onClick={() =>
+            navigate(
+              `/admin/watch_details/watch_status/${readActivityData?.watch_id}`
+            )
+          }
         >
           View Watch Details
         </Button>
@@ -53,30 +62,45 @@ const ReadActivity = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
               <p className="dark:text-white text-black">ID</p>
-              <p className="dark:text-white text-black">W{readActivityData?.watch_id}</p>
+              <p className="dark:text-white text-black">
+                W{readActivityData?.watch_id}
+              </p>
             </div>
             <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
               <p className="dark:text-white text-black">Brand</p>
-              <p className="dark:text-white text-black">{readActivityData?.watch_details?.brand}</p>
+              <p className="dark:text-white text-black">
+                {readActivityData?.watch_details?.brand}
+              </p>
             </div>
             <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
               <p className="dark:text-white text-black">Collection</p>
-              <p className="dark:text-white text-black">{readActivityData?.watch_details?.collection}</p>
+              <p className="dark:text-white text-black">
+                {readActivityData?.watch_details?.collection}
+              </p>
             </div>
             <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
               <p className="dark:text-white text-black">Model</p>
-              <p className="dark:text-white text-black">{readActivityData?.watch_details?.model_no} ({readActivityData?.watch_details?.model_desc})</p>
+              <p className="dark:text-white text-black">
+                {readActivityData?.watch_details?.model_no} (
+                {readActivityData?.watch_details?.model_desc})
+              </p>
             </div>
             <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
               <p className="dark:text-white text-black">Serial Number</p>
-              <p className="dark:text-white text-black">{readActivityData?.watch_details?.serial_no}</p>
+              <p className="dark:text-white text-black">
+                {readActivityData?.watch_details?.serial_no}
+              </p>
             </div>
             <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
               <p className="dark:text-white text-black">Estimate</p>
-              <p className="text-[#11c71e] font-bold">USD {readActivityData?.watch_details?.admin_converted_price}</p>
+              <p className="text-[#11c71e] font-bold">
+                USD {readActivityData?.watch_details?.admin_converted_price}
+              </p>
             </div>
             <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
-              <p className="dark:text-white text-black">{readActivityData?.watch_status}</p>
+              <p className="dark:text-white text-black">
+                {readActivityData?.watch_status}
+              </p>
             </div>
           </div>
         </div>
@@ -85,24 +109,36 @@ const ReadActivity = () => {
       <div className=" mt-[20px] rounded-lg p-[25px] pt-[25px] pb-[35px] dark:bg-[#1e252b] bg-[#F8F8F8] dark:text-white text-black border border-gray-300 dark:border-none">
         <div className="">
           <h3 className="mb-[5px]">
-            <strong className="font-bold">Subject:</strong> {readActivityData?.adminActivities[0]?.message} ({readActivityData?.watch_details?.brand}, {readActivityData?.watch_details?.collection}, {readActivityData?.watch_details?.model_no} - USD - {readActivityData?.watch_details?.model_desc})
+            <strong className="font-bold">Subject:</strong>{" "}
+            {readActivityData?.adminActivities[0]?.message} (
+            {readActivityData?.watch_details?.brand},{" "}
+            {readActivityData?.watch_details?.collection},{" "}
+            {readActivityData?.watch_details?.model_no} - USD -{" "}
+            {readActivityData?.watch_details?.model_desc})
           </h3>
           <div className="flex justify-between items-center flex-wrap mb-8">
             <h3 className="mb-[5px]">
               <strong className="font-bold">From: </strong>M - Mayawizard{" "}
-              <b className="font-bold">( Seller - ID: SCA{readActivityData?.user1_id} )</b>
+              <b className="font-bold">
+                ( Seller - ID: SCA{readActivityData?.user1_id} )
+              </b>
             </h3>{" "}
             <h3 className="mb-[5px]">
               <strong className="font-bold">Received: </strong>
               <span className="created_at" id="2023-04-21T00:25:19+07:00">
-              {moment.unix(readActivityData?.created_on).format('MMM DD ,YYYY HH:mm:ss')}
+                {moment
+                  .unix(readActivityData?.created_on)
+                  .format("MMM DD ,YYYY HH:mm:ss")}
               </span>
             </h3>
           </div>
         </div>
         <hr
           className="my-[20px]"
-          style={{ borderTopColor: staffUser ? "#DFDFDF" : "#ffffff1a", borderTopWidth: "2px" }}
+          style={{
+            borderTopColor: staffUser ? "#DFDFDF" : "#ffffff1a",
+            borderTopWidth: "2px",
+          }}
         />
         <div className="message_box_inner">
           <h3 className="mb-[5px]">
@@ -147,22 +183,35 @@ const ReadActivity = () => {
         >
           <div className="border_bottom pb-4">
             <h3 className="mb-3">
-              <strong className="font-bold">Subject:</strong> {item?.message} ({readActivityData?.watch_details?.brand}, {readActivityData?.watch_details?.collection}, {readActivityData?.watch_details?.model_no} - USD - {readActivityData?.watch_details?.model_desc})
+              <strong className="font-bold">Subject:</strong> {item?.message} (
+              {readActivityData?.watch_details?.brand},{" "}
+              {readActivityData?.watch_details?.collection},{" "}
+              {readActivityData?.watch_details?.model_no} - USD -{" "}
+              {readActivityData?.watch_details?.model_desc})
             </h3>
             <div className="flex justify-between items-center flex-wrap">
               <h3 className="mb-3">
                 <strong className="font-bold">From: </strong>M - Mayawizard{" "}
-                <b className="font-bold">(Seller - ID: SCA{readActivityData?.user1_id})</b>
+                <b className="font-bold">
+                  (Seller - ID: SCA{readActivityData?.user1_id})
+                </b>
               </h3>
               <h3 className="mb-3">
                 <strong className="font-bold">Received: </strong>
-                <span className="created_at">{moment.unix(item?.created_on).format('MMM DD ,YYYY HH:mm:ss')}</span>
+                <span className="created_at">
+                  {moment
+                    .unix(item?.created_on)
+                    .format("MMM DD ,YYYY HH:mm:ss")}
+                </span>
               </h3>
             </div>
           </div>
           <hr
             className="my-5"
-            style={{ borderTopColor: staffUser ? "#DFDFDF" : "#ffffff1a", borderTopWidth: "2px" }}
+            style={{
+              borderTopColor: staffUser ? "#DFDFDF" : "#ffffff1a",
+              borderTopWidth: "2px",
+            }}
           />
           <div className="message_box_inner">
             <h3 className="mb-3">

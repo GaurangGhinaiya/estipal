@@ -105,7 +105,7 @@ const WatchHistory = () => {
       </div>
 
       <div className="w-[95.5%] overflow-auto mx-auto pt-[10px]">
-        {staffUser ?
+        {staffUser ? (
           <table className="table-auto w-full text-left">
             <thead style={{ borderBottom: "2px solid #111111" }}>
               <tr>
@@ -145,16 +145,21 @@ const WatchHistory = () => {
                   <th
                     key={column.key}
                     onClick={
-                      column.isSortable ? () => handleSort(column.key) : undefined
+                      column.isSortable
+                        ? () => handleSort(column.key)
+                        : undefined
                     }
-                    className={`p-2 dark:text-[#ffff] text-black text-center ${column.isSortable ? "cursor-pointer" : ""
-                      } ${column.isSortable && sortField === column.key
+                    className={`p-2 dark:text-[#ffff] text-black text-center ${
+                      column.isSortable ? "cursor-pointer" : ""
+                    } ${
+                      column.isSortable && sortField === column.key
                         ? "active-sorting"
                         : ""
-                      } ${column.isSortable && sortField !== column.key
+                    } ${
+                      column.isSortable && sortField !== column.key
                         ? "sorting"
                         : ""
-                      }`}
+                    }`}
                   >
                     {column.label}{" "}
                     {column.isSortable &&
@@ -211,7 +216,9 @@ const WatchHistory = () => {
                     <td
                       className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center cursor-pointer"
                       onClick={() =>
-                        navigate(`/admin/watch_details/watch_status/${item?.id}`)
+                        navigate(
+                          `/admin/watch_details/watch_status/${item?.id}`
+                        )
                       }
                     >
                       W{item?.id}
@@ -219,7 +226,9 @@ const WatchHistory = () => {
                     <td
                       className="px-[18px] py-[10px] dark:text-[#ffff] text-black cursor-pointer"
                       onClick={() =>
-                        navigate(`/admin/watch_details/watch_status/${item?.id}`)
+                        navigate(
+                          `/admin/watch_details/watch_status/${item?.id}`
+                        )
                       }
                     >
                       <Tooltip title={item?.brand} placement="top" arrow>
@@ -231,7 +240,9 @@ const WatchHistory = () => {
                     <td
                       className="px-[18px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap text-center cursor-pointer"
                       onClick={() =>
-                        navigate(`/admin/watch_details/watch_status/${item?.id}`)
+                        navigate(
+                          `/admin/watch_details/watch_status/${item?.id}`
+                        )
                       }
                     >
                       {item?.collection}
@@ -239,7 +250,9 @@ const WatchHistory = () => {
                     <td
                       className="px-[18px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap text-center cursor-pointer"
                       onClick={() =>
-                        navigate(`/admin/watch_details/watch_status/${item?.id}`)
+                        navigate(
+                          `/admin/watch_details/watch_status/${item?.id}`
+                        )
                       }
                     >
                       <Tooltip title={item?.model} placement="top" arrow>
@@ -249,7 +262,9 @@ const WatchHistory = () => {
                     <td
                       className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center cursor-pointer"
                       onClick={() =>
-                        navigate(`/admin/watch_details/watch_status/${item?.id}`)
+                        navigate(
+                          `/admin/watch_details/watch_status/${item?.id}`
+                        )
                       }
                     >
                       {item?.serial_no}
@@ -257,7 +272,9 @@ const WatchHistory = () => {
                     <td
                       className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap cursor-pointer"
                       onClick={() =>
-                        navigate(`/admin/watch_details/watch_status/${item?.id}`)
+                        navigate(
+                          `/admin/watch_details/watch_status/${item?.id}`
+                        )
                       }
                     >
                       {item?.compnay_name}
@@ -265,7 +282,9 @@ const WatchHistory = () => {
                     <td
                       className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap cursor-pointer"
                       onClick={() =>
-                        navigate(`/admin/watch_details/watch_status/${item?.id}`)
+                        navigate(
+                          `/admin/watch_details/watch_status/${item?.id}`
+                        )
                       }
                     >
                       {moment.unix(item?.created_on).format("MMM DD,YYYY")}
@@ -273,7 +292,9 @@ const WatchHistory = () => {
                     <td
                       className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap cursor-pointer"
                       onClick={() =>
-                        navigate(`/admin/watch_details/watch_status/${item?.id}`)
+                        navigate(
+                          `/admin/watch_details/watch_status/${item?.id}`
+                        )
                       }
                     >
                       {item?.watch_status}
@@ -292,7 +313,7 @@ const WatchHistory = () => {
               )}
             </tbody>
           </table>
-          :
+        ) : (
           <table className="table-auto w-full text-left">
             <thead style={{ borderBottom: "2px solid #111111" }}>
               <tr>
@@ -326,23 +347,32 @@ const WatchHistory = () => {
                   { key: "model", label: "Model", isSortable: false },
                   { key: "serial_no", label: "Serial", isSortable: true },
                   { key: "compnay_name", label: "Added By", isSortable: true },
-                  { key: "asking", label: "Asking / Estimate", isSortable: true },
+                  {
+                    key: "asking",
+                    label: "Asking / Estimate",
+                    isSortable: true,
+                  },
                   { key: "addedOn", label: "Added On", isSortable: true },
                   { key: "watch_status", label: "Status", isSortable: true },
                 ]?.map((column) => (
                   <th
                     key={column.key}
                     onClick={
-                      column.isSortable ? () => handleSort(column.key) : undefined
+                      column.isSortable
+                        ? () => handleSort(column.key)
+                        : undefined
                     }
-                    className={`p-2 dark:text-[#ffff] text-black text-center ${column.isSortable ? "cursor-pointer" : ""
-                      } ${column.isSortable && sortField === column.key
+                    className={`p-2 dark:text-[#ffff] text-black text-center ${
+                      column.isSortable ? "cursor-pointer" : ""
+                    } ${
+                      column.isSortable && sortField === column.key
                         ? "active-sorting"
                         : ""
-                      } ${column.isSortable && sortField !== column.key
+                    } ${
+                      column.isSortable && sortField !== column.key
                         ? "sorting"
                         : ""
-                      }`}
+                    }`}
                   >
                     {column.label}{" "}
                     {column.isSortable &&
@@ -399,7 +429,9 @@ const WatchHistory = () => {
                     <td
                       className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center cursor-pointer"
                       onClick={() =>
-                        navigate(`/admin/watch_details/watch_status/${item?.id}`)
+                        navigate(
+                          `/admin/watch_details/watch_status/${item?.id}`
+                        )
                       }
                     >
                       W{item?.id}
@@ -407,7 +439,9 @@ const WatchHistory = () => {
                     <td
                       className="px-[18px] py-[10px] dark:text-[#ffff] text-black cursor-pointer"
                       onClick={() =>
-                        navigate(`/admin/watch_details/watch_status/${item?.id}`)
+                        navigate(
+                          `/admin/watch_details/watch_status/${item?.id}`
+                        )
                       }
                     >
                       <Tooltip title={item?.brand} placement="top" arrow>
@@ -419,7 +453,9 @@ const WatchHistory = () => {
                     <td
                       className="px-[18px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap text-center cursor-pointer"
                       onClick={() =>
-                        navigate(`/admin/watch_details/watch_status/${item?.id}`)
+                        navigate(
+                          `/admin/watch_details/watch_status/${item?.id}`
+                        )
                       }
                     >
                       {item?.collection}
@@ -427,7 +463,9 @@ const WatchHistory = () => {
                     <td
                       className="px-[18px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap text-center cursor-pointer"
                       onClick={() =>
-                        navigate(`/admin/watch_details/watch_status/${item?.id}`)
+                        navigate(
+                          `/admin/watch_details/watch_status/${item?.id}`
+                        )
                       }
                     >
                       <Tooltip title={item?.model} placement="top" arrow>
@@ -437,7 +475,9 @@ const WatchHistory = () => {
                     <td
                       className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center cursor-pointer"
                       onClick={() =>
-                        navigate(`/admin/watch_details/watch_status/${item?.id}`)
+                        navigate(
+                          `/admin/watch_details/watch_status/${item?.id}`
+                        )
                       }
                     >
                       {item?.serial_no}
@@ -445,7 +485,9 @@ const WatchHistory = () => {
                     <td
                       className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap cursor-pointer"
                       onClick={() =>
-                        navigate(`/admin/watch_details/watch_status/${item?.id}`)
+                        navigate(
+                          `/admin/watch_details/watch_status/${item?.id}`
+                        )
                       }
                     >
                       {item?.compnay_name}
@@ -453,7 +495,9 @@ const WatchHistory = () => {
                     <td
                       className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap cursor-pointer"
                       onClick={() =>
-                        navigate(`/admin/watch_details/watch_status/${item?.id}`)
+                        navigate(
+                          `/admin/watch_details/watch_status/${item?.id}`
+                        )
                       }
                     >
                       USD {item?.counter_offer_price} / USD
@@ -462,7 +506,9 @@ const WatchHistory = () => {
                     <td
                       className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap cursor-pointer"
                       onClick={() =>
-                        navigate(`/admin/watch_details/watch_status/${item?.id}`)
+                        navigate(
+                          `/admin/watch_details/watch_status/${item?.id}`
+                        )
                       }
                     >
                       {moment.unix(item?.created_on).format("MMM DD,YYYY")}
@@ -470,7 +516,9 @@ const WatchHistory = () => {
                     <td
                       className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap cursor-pointer"
                       onClick={() =>
-                        navigate(`/admin/watch_details/watch_status/${item?.id}`)
+                        navigate(
+                          `/admin/watch_details/watch_status/${item?.id}`
+                        )
                       }
                     >
                       {item?.watch_status}
@@ -488,7 +536,8 @@ const WatchHistory = () => {
                 </tr>
               )}
             </tbody>
-          </table>}
+          </table>
+        )}
       </div>
       <PaginationComponent
         currentPage={currentPage}

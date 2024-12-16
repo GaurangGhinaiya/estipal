@@ -1,17 +1,20 @@
+import { LoadingButton } from "@mui/lab";
 import { Button } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import TextInputField from "../../../components/common/TextInputField";
-import CustomSwitch from "../../../components/common/CustomSwitch";
-import countries from "../../../constant/country.json";
-import currency from "../../../constant/currency.json";
-import { stateApi } from "../../../api/stateApi";
-import PhoneInput, { formatPhoneNumber } from "react-phone-number-input";
-import "react-phone-number-input/style.css";
-import { getCountryCallingCode } from "react-phone-number-input";
-import CommissionPlan from "./components/Commission";
-import { useNavigate, useParams } from "react-router-dom";
-import axiosInstance from "../../../services";
 import moment from "moment";
+import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import PhoneInput, {
+  formatPhoneNumber,
+  getCountryCallingCode,
+} from "react-phone-number-input";
+import "react-phone-number-input/style.css";
+import { useNavigate, useParams } from "react-router-dom";
+import CustomSwitch from "../../../components/common/CustomSwitch";
+import TextInputField from "../../../components/common/TextInputField";
+import currency from "../../../constant/currency.json";
+import axiosInstance from "../../../services";
+import { fetchCountryList, fetchStateList } from "../../../utils/apiUtils";
+import CommissionPlan from "./components/Commission";
 
 const SellerEdit = () => {
   const navigate = useNavigate();
@@ -19,48 +22,85 @@ const SellerEdit = () => {
   const { id } = params;
   const [sellerData, setSellerData] = useState();
   const [isEditable, setIsEditable] = useState(false);
-  // const [states, setStates] = useState([]);
-  // const [selectCountry, setSelectCountry] = useState("IN");
-  // const [phone, setPhone] = useState("IN");
+  const [phone, setPhone] = useState("");
+  const [selectPhoneCountry, setSelectPhoneCountry] = useState("IN");
+  const [countries, setCountries] = useState([]);
+  const [states, setStates] = useState([]);
+  const [selectCountry, setSelectCountry] = useState("IN");
+  const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     active: false,
-    company: "",
-    bankName: "",
-    bankAddress: "",
-    bankAccountName: "",
-    accountNumber: "",
-    swiftCode: "",
+    company_name: "",
+    bank_name: "",
+    bank_address: "",
+    bank_account: "",
+    account_number: "",
+    bank_swift: "",
     id: "",
-    firstName: "",
-    lastName: "",
-    streetAddress: "",
+    first_name: "",
+    last_name: "",
+    address: "",
     city: "",
     state: "",
-    zipCode: "",
+    zip: "",
     country: "",
     email: "",
     username: "",
-    dial: "",
-    mobileNumber: "",
+    cnt_code: "",
+    cnt_no: "",
     currency: "",
-    tier: "",
-    signUpDate: "",
-    companyLogo: null,
+    payment_tier: "",
+    created_on: "",
+    seller_logo: null,
     companyLogoPreview: "",
   });
 
   console.log("formData: ", formData);
 
-  // useEffect(() => {
-  //   const formatNumber = formatPhoneNumber(phone);
-  //   const dial = getCountryCallingCode(selectCountry);
-  // }, [phone]);
+  // Fetch country data on mount
+  useEffect(() => {
+    const loadCountries = async () => {
+      try {
+        const countryData = await fetchCountryList();
+        setCountries(countryData);
+      } catch (error) {
+        console.error("Failed to fetch countries:", error);
+      }
+    };
+    loadCountries();
+  }, []);
+
+  // Fetch state data when the selected country changes
+  useEffect(() => {
+    if (selectCountry) {
+      const fetchStatesData = async () => {
+        try {
+          const stateData = await fetchStateList(selectCountry);
+          setStates(stateData);
+        } catch (error) {
+          console.error("Failed to fetch states:", error);
+        }
+      };
+      fetchStatesData();
+    }
+  }, [selectCountry]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+
+  useEffect(() => {
+    const formattedPhone = formatPhoneNumber(phone);
+    const dialCode = getCountryCallingCode(selectPhoneCountry);
+
+    setFormData((prev) => ({
+      ...prev,
+      cnt_code: dialCode,
+      cnt_no: formattedPhone,
+    }));
+  }, [phone, selectPhoneCountry]);
 
   // Handle file upload for the logo
   const handleFileUpload = (e) => {
@@ -68,7 +108,7 @@ const SellerEdit = () => {
     if (file) {
       setFormData({
         ...formData,
-        companyLogo: file,
+        seller_logo: file,
         companyLogoPreview: URL.createObjectURL(file),
       });
     }
@@ -78,32 +118,20 @@ const SellerEdit = () => {
     try {
       const response = await axiosInstance.get(`/sellers/detail?id=${id}`);
       const seller = response?.payload?.data;
+      console.log("seller: ", seller);
       setSellerData(seller);
 
       setFormData((prevFormData) => ({
         ...prevFormData,
-        active: seller?.active,
-        email: seller?.email,
-        username: seller?.username,
-        currency: seller?.currency,
-        firstName: seller?.first_name,
-        lastName: seller?.last_name,
-        bankName: seller?.bank_name,
-        bankAddress: seller?.bank_address,
-        bankAccountName: seller?.bank_account,
-        accountNumber: seller?.account_number,
-        swiftCode: seller?.bank_swift,
+        ...seller,
         companyLogoPreview: seller?.seller_logo,
         id: `SCA${seller?.id}`,
-        streetAddress: seller?.address,
-        city: seller?.city,
-        country: seller?.country,
-        zipCode: seller?.zip,
-        state: seller?.state,
-        tier: `Tier ${seller?.payment_tier}`,
-        mobileNumber: `+${seller?.cnt_code} ${seller?.cnt_no}`,
-        signUpDate: moment.unix(seller?.created_on).format("MMM DD,YYYY"),
+        address: seller?.address,
+        created_on: moment.unix(seller?.created_on).format("MMM DD,YYYY"),
       }));
+
+      setPhone(`+${seller?.cnt_code} ${seller?.cnt_no}`);
+      setSelectCountry(seller?.country);
     } catch (error) {
       console.log("error", error);
     }
@@ -112,6 +140,53 @@ const SellerEdit = () => {
   useEffect(() => {
     getDetailById();
   }, []);
+
+  const handleStateChange = (e) => {
+    setFormData((prev) => ({ ...prev, state: e.target.value }));
+  };
+
+  const save = async () => {
+    setLoading(true);
+
+    // Create FormData object to hold the data
+    const formDataToSend = new FormData();
+
+    // Append non-file fields to FormData
+    Object.keys(formData).forEach((key) => {
+      if (key !== "seller_logo" && formData[key]) {
+        // Exclude seller_logo as it's a file
+        formDataToSend.append(key, formData[key]);
+      }
+    });
+
+    // Append the seller_logo file if present
+    if (formData.seller_logo) {
+      formDataToSend.append("seller_logo", formData.seller_logo);
+    }
+
+    try {
+      const response = await axiosInstance["put"](
+        `/sellers?id=${id}`,
+        formDataToSend,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      if (response?.status === 200) {
+        const message = "Estimator updated successfully!";
+        toast.success(message);
+        navigate("/admin/staff/staff_user");
+      }
+    } catch (error) {
+      console.log("error: ", error);
+      toast.error(error?.response?.data?.payload?.error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="mx-auto px-[20px] sm:px-[45px] py-[20px]">
@@ -127,13 +202,14 @@ const SellerEdit = () => {
         <div className="flex gap-4">
           {isEditable ? (
             <>
-              <Button
+              <LoadingButton
+                loading={loading} // Add loading state
                 variant="contained"
                 className="!bg-[#00a65a] !normal-case !py-[5px] sm:!py-[10px] sm:!px-[40px] !px-[15px] !rounded-[50px]"
-                onClick={() => setIsEditable(false)}
+                onClick={save} // Call the save function
               >
                 Save
-              </Button>
+              </LoadingButton>
               <Button
                 variant="contained"
                 className="!bg-[#ffff] !text-black !normal-case !py-[5px] sm:!py-[10px] sm:!px-[40px] !px-[15px] !rounded-[50px]"
@@ -217,30 +293,30 @@ const SellerEdit = () => {
             }
           />
           <TextInputField
-            value={formData.company}
+            value={formData.company_name}
             rightTextValue=""
             type="text"
             label="Company"
-            name="company"
+            name="company_name"
             readOnly={!isEditable}
             bgColor={"#1e252b"}
             className="mb-[15px]"
             onChange={handleChange}
           />
           <TextInputField
-            value={formData.bankName}
+            value={formData.bank_name}
             rightTextValue=""
             type="text"
             label="Bank Name"
-            name="bankName"
+            name="bank_name"
             readOnly={!isEditable}
             bgColor={"#1e252b"}
             className="mb-[15px]"
             onChange={handleChange}
           />
           <TextInputField
-            value={formData.bankAddress}
-            name="bankAddress"
+            value={formData.bank_address}
+            name="bank_address"
             rightTextValue=""
             type="text"
             label="Bank Address"
@@ -250,8 +326,8 @@ const SellerEdit = () => {
             onChange={handleChange}
           />
           <TextInputField
-            value={formData.bankAccountName}
-            name="bankAccountName"
+            value={formData.bank_account}
+            name="bank_account"
             rightTextValue=""
             type="text"
             label="Bank Account Name"
@@ -261,8 +337,8 @@ const SellerEdit = () => {
             onChange={handleChange}
           />
           <TextInputField
-            value={formData.accountNumber}
-            name="accountNumber"
+            value={formData.account_number}
+            name="account_number"
             rightTextValue=""
             type="text"
             label="Account Number"
@@ -272,8 +348,8 @@ const SellerEdit = () => {
             onChange={handleChange}
           />
           <TextInputField
-            value={formData.swiftCode}
-            name="swiftCode"
+            value={formData.bank_swift}
+            name="bank_swift"
             rightTextValue=""
             type="text"
             label="Swift code/IBAN"
@@ -326,8 +402,8 @@ const SellerEdit = () => {
             onChange={handleChange}
           />
           <TextInputField
-            value={formData.firstName}
-            name="firstName"
+            value={formData.first_name}
+            name="first_name"
             rightTextValue=""
             type="text"
             label="First Name"
@@ -338,8 +414,8 @@ const SellerEdit = () => {
           />
           <TextInputField
             rightTextValue=""
-            value={formData.lastName}
-            name="lastName"
+            value={formData.last_name}
+            name="last_name"
             type="text"
             label="Last Name"
             readOnly={!isEditable}
@@ -349,8 +425,8 @@ const SellerEdit = () => {
           />
           <TextInputField
             rightTextValue=""
-            value={formData.streetAddress}
-            name="streetAddress"
+            value={formData.address}
+            name="address"
             type="text"
             label="Street Address"
             readOnly={!isEditable}
@@ -402,8 +478,8 @@ const SellerEdit = () => {
           />
           <TextInputField
             rightTextValue=""
-            value={formData.zipCode}
-            name="zipCode"
+            value={formData.zip}
+            name="zip"
             type="text"
             label="Zip/Postal Code"
             readOnly={!isEditable}
@@ -412,21 +488,42 @@ const SellerEdit = () => {
             onChange={handleChange}
           />
           <TextInputField
-            rightTextValue=""
-            value={formData.state}
-            name="state"
-            type="text"
             label="State/Province"
-            readOnly={!isEditable}
-            bgColor={"#1e252b"}
+            placeholder="State/Province"
+            bgColor="#1e252b"
             className="mb-[15px]"
-            onChange={handleChange}
+            component={
+              <div className="flex w-full justify-end">
+                {isEditable ? (
+                  <select
+                    name="state"
+                    id="state"
+                    className="bg-[#1e252b] max-sm:w-[100px]"
+                    style={{ textAlignLast: "right" }}
+                    value={formData.state}
+                    onChange={handleStateChange}
+                    disabled={!isEditable}
+                  >
+                    <option disabled value="">
+                      Open to select state
+                    </option>
+                    {states.map((item) => (
+                      <option key={item.id} value={item.state}>
+                        {item.state}
+                      </option>
+                    ))}
+                  </select>
+                ) : (
+                  <p>{formData.state}</p>
+                )}
+              </div>
+            }
           />
         </div>
         <div className="">
           <TextInputField
             rightTextValue=""
-            value={formData.tier}
+            value={formData.payment_tier}
             label="Tier"
             readOnly={!isEditable}
             bgColor={"#1e252b"}
@@ -442,8 +539,10 @@ const SellerEdit = () => {
                         id="tier1"
                         name="tier"
                         className="mr-2 !cursor-pointer"
-                        checked={formData.tier == "Tier 1"}
-                        onChange={() => setFormData({ ...formData, tier: 1 })}
+                        checked={formData.payment_tier == 1}
+                        onChange={() =>
+                          setFormData({ ...formData, payment_tier: 1 })
+                        }
                       />
                       <label
                         for="tier1"
@@ -458,8 +557,10 @@ const SellerEdit = () => {
                         id="tier2"
                         name="tier"
                         className="mr-2 !cursor-pointer"
-                        checked={formData.tier == "Tier 2"}
-                        onChange={() => setFormData({ ...formData, tier: 2 })}
+                        checked={formData.payment_tier == 2}
+                        onChange={() =>
+                          setFormData({ ...formData, payment_tier: 2 })
+                        }
                       />
                       <label
                         for="tier2"
@@ -471,7 +572,7 @@ const SellerEdit = () => {
                   </div>
                 ) : (
                   <p className="text-right w-full text-[#fea31e]">
-                    {formData.tier}
+                    Tier {formData.payment_tier}
                   </p>
                 )}
               </>
@@ -502,7 +603,7 @@ const SellerEdit = () => {
           />
           <TextInputField
             rightTextValue=""
-            value={formData.mobileNumber}
+            value={formData.cnt_no}
             name="mobileNumber"
             type="text"
             label="Mobile Number"
@@ -522,13 +623,14 @@ const SellerEdit = () => {
                     style={{
                       backgroundColor: "#1e252b",
                     }}
-                    value={formData.mobileNumber}
+                    value={phone}
                     onChange={(value) => {
-                      setFormData({ ...formData, mobileNumber: value });
+                      setPhone(value);
                     }}
+                    onCountryChange={(v) => setSelectPhoneCountry(v)}
                   />
                 ) : (
-                  <p>{formData.mobileNumber}</p>
+                  <p>{phone}</p>
                 )}
               </div>
             }
@@ -564,8 +666,8 @@ const SellerEdit = () => {
           />
           <TextInputField
             rightTextValue=""
-            value={formData.signUpDate}
-            name="signUpDate"
+            value={formData.created_on}
+            name="created_on"
             type="text"
             label="Sign up Date"
             readOnly={true}
