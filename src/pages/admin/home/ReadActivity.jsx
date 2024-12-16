@@ -9,6 +9,7 @@ const ReadActivity = () => {
   const params = useParams();
   const { id } = params;
   const [readActivityData, setReadActivityData] = useState();
+  const staffUser = true;
 
   const getDetailById = async () => {
     try {
@@ -28,7 +29,7 @@ const ReadActivity = () => {
   return (
     <div className="mx-auto px-[20px] sm:px-[45px] py-[20px]">
       <div className="flex justify-between items-center mb-[30px] flex-wrap gap-5">
-        <h3 className="text-white text-[21px]">
+        <h3 className="dark:text-white text-black text-[21px]">
           Message History - ID W{readActivityData?.watch_id} :{" "}
           {readActivityData?.watch_details?.brand},{" "}
           {readActivityData?.watch_details?.collection},{" "}
@@ -59,50 +60,54 @@ const ReadActivity = () => {
         </div>
         <div className="md:ml-8 w-full flex-[2]">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            <div className="bg-[#1e252b] py-[12px] px-[24px] rounded items-center flex justify-between">
-              <p className="text-white">ID</p>
-              <p className="text-white">W{readActivityData?.watch_id}</p>
+            <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
+              <p className="dark:text-white text-black">ID</p>
+              <p className="dark:text-white text-black">
+                W{readActivityData?.watch_id}
+              </p>
             </div>
-            <div className="bg-[#1e252b] py-[12px] px-[24px] rounded items-center flex justify-between">
-              <p className="text-white">Brand</p>
-              <p className="text-white">
+            <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
+              <p className="dark:text-white text-black">Brand</p>
+              <p className="dark:text-white text-black">
                 {readActivityData?.watch_details?.brand}
               </p>
             </div>
-            <div className="bg-[#1e252b] py-[12px] px-[24px] rounded items-center flex justify-between">
-              <p className="text-white">Collection</p>
-              <p className="text-white">
+            <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
+              <p className="dark:text-white text-black">Collection</p>
+              <p className="dark:text-white text-black">
                 {readActivityData?.watch_details?.collection}
               </p>
             </div>
-            <div className="bg-[#1e252b] py-[12px] px-[24px] rounded items-center flex justify-between">
-              <p className="text-white">Model</p>
-              <p className="text-white">
+            <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
+              <p className="dark:text-white text-black">Model</p>
+              <p className="dark:text-white text-black">
                 {readActivityData?.watch_details?.model_no} (
                 {readActivityData?.watch_details?.model_desc})
               </p>
             </div>
-            <div className="bg-[#1e252b] py-[12px] px-[24px] rounded items-center flex justify-between">
-              <p className="text-white">Serial Number</p>
-              <p className="text-white">
+            <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
+              <p className="dark:text-white text-black">Serial Number</p>
+              <p className="dark:text-white text-black">
                 {readActivityData?.watch_details?.serial_no}
               </p>
             </div>
-            <div className="bg-[#1e252b] py-[12px] px-[24px] rounded items-center flex justify-between">
-              <p className="text-white">Estimate</p>
+            <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
+              <p className="dark:text-white text-black">Estimate</p>
               <p className="text-[#11c71e] font-bold">
-                USD {readActivityData?.watch_details?.price}
+                USD {readActivityData?.watch_details?.admin_converted_price}
               </p>
             </div>
-            <div className="bg-[#1e252b] py-[12px] px-[24px] rounded items-center flex justify-between">
-              <p className="text-white">Estimator suggested wholesale price</p>
+            <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
+              <p className="dark:text-white text-black">
+                {readActivityData?.watch_status}
+              </p>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="message_box mt-[20px]">
-        <div className="border_bottom">
+      <div className=" mt-[20px] rounded-lg p-[25px] pt-[25px] pb-[35px] dark:bg-[#1e252b] bg-[#F8F8F8] dark:text-white text-black border border-gray-300 dark:border-none">
+        <div className="">
           <h3 className="mb-[5px]">
             <strong className="font-bold">Subject:</strong>{" "}
             {readActivityData?.adminActivities[0]?.message} (
@@ -111,7 +116,7 @@ const ReadActivity = () => {
             {readActivityData?.watch_details?.model_no} - USD -{" "}
             {readActivityData?.watch_details?.model_desc})
           </h3>
-          <div className="flex justify-between items-center flex-wrap">
+          <div className="flex justify-between items-center flex-wrap mb-8">
             <h3 className="mb-[5px]">
               <strong className="font-bold">From: </strong>M - Mayawizard{" "}
               <b className="font-bold">
@@ -130,7 +135,10 @@ const ReadActivity = () => {
         </div>
         <hr
           className="my-[20px]"
-          style={{ borderTopColor: "#ffffff1a", borderTopWidth: "2px" }}
+          style={{
+            borderTopColor: staffUser ? "#DFDFDF" : "#ffffff1a",
+            borderTopWidth: "2px",
+          }}
         />
         <div className="message_box_inner">
           <h3 className="mb-[5px]">
@@ -139,7 +147,7 @@ const ReadActivity = () => {
           </h3>
           <h3 className="mb-[5px]">Status: Pending Estipal Payment</h3>
           <div className="select_box text-center mt-20" data-select-box="0">
-            <div className="select_box_inner">
+            <div className="inline-block dark:bg-[#1d2b38] bg-[#E1E9F0] p-[30px] px-[60px] border-2 border-[#1760a9] rounded-lg">
               <p className="flex items-center gap-[10px] mb-[10px]">
                 <span>
                   <img
@@ -171,7 +179,7 @@ const ReadActivity = () => {
       {readActivityData?.adminActivities.map((item, index) => (
         <div
           key={index}
-          className="message_box mt-5 bg-gray-900 text-white p-6 rounded-lg shadow-lg"
+          className=" mt-5 dark:bg-[#1E252B] bg-[#F8F8F8] dark:text-white text-black p-6 rounded-lg dark:shadow-lg shadow-none border border-gray-300 dark:border-none"
         >
           <div className="border_bottom pb-4">
             <h3 className="mb-3">
@@ -200,7 +208,10 @@ const ReadActivity = () => {
           </div>
           <hr
             className="my-5"
-            style={{ borderTopColor: "#ffffff1a", borderTopWidth: "2px" }}
+            style={{
+              borderTopColor: staffUser ? "#DFDFDF" : "#ffffff1a",
+              borderTopWidth: "2px",
+            }}
           />
           <div className="message_box_inner">
             <h3 className="mb-3">

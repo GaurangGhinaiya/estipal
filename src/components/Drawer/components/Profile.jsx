@@ -8,17 +8,32 @@ import MenuItem from "@mui/material/MenuItem";
 import Tooltip from "@mui/material/Tooltip";
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
+import AdminProfile from "../../../assets/images/icons/AdminProfile.png";
+import ProfileImg from "../../../assets/images/icons/Profile.png";
+import EngFlag from "../../../assets/images/icons/en_flag.png";
+import ChinaFlag from "../../../assets/images/icons/cn_flag.png";
+import ItlyFlag from "../../../assets/images/icons/ita_flag.png";
+import ThailandFlag from "../../../assets/images/icons/th_flag.png";
 
 export default function Profile() {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorElLang, setAnchorElLang] = React.useState(null);
   const open = Boolean(anchorEl);
+  const openLang = Boolean(anchorElLang);
   const navigate = useNavigate();
+  const staffUser = false;
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+  const handleLangOpen = (event) => {
+    setAnchorElLang(event.currentTarget);
+  };
+  const handleLangClose = () => {
+    setAnchorElLang(null);
   };
   return (
     <React.Fragment>
@@ -39,12 +54,28 @@ export default function Profile() {
             aria-expanded={open ? "true" : undefined}
           >
             <img
-              src="https://www.estipal.com/assets/dist/images/icons/icn-profile-admin.svg"
+              src={staffUser ? ProfileImg : AdminProfile}
               alt="icon-profile"
               className="w-[30px] mr-[4px]"
             />
           </IconButton>
         </Tooltip>
+        {staffUser && <Tooltip>
+          <IconButton
+            onClick={handleLangOpen}
+            size="small"
+            sx={{ ml: 2 }}
+            aria-controls={openLang ? "account-menu" : undefined}
+            aria-haspopup="true"
+            aria-expanded={openLang ? "true" : undefined}
+          >
+            <img
+              src={EngFlag}
+              alt="icon-profile"
+              className="w-[30px] mr-[4px]"
+            />
+          </IconButton>
+        </Tooltip>}
       </Box>
       <Menu
         anchorEl={anchorEl}
@@ -100,6 +131,85 @@ export default function Profile() {
           </ListItemIcon>
           Logout
         </MenuItem>
+      </Menu>
+      <Menu
+        anchorEl={anchorElLang}
+        id="account-menu"
+        open={openLang}
+        onClose={handleLangClose}
+        onClick={handleLangClose}
+        slotProps={{
+          paper: {
+            elevation: 0,
+            sx: {
+              overflow: "visible",
+              filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+              mt: 1.5,
+              "& .MuiAvatar-root": {
+                width: 32,
+                height: 32,
+                ml: -0.5,
+                mr: 1,
+              },
+              "&::before": {
+                content: '""',
+                display: "block",
+                position: "absolute",
+                top: 0,
+                right: 14,
+                width: 10,
+                height: 10,
+                bgcolor: "background.paper",
+                transform: "translateY(-50%) rotate(45deg)",
+                zIndex: 0,
+              },
+            },
+          },
+        }}
+        transformOrigin={{ horizontal: "right", vertical: "top" }}
+        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+      >
+        <MenuItem onClick={handleLangClose} className="gap-2">
+          <ListItemIcon>
+            <img
+              src={EngFlag}
+              alt="icon-profile"
+              className="w-[30px] mr-[4px]"
+            />
+          </ListItemIcon>
+          English
+        </MenuItem>
+        <MenuItem onClick={handleLangClose} className="gap-2">
+          <ListItemIcon>
+            <img
+              src={ThailandFlag}
+              alt="icon-profile"
+              className="w-[30px] mr-[4px]"
+            />
+          </ListItemIcon>
+          Thailand
+        </MenuItem>
+        <MenuItem onClick={handleLangClose} className="gap-2">
+          <ListItemIcon>
+            <img
+              src={ItlyFlag}
+              alt="icon-profile"
+              className="w-[30px] mr-[4px]"
+            />
+          </ListItemIcon>
+          Italy
+        </MenuItem>
+        <MenuItem onClick={handleLangClose} className="gap-2">
+          <ListItemIcon>
+            <img
+              src={ChinaFlag}
+              alt="icon-profile"
+              className="w-[30px] mr-[4px]"
+            />
+          </ListItemIcon>
+          China
+        </MenuItem>
+
       </Menu>
     </React.Fragment>
   );

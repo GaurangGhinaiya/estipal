@@ -4,7 +4,7 @@ import TextInputField from "../../../components/common/TextInputField";
 const Merchantcommissionplan = ({isEditable}) => {
   return (
     <div className="bg-[#1E252B] p-6 rounded-lg w-full mb-[15px]">
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-[25px]">
+      <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 w-full ">
         <TextInputField
           rightTextValue="USD"
           type="text"

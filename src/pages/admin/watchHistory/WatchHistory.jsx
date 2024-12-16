@@ -29,6 +29,7 @@ const WatchHistory = () => {
   const [recordsPerPage, setRecordsPerPage] = useState(20);
   const [totalRecords, setTotalRecords] = useState(0);
   const debouncedSearchTerm = useDebounce(searchQuery, 500);
+  const staffUser = true;
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -80,9 +81,9 @@ const WatchHistory = () => {
   }, [currentPage, debouncedSearchTerm, status]);
 
   return (
-    <div className="p-[15px] min-h-[100vh]">
-      <div className="px-0 sm:px-[15px] flex justify-between flex-wrap">
-        <h1 className="text-[30px] font-medium mb-4 px-0 sm:px-[15px] font-sans text-white">
+    <div className="pb-[15px] min-h-[100vh]">
+      <div className="px-0 sm:px-[20px] pt-8 flex justify-between flex-wrap bg-gradient-to-b from-[rgba(0,96,169,0.36)] to-[rgba(255,255,255,0)]">
+        <h1 className="text-[30px] font-medium mb-4 px-0 sm:px-[15px] font-sans dark:text-[#ffff] text-black ">
           Watches History
         </h1>
 
@@ -104,211 +105,439 @@ const WatchHistory = () => {
       </div>
 
       <div className="w-[95.5%] overflow-auto mx-auto pt-[10px]">
-        <table className="table-auto w-full text-left">
-          <thead style={{ borderBottom: "2px solid #111111" }}>
-            <tr>
-              {[
-                { key: "", label: "" },
-                {
-                  key: "checkbox",
-                  label: (
-                    <StarOutlineIcon
-                      sx={{ color: "#9b9b9b", fontSize: "21px" }}
-                    />
-                  ),
-                  render: () => (
-                    <Checkbox
-                      icon={
-                        <StarOutlineIcon
-                          sx={{ color: "#9b9b9b", fontSize: "21px" }}
-                        />
-                      }
-                      checkedIcon={
-                        <GradeIcon
-                          sx={{ color: "#ff9300", fontSize: "21px" }}
-                        />
-                      }
-                    />
-                  ),
-                },
-                { key: "id", label: "ID", isSortable: true },
-                { key: "brand", label: "Brand", isSortable: true },
-                { key: "collection", label: "Collection", isSortable: true },
-                { key: "model", label: "Model", isSortable: true },
-                { key: "serial_no", label: "Serial", isSortable: true },
-                { key: "compnay_name", label: "Added By", isSortable: true },
-                {
-                  key: "counter_offer_price",
-                  label: "Asking / Estimate",
-                  isSortable: true,
-                },
-                { key: "created_on", label: "Added On", isSortable: true },
-                { key: "watch_status", label: "Status", isSortable: true },
-              ]?.map((column) => (
-                <th
-                  key={column.key}
-                  onClick={
-                    column.isSortable ? () => handleSort(column.key) : undefined
-                  }
-                  className={`p-2 text-[#ffff] text-center ${
-                    column.isSortable ? "cursor-pointer" : ""
-                  } ${
-                    column.isSortable && sortField === column.key
-                      ? "active-sorting"
-                      : ""
-                  } ${
-                    column.isSortable && sortField !== column.key
-                      ? "sorting"
-                      : ""
-                  }`}
-                >
-                  {column.label}{" "}
-                  {column.isSortable &&
-                    sortField === column.key &&
-                    (sortOrder === "asc" ? (
-                      <ArrowDropUpRoundedIcon />
-                    ) : (
-                      <ArrowDropDownRoundedIcon />
-                    ))}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {loading && watchActivityData?.length === 0 ? (
+        {staffUser ? (
+          <table className="table-auto w-full text-left">
+            <thead style={{ borderBottom: "2px solid #111111" }}>
               <tr>
-                <td colSpan={12} className="py-[200px] px-4  text-center">
-                  <CircularProgress />
-                </td>
-              </tr>
-            ) : watchActivityData?.length > 0 ? (
-              watchActivityData?.map((item, index) => (
-                <tr key={index} className="border-b border-[#202b34]">
-                  <td className="px-[18px] py-[0px] text-[#ffff] text-center cursor-pointer">
-                    <div className="w-[35px]">
-                      <div
-                        role="button"
-                        onClick={() =>
-                          navigate(`/admin/home/readActivity/${item?.id}`)
+                {[
+                  { key: "", label: "" },
+                  {
+                    key: "checkbox",
+                    label: (
+                      <StarOutlineIcon
+                        sx={{ color: "#9b9b9b", fontSize: "21px" }}
+                      />
+                    ),
+                    render: () => (
+                      <Checkbox
+                        icon={
+                          <StarOutlineIcon
+                            sx={{ color: "#9b9b9b", fontSize: "21px" }}
+                          />
                         }
-                      >
-                        <img
-                          src="https://www.estipal.com/assets/dist/images/icons/icn-mai-light.svg"
-                          width="25px"
-                          alt="img"
-                        />
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-[18px] py-[10px] text-[#ffff] text-center">
-                    {" "}
-                    <Checkbox
-                      {...label}
-                      icon={
-                        <StarOutlineIcon
-                          sx={{ color: "#494a4b", fontSize: "21px" }}
-                        />
-                      }
-                      checkedIcon={
-                        <GradeIcon
-                          sx={{ color: "#ff9300", fontSize: "21px" }}
-                        />
-                      }
-                    />
-                  </td>
-                  <td
-                    className="px-[18px] py-[10px] text-[#ffff] text-center cursor-pointer"
-                    onClick={() =>
-                      navigate(`/admin/watch_details/watch_status/${item?.id}`)
+                        checkedIcon={
+                          <GradeIcon
+                            sx={{ color: "#ff9300", fontSize: "21px" }}
+                          />
+                        }
+                      />
+                    ),
+                  },
+                  { key: "id", label: "ID", isSortable: true },
+                  { key: "brand", label: "Brand", isSortable: true },
+                  { key: "collection", label: "Collection", isSortable: true },
+                  { key: "model", label: "Model", isSortable: false },
+                  { key: "serial_no", label: "Serial", isSortable: true },
+                  { key: "compnay_name", label: "Added By", isSortable: true },
+                  { key: "addedOn", label: "Added On", isSortable: true },
+                  { key: "watch_status", label: "Status", isSortable: true },
+                ]?.map((column) => (
+                  <th
+                    key={column.key}
+                    onClick={
+                      column.isSortable
+                        ? () => handleSort(column.key)
+                        : undefined
                     }
+                    className={`p-2 dark:text-[#ffff] text-black text-center ${
+                      column.isSortable ? "cursor-pointer" : ""
+                    } ${
+                      column.isSortable && sortField === column.key
+                        ? "active-sorting"
+                        : ""
+                    } ${
+                      column.isSortable && sortField !== column.key
+                        ? "sorting"
+                        : ""
+                    }`}
                   >
-                    W{item?.id}
-                  </td>
-                  <td
-                    className="px-[18px] py-[10px] text-[#ffff] cursor-pointer"
-                    onClick={() =>
-                      navigate(`/admin/watch_details/watch_status/${item?.id}`)
-                    }
-                  >
-                    <Tooltip title={item?.brand} placement="top" arrow>
-                      <div className="whitespace-nowrap text-center">
-                        {item?.brand}
-                      </div>
-                    </Tooltip>
-                  </td>
-                  <td
-                    className="px-[18px] py-[10px] text-[#ffff] whitespace-nowrap text-center cursor-pointer"
-                    onClick={() =>
-                      navigate(`/admin/watch_details/watch_status/${item?.id}`)
-                    }
-                  >
-                    {item?.collection}
-                  </td>
-                  <td
-                    className="px-[18px] py-[10px] text-[#ffff] whitespace-nowrap text-center cursor-pointer"
-                    onClick={() =>
-                      navigate(`/admin/watch_details/watch_status/${item?.id}`)
-                    }
-                  >
-                    <Tooltip title={item?.model} placement="top" arrow>
-                      <div>{item?.model}</div>
-                    </Tooltip>
-                  </td>
-                  <td
-                    className="px-[18px] py-[10px] text-[#ffff] text-center cursor-pointer"
-                    onClick={() =>
-                      navigate(`/admin/watch_details/watch_status/${item?.id}`)
-                    }
-                  >
-                    {item?.serial_no}
-                  </td>
-                  <td
-                    className="px-[18px] py-[10px] text-[#ffff] text-center whitespace-nowrap cursor-pointer"
-                    onClick={() =>
-                      navigate(`/admin/watch_details/watch_status/${item?.id}`)
-                    }
-                  >
-                    {item?.addedByDetail?.company_name}
-                  </td>
-                  <td
-                    className="px-[18px] py-[10px] text-[#ffff] text-center whitespace-nowrap cursor-pointer"
-                    onClick={() =>
-                      navigate(`/admin/watch_details/watch_status/${item?.id}`)
-                    }
-                  >
-                    USD {item?.watch_price} / USD
-                    {item?.estimated_watch_price}
-                  </td>
-                  <td
-                    className="px-[18px] py-[10px] text-[#ffff] text-center whitespace-nowrap cursor-pointer"
-                    onClick={() =>
-                      navigate(`/admin/watch_details/watch_status/${item?.id}`)
-                    }
-                  >
-                    {moment.unix(item?.created_on).format("MMM DD,YYYY")}
-                  </td>
-                  <td
-                    className="px-[18px] py-[10px] text-[#ffff] text-center whitespace-nowrap cursor-pointer"
-                    onClick={() =>
-                      navigate(`/admin/watch_details/watch_status/${item?.id}`)
-                    }
-                  >
-                    {item?.watch_status}
+                    {column.label}{" "}
+                    {column.isSortable &&
+                      sortField === column.key &&
+                      (sortOrder === "asc" ? (
+                        <ArrowDropUpRoundedIcon />
+                      ) : (
+                        <ArrowDropDownRoundedIcon />
+                      ))}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {loading && watchActivityData?.length === 0 ? (
+                <tr>
+                  <td colSpan={12} className="py-[200px] px-4  text-center">
+                    <CircularProgress />
                   </td>
                 </tr>
-              ))
-            ) : (
+              ) : watchActivityData?.length > 0 ? (
+                watchActivityData?.map((item, index) => (
+                  <tr key={index} className="border-b border-[#202b34]">
+                    <td className="px-[18px] py-[0px] dark:text-[#ffff] text-black text-center cursor-pointer">
+                      <div className="w-[35px]">
+                        <div
+                          role="button"
+                          onClick={() => navigate("/admin/home/readActivity")}
+                        >
+                          <img
+                            src="https://www.estipal.com/assets/dist/images/icons/icn-mai-light.svg"
+                            width="25px"
+                            alt="img"
+                          />
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center">
+                      {" "}
+                      <Checkbox
+                        {...label}
+                        icon={
+                          <StarOutlineIcon
+                            sx={{ color: "#494a4b", fontSize: "21px" }}
+                          />
+                        }
+                        checkedIcon={
+                          <GradeIcon
+                            sx={{ color: "#ff9300", fontSize: "21px" }}
+                          />
+                        }
+                      />
+                    </td>
+                    <td
+                      className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center cursor-pointer"
+                      onClick={() =>
+                        navigate(
+                          `/admin/watch_details/watch_status/${item?.id}`
+                        )
+                      }
+                    >
+                      W{item?.id}
+                    </td>
+                    <td
+                      className="px-[18px] py-[10px] dark:text-[#ffff] text-black cursor-pointer"
+                      onClick={() =>
+                        navigate(
+                          `/admin/watch_details/watch_status/${item?.id}`
+                        )
+                      }
+                    >
+                      <Tooltip title={item?.brand} placement="top" arrow>
+                        <div className="whitespace-nowrap text-center">
+                          {item?.brand}
+                        </div>
+                      </Tooltip>
+                    </td>
+                    <td
+                      className="px-[18px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap text-center cursor-pointer"
+                      onClick={() =>
+                        navigate(
+                          `/admin/watch_details/watch_status/${item?.id}`
+                        )
+                      }
+                    >
+                      {item?.collection}
+                    </td>
+                    <td
+                      className="px-[18px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap text-center cursor-pointer"
+                      onClick={() =>
+                        navigate(
+                          `/admin/watch_details/watch_status/${item?.id}`
+                        )
+                      }
+                    >
+                      <Tooltip title={item?.model} placement="top" arrow>
+                        <div>{item?.model}</div>
+                      </Tooltip>
+                    </td>
+                    <td
+                      className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center cursor-pointer"
+                      onClick={() =>
+                        navigate(
+                          `/admin/watch_details/watch_status/${item?.id}`
+                        )
+                      }
+                    >
+                      {item?.serial_no}
+                    </td>
+                    <td
+                      className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap cursor-pointer"
+                      onClick={() =>
+                        navigate(
+                          `/admin/watch_details/watch_status/${item?.id}`
+                        )
+                      }
+                    >
+                      {item?.compnay_name}
+                    </td>
+                    <td
+                      className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap cursor-pointer"
+                      onClick={() =>
+                        navigate(
+                          `/admin/watch_details/watch_status/${item?.id}`
+                        )
+                      }
+                    >
+                      {moment.unix(item?.created_on).format("MMM DD,YYYY")}
+                    </td>
+                    <td
+                      className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap cursor-pointer"
+                      onClick={() =>
+                        navigate(
+                          `/admin/watch_details/watch_status/${item?.id}`
+                        )
+                      }
+                    >
+                      {item?.watch_status}
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td
+                    colSpan={12}
+                    className="py-[200px] px-4  text-center text-nowrap dark:text-[#ffff] text-black font-bold"
+                  >
+                    No Data Found
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        ) : (
+          <table className="table-auto w-full text-left">
+            <thead style={{ borderBottom: "2px solid #111111" }}>
               <tr>
-                <td
-                  colSpan={12}
-                  className="py-[200px] px-4  text-center text-nowrap text-white font-bold"
-                >
-                  No Data Found
-                </td>
+                {[
+                  { key: "", label: "" },
+                  {
+                    key: "checkbox",
+                    label: (
+                      <StarOutlineIcon
+                        sx={{ color: "#9b9b9b", fontSize: "21px" }}
+                      />
+                    ),
+                    render: () => (
+                      <Checkbox
+                        icon={
+                          <StarOutlineIcon
+                            sx={{ color: "#9b9b9b", fontSize: "21px" }}
+                          />
+                        }
+                        checkedIcon={
+                          <GradeIcon
+                            sx={{ color: "#ff9300", fontSize: "21px" }}
+                          />
+                        }
+                      />
+                    ),
+                  },
+                  { key: "id", label: "ID", isSortable: true },
+                  { key: "brand", label: "Brand", isSortable: true },
+                  { key: "collection", label: "Collection", isSortable: true },
+                  { key: "model", label: "Model", isSortable: false },
+                  { key: "serial_no", label: "Serial", isSortable: true },
+                  { key: "compnay_name", label: "Added By", isSortable: true },
+                  {
+                    key: "asking",
+                    label: "Asking / Estimate",
+                    isSortable: true,
+                  },
+                  { key: "addedOn", label: "Added On", isSortable: true },
+                  { key: "watch_status", label: "Status", isSortable: true },
+                ]?.map((column) => (
+                  <th
+                    key={column.key}
+                    onClick={
+                      column.isSortable
+                        ? () => handleSort(column.key)
+                        : undefined
+                    }
+                    className={`p-2 dark:text-[#ffff] text-black text-center ${
+                      column.isSortable ? "cursor-pointer" : ""
+                    } ${
+                      column.isSortable && sortField === column.key
+                        ? "active-sorting"
+                        : ""
+                    } ${
+                      column.isSortable && sortField !== column.key
+                        ? "sorting"
+                        : ""
+                    }`}
+                  >
+                    {column.label}{" "}
+                    {column.isSortable &&
+                      sortField === column.key &&
+                      (sortOrder === "asc" ? (
+                        <ArrowDropUpRoundedIcon />
+                      ) : (
+                        <ArrowDropDownRoundedIcon />
+                      ))}
+                  </th>
+                ))}
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {loading && watchActivityData?.length === 0 ? (
+                <tr>
+                  <td colSpan={12} className="py-[200px] px-4  text-center">
+                    <CircularProgress />
+                  </td>
+                </tr>
+              ) : watchActivityData?.length > 0 ? (
+                watchActivityData?.map((item, index) => (
+                  <tr key={index} className="border-b border-[#202b34]">
+                    <td className="px-[18px] py-[0px] dark:text-[#ffff] text-black text-center cursor-pointer">
+                      <div className="w-[35px]">
+                        <div
+                          role="button"
+                          onClick={() => navigate("/admin/home/readActivity")}
+                        >
+                          <img
+                            src="https://www.estipal.com/assets/dist/images/icons/icn-mai-light.svg"
+                            width="25px"
+                            alt="img"
+                          />
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center">
+                      {" "}
+                      <Checkbox
+                        {...label}
+                        icon={
+                          <StarOutlineIcon
+                            sx={{ color: "#494a4b", fontSize: "21px" }}
+                          />
+                        }
+                        checkedIcon={
+                          <GradeIcon
+                            sx={{ color: "#ff9300", fontSize: "21px" }}
+                          />
+                        }
+                      />
+                    </td>
+                    <td
+                      className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center cursor-pointer"
+                      onClick={() =>
+                        navigate(
+                          `/admin/watch_details/watch_status/${item?.id}`
+                        )
+                      }
+                    >
+                      W{item?.id}
+                    </td>
+                    <td
+                      className="px-[18px] py-[10px] dark:text-[#ffff] text-black cursor-pointer"
+                      onClick={() =>
+                        navigate(
+                          `/admin/watch_details/watch_status/${item?.id}`
+                        )
+                      }
+                    >
+                      <Tooltip title={item?.brand} placement="top" arrow>
+                        <div className="whitespace-nowrap text-center">
+                          {item?.brand}
+                        </div>
+                      </Tooltip>
+                    </td>
+                    <td
+                      className="px-[18px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap text-center cursor-pointer"
+                      onClick={() =>
+                        navigate(
+                          `/admin/watch_details/watch_status/${item?.id}`
+                        )
+                      }
+                    >
+                      {item?.collection}
+                    </td>
+                    <td
+                      className="px-[18px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap text-center cursor-pointer"
+                      onClick={() =>
+                        navigate(
+                          `/admin/watch_details/watch_status/${item?.id}`
+                        )
+                      }
+                    >
+                      <Tooltip title={item?.model} placement="top" arrow>
+                        <div>{item?.model}</div>
+                      </Tooltip>
+                    </td>
+                    <td
+                      className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center cursor-pointer"
+                      onClick={() =>
+                        navigate(
+                          `/admin/watch_details/watch_status/${item?.id}`
+                        )
+                      }
+                    >
+                      {item?.serial_no}
+                    </td>
+                    <td
+                      className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap cursor-pointer"
+                      onClick={() =>
+                        navigate(
+                          `/admin/watch_details/watch_status/${item?.id}`
+                        )
+                      }
+                    >
+                      {item?.compnay_name}
+                    </td>
+                    <td
+                      className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap cursor-pointer"
+                      onClick={() =>
+                        navigate(
+                          `/admin/watch_details/watch_status/${item?.id}`
+                        )
+                      }
+                    >
+                      USD {item?.counter_offer_price} / USD
+                      {item?.estimated_watch_price}
+                    </td>
+                    <td
+                      className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap cursor-pointer"
+                      onClick={() =>
+                        navigate(
+                          `/admin/watch_details/watch_status/${item?.id}`
+                        )
+                      }
+                    >
+                      {moment.unix(item?.created_on).format("MMM DD,YYYY")}
+                    </td>
+                    <td
+                      className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap cursor-pointer"
+                      onClick={() =>
+                        navigate(
+                          `/admin/watch_details/watch_status/${item?.id}`
+                        )
+                      }
+                    >
+                      {item?.watch_status}
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td
+                    colSpan={12}
+                    className="py-[200px] px-4  text-center text-nowrap dark:text-[#ffff] text-black font-bold"
+                  >
+                    No Data Found
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        )}
       </div>
       <PaginationComponent
         currentPage={currentPage}
@@ -316,6 +545,7 @@ const WatchHistory = () => {
         recordsPerPage={recordsPerPage}
         handlePageChange={handlePageChange}
         data={watchActivityData}
+        staffUser={staffUser}
       />
     </div>
   );
