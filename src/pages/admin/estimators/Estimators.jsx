@@ -56,7 +56,7 @@ const Estimators = () => {
   };
   return (
     <div className="p-[15px] ">
-      <div className="px-0 sm:px-[15px] flex justify-between flex-wrap">
+      <div className="px-0 sm:px-[15px] pt-4 flex justify-between flex-wrap">
         <h1 className="text-[30px] font-medium mb-4 px-0 sm:px-[15px] font-sans text-white">
           Estimators
         </h1>
