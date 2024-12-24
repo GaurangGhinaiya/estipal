@@ -196,7 +196,7 @@ const ActivitiesTable = () => {
                     className="border-b border-[#202b34]"
                     onClick={() =>
                       navigate(
-                        `/admin/home/readActivity/${activity?.watch_details?.serial_no}`
+                        `/admin/home/readActivity/${activity?.id}`
                       )
                     }
                   >
@@ -359,7 +359,7 @@ const ActivitiesTable = () => {
                     className="border-b border-[#202b34]"
                     onClick={() =>
                       navigate(
-                        `/admin/home/readActivity/${activity?.watch_details?.serial_no}`
+                        `/admin/home/readActivity/${activity?.id}`
                       )
                     }
                   >

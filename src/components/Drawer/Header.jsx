@@ -16,7 +16,7 @@ const Header = () => {
   const [openPerformanceMenu, setOpenPerformanceMenu] = React.useState(false);
   const pathName = useLocation();
   const { pathname } = pathName;
-  const staffUser = false;
+  const staffUser = true;
   const handleRevanueMenuClick = (event) => {
     setOpenRevanueMenu(!openRevanueMenu);
   };
