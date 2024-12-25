@@ -46,7 +46,7 @@ const ActivitiesTable = () => {
   const [totalRecords, setTotalRecords] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const debouncedSearchTerm = useDebounce(searchQuery, 500);
-  const staffUser = false;
+  const staffUser = JSON.parse(localStorage.getItem("staffUser"));
 
   const handleSort = (key) => {
     const newOrder = sortField === key && sortOrder === "asc" ? "desc" : "asc";

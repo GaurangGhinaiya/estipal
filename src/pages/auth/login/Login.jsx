@@ -30,6 +30,7 @@ const Login = () => {
       if (response?.status === 200) {
         toast.success(response?.data?.message);
         localStorage.setItem("authToken", response?.data?.payload?.token);
+        localStorage.setItem("staffUser",false);
         navigate("/admin");
         setLoading(false);
       }

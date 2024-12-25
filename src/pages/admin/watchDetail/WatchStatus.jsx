@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import ImageDialog from "./components/ImageDialog";
 import { useParams } from "react-router-dom";
 import axiosInstance from "../../../services";
-import { extractImageUrls } from "../../../utils";
+import { extractImageUrls, formattedNumber } from "../../../utils";
 import moment from "moment";
 
 const WatchStatus = () => {
@@ -12,7 +12,7 @@ const WatchStatus = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [watchDetailData, setWatchDetailData] = useState({});
   const [loading, setLoading] = useState(false);
-  const staffUser = true;
+  const staffUser = JSON.parse(localStorage.getItem("staffUser"));
   const imageUrls =
     watchDetailData?.watch_pic && extractImageUrls(watchDetailData?.watch_pic);
 
@@ -54,8 +54,7 @@ const WatchStatus = () => {
     <div className="mx-auto px-[20px] sm:px-[45px] py-[20px]">
       <div className="flex justify-between items-center mb-[30px] flex-wrap gap-5">
         <h3 className="dark:text-white text-black text-[21px]">
-          Watch History - ID : W{watchDetailData?.id}, {watchDetailData?.brand}, {watchDetailData?.model}, Stainless Steel -
-          Bracelet (116500)
+          Watch History - ID : W{watchDetailData?.id}, {watchDetailData?.brand}, {watchDetailData?.model}, {watchDetailData?.collection} ({watchDetailData?.reference})
         </h3>
 
         <Button
@@ -102,11 +101,16 @@ const WatchStatus = () => {
           </div>
           <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
             <p className="dark:text-white" text-black >Requested price</p>
-            <p className="dark:text-white" text-black >USD {watchDetailData?.counter_offer_price}</p>
+            <p className="dark:text-white" text-black >USD  {formattedNumber.format(
+              watchDetailData?.watch_price
+            )}</p>
           </div>
           <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
             <p className="dark:text-white" text-black >Estimated price</p>
-            <p className="dark:text-white" text-black >USD {watchDetailData?.estimated_watch_price}</p>
+            <p className="dark:text-white" text-black >USD {formattedNumber.format(
+              watchDetailData?.estimated_watch_price
+            )}
+            </p>
           </div>
           <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
             <p className="dark:text-white" text-black >Warranty date</p>
@@ -168,7 +172,7 @@ const WatchStatus = () => {
                 USD {watchDetailData?.estimated_watch_price} (Selected)
               </td>
               <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                {moment.unix(watchDetailData?.created_on).format('MMM DD ,YYYY HH:mm:ss')}
+                {moment.unix(watchDetailData?.created_on).format('MMM DD ,YYYY h:mm A')}
               </td>
             </tr>
           </tbody>

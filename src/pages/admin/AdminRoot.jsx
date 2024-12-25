@@ -22,14 +22,14 @@ import ManageStaff from "../staff/manage_staff/ManageStaff";
 import EstimatorEdit from "./estimators/EstimatorEdit";
 
 const AdminRoot = () => {
-  const staffUser = true;
+  const staffUser = JSON.parse(localStorage.getItem("staffUser"));
 
   return (
     <div>
       <Routes>
         <Route path="/" element={<Admin />} />
         <Route path="/watch_details/watch_history" element={<WatchHistory />} />
-        {!staffUser && <Route path="/staff/staff_user" element={<StaffUser />} />}
+        <Route path="/staff/staff_user" element={staffUser ? <ManageStaff /> : <StaffUser />} />
         <Route path="/home/readActivity/:id" element={<ReadActivity />} />
         <Route
           path="/watch_details/watch_status/:id"
@@ -97,10 +97,10 @@ const AdminRoot = () => {
           element={<AccountProfile />}
         />
 
-        {staffUser && <Route
+        {/* {staffUser && <Route
           path="/staff/staff_user"
           element={<ManageStaff />}
-        />}
+        />} */}
         <Route path="language" element={<Language />} />
         {/* <Route path="/edit" element={<EditUser />} />  */}
       </Routes>
