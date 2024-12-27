@@ -29,7 +29,7 @@ const WatchHistory = () => {
   const [recordsPerPage, setRecordsPerPage] = useState(20);
   const [totalRecords, setTotalRecords] = useState(0);
   const debouncedSearchTerm = useDebounce(searchQuery, 500);
-  const staffUser = true;
+  const staffUser = false;
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -187,7 +187,11 @@ const WatchHistory = () => {
                       <div className="w-[35px]">
                         <div
                           role="button"
-                          onClick={() => navigate("/admin/home/readActivity")}
+                          onClick={() =>
+                            navigate(
+                              `/admin/watch_details/watch_status/${item?.id}`
+                            )
+                          }
                         >
                           <img
                             src="https://www.estipal.com/assets/dist/images/icons/icn-mai-light.svg"
@@ -490,7 +494,7 @@ const WatchHistory = () => {
                         )
                       }
                     >
-                      {item?.compnay_name}
+                      {item?.addedByDetail?.company_name}
                     </td>
                     <td
                       className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap cursor-pointer"
@@ -500,7 +504,7 @@ const WatchHistory = () => {
                         )
                       }
                     >
-                      USD {item?.counter_offer_price} / USD
+                      USD {item?.watch_price} / USD
                       {item?.estimated_watch_price}
                     </td>
                     <td

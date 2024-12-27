@@ -94,7 +94,7 @@ const ReadActivity = () => {
             <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
               <p className="dark:text-white text-black">Estimate</p>
               <p className="text-[#11c71e] font-bold">
-                USD {readActivityData?.watch_details?.admin_converted_price}
+                USD {readActivityData?.watch_details?.price}{" "}
               </p>
             </div>
             <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">

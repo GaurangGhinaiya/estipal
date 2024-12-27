@@ -10,7 +10,6 @@ import moment from "moment";
 const Estimators = () => {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
-  console.log("data: ", data);
   const [status, setStatus] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOrder, setSortOrder] = useState("asc");
@@ -54,14 +53,15 @@ const Estimators = () => {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
+
   return (
-    <div className="p-[15px] ">
+    <div className="p-[15px]">
       <div className="px-0 sm:px-[15px] flex justify-between flex-wrap">
         <h1 className="text-[30px] font-medium mb-4 px-0 sm:px-[15px] font-sans text-white">
           Estimators
         </h1>
 
-        <div className="flex justify-between items-center mb-4 gap-4 sm:gap-8 flex-wrap ">
+        <div className="flex justify-between items-center mb-4 gap-4 sm:gap-8 flex-wrap">
           <SearchBar
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
