@@ -31,7 +31,6 @@ const Login = () => {
         toast.success(response?.data?.message);
         localStorage.setItem("authToken", response?.data?.payload?.token);
         localStorage.setItem("staffUser",false);
-        localStorage.setItem("userValue",true);
         navigate("/admin");
         setLoading(false);
       }
