@@ -239,7 +239,7 @@ const EstimatorEdit = () => {
     <div className="mx-auto px-[20px] sm:px-[45px] py-[20px]">
       <div className="flex justify-between flex-wrap gap-2">
         <div className="flex items-center">
-          <h3 className="w-[100px] text-white text-[24px]">Profile</h3>
+          <h3 className="w-[100px] text-black dark:text-white text-[24px]">Profile</h3>
           <div className="flex items-center gap-2">
             <div
               className={`${
@@ -428,14 +428,14 @@ const EstimatorEdit = () => {
             label="Country"
             placeholder="Country"
             bgColor={"#1e252b"}
-            className="mb-[15px]"
+            className="mb-[15px] text-black dark:text-white"
             component={
               <div className="flex w-full justify-end">
                 {isEditable ? (
                   <select
                     name="country"
                     id="country"
-                    className="bg-[#1e252b] max-sm:w-[100px]"
+                    className="bg-[#1e252b] max-sm:w-[100px] "
                     style={{ textAlignLast: "right" }}
                     value={formData.country}
                     readOnly={!isEditable}
@@ -470,7 +470,7 @@ const EstimatorEdit = () => {
             label="State/Province"
             placeholder="State/Province"
             bgColor="#1e252b"
-            className="mb-[15px]"
+            className="mb-[15px] text-black dark:text-white"
             component={
               <div className="flex w-full justify-end">
                 {isEditable ? (
@@ -543,18 +543,18 @@ const EstimatorEdit = () => {
             rightTextValue=""
             label="Mobile Number"
             placeholder="Mobile Number"
-            readOnly={!isEditable}
+            readOnly={!isEditable}   
             bgColor={"#1e252b"}
             className="mb-[15px]"
             onChange={handleChange}
             component={
-              <div className="flex justify-end w-full">
+              <div className="flex justify-end w-full ">
                 {isEditable ? (
                   <PhoneInput
                     international
                     defaultCountry="IN"
                     countryCallingCodeEditable={false}
-                    className="mt-1 block w-auto rounded-md p-3 max-sm:flex-wrap"
+                    className={`mt-1 block w-auto bg-[#1e252b] rounded-md p-3 max-sm:flex-wrap `}
                     placeholder="Enter phone number"
                     style={{
                       backgroundColor: "#1e252b",
@@ -566,7 +566,7 @@ const EstimatorEdit = () => {
                     onCountryChange={(v) => setSelectPhoneCountry(v)}
                   />
                 ) : (
-                  <p>{phone}</p>
+                  <p className="text-white">{phone}</p>
                 )}
               </div>
             }
@@ -670,7 +670,7 @@ const EstimatorEdit = () => {
             placeholder="Provide estimate in"
             readOnly={!isEditable}
             bgColor={"#1e252b"}
-            className="mb-[15px]"
+            className="mb-[15px] text-black dark:text-white"
             onChange={handleChange}
             component={
               <div className="flex w-full justify-end">
@@ -727,7 +727,7 @@ const EstimatorEdit = () => {
             placeholder="Commission"
             readOnly={!isEditable}
             bgColor={"#1e252b"}
-            className="mb-[15px]"
+            className="mb-[15px] text-black dark:text-white"
             onChange={handleChange}
           />
 
@@ -735,7 +735,7 @@ const EstimatorEdit = () => {
             label="Timezone"
             placeholder="Timezone"
             bgColor={"#1e252b"}
-            className="mb-[15px]"
+            className="mb-[15px] text-black dark:text-white"
             component={
               <div className="flex w-full justify-end">
                 <select

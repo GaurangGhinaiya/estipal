@@ -1,13 +1,14 @@
 import { Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import ImageDialog from "./components/ImageDialog";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axiosInstance from "../../../services";
 import { extractImageUrls, formattedNumber } from "../../../utils";
 import moment from "moment";
 
 const WatchStatus = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [watchDetailData, setWatchDetailData] = useState({});
@@ -60,6 +61,7 @@ const WatchStatus = () => {
         <Button
           variant="contained"
           className="!bg-[#1760a9] !normal-case !py-[10px] !px-[40px] !rounded-[50px]"
+          onClick={()=> navigate(`/admin/home/readActivity/${watchDetailData?.id}`)}
         >
           Messaging
         </Button>
@@ -89,11 +91,11 @@ const WatchStatus = () => {
           </div>
           <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
             <p className="dark:text-white" text-black >Condition</p>
-            <p className="dark:text-white" text-black >Mint</p>
+            <p className="dark:text-white" text-black >""</p>
           </div>
           <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
             <p className="dark:text-white" text-black >Bracelet info</p>
-            <p className="dark:text-white" text-black >Full</p>
+            <p className="dark:text-white" text-black >""</p>
           </div>
           <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
             <p className="dark:text-white" text-black >Year of production</p>
@@ -114,11 +116,11 @@ const WatchStatus = () => {
           </div>
           <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
             <p className="dark:text-white" text-black >Warranty date</p>
-            <p className="dark:text-white" text-black >9 March 2022</p>
+            <p className="dark:text-white" text-black >""</p>
           </div>
           <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
             <p className="dark:text-white" text-black >Box</p>
-            <p className="dark:text-white text-black font-bold">Yes</p>
+            <p className="dark:text-white text-black font-bold">""</p>
           </div>
           <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
             <p className="dark:text-white" text-black >Estimator suggested wholesale price</p>
