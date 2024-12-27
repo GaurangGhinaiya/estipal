@@ -10,7 +10,7 @@ import countries from "../../../constant/country.json";
 import currency from "../../../constant/currency.json";
 
 const AccountProfile = () => {
-    const staffUser = false;
+    const staffUser = JSON.parse(localStorage.getItem("staffUser"));
     const styles = {
         input: {
           backgroundColor:staffUser ? "#FFFFFF": "#1e252b", // Style for the input

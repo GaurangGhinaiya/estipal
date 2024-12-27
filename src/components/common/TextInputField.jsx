@@ -7,9 +7,9 @@ const TextInputField = (props) => {
         border:props.border,
         borderColor:props.borderColor
        }}
-      className={`w-full dark:text-white text-black rounded-lg px-4 py-[12px] flex items-center ${props.className}`}
+      className={`w-full rounded-lg px-4 py-[12px] flex items-center ${props.className}`}
     >
-      <div className="text-sm font-medium m-0 whitespace-nowrap min-w-[100px]">
+      <div className="text-sm dark:text-white text-black font-medium m-0 whitespace-nowrap min-w-[100px]">
         {props?.label}
       </div>
       <div className="flex w-full gap-[16px]">

@@ -16,7 +16,8 @@ const Header = () => {
   const [openPerformanceMenu, setOpenPerformanceMenu] = React.useState(false);
   const pathName = useLocation();
   const { pathname } = pathName;
-  const staffUser = false;
+  const staffUser = JSON.parse(localStorage.getItem("staffUser"));
+
   const handleRevanueMenuClick = (event) => {
     setOpenRevanueMenu(!openRevanueMenu);
   };

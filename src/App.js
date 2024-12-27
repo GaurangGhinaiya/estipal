@@ -4,7 +4,8 @@ import AppRoute from "./routes";
 import { useEffect, useState } from "react";
 
 function App() {
-  const userValue = true;
+  const userValue = JSON.parse(localStorage.getItem("userValue"));
+  
   const [theme, setTheme] = useState(userValue ? 'dark' : 'light');
 
 

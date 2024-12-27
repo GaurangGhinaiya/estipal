@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axiosInstance from "../../../services";
 import moment from "moment";
+import { formattedNumber, formatter } from "../../../utils";
 
 const ReadActivity = () => {
   const navigate = useNavigate();
@@ -20,6 +21,17 @@ const ReadActivity = () => {
     } catch (error) {
       console.log("error", error);
     }
+  };
+
+  const getAdminGroupInfo = (adminGroup, userId) => {
+    const groups = {
+      staff: { label: "Staff", prefix: "UCA" },
+      seller: { label: "Seller", prefix: "SCA" },
+      estimator: { label: "Estimator", prefix: "ECA" },
+    };
+
+    const group = groups[adminGroup] || groups.estimator;
+    return `${group.label} - ID: ${group.prefix}${userId}`;
   };
 
   useEffect(() => {
@@ -78,9 +90,9 @@ const ReadActivity = () => {
                 {readActivityData?.watch_details?.collection}
               </p>
             </div>
-            <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
+            <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between gap-[20px] border border-gray-300 dark:border-none">
               <p className="dark:text-white text-black">Model</p>
-              <p className="dark:text-white text-black">
+              <p className="dark:text-white text-black whitespace-nowrap overflow-x-auto hide-scrollbar">
                 {readActivityData?.watch_details?.model_no} (
                 {readActivityData?.watch_details?.model_desc})
               </p>
@@ -94,7 +106,10 @@ const ReadActivity = () => {
             <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
               <p className="dark:text-white text-black">Estimate</p>
               <p className="text-[#11c71e] font-bold">
-                USD {readActivityData?.watch_details?.price}{" "}
+                USD{" "}
+                {formattedNumber.format(
+                  readActivityData?.watch_details?.accepted_price
+                )}
               </p>
             </div>
             <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
@@ -110,17 +125,26 @@ const ReadActivity = () => {
         <div className="">
           <h3 className="mb-[5px]">
             <strong className="font-bold">Subject:</strong>{" "}
-            {readActivityData?.adminActivities[0]?.message} (
+            {readActivityData?.message} (
             {readActivityData?.watch_details?.brand},{" "}
             {readActivityData?.watch_details?.collection},{" "}
             {readActivityData?.watch_details?.model_no} - USD -{" "}
-            {readActivityData?.watch_details?.model_desc})
+            {formattedNumber.format(
+              readActivityData?.watch_details?.accepted_price
+            )}
+            )
           </h3>
           <div className="flex justify-between items-center flex-wrap mb-8">
             <h3 className="mb-[5px]">
-              <strong className="font-bold">From: </strong>M - Mayawizard{" "}
+              <strong className="font-bold">From: </strong>{readActivityData?.watch_details?.compnay_name}{" "}
               <b className="font-bold">
-                ( Seller - ID: SCA{readActivityData?.user1_id} )
+                (
+                {readActivityData &&
+                  getAdminGroupInfo(
+                    readActivityData?.admin_group,
+                    readActivityData?.user1_id
+                  )}
+                )
               </b>
             </h3>{" "}
             <h3 className="mb-[5px]">
@@ -128,7 +152,7 @@ const ReadActivity = () => {
               <span className="created_at" id="2023-04-21T00:25:19+07:00">
                 {moment
                   .unix(readActivityData?.created_on)
-                  .format("MMM DD ,YYYY HH:mm:ss")}
+                  .format("MMMM DD , YYYY h:mm A")}
               </span>
             </h3>
           </div>
@@ -142,10 +166,13 @@ const ReadActivity = () => {
         />
         <div className="message_box_inner">
           <h3 className="mb-[5px]">
-            Seller has selected 'Sell to Estipal'. The payment of USD 20,720.00
-            is required before receiving the watch.
+            {readActivityData?.message} (USD{" "}
+            {formattedNumber.format(
+              readActivityData?.watch_details?.accepted_price
+            )}
+            )
           </h3>
-          <h3 className="mb-[5px]">Status: Pending Estipal Payment</h3>
+          <h3 className="mb-[5px]">Status: {readActivityData?.watch_status}</h3>
           <div className="select_box text-center mt-20" data-select-box="0">
             <div className="inline-block dark:bg-[#1d2b38] bg-[#E1E9F0] p-[30px] px-[60px] border-2 border-[#1760a9] rounded-lg">
               <p className="flex items-center gap-[10px] mb-[10px]">
@@ -176,52 +203,63 @@ const ReadActivity = () => {
         </div>{" "}
       </div>
 
-      {readActivityData?.adminActivities.map((item, index) => (
-        <div
-          key={index}
-          className=" mt-5 dark:bg-[#1E252B] bg-[#F8F8F8] dark:text-white text-black p-6 rounded-lg dark:shadow-lg shadow-none border border-gray-300 dark:border-none"
-        >
-          <div className="border_bottom pb-4">
-            <h3 className="mb-3">
-              <strong className="font-bold">Subject:</strong> {item?.message} (
-              {readActivityData?.watch_details?.brand},{" "}
-              {readActivityData?.watch_details?.collection},{" "}
-              {readActivityData?.watch_details?.model_no} - USD -{" "}
-              {readActivityData?.watch_details?.model_desc})
-            </h3>
-            <div className="flex justify-between items-center flex-wrap">
+      {[...(readActivityData?.adminActivities || [])]
+        .reverse()
+        ?.map((item, index) => (
+          <div
+            key={index}
+            className="mt-5 dark:bg-[#1E252B] bg-[#F8F8F8] dark:text-white text-black p-6 rounded-lg dark:shadow-lg shadow-none border border-gray-300 dark:border-none"
+          >
+            <div className="border_bottom pb-4">
               <h3 className="mb-3">
-                <strong className="font-bold">From: </strong>M - Mayawizard{" "}
-                <b className="font-bold">
-                  (Seller - ID: SCA{readActivityData?.user1_id})
-                </b>
+                <strong className="font-bold">Subject:</strong> {item?.message}{" "}
+                ({readActivityData?.watch_details?.brand},{" "}
+                {readActivityData?.watch_details?.collection},{" "}
+                {readActivityData?.watch_details?.model_no} - USD -{" "}
+                {formattedNumber.format(
+                  readActivityData?.watch_details?.accepted_price
+                )}
+                )
               </h3>
+              <div className="flex justify-between items-center flex-wrap">
+                <h3 className="mb-3">
+                  <strong className="font-bold">From: </strong>M - Mayawizard{" "}
+                  <b className="font-bold">
+                    (
+                    {item?.admin_group &&
+                      getAdminGroupInfo(item?.admin_group, item?.user1_id)}
+                    )
+                  </b>
+                </h3>
+                <h3 className="mb-3">
+                  <strong className="font-bold">Received: </strong>
+                  <span className="created_at">
+                    {moment
+                      .unix(item?.created_on)
+                      .format("MMMM DD , YYYY h:mm A")}
+                  </span>
+                </h3>
+              </div>
+            </div>
+            <hr
+              className="my-5"
+              style={{
+                borderTopColor: staffUser ? "#DFDFDF" : "#ffffff1a",
+                borderTopWidth: "2px",
+              }}
+            />
+            <div className="message_box_inner">
               <h3 className="mb-3">
-                <strong className="font-bold">Received: </strong>
-                <span className="created_at">
-                  {moment
-                    .unix(item?.created_on)
-                    .format("MMM DD ,YYYY HH:mm:ss")}
-                </span>
+                {item?.message} (USD{" "}
+                {formattedNumber.format(
+                  readActivityData?.watch_details?.accepted_price
+                )}
+                )
               </h3>
+              <h3 className="mb-3">Status: {item?.watch_status}</h3>
             </div>
           </div>
-          <hr
-            className="my-5"
-            style={{
-              borderTopColor: staffUser ? "#DFDFDF" : "#ffffff1a",
-              borderTopWidth: "2px",
-            }}
-          />
-          <div className="message_box_inner">
-            <h3 className="mb-3">
-              Seller has selected 'Sell to Estipal'. The payment of USD
-              20,720.00 is required before receiving the watch.
-            </h3>
-            <h3 className="mb-3">Status: Pending Estipal Payment</h3>
-          </div>
-        </div>
-      ))}
+        ))}
     </div>
   );
 };

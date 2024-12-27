@@ -14,6 +14,7 @@ import { sortData } from "../../../components/common/Sort";
 import axiosInstance from "../../../services";
 import moment from "moment/moment";
 import useDebounce from "../../../components/common/UseDebounce";
+import { formattedNumber } from "../../../utils";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -29,7 +30,7 @@ const WatchHistory = () => {
   const [recordsPerPage, setRecordsPerPage] = useState(20);
   const [totalRecords, setTotalRecords] = useState(0);
   const debouncedSearchTerm = useDebounce(searchQuery, 500);
-  const staffUser = false;
+  const staffUser = JSON.parse(localStorage.getItem("staffUser"));
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -50,13 +51,13 @@ const WatchHistory = () => {
     const searchValue =
       debouncedSearchTerm || status
         ? JSON.stringify(
-            debouncedSearchTerm
-              ? {
-                  search: debouncedSearchTerm ? debouncedSearchTerm : "",
-                  watch_status: status,
-                }
-              : { watch_status: status }
-          )
+          debouncedSearchTerm
+            ? {
+              search: debouncedSearchTerm ? debouncedSearchTerm : "",
+              watch_status: status,
+            }
+            : { watch_status: status }
+        )
         : "";
 
     try {
@@ -82,7 +83,7 @@ const WatchHistory = () => {
 
   return (
     <div className="pb-[15px] min-h-[100vh]">
-      <div className="px-0 sm:px-[20px] pt-8 flex justify-between flex-wrap bg-gradient-to-b from-[rgba(0,96,169,0.36)] to-[rgba(255,255,255,0)]">
+      <div className="px-0 sm:px-[20px] pt-8 flex justify-between flex-wrap dark:bg-none bg-gradient-to-b from-[rgba(0,96,169,0.36)] to-[rgba(255,255,255,0)]">
         <h1 className="text-[30px] font-medium mb-4 px-0 sm:px-[15px] font-sans dark:text-[#ffff] text-black ">
           Watches History
         </h1>
@@ -149,17 +150,14 @@ const WatchHistory = () => {
                         ? () => handleSort(column.key)
                         : undefined
                     }
-                    className={`p-2 dark:text-[#ffff] text-black text-center ${
-                      column.isSortable ? "cursor-pointer" : ""
-                    } ${
-                      column.isSortable && sortField === column.key
+                    className={`p-2 dark:text-[#ffff] text-black text-center ${column.isSortable ? "cursor-pointer" : ""
+                      } ${column.isSortable && sortField === column.key
                         ? "active-sorting"
                         : ""
-                    } ${
-                      column.isSortable && sortField !== column.key
+                      } ${column.isSortable && sortField !== column.key
                         ? "sorting"
                         : ""
-                    }`}
+                      }`}
                   >
                     {column.label}{" "}
                     {column.isSortable &&
@@ -366,17 +364,14 @@ const WatchHistory = () => {
                         ? () => handleSort(column.key)
                         : undefined
                     }
-                    className={`p-2 dark:text-[#ffff] text-black text-center ${
-                      column.isSortable ? "cursor-pointer" : ""
-                    } ${
-                      column.isSortable && sortField === column.key
+                    className={`p-2 dark:text-[#ffff] text-black text-center ${column.isSortable ? "cursor-pointer" : ""
+                      } ${column.isSortable && sortField === column.key
                         ? "active-sorting"
                         : ""
-                    } ${
-                      column.isSortable && sortField !== column.key
+                      } ${column.isSortable && sortField !== column.key
                         ? "sorting"
                         : ""
-                    }`}
+                      }`}
                   >
                     {column.label}{" "}
                     {column.isSortable &&
@@ -504,8 +499,11 @@ const WatchHistory = () => {
                         )
                       }
                     >
-                      USD {item?.watch_price} / USD
-                      {item?.estimated_watch_price}
+                      USD  {formattedNumber.format(
+                        item?.watch_price
+                      )} / USD  {formattedNumber.format(
+                        item?.estimated_watch_price
+                      )}
                     </td>
                     <td
                       className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap cursor-pointer"

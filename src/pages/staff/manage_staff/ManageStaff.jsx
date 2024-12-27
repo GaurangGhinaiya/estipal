@@ -149,7 +149,7 @@ const ManageStaff = () => {
 
   return (
     <div className="pb-[15px] min-h-[100vh]">
-      <div className="px-[5px] sm:px-[20px] pt-8 flex justify-between flex-wrap bg-gradient-to-b from-[rgba(0,96,169,0.36)] to-[rgba(255,255,255,0)]">
+      <div className="px-[5px] sm:px-[20px] pt-8 flex justify-between flex-wrap dark:bg-none bg-gradient-to-b from-[rgba(0,96,169,0.36)] to-[rgba(255,255,255,0)]">
         <div className="flex sm:flex-row flex-col w-full justify-between">
           <div className="flex flex-col">
             <h1 className="text-[30px] font-medium mb-4 px-0 sm:px-[15px] font-sans dark:text-[#ffff] text-black">

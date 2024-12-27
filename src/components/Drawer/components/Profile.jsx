@@ -21,7 +21,7 @@ export default function Profile() {
   const open = Boolean(anchorEl);
   const openLang = Boolean(anchorElLang);
   const navigate = useNavigate();
-  const staffUser = false;
+  const staffUser = JSON.parse(localStorage.getItem("staffUser"));
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
