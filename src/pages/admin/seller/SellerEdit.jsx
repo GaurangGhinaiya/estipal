@@ -449,7 +449,7 @@ const SellerEdit = () => {
             rightTextValue=""
             label="Country"
             bgColor={"#1e252b"}
-            className="mb-[15px]"
+            className="mb-[15px] text-black dark:text-white"
             onChange={handleChange}
             component={
               <div className="flex w-full justify-end">
@@ -491,7 +491,7 @@ const SellerEdit = () => {
             label="State/Province"
             placeholder="State/Province"
             bgColor="#1e252b"
-            className="mb-[15px]"
+            className="mb-[15px] text-black dark:text-white"
             component={
               <div className="flex w-full justify-end">
                 {isEditable ? (
@@ -609,7 +609,7 @@ const SellerEdit = () => {
             label="Mobile Number"
             readOnly={!isEditable}
             bgColor={"#1e252b"}
-            className="mb-[15px]"
+            className="mb-[15px] text-black dark:text-white"
             onChange={handleChange}
             component={
               <div className="flex justify-end w-full">
@@ -640,7 +640,7 @@ const SellerEdit = () => {
             label="Currency of Trading"
             readOnly={!isEditable}
             bgColor={"#1e252b"}
-            className="mb-[15px]"
+            className="mb-[15px] text-black dark:text-white"
             onChange={handleChange}
             component={
               <div className="flex w-full justify-end">
