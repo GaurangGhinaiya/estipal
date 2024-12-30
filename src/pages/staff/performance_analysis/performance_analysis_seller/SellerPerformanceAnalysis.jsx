@@ -219,7 +219,8 @@ const SellerPerformanceAnalysis = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [recordsPerPage, setRecordsPerPage] = useState(10);
     const [totalRecords, setTotalRecords] = useState(0);
-    const staffUser = true;
+    const staffUser = JSON.parse(localStorage.getItem("staffUser"));
+
 
     const handleSort = (key) => {
         const newOrder = sortField === key && sortOrder === "asc" ? "desc" : "asc";
