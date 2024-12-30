@@ -3,19 +3,9 @@ import React, { useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import CloseIcon from "@mui/icons-material/Close";
 
-const Translation = () => {
-  const [translations, setTranslations] = useState([
-    { id: 1, code: "ENG", value: "Back to Activities list" },
-    { id: 2, code: "ITA", value: "Torna all'elenco delle attività" },
-    { id: 3, code: "ESP", value: "Volver a la lista de actividades" },
-    { id: 4, code: "CN", value: "返回活动列表" },
-    { id: 5, code: "JP", value: "" },
-    { id: 6, code: "PT", value: "" },
-    { id: 7, code: "TH", value: "" },
-    { id: 8, code: "AR", value: "" },
-    { id: 9, code: "HE", value: "" },
-    { id: 10, code: "HI", value: "" },
-  ]);
+const Translation = (props) => {
+  const { item, updateItem } = props;
+
   const [open, setOpen] = useState(false);
   const [inputText, setInputText] = useState("");
   const [isEditData, setIsEditData] = useState();
@@ -24,28 +14,34 @@ const Translation = () => {
   const handleClose = () => setOpen(false);
 
   const handleEdit = () => {
-    setTranslations((prev) =>
-      prev?.map((item) =>
-        item?.id === isEditData?.id ? { ...item, value: inputText } : item
-      )
-    );
+    const updatedItem = {
+      ...item,
+      [isEditData?.code.toLowerCase()]: inputText,
+    };
+    updateItem(updatedItem);
     handleClose();
   };
+
+  const translations = Object.entries(item)
+    .filter(([key]) => !["id", "group_id"].includes(key))
+    .map(([code, value]) => ({
+      code: code.toUpperCase(),
+      value,
+    }));
 
   return (
     <div className="w-full my-[20px]">
       <div className="bg-[#1E252B] text-white p-6 rounded-lg shadow-lg">
-        {translations?.map((translation, index) => (
+        {translations?.map((translation) => (
           <div
             key={translation?.code}
             className="flex items-center justify-between gap-[20px] py-3"
           >
-            {/* Language Code */}
             <div className="text-center font-bold text-[16px] sm:pl-[35px]">
               {translation?.code}
             </div>
             <div className="w-[90%] flex items-center bg-[#283641] text-white px-4 rounded-md h-[55px]">
-              {translation?.value}
+              {translation?.value || ""}
             </div>
             {/* Edit Button */}
             <button
@@ -57,7 +53,7 @@ const Translation = () => {
                 onClick={() => {
                   handleOpen();
                   setIsEditData(translation);
-                  setInputText(translation?.value);
+                  setInputText(translation?.value || "");
                 }}
               />
             </button>
@@ -86,7 +82,7 @@ const Translation = () => {
           </div>
           <Divider className="!border-white" />
           <div className="text-white font-semibold text-base py-3 px-[20px]">
-            Edit Translation
+            Edit Translation ({isEditData?.code})
           </div>
           <div className="w-full px-[20px] pb-[18px]">
             <input

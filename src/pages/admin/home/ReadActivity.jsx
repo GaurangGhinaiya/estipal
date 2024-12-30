@@ -10,7 +10,8 @@ const ReadActivity = () => {
   const params = useParams();
   const { id } = params;
   const [readActivityData, setReadActivityData] = useState();
-  const staffUser = true;
+  const staffUser = JSON.parse(localStorage.getItem("staffUser"));
+
 
   const getDetailById = async () => {
     try {

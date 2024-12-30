@@ -112,7 +112,7 @@ const WatchHistory = () => {
 
       <div className="w-[95.5%] overflow-auto mx-auto pt-[10px]">
         {staffUser ? (
-          <table className="table-auto w-full text-left">
+          <table className="table-auto w-full text-left ">
             <thead style={{ borderBottom: "2px solid #111111" }}>
               <tr>
                 {[
@@ -155,7 +155,7 @@ const WatchHistory = () => {
                         ? () => handleSort(column.key)
                         : undefined
                     }
-                    className={`p-2 dark:text-[#ffff] text-black text-center ${column.isSortable ? "cursor-pointer" : ""
+                    className={`p-2 dark:text-[#ffff] text-nowrap  text-black text-center ${column.isSortable ? "cursor-pointer" : ""
                       } ${column.isSortable && sortField === column.key
                         ? "active-sorting"
                         : ""
@@ -190,7 +190,11 @@ const WatchHistory = () => {
                       <div className="w-[35px]">
                         <div
                           role="button"
-                          onClick={() => navigate("/admin/home/readActivity")}
+                          onClick={() =>
+                            navigate(
+                              `/admin/watch_details/watch_status/${item?.id}`
+                            )
+                          }
                         >
                           <img
                             src="https://www.estipal.com/assets/dist/images/icons/icn-mai-light.svg"
@@ -365,12 +369,12 @@ const WatchHistory = () => {
                         ? () => handleSort(column.key)
                         : undefined
                     }
-                    className={`p-2 dark:text-[#ffff] text-black text-center ${column.isSortable ? "cursor-pointer" : ""
+                    className={`p-2 dark:text-[#ffff] text-nowrap text-black text-center ${column.isSortable ? "cursor-pointer" : ""
                       } ${column.isSortable && sortField === column.key
                         ? "active-sorting"
                         : ""
                       } ${column.isSortable && sortField !== column.key
-                        ? "sorting"
+                        ? "pr-4 sorting"
                         : ""
                       }`}
                   >
@@ -490,7 +494,7 @@ const WatchHistory = () => {
                         )
                       }
                     >
-                      {item?.compnay_name}
+                      {item?.addedByDetail?.company_name}
                     </td>
                     <td
                       className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap cursor-pointer"

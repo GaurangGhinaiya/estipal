@@ -10,7 +10,6 @@ import moment from "moment";
 const Estimators = () => {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
-  console.log("data: ", data);
   const [status, setStatus] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOrder, setSortOrder] = useState("asc");
@@ -54,6 +53,7 @@ const Estimators = () => {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
+
   return (
     <div className="p-[15px] ">
       <div className="px-0 sm:px-[15px] pt-4 flex justify-between flex-wrap">
@@ -61,7 +61,7 @@ const Estimators = () => {
           Estimators
         </h1>
 
-        <div className="flex justify-between items-center mb-4 gap-4 sm:gap-8 flex-wrap ">
+        <div className="flex justify-between items-center mb-4 gap-4 sm:gap-8 flex-wrap">
           <SearchBar
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
@@ -210,7 +210,7 @@ const Estimators = () => {
                       })
                     }
                   >
-                    {moment.unix(item?.created_on).format("MMM DD,YYYY")}
+                    {moment.unix(item?.created_on).format("DD MMM YYYY")}
                   </td>
                   <td
                     className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap cursor-pointer"

@@ -41,7 +41,7 @@ const CommissionPlan = (props) => {
                 onChange={(e) =>
                   handleChange(index, "from", parseInt(e.target.value))
                 }
-                className="mb-[15px]"
+                className="mb-[15px] text-black dark:text-white"
               />
 
               <TextInputField
@@ -57,7 +57,7 @@ const CommissionPlan = (props) => {
                 onChange={(e) =>
                   handleChange(index, "to", parseInt(e.target.value))
                 }
-                className="mb-[15px]"
+                className="mb-[15px] text-black dark:text-white"
               />
 
               <TextInputField
@@ -73,7 +73,7 @@ const CommissionPlan = (props) => {
                 onChange={(e) =>
                   handleChange(index, "commission", parseInt(e.target.value))
                 }
-                className="mb-[15px]"
+                className="mb-[15px] text-black dark:text-white"
               />
             </div>
           ))}

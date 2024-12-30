@@ -158,7 +158,7 @@ const ActivitiesTable = () => {
                         ? () => handleSort(column.key)
                         : undefined
                     }
-                    className={`p-2 dark:text-[#ffff] text-black text-center ${
+                    className={`p-2 dark:text-[#ffff] text-nowrap text-black text-center ${
                       column.isSortable ? "cursor-pointer" : ""
                     } ${
                       column.isSortable && sortField === column.key
@@ -166,7 +166,7 @@ const ActivitiesTable = () => {
                         : ""
                     } ${
                       column.isSortable && sortField !== column.key
-                        ? "sorting"
+                        ? "pr-5 sorting"
                         : ""
                     }`}
                   >
@@ -321,7 +321,7 @@ const ActivitiesTable = () => {
                         ? () => handleSort(column.key)
                         : undefined
                     }
-                    className={`p-2 dark:text-[#ffff] text-black text-center ${
+                    className={`p-2 dark:text-[#ffff] text-nowrap text-black text-center ${
                       column.isSortable ? "cursor-pointer" : ""
                     } ${
                       column.isSortable && sortField === column.key
@@ -329,7 +329,7 @@ const ActivitiesTable = () => {
                         : ""
                     } ${
                       column.isSortable && sortField !== column.key
-                        ? "sorting"
+                        ? "pr-5 sorting"
                         : ""
                     }`}
                   >

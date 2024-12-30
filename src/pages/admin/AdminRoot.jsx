@@ -92,10 +92,7 @@ const AdminRoot = () => {
           element={<EstimatorPerformanceAnalysis />}
         />
         <Route path="/watch_details/brand_list" element={<BrandList />} />
-        <Route
-          path="/panel/account"
-          element={<AccountProfile />}
-        />
+        <Route path="/panel/account" element={<AccountProfile />} />
 
         {/* {staffUser && <Route
           path="/staff/staff_user"

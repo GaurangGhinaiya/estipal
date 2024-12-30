@@ -1,13 +1,14 @@
 import { Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import ImageDialog from "./components/ImageDialog";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axiosInstance from "../../../services";
 import { extractImageUrls, formattedNumber } from "../../../utils";
 import moment from "moment";
 
 const WatchStatus = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [watchDetailData, setWatchDetailData] = useState({});
@@ -60,6 +61,7 @@ const WatchStatus = () => {
         <Button
           variant="contained"
           className="!bg-[#1760a9] !normal-case !py-[10px] !px-[40px] !rounded-[50px]"
+          onClick={()=> navigate(`/admin/home/readActivity/${watchDetailData?.id}`)}
         >
           Messaging
         </Button>
@@ -68,36 +70,60 @@ const WatchStatus = () => {
       <div className="w-full flex-[2]">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
           <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
-            <p className="dark:text-white" text-black >ID</p>
-            <p className="dark:text-white" text-black >W{watchDetailData?.id}</p>
+            <p className="dark:text-white" text-black>
+              ID
+            </p>
+            <p className="dark:text-white" text-black>
+              W{watchDetailData?.id}
+            </p>
           </div>
           <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
-            <p className="dark:text-white" text-black >Brand</p>
-            <p className="dark:text-white" text-black >{watchDetailData?.brand}</p>
+            <p className="dark:text-white" text-black>
+              Brand
+            </p>
+            <p className="dark:text-white" text-black>
+              {watchDetailData?.brand}
+            </p>
           </div>
           <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between gap-[25px] border border-gray-300 dark:border-none">
-            <p className="dark:text-white" text-black >Collection</p>
-            <p className="dark:text-white text-black line-clamp-1">{watchDetailData?.collection}</p>
+            <p className="dark:text-white" text-black>
+              Collection
+            </p>
+            <p className="dark:text-white text-black line-clamp-1">
+              {watchDetailData?.collection}
+            </p>
           </div>
           <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
-            <p className="dark:text-white" text-black >Model</p>
-            <p className="dark:text-white" text-black >{watchDetailData?.model}</p>
+            <p className="dark:text-white" text-black>
+              Model
+            </p>
+            <p className="dark:text-white" text-black>
+              {watchDetailData?.model}
+            </p>
           </div>
           <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
-            <p className="dark:text-white" text-black >Serial Number</p>
-            <p className="dark:text-white" text-black >{watchDetailData?.serial_no}</p>
+            <p className="dark:text-white" text-black>
+              Serial Number
+            </p>
+            <p className="dark:text-white" text-black>
+              {watchDetailData?.serial_no}
+            </p>
           </div>
           <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
             <p className="dark:text-white" text-black >Condition</p>
-            <p className="dark:text-white" text-black >Mint</p>
+            <p className="dark:text-white" text-black >""</p>
           </div>
           <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
             <p className="dark:text-white" text-black >Bracelet info</p>
-            <p className="dark:text-white" text-black >Full</p>
+            <p className="dark:text-white" text-black >""</p>
           </div>
           <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
-            <p className="dark:text-white" text-black >Year of production</p>
-            <p className="dark:text-white" text-black >{watchDetailData?.year_of_prod}</p>
+            <p className="dark:text-white" text-black>
+              Year of production
+            </p>
+            <p className="dark:text-white" text-black>
+              {watchDetailData?.year_of_prod}
+            </p>
           </div>
           <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
             <p className="dark:text-white" text-black >Requested price</p>
@@ -114,14 +140,16 @@ const WatchStatus = () => {
           </div>
           <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
             <p className="dark:text-white" text-black >Warranty date</p>
-            <p className="dark:text-white" text-black >9 March 2022</p>
+            <p className="dark:text-white" text-black >""</p>
           </div>
           <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
             <p className="dark:text-white" text-black >Box</p>
-            <p className="dark:text-white text-black font-bold">Yes</p>
+            <p className="dark:text-white text-black font-bold">""</p>
           </div>
           <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
-            <p className="dark:text-white" text-black >Estimator suggested wholesale price</p>
+            <p className="dark:text-white" text-black>
+              Estimator suggested wholesale price
+            </p>
           </div>
         </div>
       </div>
@@ -163,7 +191,8 @@ const WatchStatus = () => {
           <tbody>
             <tr>
               <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                {watchDetailData?.addedByDetail?.company_name} - {watchDetailData?.addedByDetail?.username}
+                {watchDetailData?.addedByDetail?.company_name} -{" "}
+                {watchDetailData?.addedByDetail?.username}
               </td>
               <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                 test - nopp ice
@@ -179,7 +208,9 @@ const WatchStatus = () => {
         </table>
       </div>
 
-      <h2 className="dark:text-white text-black font-bold text-[30px] mb-2">Watch history</h2>
+      <h2 className="dark:text-white text-black font-bold text-[30px] mb-2">
+        Watch history
+      </h2>
 
       <div
         className="w-[100%] overflow-auto mx-auto p-[25px] dark:bg-[#1e252b] bg-[#F8F8F8] rounded-[8px]"
@@ -190,7 +221,9 @@ const WatchStatus = () => {
             {watchDetailData?.adminActivities?.map((item, index) => (
               <tr key={index}>
                 <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                  {moment.unix(item?.created_on).format('MMM DD ,YYYY HH:mm:ss')}
+                  {moment
+                    .unix(item?.created_on)
+                    .format("MMM DD ,YYYY HH:mm:ss")}
                 </td>
                 <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                   {item?.admin_group}
