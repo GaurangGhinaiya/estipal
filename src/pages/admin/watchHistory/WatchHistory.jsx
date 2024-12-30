@@ -9,7 +9,7 @@ import SearchBar from "../../../components/common/SearchBar";
 import SelectDropdown from "../../../components/common/SelectDropdown";
 import { CircularProgress, Tooltip } from "@mui/material";
 import { statusOptions } from "../components/ActivitiesTable";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { sortData } from "../../../components/common/Sort";
 import axiosInstance from "../../../services";
 import moment from "moment/moment";
@@ -31,6 +31,11 @@ const WatchHistory = () => {
   const [totalRecords, setTotalRecords] = useState(0);
   const debouncedSearchTerm = useDebounce(searchQuery, 500);
   const staffUser = JSON.parse(localStorage.getItem("staffUser"));
+  const [searchParams] = useSearchParams();
+
+  // Get a specific query parameter
+  const sellerId = searchParams.get("seller_id");
+  // console.log('sellerId: ', sellerId);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);

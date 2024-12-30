@@ -27,7 +27,6 @@ import EstimatorEdit from "../pages/admin/estimators/EstimatorEdit";
 
 const AppRoute = () => {
   const staffUser = JSON.parse(localStorage.getItem("staffUser"));
-  console.log("staffUser", staffUser)
 
   return (
     <Router>
@@ -55,7 +54,10 @@ const AppRoute = () => {
               path="watch_details/watch_history"
               element={<WatchHistory />}
             />
-            <Route path="staff/staff_user" element={staffUser ? <ManageStaff /> : <StaffUser />} />
+            <Route
+              path="staff/staff_user"
+              element={staffUser ? <ManageStaff /> : <StaffUser />}
+            />
             <Route path="home/readActivity/:id" element={<ReadActivity />} />
             <Route
               path="watch_details/watch_status/:id"
@@ -77,7 +79,7 @@ const AppRoute = () => {
               element={<AdminRevanueAnalysis />}
             />
             <Route
-              path="analysis/revenue_analysis/seller"
+              path="analysis/revenue_analysis/seller/:seller_id"
               element={<SellerRevenueAnalysis />}
             />
             <Route
@@ -89,7 +91,7 @@ const AppRoute = () => {
               element={<AdminPerformanceAnalysis />}
             />
             <Route
-              path="analysis/performance_analysis/seller"
+              path="analysis/performance_analysis/seller/:seller_id"
               element={<SellerPerformanceAnalysis />}
             />
             <Route
@@ -118,10 +120,7 @@ const AppRoute = () => {
               element={<EstimatorPerformanceAnalysis />}
             />
             <Route path="watch_details/brand_list" element={<BrandList />} />
-            <Route
-              path="panel/account"
-              element={<AccountProfile />}
-            />
+            <Route path="panel/account" element={<AccountProfile />} />
             {/* {staffUser === true && <Route
               path="staff/staff_user"
               element={<ManageStaff />}

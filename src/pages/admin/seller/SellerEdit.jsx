@@ -241,8 +241,8 @@ const SellerEdit = () => {
         <div className="flex justify-center">
           <Button
             variant="contained"
-            className="!bg-[#3c8dbc] !normal-case !py-[10px] !px-[40px] !rounded-[50px]"
-            onClick={() => navigate("/admin/watch_details/watch_history")}
+            className="!bg-[#3c8dbc] !normal-case !py-[10px] !px-[40px] !rounded-[50px]" 
+            onClick={() => navigate(`/admin/watch_details/watch_history/?seller_id=${id}`)}
           >
             View watches history
           </Button>
@@ -251,7 +251,7 @@ const SellerEdit = () => {
           <Button
             variant="contained"
             className="!bg-[#3c8dbc] !normal-case !py-[10px] !px-[40px] !rounded-[50px]"
-            onClick={() => navigate("/admin/analysis/revenue_analysis/admin")}
+            onClick={() => navigate(`/admin/analysis/revenue_analysis/seller/${id}`)}
           >
             View revenue analysis
           </Button>
@@ -260,7 +260,7 @@ const SellerEdit = () => {
           <Button
             variant="contained"
             className="!bg-[#3c8dbc] !normal-case !py-[10px] !px-[40px] !rounded-[50px]"
-            onClick={() => navigate("/admin/watch_details/watch_history")}
+            onClick={() => navigate(`/admin/analysis/performance_analysis/seller/${id}`)}
           >
             View performance analysis
           </Button>

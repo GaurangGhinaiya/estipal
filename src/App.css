@@ -301,7 +301,7 @@ table.dataTable tbody td {
   margin: auto;
 }
 
-/* /* .PhoneInputInput {
+.PhoneInputInput {
   background-color: #1e252b !important;
 }
 
@@ -318,7 +318,7 @@ table.dataTable tbody td {
   font-weight: 800;
   text-align: center;
   padding: 16px 0;
-} */
+} 
 
 .hide-scrollbar {
   /* Hide the scrollbar */

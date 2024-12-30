@@ -122,7 +122,15 @@ const StaffUser = () => {
               </tr>
             ) : data?.length > 0 ? (
               data.map((item, index) => (
-                <tr key={index} className="border-b border-[#202b34]">
+                <tr
+                  onClick={() =>
+                    navigate(
+                      `/admin/seller/seller_edit/${item?.admin_seller_id}`
+                    )
+                  }
+                  key={index}
+                  className="border-b border-[#202b34]"
+                >
                   <td className="px-[18px] py-[0px] text-[#ffff] text-center">
                     <div className="require_vaild_list text-center">
                       <span
@@ -131,75 +139,41 @@ const StaffUser = () => {
                     </div>
                   </td>
 
-                  <td
-                    className="px-[18px] py-[12px] text-[#ffff] text-center cursor-pointer"
-                    onClick={() =>
-                      navigate(`/admin/seller/seller_edit/${item?.id}`)
-                    }
-                  >
-                    SCA{item.id}
+                  <td className="px-[18px] py-[12px] text-[#ffff] text-center cursor-pointer">
+                    SCA{item?.admin_seller_id}
                   </td>
-                  <td
-                    className="px-[18px] py-[12px] text-[#ffff] cursor-pointer"
-                    onClick={() =>
-                      navigate(`/admin/seller/seller_edit/${item?.id}`)
-                    }
-                  >
+                  <td className="px-[18px] py-[12px] text-[#ffff] cursor-pointer">
                     <div className="whitespace-nowrap text-center">
                       {item.cmp_name}
                     </div>
                   </td>
-                  <td
-                    className="px-[18px] py-[12px] text-[#ffff] whitespace-nowrap text-center cursor-pointer"
-                    onClick={() =>
-                      navigate(`/admin/seller/seller_edit/${item?.id}`)
-                    }
-                  >
+                  <td className="px-[18px] py-[12px] text-[#ffff] whitespace-nowrap text-center cursor-pointer">
                     {item.first_name + " " + item.last_name}
                   </td>
-                  <td
-                    className="px-[18px] py-[12px] text-[#ffff] whitespace-nowrap text-center cursor-pointer"
-                    onClick={() =>
-                      navigate(`/admin/seller/seller_edit/${item?.id}`)
-                    }
-                  >
+                  <td className="px-[18px] py-[12px] text-[#ffff] whitespace-nowrap text-center cursor-pointer">
                     {item.email}
                   </td>
-                  <td
-                    className="px-[18px] py-[12px] text-[#ffff] text-center cursor-pointer"
-                    onClick={() =>
-                      navigate(`/admin/seller/seller_edit/${item?.id}`)
-                    }
-                  >
+                  <td className="px-[18px] py-[12px] text-[#ffff] text-center cursor-pointer">
                     {item.username}
                   </td>
-                  <td
-                    className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap cursor-pointer"
-                    onClick={() =>
-                      navigate(`/admin/seller/seller_edit/${item?.id}`)
-                    }
-                  >
+                  <td className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap cursor-pointer">
                     {moment.unix(item?.created_on).format("MMM DD,YYYY")}
                   </td>
-                  <td
-                    className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap cursor-pointer"
-                    onClick={() =>
-                      navigate(`/admin/seller/seller_edit/${item?.id}`)
-                    }
-                  >
+                  <td className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap cursor-pointer">
                     {item.staff}
                   </td>
-                  <td
-                    className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap cursor-pointer"
-                    onClick={() =>
-                      navigate(`/admin/seller/seller_edit/${item?.id}`)
-                    }
-                  >
+                  <td className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap cursor-pointer">
                     {item.sentAccepted}
                   </td>
                   <td className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap">
                     <div className="flex gap-[10px]">
-                      <a href="https://www.estipal.com//admin/watch_details/watch_history?seller_id=1000">
+                      <div
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          navigate(`/admin/watch_details/watch_history/?seller_id=${item?.admin_seller_id}`);
+                        }}
+                        className="cursor-pointer"
+                      >
                         <img
                           alt="start"
                           id="star"
@@ -208,8 +182,14 @@ const StaffUser = () => {
                           style={{ filter: "invert(1)" }}
                           src="https://www.estipal.com/assets/dist/images/icons/Watch history 2.png"
                         />
-                      </a>
-                      <a href="#">
+                      </div>
+                      <div
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          navigate(`/admin`);
+                        }}
+                        className="cursor-pointer"
+                      >
                         <img
                           alt="revanue"
                           width="30px"
@@ -217,8 +197,16 @@ const StaffUser = () => {
                           style={{ filter: "invert(1)" }}
                           src="https://www.estipal.com/assets/dist/images/icons/Revenue.png"
                         />
-                      </a>
-                      <a href="https://www.estipal.com/admin/analysis/performance_analysis/seller/1000">
+                      </div>
+                      <div
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          navigate(
+                            `/admin/analysis/performance_analysis/seller/${item?.admin_seller_id}`
+                          );
+                        }}
+                        className="cursor-pointer"
+                      >
                         <img
                           alt="performance"
                           width="30px"
@@ -226,7 +214,7 @@ const StaffUser = () => {
                           style={{ filter: "invert(1)" }}
                           src="https://www.estipal.com/assets/dist/images/icons/performance.png"
                         />
-                      </a>
+                      </div>
                     </div>
                   </td>
                 </tr>
