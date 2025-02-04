@@ -239,7 +239,9 @@ const EstimatorEdit = () => {
     <div className="mx-auto px-[20px] sm:px-[45px] py-[20px]">
       <div className="flex justify-between flex-wrap gap-2">
         <div className="flex items-center">
-          <h3 className="w-[100px] text-black dark:text-white text-[24px]">Profile</h3>
+          <h3 className="w-[100px] text-black dark:text-white text-[24px]">
+            Profile
+          </h3>
           <div className="flex items-center gap-2">
             <div
               className={`${
@@ -445,7 +447,9 @@ const EstimatorEdit = () => {
                       Open to select country
                     </option>
                     {countries.map((item, index) => (
-                      <option value={item.iso}>{item.name}</option>
+                      <option value={item.iso} key={index}>
+                        {item.name}
+                      </option>
                     ))}
                   </select>
                 ) : (
@@ -543,7 +547,7 @@ const EstimatorEdit = () => {
             rightTextValue=""
             label="Mobile Number"
             placeholder="Mobile Number"
-            readOnly={!isEditable}   
+            readOnly={!isEditable}
             bgColor={"#1e252b"}
             className="mb-[15px]"
             onChange={handleChange}
@@ -685,7 +689,9 @@ const EstimatorEdit = () => {
                     onChange={handleChange}
                   >
                     {currency.map((item, index) => (
-                      <option value={item.value}>{item.name}</option>
+                      <option value={item.value} key={index}>
+                        {item.name}
+                      </option>
                     ))}
                   </select>
                 ) : (
@@ -751,7 +757,7 @@ const EstimatorEdit = () => {
                     Open to select timezone
                   </option>
                   {timeZone.map((item, index) => (
-                    <option key={item.value} value={item.value}>
+                    <option key={index} value={item.value}>
                       {item.label}
                     </option>
                   ))}

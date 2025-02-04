@@ -401,7 +401,9 @@ const SellerUserCreate = () => {
                       Open to select country
                     </option>
                     {countries.map((item, index) => (
-                      <option value={item.iso}>{item.name}</option>
+                      <option value={item.iso} key={index}>
+                        {item.name}
+                      </option>
                     ))}
                   </select>
                 ) : (
@@ -566,7 +568,9 @@ const SellerUserCreate = () => {
                   onChange={handleChange}
                 >
                   {currency.map((item, index) => (
-                    <option value={item.value}>{item.name}</option>
+                    <option value={item.value} key={index}>
+                      {item.name}
+                    </option>
                   ))}
                 </select>
               </div>

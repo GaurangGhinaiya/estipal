@@ -113,7 +113,7 @@ const Settings = () => {
       </h1>
       {emailList?.map((email, index) => (
         <div
-          key={email.name}
+          key={index}
           className="w-full lg:w-[70%] pr-[12.5px] flex sm:flex-row flex-col items-end sm:items-center gap-[10px] sm:gap-[25px] mb-[15px]"
         >
           <div className="w-full sm:w-1/2">

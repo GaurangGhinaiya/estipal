@@ -467,7 +467,9 @@ const SellerEdit = () => {
                       Open to select country
                     </option>
                     {countries.map((item, index) => (
-                      <option value={item.code}>{item.name}</option>
+                      <option value={item.code} key={index}>
+                        {item.name}
+                      </option>
                     ))}
                   </select>
                 ) : (
@@ -655,7 +657,9 @@ const SellerEdit = () => {
                     onChange={handleChange}
                   >
                     {currency.map((item, index) => (
-                      <option value={item.value}>{item.name}</option>
+                      <option value={item.value} key={index}>
+                        {item.name}
+                      </option>
                     ))}
                   </select>
                 ) : (

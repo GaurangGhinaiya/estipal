@@ -8,43 +8,42 @@ import CloseIcon from "@mui/icons-material/Close";
 const Language = () => {
   const [languageSettings, setLanguageSettings] = useState([]);
   const [languageGroupList, setLanguageGroupList] = useState([]);
-  const [selectedGroupsId, setSelectedGroupsId] = useState(null);
   const [languagesData, setLanguagesData] = useState([]);
+  const [selectedGroupsId, setSelectedGroupsId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const getLanguagesList = async () => {
+  // Fetch languages list, groups, and translations
+  const fetchData = async () => {
     try {
-      const response = await axiosInstance.get(`/languagesSetting`);
-      setLanguageSettings(response?.payload?.data);
+      const [languagesSettingsResponse, languageGroupsResponse] =
+        await Promise.all([
+          axiosInstance.get("/languagesSetting"),
+          axiosInstance.get("/languagesGroups"),
+        ]);
+      setLanguageSettings(languagesSettingsResponse?.payload?.data || []);
+      setLanguageGroupList(languageGroupsResponse?.payload?.data || []);
     } catch (error) {
-      console.log("error", error);
+      console.error("Error fetching data", error);
     }
   };
 
-  const getLanguagesGroupList = async () => {
-    try {
-      const response = await axiosInstance.get(`/languagesGroups`);
-      setLanguageGroupList(response?.payload?.data);
-    } catch (error) {
-      console.log("error", error);
-    }
-  };
-
-  const getLanguages = async (id) => {
+  const fetchLanguages = async (groupId) => {
     try {
       const response = await axiosInstance.get(
-        `/languages?show_all=${true}&search=${JSON.stringify({
-          group_id: id,
+        `/languages?show_all=true&search=${JSON.stringify({
+          group_id: groupId,
         })}`
       );
-      setLanguagesData(response?.payload?.data);
+      setLanguagesData(response?.payload?.data || []);
     } catch (error) {
-      console.log("error", error);
+      console.error("Error fetching languages", error);
     }
   };
 
-  const handleToggleConfirm = async (index) => {
+  // Handle toggle of language settings
+  const handleToggleConfirm = (index) => {
     setSelectedIndex(index);
     setIsModalOpen(true);
   };
@@ -56,10 +55,10 @@ const Language = () => {
       updatedLanguage.enable = updatedLanguage.enable ? 0 : 1;
 
       try {
-        await axiosInstance.put(`/languagesSetting?id=${updatedLanguage.id}`, {
-          ...updatedLanguage,
-        });
-
+        await axiosInstance.put(
+          `/languagesSetting?id=${updatedLanguage.id}`,
+          updatedLanguage
+        );
         setLanguageSettings(updatedSettings);
         setIsModalOpen(false);
         setSelectedIndex(null);
@@ -74,32 +73,28 @@ const Language = () => {
     setSelectedIndex(null);
   };
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("");
-
-  const toggleDropdown = () => setIsOpen(!isOpen);
+  const toggleDropdown = () => setIsOpen((prev) => !prev);
   const handleOptionClick = (option) => {
     setSelectedGroupsId(option);
     setIsOpen(false);
   };
 
+  // Effect hook to fetch initial data
   useEffect(() => {
-    getLanguagesList();
-    getLanguagesGroupList();
+    fetchData();
   }, []);
 
+  // Effect hook to fetch languages when a group is selected
   useEffect(() => {
-    getLanguages(selectedGroupsId?.id);
+    if (selectedGroupsId?.id) {
+      fetchLanguages(selectedGroupsId.id);
+    }
   }, [selectedGroupsId]);
 
+  // Update individual language translation
   const updateItem = async (updatedItem) => {
     try {
-      const response = await axiosInstance.put(
-        `/languages?id=${updatedItem?.id}`,
-        {
-          ...updatedItem,
-        }
-      );
+      await axiosInstance.put(`/languages?id=${updatedItem?.id}`, updatedItem);
       setLanguagesData((prevData) =>
         prevData.map((item) =>
           item.id === updatedItem.id ? updatedItem : item
@@ -115,8 +110,9 @@ const Language = () => {
       <h1 className="text-[22px] sm:text-[32px] text-white font-medium mb-4">
         Languages
       </h1>
+
       <div className="w-full mb-[35px]">
-        {languageSettings?.map((language, index) => (
+        {languageSettings.map((language, index) => (
           <div
             className="w-full flex items-center gap-[25px] mb-[15px]"
             key={index}
@@ -126,13 +122,11 @@ const Language = () => {
                 {language?.full_name}
               </div>
             </div>
-            <div>
-              <CustomSwitch
-                name="isActive"
-                checked={language?.enable}
-                onChange={() => handleToggleConfirm(index)}
-              />
-            </div>
+            <CustomSwitch
+              name="isActive"
+              checked={language?.enable}
+              onChange={() => handleToggleConfirm(index)}
+            />
           </div>
         ))}
       </div>
@@ -155,7 +149,7 @@ const Language = () => {
         </button>
         {isOpen && (
           <ul className="absolute w-full bg-white shadow-lg max-h-60 overflow-y-auto border border-gray-700 rounded-b-md">
-            {languageGroupList?.map((option) => (
+            {languageGroupList.map((option) => (
               <li
                 key={option?.id}
                 onClick={() => handleOptionClick(option)}
@@ -173,16 +167,16 @@ const Language = () => {
       </div>
 
       {selectedGroupsId && (
-        <h1 className="text-[22px] sm:text-[32px] text-white font-medium mb-4 mt-[25px]">
-          Translation
-        </h1>
-      )}
-      {selectedGroupsId && (
-        <div>
-          {languagesData?.map((item) => (
-            <Translation key={item.id} item={item} updateItem={updateItem} />
-          ))}
-        </div>
+        <>
+          <h1 className="text-[22px] sm:text-[32px] text-white font-medium mb-4 mt-[25px]">
+            Translation
+          </h1>
+          <div>
+            {languagesData.map((item) => (
+              <Translation key={item.id} item={item} updateItem={updateItem} />
+            ))}
+          </div>
+        </>
       )}
 
       {/* Modal */}

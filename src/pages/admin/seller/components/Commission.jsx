@@ -20,14 +20,19 @@ const CommissionPlan = (props) => {
   };
   return (
     <div className="px-0 sm:px-[20px] ">
-      <h3 className="text-[24px] dark:text-[#ffff] text-black mb-2">Commission Plan</h3>
+      <h3 className="text-[24px] dark:text-[#ffff] text-black mb-2">
+        Commission Plan
+      </h3>
       <div
         className="dark:bg-[#1E252B] bg-[#F8F8F8] p-6 rounded-lg w-full mb-[15px]"
         style={{ border: "1px solid #ccc" }}
       >
         <div className="w-full ">
           {commissionData.map((row, index) => (
-            <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-[25px]">
+            <div
+              className="grid grid-cols-1 lg:grid-cols-3 lg:gap-[25px]"
+              key={index}
+            >
               <TextInputField
                 rightTextValue="(USD)"
                 type="number"
