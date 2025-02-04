@@ -235,20 +235,27 @@ const EstimatorEdit = () => {
       setLoading(false);
     }
   };
-  console.log("actionType", actionType)
+  console.log("actionType", actionType);
 
   return (
     <div className="mx-auto px-[20px] sm:px-[45px] py-[20px]">
       <div className="flex justify-between flex-wrap gap-2">
         <div className="flex items-center">
-          <h3 className="w-[100px] text-black dark:text-white text-[24px] text-nowrap">{actionType !== "add" ? "Profile" : "Add Estimators"}</h3>
-          {actionType === "add" ? "" : <div className="flex items-center gap-2">
-            <div
-              className={`${estimatorData?.available ? "bg-[#11c71d]" : "bg-[#da3832]"
+          <h3 className="w-[100px] text-black dark:text-white text-[24px] text-nowrap">
+            {actionType !== "add" ? "Profile" : "Add Estimators"}
+          </h3>
+          {actionType === "add" ? (
+            ""
+          ) : (
+            <div className="flex items-center gap-2">
+              <div
+                className={`${
+                  estimatorData?.available ? "bg-[#11c71d]" : "bg-[#da3832]"
                 } rounded-[100%] w-[15px] h-[15px]`}
-            ></div>
-            <p className="text-white">Online</p>
-          </div>}
+              ></div>
+              <p className="text-white">Online</p>
+            </div>
+          )}
         </div>
 
         <div className="flex gap-4">
@@ -265,8 +272,9 @@ const EstimatorEdit = () => {
               <Button
                 variant="contained"
                 className="!bg-[#ffff] !text-black !normal-case !py-[5px] sm:!py-[10px] sm:!px-[40px] !px-[15px] !rounded-[50px]"
-                onClick={() =>{ setIsEditable(false)
-                  navigate("/admin/estimator/estimator_user")
+                onClick={() => {
+                  setIsEditable(false);
+                  navigate("/admin/estimator/estimator_user");
                 }}
               >
                 Cancel
@@ -318,7 +326,9 @@ const EstimatorEdit = () => {
           <Button
             variant="contained"
             className="!bg-[#3c8dbc] !normal-case !py-[10px] !px-[40px] !rounded-[50px]"
-            onClick={() => navigate("/admin/analysis/performance_analysis/estimator")}
+            onClick={() =>
+              navigate("/admin/analysis/performance_analysis/estimator")
+            }
           >
             View performance analysis
           </Button>

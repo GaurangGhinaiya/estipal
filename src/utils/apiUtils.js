@@ -1,7 +1,7 @@
 // src/utils/apiUtils.js
 import axiosInstance from "../services";
 
-const BASE_URL = "http://192.168.29.178:8080/estipal/api/v1";
+const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 // Function to fetch the country list
 export const fetchCountryList = async () => {
