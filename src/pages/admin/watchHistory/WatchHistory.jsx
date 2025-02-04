@@ -9,7 +9,7 @@ import SearchBar from "../../../components/common/SearchBar";
 import SelectDropdown from "../../../components/common/SelectDropdown";
 import { CircularProgress, Tooltip } from "@mui/material";
 import { statusOptions } from "../components/ActivitiesTable";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { sortData } from "../../../components/common/Sort";
 import axiosInstance from "../../../services";
 import moment from "moment/moment";
@@ -31,6 +31,11 @@ const WatchHistory = () => {
   const [totalRecords, setTotalRecords] = useState(0);
   const debouncedSearchTerm = useDebounce(searchQuery, 500);
   const staffUser = JSON.parse(localStorage.getItem("staffUser"));
+  const [searchParams] = useSearchParams();
+
+  // Get a specific query parameter
+  const sellerId = searchParams.get("seller_id");
+  // console.log('sellerId: ', sellerId);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -107,7 +112,7 @@ const WatchHistory = () => {
 
       <div className="w-[95.5%] overflow-auto mx-auto pt-[10px]">
         {staffUser ? (
-          <table className="table-auto w-full text-left">
+          <table className="table-auto w-full text-left ">
             <thead style={{ borderBottom: "2px solid #111111" }}>
               <tr>
                 {[
@@ -150,7 +155,7 @@ const WatchHistory = () => {
                         ? () => handleSort(column.key)
                         : undefined
                     }
-                    className={`p-2 dark:text-[#ffff] text-black text-center ${column.isSortable ? "cursor-pointer" : ""
+                    className={`p-2 dark:text-[#ffff] text-nowrap  text-black text-center ${column.isSortable ? "cursor-pointer" : ""
                       } ${column.isSortable && sortField === column.key
                         ? "active-sorting"
                         : ""
@@ -364,12 +369,12 @@ const WatchHistory = () => {
                         ? () => handleSort(column.key)
                         : undefined
                     }
-                    className={`p-2 dark:text-[#ffff] text-black text-center ${column.isSortable ? "cursor-pointer" : ""
+                    className={`p-2 dark:text-[#ffff] text-nowrap text-black text-center ${column.isSortable ? "cursor-pointer" : ""
                       } ${column.isSortable && sortField === column.key
                         ? "active-sorting"
                         : ""
                       } ${column.isSortable && sortField !== column.key
-                        ? "sorting"
+                        ? "pr-4 sorting"
                         : ""
                       }`}
                   >

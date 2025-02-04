@@ -384,7 +384,7 @@ const SellerUserCreate = () => {
             label="Country"
             placeholder="Country"
             bgColor={"#1e252b"}
-            className="mb-[15px]"
+            className="mb-[15px] text-black dark:text-white"
             component={
               <div className="flex w-full justify-end">
                 {isEditable ? (
@@ -427,7 +427,7 @@ const SellerUserCreate = () => {
             label="State/Province"
             placeholder="State/Province"
             bgColor="#1e252b"
-            className="mb-[15px]"
+            className="mb-[15px] text-black dark:text-white"
             component={
               <div className="flex w-full justify-end">
                 {isEditable ? (
@@ -525,7 +525,7 @@ const SellerUserCreate = () => {
             type="text"
             label="Mobile Number"
             bgColor={"#1e252b"}
-            className="mb-[15px]"
+            className="mb-[15px] text-black dark:text-white"
             onChange={handleChange}
             component={
               <div className="flex justify-end w-full">
@@ -555,7 +555,7 @@ const SellerUserCreate = () => {
             rightTextValue=""
             label="Currency of Trading"
             bgColor={"#1e252b"}
-            className="mb-[15px]"
+            className="mb-[15px] text-black dark:text-white"
             onChange={handleChange}
             component={
               <div className="flex w-full justify-end">

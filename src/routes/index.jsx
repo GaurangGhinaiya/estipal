@@ -81,7 +81,7 @@ const AppRoute = () => {
               element={<AdminRevanueAnalysis />}
             />
             <Route
-              path="analysis/revenue_analysis/seller"
+              path="analysis/revenue_analysis/seller/:seller_id"
               element={<SellerRevenueAnalysis />}
             />
             <Route
@@ -93,7 +93,7 @@ const AppRoute = () => {
               element={<AdminPerformanceAnalysis />}
             />
             <Route
-              path="analysis/performance_analysis/seller"
+              path="analysis/performance_analysis/seller/:seller_id"
               element={<SellerPerformanceAnalysis />}
             />
             <Route
