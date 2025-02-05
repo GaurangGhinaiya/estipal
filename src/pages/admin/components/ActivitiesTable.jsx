@@ -60,27 +60,27 @@ const ActivitiesTable = () => {
 
   const getActivityData = async () => {
     try {
-      const searchValue =
-        debouncedSearchTerm || status
-          ? JSON.stringify(
-              debouncedSearchTerm
-                ? {
-                    search: debouncedSearchTerm ? debouncedSearchTerm : "",
-                    watch_status: status,
-                  }
-                : { watch_status: status }
-            )
-          : "";
-
       setIsLoading(true);
+
+      const searchObject = {
+        search: debouncedSearchTerm || "",
+      };
+
+      if (status && status !== "All") {
+        searchObject.watch_status = status;
+      }
+
+      const searchValue = JSON.stringify(searchObject);
+
       const response = await axiosInstance.get(
-        `/adminActivity?page=${currentPage}&records_per_page=${recordsPerPage}&search=${searchValue}&sort_order=${sortOrder}`
+        `/adminActivity?page=${currentPage}&records_per_page=${recordsPerPage}&search=${searchValue}&sort_order=${sortOrder}&sort_field=${sortField}`
       );
+
       setActivitiesData(response.payload.data);
       setTotalRecords(response?.pager?.total_records);
-      setIsLoading(false);
     } catch (error) {
       console.log("error", error);
+    } finally {
       setIsLoading(false);
     }
   };
@@ -94,7 +94,7 @@ const ActivitiesTable = () => {
   };
 
   return (
-    <div className=" pb-[15px] min-h-[100vh]" >
+    <div className=" pb-[15px] min-h-[100vh]">
       <div className="px-0 pt-6 sm:px-[20px] flex justify-between flex-wrap dark:bg-none bg-gradient-to-b from-[rgba(0,96,169,0.36)] to-[rgba(255,255,255,0)]">
         <h1 className="text-[30px] font-medium mb-4 px-0 sm:px-[15px] font-sans dark:text-white text-black">
           Activities
@@ -158,15 +158,9 @@ const ActivitiesTable = () => {
                         ? () => handleSort(column.key)
                         : undefined
                     }
-                    className={`p-2 dark:text-[#ffff] text-nowrap text-black text-center ${
-                      column.isSortable ? "cursor-pointer" : ""
-                    } ${
+                    className={`p-2 dark:text-[#ffff] text-black text-center cursor-pointer ${
                       column.isSortable && sortField === column.key
                         ? "active-sorting"
-                        : ""
-                    } ${
-                      column.isSortable && sortField !== column.key
-                        ? "pr-5 sorting"
                         : ""
                     }`}
                   >
@@ -185,7 +179,7 @@ const ActivitiesTable = () => {
             <tbody>
               {isLoading && activitesData?.length === 0 ? (
                 <tr>
-                  <td colSpan={12} className="py-[200px] px-4  text-center">
+                  <td colSpan={12} className="py-[200px] px-4 text-center">
                     <CircularProgress />
                   </td>
                 </tr>
@@ -195,9 +189,7 @@ const ActivitiesTable = () => {
                     key={index}
                     className="border-b border-[#202b34]"
                     onClick={() =>
-                      navigate(
-                        `/admin/home/readActivity/${activity?.id}`
-                      )
+                      navigate(`/admin/home/readActivity/${activity?.id}`)
                     }
                   >
                     <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center">
@@ -308,7 +300,7 @@ const ActivitiesTable = () => {
                   },
                   { key: "who", label: "Who", isSortable: true },
                   { key: "from", label: "From", isSortable: true },
-                  { key: "id", label: "ID", isSortable: true },
+                  { key: "user1_id", label: "ID", isSortable: true },
                   { key: "message", label: "Message", isSortable: false },
                   { key: "watchId", label: "Watch Id", isSortable: true },
                   { key: "status", label: "Status", isSortable: true },
@@ -358,9 +350,7 @@ const ActivitiesTable = () => {
                     key={index}
                     className="border-b border-[#202b34]"
                     onClick={() =>
-                      navigate(
-                        `/admin/home/readActivity/${activity?.id}`
-                      )
+                      navigate(`/admin/home/readActivity/${activity?.id}`)
                     }
                   >
                     <td className="px-[18px] py-[0px] text-[#ffff] text-center">
@@ -378,6 +368,7 @@ const ActivitiesTable = () => {
                       {" "}
                       <Checkbox
                         {...label}
+                        checked={activity?.star_selected_flag_admin}
                         icon={
                           <StarOutlineIcon
                             sx={{ color: "#494a4b", fontSize: "21px" }}
@@ -391,16 +382,22 @@ const ActivitiesTable = () => {
                       />
                     </td>
                     <td className="px-[18px] py-[10px] text-[#ffff] text-center">
-                      {activity?.admin_group}
+                      {activity?.admin_group === "staff"
+                        ? "(U)"
+                        : activity?.admin_group === "estimator"
+                        ? "(E)"
+                        : activity?.admin_group === "seller"
+                        ? "(S)"
+                        : "(Admin)"}
                     </td>
                     <td className="px-[18px] py-[10px] text-[#ffff] cursor-pointer">
                       <Tooltip
-                        title={activity.from ? activity.from : "-"}
+                        title={activity?.from_name ? activity?.from_name : "-"}
                         placement="top"
                         arrow
                       >
                         <div className="w-[77px] text-center">
-                          {activity.from ? activity.from : "-"}
+                          {activity?.from_name ? activity?.from_name : "-"}
                         </div>
                       </Tooltip>
                     </td>
@@ -409,13 +406,27 @@ const ActivitiesTable = () => {
                     </td>
                     <td className="px-[18px] py-[10px] text-[#ffff] whitespace-nowrap cursor-pointer">
                       <Tooltip
-                        title="Rolex Daytona Stainless Steel - Bracelet - Serial: 43141331 - Year: 2019 - Last requested/quoted price: USD "
+                        title={`${activity?.watch_details?.brand && "( "}
+                       ${activity?.watch_details?.brand}
+                       ${activity?.watch_details?.collection}
+                       ${activity?.watch_details?.model_no}
+                       ${activity?.watch_details?.model_no && "Serial -"}
+                       ${activity?.watch_details?.serial_no}
+                       ${activity?.watch_details?.model_no && "- Year :"}
+                       ${activity?.watch_details?.year_of_production}
+                       ${
+                         activity?.watch_details?.model_no &&
+                         "- Last requested/quoted price: USD"
+                       }
+                       ${activity?.watch_details?.admin_converted_price}
+                       ${activity?.watch_details?.brand && ")"}`}
                         placement="top"
                         arrow
                       >
                         {activity.message}{" "}
                         {activity?.watch_details?.brand && "( "}
                         {activity?.watch_details?.brand}{" "}
+                        {activity?.watch_details?.collection}{" "}
                         {activity?.watch_details?.model_no}{" "}
                         {activity?.watch_details?.model_no && "Serial -"}{" "}
                         {activity?.watch_details?.serial_no}
@@ -423,12 +434,12 @@ const ActivitiesTable = () => {
                         {activity?.watch_details?.year_of_production}{" "}
                         {activity?.watch_details?.model_no &&
                           "- Last requested/quoted price: USD"}{" "}
-                        {activity?.watch_details?.price}
+                        {activity?.watch_details?.admin_converted_price}
                         {activity?.watch_details?.brand && ")"}
                       </Tooltip>
                     </td>
                     <td className="px-[18px] py-[10px] text-[#ffff] text-center">
-                      {activity?.watch_id}
+                      W{activity?.watch_id}
                     </td>
                     <td className="px-[18px] py-[10px] text-[#ffff] text-center whitespace-nowrap">
                       {activity?.watch_status}
