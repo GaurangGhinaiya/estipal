@@ -232,7 +232,7 @@ const WatchStatus = () => {
                 >
                   {item?.estimator_watch_status == "Pass"
                     ? item?.estimator_watch_status
-                    : item?.estimatorDetail.currency +
+                    : item?.estimatorDetail?.currency +
                       " " +
                       item?.estimated_watch_price}{" "}
                   {watchDetailData?.is_selected && "(Selected)"}
@@ -270,7 +270,7 @@ const WatchStatus = () => {
                   {item?.status_description}
                 </td>
                 <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                  {item?.adminUserDetail.currency + " " + item?.formatted_price}
+                  {item?.adminUserDetail?.currency + " " + item?.formatted_price}
                 </td>
               </tr>
             ))}
