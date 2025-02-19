@@ -1,8 +1,8 @@
 import ReactSpeedometer from "react-d3-speedometer";
-import React, { useState } from 'react';
-import PaginationComponent from '../../../../components/common/PaginationComponent';
-import ArrowDropUpRoundedIcon from '@mui/icons-material/ArrowDropUpRounded';
-import ArrowDropDownRoundedIcon from '@mui/icons-material/ArrowDropDownRounded';
+import React, { useState } from "react";
+import PaginationComponent from "../../../../components/common/PaginationComponent";
+import ArrowDropUpRoundedIcon from "@mui/icons-material/ArrowDropUpRounded";
+import ArrowDropDownRoundedIcon from "@mui/icons-material/ArrowDropDownRounded";
 import { sortData } from "../../../../components/common/Sort";
 
 const estimatorPerformanceData = [
@@ -357,20 +357,20 @@ const EstimatorPerformanceAnalysis = () => {
                   key={index}
                   className="border-b border-[#202b34] text-white"
                 >
-                  <td className="py-2 px-4">{item.company}</td>
-                  <td className="py-2 px-4">{item.email}</td>
-                  <td className="py-2 px-4">{item.totalReceived}</td>
-                  <td className="py-2 px-4">{item.repliedWithQuotation}</td>
-                  <td className="py-2 px-4">{item.repliedWithPass}</td>
-                  <td className="py-2 px-4">{item.missedQuotation}</td>
-                  <td className="py-2 px-4">{item.acceptedQuotation}</td>
+                  <td className="py-2 px-4">{item?.company}</td>
+                  <td className="py-2 px-4">{item?.email}</td>
+                  <td className="py-2 px-4">{item?.totalReceived}</td>
+                  <td className="py-2 px-4">{item?.repliedWithQuotation}</td>
+                  <td className="py-2 px-4">{item?.repliedWithPass}</td>
+                  <td className="py-2 px-4">{item?.missedQuotation}</td>
+                  <td className="py-2 px-4">{item?.acceptedQuotation}</td>
                   <td className="py-2 px-4 ">
-                    <span className="ml-2">{item.successRate}%</span>
+                    <span className="ml-2">{item?.successRate}%</span>
                   </td>
                   <td className="py-2 px-4 w-[120px]">
                     <ReactSpeedometer
                       maxValue={100}
-                      value={item.successRate}
+                      value={item?.successRate}
                       valueFormat={"d"}
                       customSegmentStops={[0, 25, 50, 75, 100]}
                       segmentColors={[
@@ -389,12 +389,12 @@ const EstimatorPerformanceAnalysis = () => {
                     />
                   </td>
                   <td className="py-2 px-4 ">
-                    <span className="ml-2">{item.responseTime}Min</span>
+                    <span className="ml-2">{item?.responseTime}Min</span>
                   </td>
                   <td className="py-[12px] text-[#ffff] flex justify-center text-center items-center whitespace-nowrap">
                     <ReactSpeedometer
                       maxValue={maxTime}
-                      value={item.responseTime}
+                      value={item?.responseTime}
                       valueFormat={"d"}
                       customSegmentStops={segmentStops}
                       segmentColors={[
@@ -459,13 +459,17 @@ const EstimatorPerformanceAnalysis = () => {
                 <th
                   key={column.key}
                   onClick={() => handleSort(column.key)}
-                  className={`p-2 text-[#ffff] text-center cursor-pointer ${sortField === column.key ? "active-sorting" : "sorting"
-                    }`}
+                  className={`p-2 text-[#ffff] text-center cursor-pointer ${
+                    sortField === column.key ? "active-sorting" : "sorting"
+                  }`}
                 >
                   {column.label}{" "}
-                  {sortField === column.key && (
-                    sortOrder === "asc" ? <ArrowDropUpRoundedIcon /> : <ArrowDropDownRoundedIcon />
-                  )}
+                  {sortField === column.key &&
+                    (sortOrder === "asc" ? (
+                      <ArrowDropUpRoundedIcon />
+                    ) : (
+                      <ArrowDropDownRoundedIcon />
+                    ))}
                 </th>
               ))}
             </tr>
@@ -474,28 +478,28 @@ const EstimatorPerformanceAnalysis = () => {
             {data?.map((item, index) => (
               <tr key={index} className="border-b border-[#202b34]">
                 <td className="px-[18px] py-[10px] text-[#ffff] text-center">
-                  {item.date}
+                  {item?.date}
                 </td>
                 <td className="px-[18px] py-[10px] text-[#ffff] whitespace-nowrap text-center">
-                  {item.company}
+                  {item?.company}
                 </td>
                 <td className="px-[18px] py-[10px] text-[#ffff] text-center">
-                  {item.firstName}
+                  {item?.firstName}
                 </td>
                 <td className="px-[18px] py-[10px] text-[#ffff] text-center whitespace-nowrap">
-                  {item.lastName}
+                  {item?.lastName}
                 </td>
                 <td className="px-[18px] py-[10px] text-[#ffff] text-center whitespace-nowrap">
-                  {item.watchId}
+                  {item?.watchId}
                 </td>
                 <td className="px-[18px] py-[10px] text-[#ffff] text-center whitespace-nowrap">
-                  {item.model}
+                  {item?.model}
                 </td>
                 <td className="px-[18px] py-[10px] text-[#ffff] text-center whitespace-nowrap">
-                  {item.estimate}
+                  {item?.estimate}
                 </td>
                 <td className="px-[18px] py-[10px] text-[#ffff] text-center whitespace-nowrap">
-                  {item.status}
+                  {item?.status}
                 </td>
               </tr>
             ))}

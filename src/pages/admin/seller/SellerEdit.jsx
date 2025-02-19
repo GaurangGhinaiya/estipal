@@ -241,8 +241,10 @@ const SellerEdit = () => {
         <div className="flex justify-center">
           <Button
             variant="contained"
-            className="!bg-[#3c8dbc] !normal-case !py-[10px] !px-[40px] !rounded-[50px]" 
-            onClick={() => navigate(`/admin/watch_details/watch_history/?seller_id=${id}`)}
+            className="!bg-[#3c8dbc] !normal-case !py-[10px] !px-[40px] !rounded-[50px]"
+            onClick={() =>
+              navigate(`/admin/watch_details/watch_history/?seller_id=${id}`)
+            }
           >
             View watches history
           </Button>
@@ -251,7 +253,9 @@ const SellerEdit = () => {
           <Button
             variant="contained"
             className="!bg-[#3c8dbc] !normal-case !py-[10px] !px-[40px] !rounded-[50px]"
-            onClick={() => navigate(`/admin/analysis/revenue_analysis/seller/${id}`)}
+            onClick={() =>
+              navigate(`/admin/analysis/revenue_analysis/seller/${id}`)
+            }
           >
             View revenue analysis
           </Button>
@@ -260,7 +264,9 @@ const SellerEdit = () => {
           <Button
             variant="contained"
             className="!bg-[#3c8dbc] !normal-case !py-[10px] !px-[40px] !rounded-[50px]"
-            onClick={() => navigate(`/admin/analysis/performance_analysis/seller/${id}`)}
+            onClick={() =>
+              navigate(`/admin/analysis/performance_analysis/seller/${id}`)
+            }
           >
             View performance analysis
           </Button>
@@ -467,8 +473,8 @@ const SellerEdit = () => {
                       Open to select country
                     </option>
                     {countries.map((item, index) => (
-                      <option value={item.code} key={index}>
-                        {item.name}
+                      <option value={item?.code} key={index}>
+                        {item?.name}
                       </option>
                     ))}
                   </select>
@@ -510,8 +516,8 @@ const SellerEdit = () => {
                       Open to select state
                     </option>
                     {states.map((item) => (
-                      <option key={item.id} value={item.state}>
-                        {item.state}
+                      <option key={item?.id} value={item?.state}>
+                        {item?.state}
                       </option>
                     ))}
                   </select>
@@ -657,8 +663,8 @@ const SellerEdit = () => {
                     onChange={handleChange}
                   >
                     {currency.map((item, index) => (
-                      <option value={item.value} key={index}>
-                        {item.name}
+                      <option value={item?.value} key={index}>
+                        {item?.name}
                       </option>
                     ))}
                   </select>

@@ -220,7 +220,6 @@ const SellerRevenueAnalysis = () => {
   const [totalRecords, setTotalRecords] = useState(0);
   const staffUser = JSON.parse(localStorage.getItem("staffUser"));
 
-
   const handleSort = (key) => {
     const newOrder = sortField === key && sortOrder === "asc" ? "desc" : "asc";
     setSortField(key);
@@ -303,16 +302,16 @@ const SellerRevenueAnalysis = () => {
             {merchantData?.map((item, index) => (
               <tr key={index} className="border-b border-[#202b34]">
                 <td className="px-[18px] py-[12px] dark:text-[#ffff] text-black text-center">
-                  {item.Company}
+                  {item?.Company}
                 </td>
                 <td className="px-[18px] py-[12px] dark:text-[#ffff] text-black whitespace-nowrap text-center cursor-pointer">
-                  {item.Email}
+                  {item?.Email}
                 </td>
                 <td className="px-[18px] py-[12px] dark:text-[#ffff] text-black text-center whitespace-nowrap">
-                  {item.Total_sold_to_Estipal}
+                  {item?.Total_sold_to_Estipal}
                 </td>
                 <td className="px-[18px] py-[12px] dark:text-[#ffff] text-black text-center whitespace-nowrap">
-                  {item.Total_partner_with_Estipal}
+                  {item?.Total_partner_with_Estipal}
                 </td>
               </tr>
             ))}
@@ -379,28 +378,28 @@ const SellerRevenueAnalysis = () => {
             {data?.map((item, index) => (
               <tr key={index} className="border-b border-[#202b34]">
                 <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center">
-                  {item.date}
+                  {item?.date}
                 </td>
                 <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap text-center">
-                  {item.company}
+                  {item?.company}
                 </td>
                 <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center">
-                  {item.firstName}
+                  {item?.firstName}
                 </td>
                 <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap">
-                  {item.lastName}
+                  {item?.lastName}
                 </td>
                 <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap">
-                  {item.watchId}
+                  {item?.watchId}
                 </td>
                 <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap">
-                  {item.model}
+                  {item?.model}
                 </td>
                 <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap">
-                  {item.estimate}
+                  {item?.estimate}
                 </td>
                 <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap">
-                  {item.status}
+                  {item?.status}
                 </td>
               </tr>
             ))}

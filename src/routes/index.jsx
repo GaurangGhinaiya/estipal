@@ -20,10 +20,10 @@ import ProtectedRoute from "./protectedRoute";
 import PublicRoute from "./PublicRoute";
 import SellerUserCreate from "../pages/admin/seller/SellerUserCreate";
 import SellerRevenueAnalysis from "../pages/staff/revenue_analysis/revenue_analysis_seller/SellerRevenueAnalysis";
-import SellerPerformanceAnalysis from "../pages/staff/performance_analysis/performance_analysis_seller/SellerPerformanceAnalysis";
 import AccountProfile from "../pages/staff/account_profile/AccountProfile";
 import ManageStaff from "../pages/staff/manage_staff/ManageStaff";
 import EstimatorEdit from "../pages/admin/estimators/EstimatorEdit";
+import SellerPerformanceAnalysis from "../pages/admin/performance_analysis/performance_analysis_seller/SellerPerformanceAnalysis";
 // import AddFormulaMaster from "../pages/AddFormulaMaster";
 
 const AppRoute = () => {

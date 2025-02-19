@@ -292,6 +292,26 @@ table.dataTable tbody td {
   font-weight: 500;
   box-shadow: rgb(0 0 0 / 25%) 0px 14px 28px, rgb(0 0 0 / 22%) 0px 10px 10px;
 }
+
+.dark_green {
+  background: #006400 !important;
+  border-color: #006400 !important;
+  border: 2px;
+  color: #fff !important;
+  font-weight: 500;
+  box-shadow: rgb(0 0 0 / 25%) 0px 14px 28px, rgb(0 0 0 / 22%) 0px 10px 10px;
+}
+
+.light_grey {
+  background: #d3d3d3 !important;
+  border-color: #d3d3d3 !important;
+  opacity: 0.5;
+  border: 2px;
+  color: #000 !important;
+  font-weight: 500;
+  box-shadow: rgb(0 0 0 / 25%) 0px 14px 28px, rgb(0 0 0 / 22%) 0px 10px 10px;
+}
+
 .dot-red {
   background-color: #ed1c24;
   height: 22px;

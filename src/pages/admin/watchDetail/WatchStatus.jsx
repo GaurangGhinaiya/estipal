@@ -55,13 +55,17 @@ const WatchStatus = () => {
     <div className="mx-auto px-[20px] sm:px-[45px] py-[20px]">
       <div className="flex justify-between items-center mb-[30px] flex-wrap gap-5">
         <h3 className="dark:text-white text-black text-[21px]">
-          Watch History - ID : W{watchDetailData?.id}, {watchDetailData?.brand}, {watchDetailData?.model}, {watchDetailData?.collection} ({watchDetailData?.reference})
+          Watch History - ID : W{watchDetailData?.id}, {watchDetailData?.brand},{" "}
+          {watchDetailData?.model}, {watchDetailData?.collection} (
+          {watchDetailData?.reference})
         </h3>
 
         <Button
           variant="contained"
           className="!bg-[#1760a9] !normal-case !py-[10px] !px-[40px] !rounded-[50px]"
-          onClick={()=> navigate(`/admin/home/readActivity/${watchDetailData?.id}`)}
+          onClick={() =>
+            navigate(`/admin/home/readActivity/${watchDetailData?.id}`)
+          }
         >
           Messaging
         </Button>
@@ -70,85 +74,98 @@ const WatchStatus = () => {
       <div className="w-full flex-[2]">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
           <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
-            <p className="dark:text-white" text-black>
-              ID
-            </p>
-            <p className="dark:text-white" text-black>
-              W{watchDetailData?.id}
-            </p>
+            <p className="dark:text-white text-black">ID</p>
+            <p className="dark:text-white text-black">W{watchDetailData?.id}</p>
           </div>
           <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
-            <p className="dark:text-white" text-black>
-              Brand
-            </p>
-            <p className="dark:text-white" text-black>
+            <p className="dark:text-white text-black">Brand</p>
+            <p className="dark:text-white text-black">
               {watchDetailData?.brand}
             </p>
           </div>
           <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between gap-[25px] border border-gray-300 dark:border-none">
-            <p className="dark:text-white" text-black>
-              Collection
-            </p>
+            <p className="dark:text-white text-black">Collection</p>
             <p className="dark:text-white text-black line-clamp-1">
-              {watchDetailData?.collection}
-            </p>
-          </div>
-          <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
-            <p className="dark:text-white" text-black>
-              Model
-            </p>
-            <p className="dark:text-white" text-black>
               {watchDetailData?.model}
             </p>
           </div>
           <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
-            <p className="dark:text-white" text-black>
-              Serial Number
+            <p className="dark:text-white text-black">Model</p>
+            <p className="dark:text-white text-black">
+              {`${watchDetailData?.collection} (${watchDetailData?.reference})`}
             </p>
-            <p className="dark:text-white" text-black>
+          </div>
+          <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
+            <p className="dark:text-white text-black">Serial Number</p>
+            <p className="dark:text-white text-black">
               {watchDetailData?.serial_no}
             </p>
           </div>
           <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
-            <p className="dark:text-white" text-black >Condition</p>
-            <p className="dark:text-white" text-black >""</p>
-          </div>
-          <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
-            <p className="dark:text-white" text-black >Bracelet info</p>
-            <p className="dark:text-white" text-black >""</p>
-          </div>
-          <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
-            <p className="dark:text-white" text-black>
-              Year of production
+            <p className="dark:text-white text-black">Condition</p>
+            <p className="dark:text-white text-black">
+              {watchDetailData?.imageUploadDetails?.[0]?.condition}
             </p>
-            <p className="dark:text-white" text-black>
+          </div>
+          <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
+            <p className="dark:text-white text-black">Bracelet info</p>
+            <p className="dark:text-white text-black">
+              {watchDetailData?.imageUploadDetails?.[0]?.bracelet_link}
+            </p>
+          </div>
+          <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
+            <p className="dark:text-white text-black">Year of production</p>
+            <p className="dark:text-white text-black">
               {watchDetailData?.year_of_prod}
             </p>
           </div>
           <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
-            <p className="dark:text-white" text-black >Requested price</p>
-            <p className="dark:text-white" text-black >USD  {formattedNumber.format(
-              watchDetailData?.watch_price
-            )}</p>
-          </div>
-          <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
-            <p className="dark:text-white" text-black >Estimated price</p>
-            <p className="dark:text-white" text-black >USD {formattedNumber.format(
-              watchDetailData?.estimated_watch_price
-            )}
+            <p className="dark:text-white text-black">Requested price</p>
+            <p className="dark:text-white text-black">
+              USD {formattedNumber.format(watchDetailData?.watch_price)}
             </p>
           </div>
           <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
-            <p className="dark:text-white" text-black >Warranty date</p>
-            <p className="dark:text-white" text-black >""</p>
+            <p className="dark:text-white text-black">Estimated price</p>
+            <p className="dark:text-white text-black">
+              USD{" "}
+              {formattedNumber.format(watchDetailData?.estimated_watch_price)}
+            </p>
           </div>
           <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
-            <p className="dark:text-white" text-black >Box</p>
-            <p className="dark:text-white text-black font-bold">""</p>
+            <p className="dark:text-white text-black">Warranty date</p>
+            <p className="dark:text-white text-black">
+              {watchDetailData?.imageUploadDetails?.[0]?.warentee_card_year
+                ? moment
+                    .unix(
+                      watchDetailData?.imageUploadDetails?.[0]
+                        ?.warentee_card_year
+                    )
+                    .utc()
+                    .format("DD MMMM YYYY")
+                : "-"}
+            </p>
           </div>
           <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
-            <p className="dark:text-white" text-black>
+            <p className="dark:text-white text-black">Box</p>
+            <p className="dark:text-white text-black">
+              {watchDetailData?.imageUploadDetails?.[0]?.box_image
+                ? "Yes"
+                : "No"}
+            </p>
+          </div>
+          <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
+            <p className="dark:text-white text-black">
               Estimator suggested wholesale price
+            </p>
+            <p className="dark:text-white text-black">
+              {watchDetailData?.estimatorEssignwatchDetails?.[0]
+                ?.suggest_retail_price
+                ? `${watchDetailData?.sellerDetail?.currency} ${Number(
+                    watchDetailData?.estimatorEssignwatchDetails?.[0]
+                      ?.suggest_retail_price
+                  ).toFixed(2)}`
+                : "0.00"}
             </p>
           </div>
         </div>
@@ -189,21 +206,44 @@ const WatchStatus = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                {watchDetailData?.addedByDetail?.company_name} -{" "}
-                {watchDetailData?.addedByDetail?.username}
-              </td>
-              <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                test - nopp ice
-              </td>
-              <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                USD {watchDetailData?.estimated_watch_price} (Selected)
-              </td>
-              <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                {moment.unix(watchDetailData?.created_on).format('MMM DD ,YYYY h:mm A')}
-              </td>
-            </tr>
+            {watchDetailData?.allEstimatorsAssignDetails?.map((item, index) => (
+              <tr key={index}>
+                <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                  {item?.allEstimatorAddedByDetail?.company_name +
+                    " - " +
+                    item?.allEstimatorAddedByDetail?.username}
+                </td>
+                <td
+                  className={`px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap ${
+                    watchDetailData?.is_selected ? "font-bold" : "font-normal"
+                  }`}
+                >
+                  {" "}
+                  {item?.estimatorDetail.company_name +
+                    " - " +
+                    item?.estimatorDetail.first_name +
+                    " " +
+                    item?.estimatorDetail.last_name}
+                </td>
+                <td
+                  className={`px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap ${
+                    watchDetailData?.is_selected ? "font-bold" : "font-normal"
+                  }`}
+                >
+                  {item?.estimator_watch_status == "Pass"
+                    ? item?.estimator_watch_status
+                    : item?.estimatorDetail.currency +
+                      " " +
+                      item?.estimated_watch_price}{" "}
+                  {watchDetailData?.is_selected && "(Selected)"}
+                </td>
+                <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                  {moment
+                    .unix(item?.estimation_assign_date)
+                    .format("MMM DD ,YYYY h:mm A")}
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
@@ -221,18 +261,16 @@ const WatchStatus = () => {
             {watchDetailData?.adminActivities?.map((item, index) => (
               <tr key={index}>
                 <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                  {moment
-                    .unix(item?.created_on)
-                    .format("MMM DD ,YYYY HH:mm:ss")}
+                  {moment.unix(item?.created_on).format("MMMM DD ,YYYY h:mm A")}
                 </td>
                 <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                  {item?.admin_group}
+                  {item?.company_name + " - " + item?.from_name}
                 </td>
                 <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                  {item?.watch_status}
+                  {item?.status_description}
                 </td>
                 <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                  USD {watchDetailData?.accepted_usd_price}
+                  {item?.adminUserDetail.currency + " " + item?.formatted_price}
                 </td>
               </tr>
             ))}

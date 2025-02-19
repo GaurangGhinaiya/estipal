@@ -166,7 +166,7 @@ const Estimators = () => {
                       })
                     }
                   >
-                    ECA{item.id}
+                    ECA{item?.id}
                   </td>
                   <td
                     className="px-[18px] py-[12px] text-[#ffff] cursor-pointer"
@@ -177,7 +177,7 @@ const Estimators = () => {
                     }
                   >
                     <div className="whitespace-nowrap text-center">
-                      {item.first_name}
+                      {item?.first_name}
                     </div>
                   </td>
                   <td
@@ -189,7 +189,7 @@ const Estimators = () => {
                     }
                   >
                     <div className="whitespace-nowrap text-center">
-                      {item.last_name}
+                      {item?.last_name}
                     </div>
                   </td>
                   <td
@@ -200,7 +200,7 @@ const Estimators = () => {
                       })
                     }
                   >
-                    {item.email}
+                    {item?.email}
                   </td>
                   <td
                     className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap cursor-pointer"
@@ -220,7 +220,8 @@ const Estimators = () => {
                       })
                     }
                   >
-                    {item.sentAccepted}
+                    {item?.total_estimator_assign_details} /{" "}
+                    {item?.accepted_count}
                   </td>
                   <td
                     className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap cursor-pointer"
@@ -230,7 +231,7 @@ const Estimators = () => {
                       })
                     }
                   >
-                    {item.paidOutstanding}
+                    0/0
                   </td>
 
                   <td className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap">

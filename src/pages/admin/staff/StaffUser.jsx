@@ -144,33 +144,35 @@ const StaffUser = () => {
                   </td>
                   <td className="px-[18px] py-[12px] text-[#ffff] cursor-pointer">
                     <div className="whitespace-nowrap text-center">
-                      {item.cmp_name}
+                      {item?.cmp_name}
                     </div>
                   </td>
                   <td className="px-[18px] py-[12px] text-[#ffff] whitespace-nowrap text-center cursor-pointer">
-                    {item.first_name + " " + item.last_name}
+                    {item?.first_name + " " + item?.last_name}
                   </td>
                   <td className="px-[18px] py-[12px] text-[#ffff] whitespace-nowrap text-center cursor-pointer">
-                    {item.email}
+                    {item?.email}
                   </td>
                   <td className="px-[18px] py-[12px] text-[#ffff] text-center cursor-pointer">
-                    {item.username}
+                    {item?.username}
                   </td>
                   <td className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap cursor-pointer">
                     {moment.unix(item?.created_on).format("MMM DD,YYYY")}
                   </td>
                   <td className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap cursor-pointer">
-                    {item.staff}
+                    {item?.staff}
                   </td>
                   <td className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap cursor-pointer">
-                    {item.sentAccepted}
+                    {item?.sent} / {item?.accepted}
                   </td>
                   <td className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap">
                     <div className="flex gap-[10px]">
                       <div
                         onClick={(e) => {
                           e.stopPropagation();
-                          navigate(`/admin/watch_details/watch_history/?seller_id=${item?.admin_seller_id}`);
+                          navigate(
+                            `/admin/watch_details/watch_history/?seller_id=${item?.admin_seller_id}`
+                          );
                         }}
                         className="cursor-pointer"
                       >

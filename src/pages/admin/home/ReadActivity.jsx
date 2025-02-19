@@ -2,8 +2,8 @@ import { Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axiosInstance from "../../../services";
-import moment from "moment";
-import { formattedNumber, formatter } from "../../../utils";
+import { extractImageUrls, formattedNumber } from "../../../utils";
+import CardData from "./components/CardData";
 
 const ReadActivity = () => {
   const navigate = useNavigate();
@@ -11,7 +11,6 @@ const ReadActivity = () => {
   const { id } = params;
   const [readActivityData, setReadActivityData] = useState();
   const staffUser = JSON.parse(localStorage.getItem("staffUser"));
-
 
   const getDetailById = async () => {
     try {
@@ -33,6 +32,30 @@ const ReadActivity = () => {
 
     const group = groups[adminGroup] || groups.estimator;
     return `${group.label} - ID: ${group.prefix}${userId}`;
+  };
+
+  const getImageSrc = (image, type) => {
+    let imageArray;
+    try {
+      imageArray = extractImageUrls(image);
+    } catch (e) {
+      imageArray = [];
+    }
+    if (imageArray.length === 0) return "";
+    const uriSegments = imageArray[0].split("/");
+    if (uriSegments[2] && window.location.host === uriSegments[2]) {
+      return imageArray[0];
+    } else if (uriSegments[5] === "bg_remove_upload_images") {
+      return imageArray[0];
+    } else if (type === "rejected") {
+      return imageArray[0].startsWith("http")
+        ? imageArray[0]
+        : `/bg_remove_upload_images/${imageArray[0]}`;
+    } else {
+      return imageArray[0].startsWith("http")
+        ? imageArray[0]
+        : `/upload_images/${imageArray[0]}`;
+    }
   };
 
   useEffect(() => {
@@ -68,7 +91,10 @@ const ReadActivity = () => {
             alt="img"
             className="max-w-[350px] w-full object-cover mx-auto rounded-[8px]"
             style={{ border: "5px solid #1e252b" }}
-            src="https://cdn.estipal.com/production/2022/12/06/RYbhS159nO6DAhgQrA6O7TrmK49QZWIg767nDzEWggl0OTiL1Amd7l7Sj01S7n7Z.jpg"
+            src={getImageSrc(
+              readActivityData?.adminActivities?.[0]?.watch_pic,
+              readActivityData?.type
+            )}
           />
         </div>
         <div className="md:ml-8 w-full flex-[2]">
@@ -115,13 +141,21 @@ const ReadActivity = () => {
             </div>
             <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
               <p className="dark:text-white text-black">
-                {readActivityData?.watch_status}
+                Estimator suggested wholesale price
+              </p>
+              <p className="dark:text-white text-black">
+                {readActivityData?.assignWatchDetails?.[0]?.suggest_retail_price
+                  ? `${readActivityData?.adminUserDetail?.currency} ${Number(
+                      readActivityData?.assignWatchDetails?.[0]
+                        ?.suggest_retail_price
+                    ).toFixed(2)}`
+                  : "0.00"}
               </p>
             </div>
           </div>
         </div>
       </div>
-
+      {/* 
       <div className=" mt-[20px] rounded-lg p-[25px] pt-[25px] pb-[35px] dark:bg-[#1e252b] bg-[#F8F8F8] dark:text-white text-black border border-gray-300 dark:border-none">
         <div className="">
           <h3 className="mb-[5px]">
@@ -131,13 +165,14 @@ const ReadActivity = () => {
             {readActivityData?.watch_details?.collection},{" "}
             {readActivityData?.watch_details?.model_no} - USD -{" "}
             {formattedNumber.format(
-              readActivityData?.watch_details?.accepted_price
+              readActivityData?.watch_details?.accepted_usd_price
             )}
             )
           </h3>
           <div className="flex justify-between items-center flex-wrap mb-8">
             <h3 className="mb-[5px]">
-              <strong className="font-bold">From: </strong>{readActivityData?.watch_details?.compnay_name}{" "}
+              <strong className="font-bold">From: </strong>
+              {readActivityData?.watch_details?.compnay_name}{" "}
               <b className="font-bold">
                 (
                 {readActivityData &&
@@ -202,65 +237,13 @@ const ReadActivity = () => {
             </div>
           </div>
         </div>{" "}
-      </div>
+      </div> */}
 
       {[...(readActivityData?.adminActivities || [])]
         .reverse()
-        ?.map((item, index) => (
-          <div
-            key={index}
-            className="mt-5 dark:bg-[#1E252B] bg-[#F8F8F8] dark:text-white text-black p-6 rounded-lg dark:shadow-lg shadow-none border border-gray-300 dark:border-none"
-          >
-            <div className="border_bottom pb-4">
-              <h3 className="mb-3">
-                <strong className="font-bold">Subject:</strong> {item?.message}{" "}
-                ({readActivityData?.watch_details?.brand},{" "}
-                {readActivityData?.watch_details?.collection},{" "}
-                {readActivityData?.watch_details?.model_no} - USD -{" "}
-                {formattedNumber.format(
-                  readActivityData?.watch_details?.accepted_price
-                )}
-                )
-              </h3>
-              <div className="flex justify-between items-center flex-wrap">
-                <h3 className="mb-3">
-                  <strong className="font-bold">From: </strong>M - Mayawizard{" "}
-                  <b className="font-bold">
-                    (
-                    {item?.admin_group &&
-                      getAdminGroupInfo(item?.admin_group, item?.user1_id)}
-                    )
-                  </b>
-                </h3>
-                <h3 className="mb-3">
-                  <strong className="font-bold">Received: </strong>
-                  <span className="created_at">
-                    {moment
-                      .unix(item?.created_on)
-                      .format("MMMM DD , YYYY h:mm A")}
-                  </span>
-                </h3>
-              </div>
-            </div>
-            <hr
-              className="my-5"
-              style={{
-                borderTopColor: staffUser ? "#DFDFDF" : "#ffffff1a",
-                borderTopWidth: "2px",
-              }}
-            />
-            <div className="message_box_inner">
-              <h3 className="mb-3">
-                {item?.message} (USD{" "}
-                {formattedNumber.format(
-                  readActivityData?.watch_details?.accepted_price
-                )}
-                )
-              </h3>
-              <h3 className="mb-3">Status: {item?.watch_status}</h3>
-            </div>
-          </div>
-        ))}
+        ?.map((item, index) => {
+          return <CardData item={item} index={index} staffUser={staffUser} />;
+        })}
     </div>
   );
 };

@@ -97,7 +97,9 @@ const EstimatorRevanueAnalysis = () => {
               <th className="p-2 text-[#ffff] text-center cursor-pointer">
                 Comapny
               </th>
-              <th className="p-2 text-[#ffff] text-center cursor-pointer">Email</th>
+              <th className="p-2 text-[#ffff] text-center cursor-pointer">
+                Email
+              </th>
               <th className="p-2 text-[#ffff] text-center cursor-pointer">
                 Total Completed deal
               </th>
@@ -119,25 +121,25 @@ const EstimatorRevanueAnalysis = () => {
             {estimaotrData?.map((item, index) => (
               <tr key={index} className="border-b border-[#202b34]">
                 <td className="px-[18px] py-[12px] text-[#ffff] text-center">
-                  {item.Company}
+                  {item?.Company}
                 </td>
                 <td className="px-[18px] py-[12px] text-[#ffff] whitespace-nowrap text-center cursor-pointer">
-                  {item.Email}
+                  {item?.Email}
                 </td>
                 <td className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap">
-                  {item.Total_Completed_Deal}
+                  {item?.Total_Completed_Deal}
                 </td>
                 <td className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap">
-                  {item.Total_Bought}
+                  {item?.Total_Bought}
                 </td>
                 <td className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap">
-                  {item.Total_Sold}
+                  {item?.Total_Sold}
                 </td>
                 <td className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap">
-                  {item.Total_Profit}
+                  {item?.Total_Profit}
                 </td>
                 <td className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap">
-                  {item.Total_Commission_Payable_Paid}
+                  {item?.Total_Commission_Payable_Paid}
                 </td>
               </tr>
             ))}

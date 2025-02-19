@@ -11,3 +11,13 @@ export const formatter = new Intl.NumberFormat("en-US", {
 });
 
 export const formattedNumber = new Intl.NumberFormat("en-US");
+
+export const formatCurrency = (price, currency) => {
+  if (price) {
+    return `${currency} ${parseFloat(price).toLocaleString("en", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })}`;
+  }
+  return "";
+};

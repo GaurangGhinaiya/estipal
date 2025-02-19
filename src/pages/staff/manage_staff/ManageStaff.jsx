@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { Button } from '@mui/material';
-import moment from 'moment';
-import CustomSwitch from '../../../components/common/CustomSwitch';
+import React, { useState } from "react";
+import { Button } from "@mui/material";
+import moment from "moment";
+import CustomSwitch from "../../../components/common/CustomSwitch";
 import StaffWatch from "../../../assets/images/icons/staffWatch.png";
 import StaffLock from "../../../assets/images/icons/Stafflock.png";
-import SearchBar from '../../../components/common/SearchBar';
-import PaginationComponent from '../../../components/common/PaginationComponent';
+import SearchBar from "../../../components/common/SearchBar";
+import PaginationComponent from "../../../components/common/PaginationComponent";
 
 const history = [
   {
@@ -18,7 +18,7 @@ const history = [
     added_on: "24 Apr 2023",
     sent_accepted: "7/3",
     watches_history: true,
-    reset_password: true
+    reset_password: true,
   },
   {
     id: "W10091",
@@ -30,7 +30,7 @@ const history = [
     added_on: "25 Apr 2023",
     sent_accepted: "8/3",
     watches_history: true,
-    reset_password: true
+    reset_password: true,
   },
 ];
 
@@ -47,15 +47,15 @@ const ManageStaff = () => {
   const [isArchiveMode, setIsArchiveMode] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
   const [newStaff, setNewStaff] = useState({
-    name: '',
-    email: '',
-    mobile_number: '',
-    added_on: moment().format('D MMM YYYY'),
-    sent_accepted: '0/0',
+    name: "",
+    email: "",
+    mobile_number: "",
+    added_on: moment().format("D MMM YYYY"),
+    sent_accepted: "0/0",
     online: false,
     active: true,
     watches_history: false,
-    reset_password: false
+    reset_password: false,
   });
 
   const handlePageChange = (page) => {
@@ -97,15 +97,15 @@ const ManageStaff = () => {
     setIsEditMode(false);
     setIsArchiveMode(false);
     setNewStaff({
-      name: '',
-      email: '',
-      mobile_number: '',
-      added_on: moment().format('D MMM YYYY'),
-      sent_accepted: '0/0',
+      name: "",
+      email: "",
+      mobile_number: "",
+      added_on: moment().format("D MMM YYYY"),
+      sent_accepted: "0/0",
       online: false,
       active: true,
       watches_history: false,
-      reset_password: false
+      reset_password: false,
     });
   };
 
@@ -115,15 +115,15 @@ const ManageStaff = () => {
     setIsEditMode(false);
     setIsArchiveMode(false);
     setNewStaff({
-      name: '',
-      email: '',
-      mobile_number: '',
-      added_on: moment().format('D MMM YYYY'),
-      sent_accepted: '0/0',
+      name: "",
+      email: "",
+      mobile_number: "",
+      added_on: moment().format("D MMM YYYY"),
+      sent_accepted: "0/0",
       online: false,
       active: true,
       watches_history: false,
-      reset_password: false
+      reset_password: false,
     });
     setSelectedRows([]);
   };
@@ -156,12 +156,14 @@ const ManageStaff = () => {
               Manage Staff
             </h1>
             <div className="flex sm:flex-row flex-col space-x-0 sm:gap-0 gap-4 sm:space-x-4 mb-4">
-              {(isAddMode || isEditMode || isArchiveMode) ? (
+              {isAddMode || isEditMode || isArchiveMode ? (
                 <div className="flex gap-2">
                   <Button
                     variant="contained"
                     className="!bg-[#00a65a] !px-[5px] sm:!px-[40px] !py-[10px] sm:!py-[10px] text-white !capitalize !rounded-[50px]"
-                    onClick={isArchiveMode ? handleArchiveSelected : handleSaveStaff}
+                    onClick={
+                      isArchiveMode ? handleArchiveSelected : handleSaveStaff
+                    }
                   >
                     Save
                   </Button>
@@ -214,7 +216,11 @@ const ManageStaff = () => {
         <table className="table-auto w-full text-left">
           <thead style={{ borderBottom: "2px solid #111111" }}>
             <tr>
-              {isArchiveMode && <th className="p-2 dark:text-[#ffff] text-black text-center">Select</th>}
+              {isArchiveMode && (
+                <th className="p-2 dark:text-[#ffff] text-black text-center">
+                  Select
+                </th>
+              )}
               {[
                 { key: "online", label: "Online" },
                 { key: "active", label: "Active" },
@@ -224,7 +230,7 @@ const ManageStaff = () => {
                 { key: "added_on", label: "Added on" },
                 { key: "sent/accepted", label: "Sent/Accepted" },
                 { key: "watches_history", label: "Watches History" },
-                { key: "reset_password", label: "Reset Password" }
+                { key: "reset_password", label: "Reset Password" },
               ].map((column) => (
                 <th
                   key={column.key}
@@ -249,13 +255,15 @@ const ManageStaff = () => {
                     </td>
                   )}
                   <td className="px-[18px] py-[10px] text-center">
-                    <span className={`${item.online ? "dot-green" : "dot-red"}`} />
+                    <span
+                      className={`${item?.online ? "dot-green" : "dot-red"}`}
+                    />
                   </td>
                   <td className="px-[18px] py-[10px] text-center">
                     <CustomSwitch
                       name={`active${index}`}
-                      checked={item.active}
-                      onChange={() => { }}
+                      checked={item?.active}
+                      onChange={() => {}}
                     />
                   </td>
                   <td className="px-[18px] py-[10px] text-center">
@@ -263,12 +271,12 @@ const ManageStaff = () => {
                       <input
                         type="text"
                         name="name"
-                        value={item.name}
+                        value={item?.name}
                         onChange={(e) => handleNewStaffChange(index, e)}
                         className="p-2 border border-gray-300 rounded"
                       />
                     ) : (
-                      item.name
+                      item?.name
                     )}
                   </td>
                   <td className="px-[18px] py-[10px] text-center">
@@ -276,12 +284,12 @@ const ManageStaff = () => {
                       <input
                         type="email"
                         name="email"
-                        value={item.email}
+                        value={item?.email}
                         onChange={(e) => handleNewStaffChange(index, e)}
                         className="p-2 border border-gray-300 rounded"
                       />
                     ) : (
-                      item.email
+                      item?.email
                     )}
                   </td>
                   <td className="px-[18px] py-[10px] text-center">
@@ -289,32 +297,32 @@ const ManageStaff = () => {
                       <input
                         type="text"
                         name="mobile_number"
-                        value={item.mobile_number}
+                        value={item?.mobile_number}
                         onChange={(e) => handleNewStaffChange(index, e)}
                         className="p-2 border border-gray-300 rounded"
                       />
                     ) : (
-                      item.mobile_number
+                      item?.mobile_number
                     )}
                   </td>
                   <td className="px-[18px] py-[10px] text-center">
-                    {item.added_on}
+                    {item?.added_on}
                   </td>
                   <td className="px-[18px] py-[10px] text-center">
-                    {item.sent_accepted}
+                    {item?.sent_accepted}
                   </td>
                   <td className="px-[18px] py-[10px] text-center">
-                    <div className='flex justify-center'>
+                    <div className="flex justify-center">
                       <img src={StaffWatch} alt="Watch" width="35px" />
                     </div>
                   </td>
                   <td className="px-[18px] py-[10px] text-center ">
-                    <div className='flex justify-center'>
+                    <div className="flex justify-center">
                       <img src={StaffLock} alt="Lock" width="35px" />
                     </div>
                   </td>
                 </tr>
-              )
+              );
             })}
 
             {isAddMode && (
@@ -331,7 +339,7 @@ const ManageStaff = () => {
                   <CustomSwitch
                     name="active"
                     checked={newStaff.active}
-                    onChange={() => { }}
+                    onChange={() => {}}
                   />
                 </td>
                 <td className="px-[18px] py-[10px] text-center">
@@ -339,7 +347,9 @@ const ManageStaff = () => {
                     type="text"
                     name="name"
                     value={newStaff.name}
-                    onChange={(e) => setNewStaff({ ...newStaff, name: e.target.value })}
+                    onChange={(e) =>
+                      setNewStaff({ ...newStaff, name: e.target.value })
+                    }
                     placeholder="Name"
                     className="p-2 border border-gray-300 rounded"
                   />
@@ -349,7 +359,9 @@ const ManageStaff = () => {
                     type="email"
                     name="email"
                     value={newStaff.email}
-                    onChange={(e) => setNewStaff({ ...newStaff, email: e.target.value })}
+                    onChange={(e) =>
+                      setNewStaff({ ...newStaff, email: e.target.value })
+                    }
                     placeholder="Email"
                     className="p-2 border border-gray-300 rounded"
                   />
@@ -359,7 +371,12 @@ const ManageStaff = () => {
                     type="text"
                     name="mobile_number"
                     value={newStaff.mobile_number}
-                    onChange={(e) => setNewStaff({ ...newStaff, mobile_number: e.target.value })}
+                    onChange={(e) =>
+                      setNewStaff({
+                        ...newStaff,
+                        mobile_number: e.target.value,
+                      })
+                    }
                     placeholder="Mobile Number"
                     className="p-2 border border-gray-300 rounded"
                   />
@@ -371,12 +388,12 @@ const ManageStaff = () => {
                   {newStaff.sent_accepted}
                 </td>
                 <td className="px-[18px] py-[10px] text-center">
-                  <div className='flex justify-center'>
+                  <div className="flex justify-center">
                     <img src={StaffWatch} alt="Watch" width="35px" />
                   </div>
                 </td>
                 <td className="px-[18px] py-[10px] text-center">
-                  <div className='flex justify-center'>
+                  <div className="flex justify-center">
                     <img src={StaffLock} alt="Lock" width="35px" />
                   </div>
                 </td>

@@ -93,6 +93,17 @@ const ActivitiesTable = () => {
     setCurrentPage(page);
   };
 
+  const getImageSrc = (activity) => {
+    if (
+      activity?.staffWatchActivityDetails?.progress === 2 ||
+      activity?.staffWatchActivityDetails?.progress === 4 ||
+      activity?.staffWatchActivityDetails?.progress === 5
+    ) {
+      return "https://www.estipal.com/assets/dist/images/icons/Alarm_watch_light.png";
+    }
+    return "";
+  };
+
   return (
     <div className=" pb-[15px] min-h-[100vh]">
       <div className="px-0 pt-6 sm:px-[20px] flex justify-between flex-wrap dark:bg-none bg-gradient-to-b from-[rgba(0,96,169,0.36)] to-[rgba(255,255,255,0)]">
@@ -192,6 +203,22 @@ const ActivitiesTable = () => {
                       navigate(`/admin/home/readActivity/${activity?.id}`)
                     }
                   >
+                    <td className="px-[18px] py-[0px] text-[#ffff] text-center">
+                      <div className="w-[35px]">
+                        {getImageSrc(activity) && (
+                          <a
+                            href={`/admin/home/readActivity/${activity?.id}/${activity?.watch_id}`}
+                            role="button"
+                          >
+                            <img
+                              alt="img"
+                              src={getImageSrc(activity)}
+                              width="35px"
+                            />
+                          </a>
+                        )}
+                      </div>
+                    </td>
                     <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center">
                       {" "}
                       <Checkbox
@@ -355,13 +382,18 @@ const ActivitiesTable = () => {
                   >
                     <td className="px-[18px] py-[0px] text-[#ffff] text-center">
                       <div className="w-[35px]">
-                        <a href="#" role="button">
-                          <img
-                            alt="img"
-                            src="https://www.estipal.com/assets/dist/images/icons/Alarm_watch_light.png"
-                            width="35px"
-                          />
-                        </a>
+                        {getImageSrc(activity) && (
+                          <a
+                            href={`/admin/home/readActivity/${activity?.id}/${activity?.watch_id}`}
+                            role="button"
+                          >
+                            <img
+                              alt="img"
+                              src={getImageSrc(activity)}
+                              width="35px"
+                            />
+                          </a>
+                        )}
                       </div>
                     </td>
                     <td className="px-[18px] py-[10px] text-[#ffff] text-center">

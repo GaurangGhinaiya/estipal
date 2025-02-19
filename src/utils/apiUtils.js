@@ -40,7 +40,7 @@ export const fetchNextEstimatorId = async () => {
     const response = await axiosInstance.get(`${BASE_URL}/estimator/getNextId`);
     return response.payload?.data?.id || ""; // Adjust according to your API response structure
   } catch (error) {
-    console.error("Error fetching next estimator ID:", error);
+    console.error("Error fetching next estimator ID:", error); 
     throw error;
   }
 };

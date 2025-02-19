@@ -97,7 +97,7 @@ const Language = () => {
       await axiosInstance.put(`/languages?id=${updatedItem?.id}`, updatedItem);
       setLanguagesData((prevData) =>
         prevData.map((item) =>
-          item.id === updatedItem.id ? updatedItem : item
+          item?.id === updatedItem.id ? updatedItem : item
         )
       );
     } catch (error) {
@@ -173,7 +173,7 @@ const Language = () => {
           </h1>
           <div>
             {languagesData.map((item) => (
-              <Translation key={item.id} item={item} updateItem={updateItem} />
+              <Translation key={item?.id} item={item} updateItem={updateItem} />
             ))}
           </div>
         </>

@@ -327,8 +327,8 @@ const AccountProfile = () => {
                     Open to select country
                   </option>
                   {countries.map((item, index) => (
-                    <option value={item.code} key={index}>
-                      {item.name}
+                    <option value={item?.code} key={index}>
+                      {item?.name}
                     </option>
                   ))}
                 </select>
@@ -483,8 +483,8 @@ const AccountProfile = () => {
                   onChange={handleChange}
                 >
                   {currency.map((item, index) => (
-                    <option value={item.value} key={index}>
-                      {item.name}
+                    <option value={item?.value} key={index}>
+                      {item?.name}
                     </option>
                   ))}
                 </select>

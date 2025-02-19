@@ -15,6 +15,8 @@ import axiosInstance from "../../../services";
 import moment from "moment/moment";
 import useDebounce from "../../../components/common/UseDebounce";
 import { formattedNumber } from "../../../utils";
+import gmailIcon from "../../../assets/images/icons/icn-mai-light.svg";
+import gmailYellowIcon from "../../../assets/images/icons/icn-mail-yellow.svg";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -56,13 +58,13 @@ const WatchHistory = () => {
     const searchValue =
       debouncedSearchTerm || status
         ? JSON.stringify(
-          debouncedSearchTerm
-            ? {
-              search: debouncedSearchTerm ? debouncedSearchTerm : "",
-              watch_status: status,
-            }
-            : { watch_status: status }
-        )
+            debouncedSearchTerm
+              ? {
+                  search: debouncedSearchTerm ? debouncedSearchTerm : "",
+                  watch_status: status,
+                }
+              : { watch_status: status }
+          )
         : "";
 
     try {
@@ -155,14 +157,17 @@ const WatchHistory = () => {
                         ? () => handleSort(column.key)
                         : undefined
                     }
-                    className={`p-2 dark:text-[#ffff] text-nowrap  text-black text-center ${column.isSortable ? "cursor-pointer" : ""
-                      } ${column.isSortable && sortField === column.key
+                    className={`p-2 dark:text-[#ffff] text-nowrap  text-black text-center ${
+                      column.isSortable ? "cursor-pointer" : ""
+                    } ${
+                      column.isSortable && sortField === column.key
                         ? "active-sorting"
                         : ""
-                      } ${column.isSortable && sortField !== column.key
+                    } ${
+                      column.isSortable && sortField !== column.key
                         ? "sorting"
                         : ""
-                      }`}
+                    }`}
                   >
                     {column.label}{" "}
                     {column.isSortable &&
@@ -208,6 +213,7 @@ const WatchHistory = () => {
                       {" "}
                       <Checkbox
                         {...label}
+                        checked={item?.admin_star_selected_flag}
                         icon={
                           <StarOutlineIcon
                             sx={{ color: "#494a4b", fontSize: "21px" }}
@@ -369,14 +375,17 @@ const WatchHistory = () => {
                         ? () => handleSort(column.key)
                         : undefined
                     }
-                    className={`p-2 dark:text-[#ffff] text-nowrap text-black text-center ${column.isSortable ? "cursor-pointer" : ""
-                      } ${column.isSortable && sortField === column.key
+                    className={`p-2 dark:text-[#ffff] text-nowrap text-black text-center ${
+                      column.isSortable ? "cursor-pointer" : ""
+                    } ${
+                      column.isSortable && sortField === column.key
                         ? "active-sorting"
                         : ""
-                      } ${column.isSortable && sortField !== column.key
+                    } ${
+                      column.isSortable && sortField !== column.key
                         ? "pr-4 sorting"
                         : ""
-                      }`}
+                    }`}
                   >
                     {column.label}{" "}
                     {column.isSortable &&
@@ -406,11 +415,11 @@ const WatchHistory = () => {
                           role="button"
                           onClick={() => navigate("/admin/home/readActivity")}
                         >
-                          <img
-                            src="https://www.estipal.com/assets/dist/images/icons/icn-mai-light.svg"
-                            width="25px"
-                            alt="img"
-                          />
+                          {item?.emailIcon ? (
+                            <img src={gmailIcon} width="25px" alt="img" />
+                          ) : (
+                            <img src={gmailYellowIcon} width="25px" alt="img" />
+                          )}
                         </div>
                       </div>
                     </td>
@@ -418,6 +427,7 @@ const WatchHistory = () => {
                       {" "}
                       <Checkbox
                         {...label}
+                        checked={item?.star_selected_flag}
                         icon={
                           <StarOutlineIcon
                             sx={{ color: "#494a4b", fontSize: "21px" }}
@@ -494,7 +504,9 @@ const WatchHistory = () => {
                         )
                       }
                     >
-                      {item?.addedByDetail?.company_name}
+                      {item?.addedByDetail?.company_name +
+                        " - " +
+                        item?.addedByDetail?.username}
                     </td>
                     <td
                       className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap cursor-pointer"
@@ -504,11 +516,8 @@ const WatchHistory = () => {
                         )
                       }
                     >
-                      USD  {formattedNumber.format(
-                        item?.watch_price
-                      )} / USD  {formattedNumber.format(
-                        item?.estimated_watch_price
-                      )}
+                      USD {formattedNumber.format(item?.watch_price)} / USD{" "}
+                      {formattedNumber.format(item?.estimated_watch_price)}
                     </td>
                     <td
                       className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap cursor-pointer"

@@ -16,10 +16,11 @@ import BrandList from "./brandList/BrandList";
 import Language from "./language/Language";
 import SellerUserCreate from "./seller/SellerUserCreate";
 import SellerRevenueAnalysis from "../staff/revenue_analysis/revenue_analysis_seller/SellerRevenueAnalysis";
-import SellerPerformanceAnalysis from "../staff/performance_analysis/performance_analysis_seller/SellerPerformanceAnalysis";
+// import SellerPerformanceAnalysis from "../staff/performance_analysis/performance_analysis_seller/SellerPerformanceAnalysis";
 import AccountProfile from "../staff/account_profile/AccountProfile";
 import ManageStaff from "../staff/manage_staff/ManageStaff";
 import EstimatorEdit from "./estimators/EstimatorEdit";
+import SellerPerformanceAnalysis from "./performance_analysis/performance_analysis_seller/SellerPerformanceAnalysis";
 
 const AdminRoot = () => {
   const staffUser = JSON.parse(localStorage.getItem("staffUser"));
@@ -29,7 +30,10 @@ const AdminRoot = () => {
       <Routes>
         <Route path="/" element={<Admin />} />
         <Route path="/watch_details/watch_history" element={<WatchHistory />} />
-        <Route path="/staff/staff_user" element={staffUser ? <ManageStaff /> : <StaffUser />} />
+        <Route
+          path="/staff/staff_user"
+          element={staffUser ? <ManageStaff /> : <StaffUser />}
+        />
         <Route path="/home/readActivity/:id" element={<ReadActivity />} />
         <Route
           path="/watch_details/watch_status/:id"
