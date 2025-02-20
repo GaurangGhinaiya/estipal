@@ -31,7 +31,7 @@ const SellerEdit = () => {
 
   const [formData, setFormData] = useState({
     active: false,
-    company_name: "",
+    cmp_name: "",
     bank_name: "",
     bank_address: "",
     bank_account: "",
@@ -55,9 +55,7 @@ const SellerEdit = () => {
     seller_logo: null,
     companyLogoPreview: "",
   });
-
-  console.log("formData: ", formData);
-
+  const [commissionData, setCommissionData] = useState([]);
   // Fetch country data on mount
   useEffect(() => {
     const loadCountries = async () => {
@@ -118,7 +116,6 @@ const SellerEdit = () => {
     try {
       const response = await axiosInstance.get(`/sellers/detail?id=${id}`);
       const seller = response?.payload?.data;
-      console.log("seller: ", seller);
       setSellerData(seller);
 
       setFormData((prevFormData) => ({
@@ -151,9 +148,22 @@ const SellerEdit = () => {
     // Create FormData object to hold the data
     const formDataToSend = new FormData();
 
+    const formattedCommissionData = commissionData?.map((item) => ({
+      from: `USD ${item?.from}`,
+      to: item?.to !== null ? `USD ${item?.to}` : "", // Handle null value
+      commission: String(item?.commission), // Convert to string
+    }));
+
+    const sendData = { ...formData, commission_plan: formattedCommissionData };
+
     // Append non-file fields to FormData
-    Object.keys(formData).forEach((key) => {
-      if (key !== "seller_logo" && formData[key]) {
+    Object.keys(sendData).forEach((key) => {
+      if (key === "commission_plan") {
+        formDataToSend.append(
+          "commission_plan",
+          JSON.stringify(formattedCommissionData)
+        );
+      } else if (key !== "seller_logo") {
         // Exclude seller_logo as it's a file
         formDataToSend.append(key, formData[key]);
       }
@@ -299,11 +309,11 @@ const SellerEdit = () => {
             }
           />
           <TextInputField
-            value={formData.company_name}
+            value={formData.cmp_name}
             rightTextValue=""
             type="text"
             label="Company"
-            name="company_name"
+            name="cmp_name"
             readOnly={!isEditable}
             bgColor={"#1e252b"}
             className="mb-[15px]"
@@ -688,7 +698,12 @@ const SellerEdit = () => {
         </div>
       </div>
 
-      <CommissionPlan isEditable={isEditable} />
+      <CommissionPlan
+        isEditable={isEditable}
+        commissionData={commissionData}
+        setCommissionData={setCommissionData}
+        sellerData={sellerData}
+      />
     </div>
   );
 };
