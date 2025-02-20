@@ -236,34 +236,42 @@ const Estimators = () => {
 
                   <td className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap">
                     <div className="flex gap-[10px]">
-                      <a href="/admin/watch_details/watch_history">
-                        <img
-                          alt="star"
-                          id="star"
-                          width="30px"
-                          height="30px"
-                          style={{ filter: "invert(1)" }}
-                          src="https://www.estipal.com/assets/dist/images/icons/Watch history 2.png"
-                        />
-                      </a>
-                      <a href="/admin">
-                        <img
-                          alt="revanue"
-                          width="30px"
-                          height="30px"
-                          style={{ filter: "invert(1)" }}
-                          src="https://www.estipal.com/assets/dist/images/icons/Revenue.png"
-                        />
-                      </a>
-                      <a href="/admin/analysis/performance_analysis/estimator">
-                        <img
-                          alt="performance"
-                          width="30px"
-                          height="30px"
-                          style={{ filter: "invert(1)" }}
-                          src="https://www.estipal.com/assets/dist/images/icons/performance.png"
-                        />
-                      </a>
+                      <img
+                        alt="star"
+                        id="star"
+                        width="30px"
+                        height="30px"
+                        style={{ filter: "invert(1)" }}
+                        className="cursor-pointer"
+                        src="https://www.estipal.com/assets/dist/images/icons/Watch history 2.png"
+                        onClick={() =>
+                          navigate(
+                            `/admin/watch_details/watch_history/?estimator_id=${item?.id}`
+                          )
+                        }
+                      />
+                      <img
+                        alt="revanue"
+                        width="30px"
+                        height="30px"
+                        style={{ filter: "invert(1)" }}
+                        className="cursor-pointer"
+                        src="https://www.estipal.com/assets/dist/images/icons/Revenue.png"
+                        onClick={() => navigate(`/admin`)}
+                      />
+                      <img
+                        alt="performance"
+                        width="30px"
+                        height="30px"
+                        style={{ filter: "invert(1)" }}
+                        className="cursor-pointer"
+                        src="https://www.estipal.com/assets/dist/images/icons/performance.png"
+                        onClick={() =>
+                          navigate(
+                            `/admin/analysis/performance_analysis/estimator`
+                          )
+                        }
+                      />
                     </div>
                   </td>
                 </tr>
