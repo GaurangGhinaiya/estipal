@@ -1,45 +1,50 @@
-import React from "react";
-
-const merchantData = [
-  {
-    Company: "M",
-    Email: "nopparat_sat@maya-wizard.com",
-    Total_sold_to_Estipal: "5 / USD 75,300.00",
-    Total_partner_with_Estipal: "0 / USD 0.00",
-  },
-  {
-    Company: "MLA Thai",
-    Email: "admin@mlathai.com",
-    Total_sold_to_Estipal: "0 / USD 0.00",
-    Total_partner_with_Estipal: "0 / USD 0.00",
-  },
-  {
-    Company: "Estipal, LLC",
-    Email: "niels@estipal.com",
-    Total_sold_to_Estipal: "7 / USD 143,000.00",
-    Total_partner_with_Estipal: "0 / USD 0.00",
-  },
-  {
-    Company: "Test",
-    Email: "nopparat@scouse.tech",
-    Total_sold_to_Estipal: "0 / USD 0.00",
-    Total_partner_with_Estipal: "0 / USD 0.00",
-  },
-  {
-    Company: "maya",
-    Email: "nopparat.mayawizard2@gmail.com",
-    Total_sold_to_Estipal: "0 / USD 0.00",
-    Total_partner_with_Estipal: "0 / USD 0.00",
-  },
-  {
-    Company: "maya",
-    Email: "info.icenetwork@gmail.com",
-    Total_sold_to_Estipal: "3 / USD 52,600.00",
-    Total_partner_with_Estipal: "0 / USD 0.00",
-  },
-];
+import React, { useEffect, useState } from "react";
+import axiosInstance from "../../../../services";
+import { CircularProgress } from "@mui/material";
 
 const AdminRevanueAnalysis = () => {
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
+
+  const fetchData = async (fromDate, toDate) => {
+    const searchObject = {};
+
+    if (fromDate && toDate) {
+      searchObject.from = fromDate;
+      searchObject.to = toDate;
+    }
+
+    const searchValue = JSON.stringify(searchObject);
+
+    try {
+      setIsLoading(true);
+      const response = await axiosInstance.get(
+        `/revenueAnalysis/merchant?search=${searchValue}`
+      );
+      setData(response?.payload?.data);
+    } catch (error) {
+      console.error("Error fetching transaction data:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const applyFilter = () => {
+    fetchData(fromDate, toDate);
+  };
+
+  const clearFilter = () => {
+    setFromDate("");
+    setToDate("");
+    fetchData();
+  };
+
   return (
     <div className="p-[15px] h-[100vh]">
       <div className="px-0 sm:px-[15px] flex flex-col justify-between flex-wrap">
@@ -56,6 +61,8 @@ const AdminRevanueAnalysis = () => {
               id="fromDate"
               placeholder="dd-mm-yyyy"
               className="p-2 border rounded-md text-black"
+              value={fromDate}
+              onChange={(e) => setFromDate(e.target.value)}
             />
           </div>
           <div className="flex items-center space-x-2">
@@ -67,12 +74,20 @@ const AdminRevanueAnalysis = () => {
               id="toDate"
               placeholder="dd-mm-yyyy"
               className="p-2 border rounded-md text-black"
+              value={toDate}
+              onChange={(e) => setToDate(e.target.value)}
             />
           </div>
-          <button className="bg-[#0060aa] hover:bg-[#0060aa] text-white font-bold py-2 px-4 rounded">
+          <button
+            className="bg-[#0060aa] hover:bg-[#0060aa] text-white font-bold py-2 px-4 rounded"
+            onClick={applyFilter}
+          >
             Apply Filter
           </button>
-          <button className="bg-[#0060aa] hover:bg-[#0060aa] text-white font-bold py-2 px-4 rounded">
+          <button
+            className="bg-[#0060aa] hover:bg-[#0060aa] text-white font-bold py-2 px-4 rounded"
+            onClick={clearFilter}
+          >
             Clear Filter
           </button>
         </div>
@@ -82,42 +97,54 @@ const AdminRevanueAnalysis = () => {
       </div>
 
       <div className="w-[95.5%] overflow-auto mx-auto pt-[10px]">
-        <table className="table-auto w-full text-left">
-          <thead style={{ borderBottom: "2px solid #111111" }}>
-            <tr>
-              <th className="p-2 text-[#ffff] text-center cursor-pointer">
-                Comapny
-              </th>
-              <th className="p-2 text-[#ffff] text-center cursor-pointer">
-                Email
-              </th>
-              <th className="p-2 text-[#ffff] text-center cursor-pointer">
-                Total sold to Estipal / Amount
-              </th>
-              <th className="p-2 text-[#ffff] text-center cursor-pointer">
-                Total partner with Estipal / Amount
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {merchantData?.map((item, index) => (
-              <tr key={index} className="border-b border-[#202b34]">
-                <td className="px-[18px] py-[12px] text-[#ffff] text-center">
-                  {item?.Company}
-                </td>
-                <td className="px-[18px] py-[12px] text-[#ffff] whitespace-nowrap text-center cursor-pointer">
-                  {item?.Email}
-                </td>
-                <td className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap">
-                  {item?.Total_sold_to_Estipal}
-                </td>
-                <td className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap">
-                  {item?.Total_partner_with_Estipal}
-                </td>
+        {isLoading ? (
+          <div className="py-[200px] px-4 text-center">
+            <CircularProgress />
+          </div>
+        ) : data?.length > 0 ? (
+          <table className="table-auto w-full text-left">
+            <thead style={{ borderBottom: "2px solid #111111" }}>
+              <tr>
+                <th className="p-2 text-[#ffff] text-center cursor-pointer">
+                  Company
+                </th>
+                <th className="p-2 text-[#ffff] text-center cursor-pointer">
+                  Email
+                </th>
+                <th className="p-2 text-[#ffff] text-center cursor-pointer">
+                  Total sold to Estipal / Amount
+                </th>
+                <th className="p-2 text-[#ffff] text-center cursor-pointer">
+                  Total partner with Estipal / Amount
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {data?.map((item, index) => (
+                <tr key={index} className="border-b border-[#202b34]">
+                  <td className="px-[18px] py-[12px] text-[#ffff] text-center">
+                    {item?.cmp_name}
+                  </td>
+                  <td className="px-[18px] py-[12px] text-[#ffff] whitespace-nowrap text-center cursor-pointer">
+                    {item?.email}
+                  </td>
+                  <td className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap">
+                    {item?.total_sold_to_estipal} / USD{" "}
+                    {item?.total_sold_amount.toLocaleString()}
+                  </td>
+                  <td className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap">
+                    {item?.total_partner_with_estipal} / USD{" "}
+                    {item?.total_partner_amount.toLocaleString()}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <div className="py-[200px] px-4 text-center text-nowrap text-white font-bold">
+            No Data Found
+          </div>
+        )}
       </div>
     </div>
   );

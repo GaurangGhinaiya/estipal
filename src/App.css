@@ -349,3 +349,9 @@ table.dataTable tbody td {
 .hide-scrollbar::-webkit-scrollbar {
   display: none; /* Chrome, Safari, and Edge */
 }
+
+.b_btn {
+  color:white !important;
+  background-image: linear-gradient(to bottom, #0088cc, #0055cc) !important;
+  text-transform: unset !important;
+}

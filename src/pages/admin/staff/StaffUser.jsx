@@ -71,7 +71,7 @@ const StaffUser = () => {
 
           <Button
             variant="contained"
-            className="!bg-[#1760a9] !normal-case !py-[10px] !px-[40px] !rounded-[50px]"
+            className="b_btn !py-[10px] !px-[40px] !rounded-[50px]"
             onClick={() => navigate("/admin/seller/seller_user_create")}
           >
             Add Merchant
