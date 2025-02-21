@@ -17,7 +17,7 @@ const MainLayout = () => {
   return (
     <>
       <Header />
-      <div className="max-sm:px-[10px]">
+      <div className="max-sm:px-[10px] min-h-[calc(100vh-162.5px)]">
         <Outlet />
       </div>
       <Footer />

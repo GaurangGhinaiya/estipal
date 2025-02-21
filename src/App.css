@@ -252,13 +252,6 @@ table.dataTable tbody td {
   height: 8px;
 }
 
-.main-footer {
-  display: flex;
-  flex-wrap: wrap;
-  background: #1d272e;
-  color: #fff;
-}
-
 .dot-green {
   background-color: #009245;
   height: 22px;

@@ -15,7 +15,7 @@ function App() {
   }, [theme]);
 
   return (
-    <div className="bg-white dark:bg-[#283641] ">
+    <div className="bg-white dark:bg-[#283641]">
       <Toaster position="top-center" reverseOrder={false} />
       <AppRoute />
     </div>

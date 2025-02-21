@@ -2,13 +2,11 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <div>
-      <footer className="main-footer justify-center items-center p-[15px]">
-        <div>
-          <span>© 2024 Estipal - All right reserved</span>
-        </div>
-      </footer>
-    </div>
+    <footer className="bg-[#1d272e] text-white text-center p-[15px] w-full">
+      <div>
+        <span>© 2024 Estipal - All right reserved</span>
+      </div>
+    </footer>
   );
 };
 
