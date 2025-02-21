@@ -39,10 +39,15 @@ const SellerPerformanceAnalysis = () => {
     setCurrentPage(page);
   };
 
-  const fetchSummaryData = async () => {
+  const fetchSummaryData = async (fromDate, toDate) => {
     const searchObject = {
       admin_id: seller_id,
     };
+
+    if (fromDate && toDate) {
+      searchObject.from = fromDate;
+      searchObject.to = toDate;
+    }
 
     const searchValue = JSON.stringify(searchObject);
     try {
@@ -105,12 +110,14 @@ const SellerPerformanceAnalysis = () => {
 
   const applyFilter = () => {
     fetchTransactionData(fromDate, toDate);
+    fetchSummaryData(fromDate, toDate);
   };
 
   const clearFilter = () => {
     setFromDate("");
     setToDate("");
     fetchTransactionData();
+    fetchSummaryData();
   };
 
   return (

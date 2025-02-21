@@ -377,7 +377,7 @@ const ActivitiesTable = () => {
                     key={index}
                     className="border-b border-[#202b34]"
                     onClick={() =>
-                      navigate(`/admin/home/readActivity/${activity?.watch_id}`)
+                      navigate(`/admin/home/readActivity/${activity?.id}`)
                     }
                   >
                     <td className="px-[18px] py-[0px] text-[#ffff] text-center">

@@ -32,10 +32,10 @@ const WatchHistory = () => {
     setLoading(true);
 
     const searchValue =
-      debouncedSearchTerm || status
+      debouncedSearchTerm || status !== "All" || sellerId || estimatorId
         ? JSON.stringify({
             ...(debouncedSearchTerm && { search: debouncedSearchTerm }),
-            watch_status: status,
+            ...(status !== "All" && { watch_status: status }),
             ...(sellerId && { seller_id: sellerId }),
             ...(estimatorId && { estimator_id: estimatorId }),
           })
@@ -59,7 +59,6 @@ const WatchHistory = () => {
 
   useEffect(() => {
     getWatchActivityList();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage, debouncedSearchTerm, status]);
 
   return (
