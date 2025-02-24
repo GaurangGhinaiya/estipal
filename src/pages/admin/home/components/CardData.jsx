@@ -30,10 +30,11 @@ const CardData = (props) => {
     }
   };
 
-  const { brand, collection, model_no, serial_no } = item?.watch_details;
+  const watchDetails = item?.watch_details || {};
+  const { brand, collection, model_no, serial_no } = watchDetails;
 
   const getWatchDetails = () =>
-    `${brand} ${collection} ${model_no} ${serial_no}`;
+    `${brand || ""} ${collection || ""} ${model_no || ""} ${serial_no || ""}`;
 
   const getAcceptedPrice = () => {
     const priceKeys = [
