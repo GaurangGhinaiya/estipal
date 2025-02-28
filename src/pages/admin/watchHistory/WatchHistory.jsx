@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import PaginationComponent from "../../../components/common/PaginationComponent";
 import SearchBar from "../../../components/common/SearchBar";
 import SelectDropdown from "../../../components/common/SelectDropdown";
@@ -10,11 +10,13 @@ import AdminUserWatchHistory from "./component/AdminUserWatchHistory";
 import StaffUserWatchHistory from "./component/StaffUserWatchHistory";
 
 const WatchHistory = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [status, setStatus] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [watchActivityData, setWatchActivityData] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(null);
   const [recordsPerPage, setRecordsPerPage] = useState(20);
   const [totalRecords, setTotalRecords] = useState(0);
   const debouncedSearchTerm = useDebounce(searchQuery, 500);
@@ -24,8 +26,15 @@ const WatchHistory = () => {
   const sellerId = searchParams.get("seller_id");
   const estimatorId = searchParams.get("estimator_id");
 
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const page = queryParams.get("page") || 1;
+    setCurrentPage(Number(page));
+  }, [location.search]);
+
   const handlePageChange = (page) => {
     setCurrentPage(page);
+    navigate(`?page=${page}`);
   };
 
   const getWatchActivityList = async () => {
@@ -58,7 +67,9 @@ const WatchHistory = () => {
   };
 
   useEffect(() => {
-    getWatchActivityList();
+    if (currentPage) {
+      getWatchActivityList();
+    }
   }, [currentPage, debouncedSearchTerm, status]);
 
   return (
@@ -74,6 +85,7 @@ const WatchHistory = () => {
             status={status}
             setStatus={setStatus}
             options={statusOptions}
+            setCurrentPage={setCurrentPage}
           />
 
           <SearchBar

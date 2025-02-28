@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import PaginationComponent from "../../../components/common/PaginationComponent";
 import SearchBar from "../../../components/common/SearchBar";
 import SelectDropdown from "../../../components/common/SelectDropdown";
@@ -29,13 +29,14 @@ export const statusOptions = [
 
 const ActivitiesTable = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [status, setStatus] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [sortField, setSortField] = useState(null);
   const [sortOrder, setSortOrder] = useState("asc");
   const [activitesData, setActivitiesData] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [recordsPerPage, setRecordsPerPage] = useState(20);
+  const [currentPage, setCurrentPage] = useState(null);
+  const [recordsPerPage, setRecordsPerPage] = useState(10);
   const [totalRecords, setTotalRecords] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const debouncedSearchTerm = useDebounce(searchQuery, 500);
@@ -80,12 +81,21 @@ const ActivitiesTable = () => {
   };
 
   useEffect(() => {
-    getActivityData();
-  }, [currentPage, sortOrder, debouncedSearchTerm, status]);
+    const queryParams = new URLSearchParams(location.search);
+    const page = queryParams.get("page") || 1;
+    setCurrentPage(Number(page));
+  }, [location.search]);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
+    navigate(`?page=${page}`);
   };
+
+  useEffect(() => {
+    if (currentPage) {
+      getActivityData();
+    }
+  }, [currentPage, sortOrder, debouncedSearchTerm, status]);
 
   const getImageSrc = (activity) => {
     if (

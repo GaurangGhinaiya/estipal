@@ -18,6 +18,11 @@ const AdminTable = ({
   navigate,
   getImageSrc,
 }) => {
+  const handleRowClick = (watchId) => {
+    navigate(`/admin/home/readActivity/${watchId}`);
+    window.scrollTo(0, 0);
+  };
+
   return (
     <table className="table-auto w-full text-left">
       <thead style={{ borderBottom: "2px solid #111111" }}>
@@ -74,9 +79,7 @@ const AdminTable = ({
             <tr
               key={index}
               className="border-b border-[#202b34]"
-              onClick={() =>
-                navigate(`/admin/home/readActivity/${activity?.watch_id}`)
-              }
+              onClick={() => handleRowClick(activity?.watch_id)}
             >
               <td className="px-[18px] py-[0px] text-[#ffff] text-center">
                 <div className="w-[35px]">
