@@ -1,18 +1,13 @@
-import GradeIcon from "@mui/icons-material/Grade";
-import StarOutlineIcon from "@mui/icons-material/StarOutline";
-import Checkbox from "@mui/material/Checkbox";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import PaginationComponent from "../../../components/common/PaginationComponent";
 import SearchBar from "../../../components/common/SearchBar";
 import SelectDropdown from "../../../components/common/SelectDropdown";
-import { CircularProgress, Tooltip } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import ArrowDropUpRoundedIcon from "@mui/icons-material/ArrowDropUpRounded";
-import ArrowDropDownRoundedIcon from "@mui/icons-material/ArrowDropDownRounded";
 import { sortData } from "../../../components/common/Sort";
-import axiosInstance from "../../../services/index";
-import moment from "moment/moment";
 import useDebounce from "../../../components/common/UseDebounce";
+import axiosInstance from "../../../services/index";
+import AdminTable from "./AdminTable";
+import StaffTable from "./StaffTable";
 
 export const statusOptions = [
   "All",
@@ -32,8 +27,6 @@ export const statusOptions = [
   "Completed",
 ];
 
-const label = { inputProps: { "aria-label": "Checkbox demo" } };
-
 const ActivitiesTable = () => {
   const navigate = useNavigate();
   const [status, setStatus] = useState("");
@@ -47,6 +40,7 @@ const ActivitiesTable = () => {
   const [isLoading, setIsLoading] = useState(false);
   const debouncedSearchTerm = useDebounce(searchQuery, 500);
   const staffUser = JSON.parse(localStorage.getItem("staffUser"));
+  console.log("staffUser: ", staffUser);
 
   const handleSort = (key) => {
     const newOrder = sortField === key && sortOrder === "asc" ? "desc" : "asc";
@@ -130,375 +124,25 @@ const ActivitiesTable = () => {
 
       <div className="w-[95.5%] overflow-auto mx-auto pt-[10px]">
         {staffUser ? (
-          <table className="table-auto w-full text-left">
-            <thead style={{ borderBottom: "2px solid #111111" }}>
-              <tr>
-                {[
-                  {
-                    key: "checkbox",
-                    label: (
-                      <StarOutlineIcon
-                        sx={{ color: "#9b9b9b", fontSize: "21px" }}
-                      />
-                    ),
-                    render: () => (
-                      <Checkbox
-                        icon={
-                          <StarOutlineIcon
-                            sx={{ color: "#9b9b9b", fontSize: "21px" }}
-                          />
-                        }
-                        checkedIcon={
-                          <GradeIcon
-                            sx={{ color: "#ff9300", fontSize: "21px" }}
-                          />
-                        }
-                      />
-                    ),
-                  },
-                  { key: "from", label: "From", isSortable: true },
-                  { key: "message", label: "Message", isSortable: false },
-                  { key: "watchId", label: "Watch Id", isSortable: true },
-                  { key: "status", label: "Status", isSortable: true },
-                  { key: "received", label: "Received", isSortable: true },
-                ].map((column) => (
-                  <th
-                    key={column.key}
-                    onClick={
-                      column.isSortable
-                        ? () => handleSort(column.key)
-                        : undefined
-                    }
-                    className={`p-2 dark:text-[#ffff] text-black text-center cursor-pointer ${
-                      column.isSortable && sortField === column.key
-                        ? "active-sorting"
-                        : ""
-                    }`}
-                  >
-                    {column.label}{" "}
-                    {column.isSortable &&
-                      sortField === column.key &&
-                      (sortOrder === "asc" ? (
-                        <ArrowDropUpRoundedIcon />
-                      ) : (
-                        <ArrowDropDownRoundedIcon />
-                      ))}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {isLoading && activitesData?.length === 0 ? (
-                <tr>
-                  <td colSpan={12} className="py-[200px] px-4 text-center">
-                    <CircularProgress />
-                  </td>
-                </tr>
-              ) : activitesData?.length > 0 ? (
-                activitesData?.map((activity, index) => (
-                  <tr
-                    key={index}
-                    className="border-b border-[#202b34]"
-                    onClick={() =>
-                      navigate(`/admin/home/readActivity/${activity?.id}`)
-                    }
-                  >
-                    <td className="px-[18px] py-[0px] text-[#ffff] text-center">
-                      <div className="w-[35px]">
-                        {getImageSrc(activity) && (
-                          <a
-                            href={`/admin/home/readActivity/${activity?.id}/${activity?.watch_id}`}
-                            role="button"
-                          >
-                            <img
-                              alt="img"
-                              src={getImageSrc(activity)}
-                              width="35px"
-                            />
-                          </a>
-                        )}
-                      </div>
-                    </td>
-                    <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center">
-                      {" "}
-                      <Checkbox
-                        {...label}
-                        icon={
-                          <StarOutlineIcon
-                            sx={{ color: "#494a4b", fontSize: "21px" }}
-                          />
-                        }
-                        checkedIcon={
-                          <GradeIcon
-                            sx={{ color: "#ff9300", fontSize: "21px" }}
-                          />
-                        }
-                      />
-                    </td>
-
-                    <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black cursor-pointer">
-                      <Tooltip
-                        title={activity.from ? activity.from : "-"}
-                        placement="top"
-                        arrow
-                      >
-                        <div className="w-[77px] text-center">
-                          {activity.from ? activity.from : "-"}
-                        </div>
-                      </Tooltip>
-                    </td>
-
-                    <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap cursor-pointer">
-                      <Tooltip
-                        title="Rolex Daytona Stainless Steel - Bracelet - Serial: 43141331 - Year: 2019 - Last requested/quoted price: USD "
-                        placement="top"
-                        arrow
-                      >
-                        {activity.message}{" "}
-                        {activity?.watch_details?.brand && "( "}
-                        {activity?.watch_details?.brand}{" "}
-                        {activity?.watch_details?.model_no}{" "}
-                        {activity?.watch_details?.model_no && "Serial -"}{" "}
-                        {activity?.watch_details?.serial_no}
-                        {activity?.watch_details?.model_no && "- Year :"}{" "}
-                        {activity?.watch_details?.year_of_production}{" "}
-                        {activity?.watch_details?.model_no &&
-                          "- Last requested/quoted price: USD"}{" "}
-                        {activity?.watch_details?.price}
-                        {activity?.watch_details?.brand && ")"}
-                      </Tooltip>
-                    </td>
-                    <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center">
-                      {activity?.watch_id}
-                    </td>
-                    <td className="px-[18px] py-[10px] dark:text-[#ffffff] text-black text-center whitespace-nowrap">
-                      {activity?.watch_status}
-                    </td>
-                    <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap">
-                      {`${
-                        activity.created_on
-                          ? moment
-                              .unix(activity.created_on)
-                              .format("MMMM D, YYYY h:mm A")
-                          : "-"
-                      }`}
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td
-                    colSpan={12}
-                    className="py-[200px] px-4  text-center text-nowrap dark:text-[#ffff] text-black font-bold"
-                  >
-                    No Data Found
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+          <StaffTable
+            activitesData={activitesData}
+            isLoading={isLoading}
+            handleSort={handleSort}
+            sortField={sortField}
+            sortOrder={sortOrder}
+            navigate={navigate}
+            getImageSrc={getImageSrc}
+          />
         ) : (
-          <table className="table-auto w-full text-left">
-            <thead style={{ borderBottom: "2px solid #111111" }}>
-              <tr>
-                {[
-                  { key: "", label: "" },
-                  {
-                    key: "checkbox",
-                    label: (
-                      <StarOutlineIcon
-                        sx={{ color: "#9b9b9b", fontSize: "21px" }}
-                      />
-                    ),
-                    render: () => (
-                      <Checkbox
-                        icon={
-                          <StarOutlineIcon
-                            sx={{ color: "#9b9b9b", fontSize: "21px" }}
-                          />
-                        }
-                        checkedIcon={
-                          <GradeIcon
-                            sx={{ color: "#ff9300", fontSize: "21px" }}
-                          />
-                        }
-                      />
-                    ),
-                  },
-                  { key: "who", label: "Who", isSortable: true },
-                  { key: "from", label: "From", isSortable: true },
-                  { key: "user1_id", label: "ID", isSortable: true },
-                  { key: "message", label: "Message", isSortable: false },
-                  { key: "watchId", label: "Watch Id", isSortable: true },
-                  { key: "status", label: "Status", isSortable: true },
-                  { key: "received", label: "Received", isSortable: true },
-                ].map((column) => (
-                  <th
-                    key={column.key}
-                    onClick={
-                      column.isSortable
-                        ? () => handleSort(column.key)
-                        : undefined
-                    }
-                    className={`p-2 dark:text-[#ffff] text-nowrap text-black text-center ${
-                      column.isSortable ? "cursor-pointer" : ""
-                    } ${
-                      column.isSortable && sortField === column.key
-                        ? "active-sorting"
-                        : ""
-                    } ${
-                      column.isSortable && sortField !== column.key
-                        ? "pr-5 sorting"
-                        : ""
-                    }`}
-                  >
-                    {column.label}{" "}
-                    {column.isSortable &&
-                      sortField === column.key &&
-                      (sortOrder === "asc" ? (
-                        <ArrowDropUpRoundedIcon />
-                      ) : (
-                        <ArrowDropDownRoundedIcon />
-                      ))}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {isLoading && activitesData?.length === 0 ? (
-                <tr>
-                  <td colSpan={12} className="py-[200px] px-4  text-center">
-                    <CircularProgress />
-                  </td>
-                </tr>
-              ) : activitesData?.length > 0 ? (
-                activitesData?.map((activity, index) => (
-                  <tr
-                    key={index}
-                    className="border-b border-[#202b34]"
-                    onClick={() =>
-                      navigate(`/admin/home/readActivity/${activity?.id}`)
-                    }
-                  >
-                    <td className="px-[18px] py-[0px] text-[#ffff] text-center">
-                      <div className="w-[35px]">
-                        {getImageSrc(activity) && (
-                          <a
-                            href={`/admin/home/readActivity/${activity?.id}/${activity?.watch_id}`}
-                            role="button"
-                          >
-                            <img
-                              alt="img"
-                              src={getImageSrc(activity)}
-                              width="35px"
-                            />
-                          </a>
-                        )}
-                      </div>
-                    </td>
-                    <td className="px-[18px] py-[10px] text-[#ffff] text-center">
-                      {" "}
-                      <Checkbox
-                        {...label}
-                        checked={activity?.star_selected_flag_admin}
-                        icon={
-                          <StarOutlineIcon
-                            sx={{ color: "#494a4b", fontSize: "21px" }}
-                          />
-                        }
-                        checkedIcon={
-                          <GradeIcon
-                            sx={{ color: "#ff9300", fontSize: "21px" }}
-                          />
-                        }
-                      />
-                    </td>
-                    <td className="px-[18px] py-[10px] text-[#ffff] text-center">
-                      {activity?.admin_group === "staff"
-                        ? "(U)"
-                        : activity?.admin_group === "estimator"
-                        ? "(E)"
-                        : activity?.admin_group === "seller"
-                        ? "(S)"
-                        : "(Admin)"}
-                    </td>
-                    <td className="px-[18px] py-[10px] text-[#ffff] cursor-pointer">
-                      <Tooltip
-                        title={activity?.from_name ? activity?.from_name : "-"}
-                        placement="top"
-                        arrow
-                      >
-                        <div className="w-[77px] text-center">
-                          {activity?.from_name ? activity?.from_name : "-"}
-                        </div>
-                      </Tooltip>
-                    </td>
-                    <td className="px-[18px] py-[10px] text-[#ffff] text-center">
-                      {activity?.user1_id && `UCA${activity?.user1_id}`}
-                    </td>
-                    <td className="px-[18px] py-[10px] text-[#ffff] whitespace-nowrap cursor-pointer">
-                      <Tooltip
-                        title={`${activity?.watch_details?.brand && "( "}
-                       ${activity?.watch_details?.brand}
-                       ${activity?.watch_details?.collection}
-                       ${activity?.watch_details?.model_no}
-                       ${activity?.watch_details?.model_no && "Serial -"}
-                       ${activity?.watch_details?.serial_no}
-                       ${activity?.watch_details?.model_no && "- Year :"}
-                       ${activity?.watch_details?.year_of_production}
-                       ${
-                         activity?.watch_details?.model_no &&
-                         "- Last requested/quoted price: USD"
-                       }
-                       ${activity?.watch_details?.admin_converted_price}
-                       ${activity?.watch_details?.brand && ")"}`}
-                        placement="top"
-                        arrow
-                      >
-                        {activity.message}{" "}
-                        {activity?.watch_details?.brand && "( "}
-                        {activity?.watch_details?.brand}{" "}
-                        {activity?.watch_details?.collection}{" "}
-                        {activity?.watch_details?.model_no}{" "}
-                        {activity?.watch_details?.model_no && "Serial -"}{" "}
-                        {activity?.watch_details?.serial_no}
-                        {activity?.watch_details?.model_no && "- Year :"}{" "}
-                        {activity?.watch_details?.year_of_production}{" "}
-                        {activity?.watch_details?.model_no &&
-                          "- Last requested/quoted price: USD"}{" "}
-                        {activity?.watch_details?.admin_converted_price}
-                        {activity?.watch_details?.brand && ")"}
-                      </Tooltip>
-                    </td>
-                    <td className="px-[18px] py-[10px] text-[#ffff] text-center">
-                      W{activity?.watch_id}
-                    </td>
-                    <td className="px-[18px] py-[10px] text-[#ffff] text-center whitespace-nowrap">
-                      {activity?.watch_status}
-                    </td>
-                    <td className="px-[18px] py-[10px] text-[#ffff] text-center whitespace-nowrap">
-                      {`${
-                        activity.created_on
-                          ? moment
-                              .unix(activity.created_on)
-                              .format("DD-MM-YYYY")
-                          : "-"
-                      }  `}
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td
-                    colSpan={12}
-                    className="py-[200px] px-4  text-center text-nowrap text-white font-bold"
-                  >
-                    No Data Found
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+          <AdminTable
+            activitesData={activitesData}
+            isLoading={isLoading}
+            handleSort={handleSort}
+            sortField={sortField}
+            sortOrder={sortOrder}
+            navigate={navigate}
+            getImageSrc={getImageSrc}
+          />
         )}
       </div>
       <PaginationComponent

@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, Skeleton } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axiosInstance from "../../../services";
@@ -10,16 +10,19 @@ const ReadActivity = () => {
   const params = useParams();
   const { id } = params;
   const [readActivityData, setReadActivityData] = useState();
+  const [isLoading, setIsLoading] = useState(true);
   const staffUser = JSON.parse(localStorage.getItem("staffUser"));
 
   const getDetailById = async () => {
     try {
       const response = await axiosInstance.get(
-        `/adminActivity/detail?id=${id}`
+        `/adminActivity/detail?watch_id=${id}`
       );
       setReadActivityData(response?.payload?.data);
     } catch (error) {
       console.log("error", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -65,102 +68,145 @@ const ReadActivity = () => {
   return (
     <div className="mx-auto px-[20px] sm:px-[45px] py-[20px]">
       <div className="flex justify-between items-center mb-[30px] flex-wrap gap-5">
-        <h3 className="dark:text-white text-black text-[21px]">
-          Message History - ID W{readActivityData?.watch_id} :{" "}
-          {readActivityData?.watch_details?.brand},{" "}
-          {readActivityData?.watch_details?.collection},{" "}
-          {readActivityData?.watch_details?.model_no} (
-          {readActivityData?.watch_details?.model_desc})
-        </h3>
+        {isLoading ? (
+          <Skeleton variant="text" width={300} height={40} />
+        ) : (
+          <h3 className="dark:text-white text-black text-[21px]">
+            Message History - ID W{readActivityData?.watch_id} :{" "}
+            {readActivityData?.watch_details?.brand},{" "}
+            {readActivityData?.watch_details?.collection},{" "}
+            {readActivityData?.watch_details?.model_no} (
+            {readActivityData?.watch_details?.model_desc})
+          </h3>
+        )}
 
-        <Button
-          variant="contained"
-          className="!bg-[#1760a9] !normal-case !py-[10px] !px-[40px] !rounded-[50px]"
-          onClick={() =>
-            navigate(
-              `/admin/watch_details/watch_status/${readActivityData?.watch_id}`
-            )
-          }
-        >
-          View Watch Details
-        </Button>
+        {isLoading ? (
+          <Skeleton variant="rectangular" width={200} height={40} />
+        ) : (
+          <Button
+            variant="contained"
+            className="!bg-[#1760a9] !normal-case !py-[10px] !px-[40px] !rounded-[50px]"
+            onClick={() =>
+              navigate(
+                `/admin/watch_details/watch_status/${readActivityData?.watch_id}`
+              )
+            }
+          >
+            View Watch Details
+          </Button>
+        )}
       </div>
       <div className="flex flex-col md:flex-row items-center md:items-start">
         <div className="flex-[1] mb-4 md:mb-0">
-          <img
-            alt="img"
-            className="max-w-[350px] w-full object-cover mx-auto rounded-[8px]"
-            style={{ border: "5px solid #1e252b" }}
-            src={getImageSrc(
-              readActivityData?.adminActivities?.[0]?.watch_pic,
-              readActivityData?.type
-            )}
-          />
+          {isLoading ? (
+            <Skeleton variant="rectangular" width={350} height={350} />
+          ) : (
+            <img
+              alt="img"
+              className="max-w-[350px] w-full object-cover mx-auto rounded-[8px]"
+              style={{ border: "5px solid #1e252b" }}
+              src={getImageSrc(
+                readActivityData?.adminActivities?.[0]?.watch_pic,
+                readActivityData?.type
+              )}
+            />
+          )}
         </div>
         <div className="md:ml-8 w-full flex-[2]">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
-              <p className="dark:text-white text-black">ID</p>
-              <p className="dark:text-white text-black">
-                W{readActivityData?.watch_id}
-              </p>
-            </div>
-            <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
-              <p className="dark:text-white text-black">Brand</p>
-              <p className="dark:text-white text-black">
-                {readActivityData?.watch_details?.brand}
-              </p>
-            </div>
-            <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
-              <p className="dark:text-white text-black">Collection</p>
-              <p className="dark:text-white text-black">
-                {readActivityData?.watch_details?.collection}
-              </p>
-            </div>
-            <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between gap-[20px] border border-gray-300 dark:border-none">
-              <p className="dark:text-white text-black">Model</p>
-              <p className="dark:text-white text-black whitespace-nowrap overflow-x-auto hide-scrollbar">
-                {readActivityData?.watch_details?.model_no} (
-                {readActivityData?.watch_details?.model_desc})
-              </p>
-            </div>
-            <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
-              <p className="dark:text-white text-black">Serial Number</p>
-              <p className="dark:text-white text-black">
-                {readActivityData?.watch_details?.serial_no}
-              </p>
-            </div>
-            <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
-              <p className="dark:text-white text-black">Estimate</p>
-              <p className="text-[#11c71e] font-bold">
-                USD{" "}
-                {formattedNumber.format(
-                  readActivityData?.watch_details?.accepted_price
-                )}
-              </p>
-            </div>
-            <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
-              <p className="dark:text-white text-black">
-                Estimator suggested wholesale price
-              </p>
-              <p className="dark:text-white text-black">
-                {readActivityData?.assignWatchDetails?.[0]?.suggest_retail_price
-                  ? `${readActivityData?.adminUserDetail?.currency} ${Number(
-                      readActivityData?.assignWatchDetails?.[0]
-                        ?.suggest_retail_price
-                    ).toFixed(2)}`
-                  : "0.00"}
-              </p>
-            </div>
+            {isLoading ? (
+              <>
+                <Skeleton variant="rectangular" width="100%" height={60} />
+                <Skeleton variant="rectangular" width="100%" height={60} />
+                <Skeleton variant="rectangular" width="100%" height={60} />
+                <Skeleton variant="rectangular" width="100%" height={60} />
+                <Skeleton variant="rectangular" width="100%" height={60} />
+                <Skeleton variant="rectangular" width="100%" height={60} />
+                <Skeleton variant="rectangular" width="100%" height={60} />
+              </>
+            ) : (
+              <>
+                <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
+                  <p className="dark:text-white text-black">ID</p>
+                  <p className="dark:text-white text-black">
+                    W{readActivityData?.watch_id}
+                  </p>
+                </div>
+                <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
+                  <p className="dark:text-white text-black">Brand</p>
+                  <p className="dark:text-white text-black">
+                    {readActivityData?.watch_details?.brand}
+                  </p>
+                </div>
+                <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
+                  <p className="dark:text-white text-black">Collection</p>
+                  <p className="dark:text-white text-black">
+                    {readActivityData?.watch_details?.collection}
+                  </p>
+                </div>
+                <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between gap-[20px] border border-gray-300 dark:border-none">
+                  <p className="dark:text-white text-black">Model</p>
+                  <p className="dark:text-white text-black whitespace-nowrap overflow-x-auto hide-scrollbar">
+                    {readActivityData?.watch_details?.model_no} (
+                    {readActivityData?.watch_details?.model_desc})
+                  </p>
+                </div>
+                <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
+                  <p className="dark:text-white text-black">Serial Number</p>
+                  <p className="dark:text-white text-black">
+                    {readActivityData?.watch_details?.serial_no}
+                  </p>
+                </div>
+                <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
+                  <p className="dark:text-white text-black">Estimate</p>
+                  <p className="text-[#11c71e] font-bold">
+                    USD{" "}
+                    {formattedNumber.format(
+                      readActivityData?.watch_details?.accepted_price
+                    )}
+                  </p>
+                </div>
+                <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
+                  <p className="dark:text-white text-black">
+                    Estimator suggested wholesale price
+                  </p>
+                  <p className="dark:text-white text-black">
+                    {readActivityData?.assignWatchDetails?.[0]
+                      ?.suggest_retail_price
+                      ? `${
+                          readActivityData?.adminUserDetail?.currency
+                        } ${Number(
+                          readActivityData?.assignWatchDetails?.[0]
+                            ?.suggest_retail_price
+                        ).toFixed(2)}`
+                      : "0.00"}
+                  </p>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>
 
-      {[...(readActivityData?.adminActivities || [])]
-        .reverse()
-        ?.map((item, index) => {
-          return <CardData item={item} index={index} staffUser={staffUser} />;
-        })}
+      {isLoading ? (
+        <Skeleton
+          variant="rectangular"
+          width="100%"
+          height={200}
+          sx={{ marginTop: "50px" }}
+        />
+      ) : (
+        readActivityData?.adminActivities
+          ?.reverse()
+          ?.map((item, index) => (
+            <CardData
+              key={index}
+              item={item}
+              index={index}
+              staffUser={staffUser}
+            />
+          ))
+      )}
     </div>
   );
 };
