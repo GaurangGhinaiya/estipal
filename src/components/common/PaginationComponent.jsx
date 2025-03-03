@@ -26,24 +26,23 @@ const PaginationComponent = ({
           onChange={(e, page) => handlePageChange(page)}
           variant="outlined"
           shape="rounded"
+          Name={`pagination ${staffUser ? "staff" : "non-staff"}`}
           sx={{
-            "& .css-ptck8z-MuiButtonBase-root-MuiPaginationItem-root": {
-              border: "none",
-              color: staffUser ? "#000000" : "#ffffff",
+            "& .MuiButtonBase-root": {
+              border: "none !important",
+              color: staffUser ? "#000000 !important" : "#ffffff !important",
             },
-            "& .css-ptck8z-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected":
-              {
-                backgroundColor: "#0060aa",
-                color: staffUser ? "#ffff" : "#000000",
-              },
-            "& .css-btxnvc-MuiPaginationItem-root": {
-              color: staffUser ? "#000000" : "#ffffff",
+            "& .Mui-selected": {
+              backgroundColor: "#0060aa !important",
+              color: staffUser ? "#ffff !important" : "#ffff !important",
+            },
+            "& .MuiPaginationItem-root": {
+              color: staffUser ? "#000000 !important" : "#ffffff !important",
             },
           }}
-        />
-      </div>
+        />{" "}
+      </div>{" "}
     </div>
   );
 };
-
 export default PaginationComponent;

@@ -41,7 +41,6 @@ const ActivitiesTable = () => {
   const [isLoading, setIsLoading] = useState(false);
   const debouncedSearchTerm = useDebounce(searchQuery, 500);
   const staffUser = JSON.parse(localStorage.getItem("staffUser"));
-  console.log("staffUser: ", staffUser);
 
   const handleSort = (key) => {
     const newOrder = sortField === key && sortOrder === "asc" ? "desc" : "asc";
@@ -68,7 +67,7 @@ const ActivitiesTable = () => {
       const searchValue = JSON.stringify(searchObject);
 
       const response = await axiosInstance.get(
-        `/adminActivity?page=${currentPage}&records_per_page=${recordsPerPage}&search=${searchValue}&sort_order=${sortOrder}&sort_field=${sortField}`
+        `/adminActivity?page=${currentPage}&records_per_page=${recordsPerPage}&search=${searchValue}&sort_order=${sortOrder}&sort_field=${sortField}&status=${status}`
       );
 
       setActivitiesData(response.payload.data);
@@ -83,12 +82,13 @@ const ActivitiesTable = () => {
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const page = queryParams.get("page") || 1;
+    const statusQuery = queryParams.get("status") || "All";
     setCurrentPage(Number(page));
+    setStatus(statusQuery);
   }, [location.search]);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
-    navigate(`?page=${page}`);
   };
 
   useEffect(() => {
@@ -96,6 +96,16 @@ const ActivitiesTable = () => {
       getActivityData();
     }
   }, [currentPage, sortOrder, debouncedSearchTerm, status]);
+
+  useEffect(() => {
+    if (currentPage && status) {
+      navigate(`?page=${currentPage}&status=${status}`);
+    } else if (currentPage) {
+      navigate(`?page=${currentPage}`);
+    } else if (status) {
+      navigate(`?status=${status}`);
+    }
+  }, [currentPage, status]);
 
   const getImageSrc = (activity) => {
     if (
@@ -121,6 +131,7 @@ const ActivitiesTable = () => {
             status={status}
             setStatus={setStatus}
             options={statusOptions}
+            setCurrentPage={setCurrentPage}
           />
 
           <SearchBar

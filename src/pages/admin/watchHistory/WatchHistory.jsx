@@ -29,13 +29,24 @@ const WatchHistory = () => {
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const page = queryParams.get("page") || 1;
+    const statusQuery = queryParams.get("status") || "All";
     setCurrentPage(Number(page));
+    setStatus(statusQuery);
   }, [location.search]);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
-    navigate(`?page=${page}`);
   };
+
+  useEffect(() => {
+    if (currentPage && status) {
+      navigate(`?page=${currentPage}&status=${status}`);
+    } else if (currentPage) {
+      navigate(`?page=${currentPage}`);
+    } else if (status) {
+      navigate(`?status=${status}`);
+    }
+  }, [currentPage, status]);
 
   const getWatchActivityList = async () => {
     setLoading(true);
