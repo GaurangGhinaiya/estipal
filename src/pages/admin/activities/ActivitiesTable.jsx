@@ -6,8 +6,9 @@ import SelectDropdown from "../../../components/common/SelectDropdown";
 import { sortData } from "../../../components/common/Sort";
 import useDebounce from "../../../components/common/UseDebounce";
 import axiosInstance from "../../../services/index";
-import AdminTable from "./AdminTable";
-import StaffTable from "./StaffTable";
+import AdminTable from "./components/AdminTable";
+import StaffTable from "./components/StaffTable";
+import useActivityData from "./hooks/useActivityData";
 
 export const statusOptions = [
   "All",
@@ -34,61 +35,50 @@ const ActivitiesTable = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortField, setSortField] = useState(null);
   const [sortOrder, setSortOrder] = useState("asc");
-  const [activitesData, setActivitiesData] = useState([]);
   const [currentPage, setCurrentPage] = useState(null);
   const [recordsPerPage, setRecordsPerPage] = useState(10);
-  const [totalRecords, setTotalRecords] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
+  const [sellerId, setSellerId] = useState(null);
+  const [estimatorId, setEstimatorId] = useState(null);
   const debouncedSearchTerm = useDebounce(searchQuery, 500);
   const staffUser = JSON.parse(localStorage.getItem("staffUser"));
+
+  const { activitesData, totalRecords, isLoading, getActivityData } =
+    useActivityData({
+      currentPage,
+      recordsPerPage,
+      debouncedSearchTerm,
+      sortOrder,
+      sortField,
+      status,
+    });
 
   const handleSort = (key) => {
     const newOrder = sortField === key && sortOrder === "asc" ? "desc" : "asc";
     setSortField(key);
     setSortOrder(newOrder);
-
-    // Sort data and update state
-    const sortedData = sortData(activitesData, key, newOrder);
-    setActivitiesData(sortedData);
-  };
-
-  const getActivityData = async () => {
-    try {
-      setIsLoading(true);
-
-      const searchObject = {
-        search: debouncedSearchTerm || "",
-      };
-
-      if (status && status !== "All") {
-        searchObject.watch_status = status;
-      }
-
-      const searchValue = JSON.stringify(searchObject);
-
-      const response = await axiosInstance.get(
-        `/adminActivity?page=${currentPage}&records_per_page=${recordsPerPage}&search=${searchValue}&sort_order=${sortOrder}&sort_field=${sortField}&status=${status}`
-      );
-
-      setActivitiesData(response.payload.data);
-      setTotalRecords(response?.pager?.total_records);
-    } catch (error) {
-      console.log("error", error);
-    } finally {
-      setIsLoading(false);
-    }
+    // const sortedData = sortData(activitesData, key, newOrder);
+    // setActivitiesData(sortedData);
   };
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const page = queryParams.get("page") || 1;
     const statusQuery = queryParams.get("status") || "All";
+    const seller = queryParams.get("seller_id") || null;
+    const estimator = queryParams.get("estimator_id") || null;
+    setEstimatorId(estimator);
+    setSellerId(seller);
     setCurrentPage(Number(page));
     setStatus(statusQuery);
   }, [location.search]);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
+    let url = `?page=${page}`;
+    if (status !== "All") {
+      url += `&status=${status}`;
+    }
+    navigate(url);
   };
 
   useEffect(() => {
@@ -96,16 +86,6 @@ const ActivitiesTable = () => {
       getActivityData();
     }
   }, [currentPage, sortOrder, debouncedSearchTerm, status]);
-
-  useEffect(() => {
-    if (currentPage && status) {
-      navigate(`?page=${currentPage}&status=${status}`);
-    } else if (currentPage) {
-      navigate(`?page=${currentPage}`);
-    } else if (status) {
-      navigate(`?status=${status}`);
-    }
-  }, [currentPage, status]);
 
   const getImageSrc = (activity) => {
     if (
@@ -124,7 +104,6 @@ const ActivitiesTable = () => {
         <h1 className="text-[30px] font-medium mb-4 px-0 sm:px-[15px] font-sans dark:text-white text-black">
           Activities
         </h1>
-
         <div className="flex justify-between items-center mb-4 gap-4 sm:gap-8 flex-wrap ">
           <SelectDropdown
             title="Filter by Status :"
@@ -132,8 +111,8 @@ const ActivitiesTable = () => {
             setStatus={setStatus}
             options={statusOptions}
             setCurrentPage={setCurrentPage}
+            page={currentPage}
           />
-
           <SearchBar
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
@@ -142,7 +121,6 @@ const ActivitiesTable = () => {
           />
         </div>
       </div>
-
       <div className="w-[95.5%] overflow-auto mx-auto pt-[10px]">
         {staffUser ? (
           <StaffTable

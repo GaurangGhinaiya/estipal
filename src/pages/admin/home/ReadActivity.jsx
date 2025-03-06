@@ -61,6 +61,44 @@ const ReadActivity = () => {
     }
   };
 
+  const getPrice = (watchDetails, currencyUnit) => {
+    if (watchDetails?.accepted_price) {
+      return `${currencyUnit} ${formattedNumber.format(
+        watchDetails?.accepted_price
+      )}`;
+    } else if (watchDetails?.estimated_price_admin) {
+      return `${currencyUnit} ${formattedNumber.format(
+        watchDetails?.estimated_price_admin
+      )}`;
+    } else if (watchDetails?.admin_counter_offer_price) {
+      return `${currencyUnit} ${formattedNumber.format(
+        watchDetails?.admin_counter_offer_price
+      )}`;
+    } else if (watchDetails?.seller_view_request_price) {
+      return `${currencyUnit} ${formattedNumber.format(
+        watchDetails?.seller_view_request_price
+      )}`;
+    } else if (watchDetails?.request_price) {
+      return `${currencyUnit} ${formattedNumber.format(
+        watchDetails?.request_price
+      )}`;
+    } else if (watchDetails?.seller_display_price) {
+      return `${currencyUnit} ${formattedNumber.format(
+        watchDetails?.seller_display_price
+      )}`;
+    } else if (watchDetails?.seller_request_price) {
+      return `${currencyUnit} ${formattedNumber.format(
+        watchDetails?.seller_request_price
+      )}`;
+    } else if (watchDetails?.admin_converted_price) {
+      return `${currencyUnit} ${formattedNumber.format(
+        watchDetails?.admin_converted_price
+      )}`;
+    } else {
+      return "N/A";
+    }
+  };
+
   useEffect(() => {
     getDetailById();
   }, []);
@@ -147,8 +185,9 @@ const ReadActivity = () => {
                 <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between gap-[20px] border border-gray-300 dark:border-none">
                   <p className="dark:text-white text-black">Model</p>
                   <p className="dark:text-white text-black whitespace-nowrap overflow-x-auto hide-scrollbar">
-                    {readActivityData?.watch_details?.model_no} (
-                    {readActivityData?.watch_details?.model_desc})
+                    {readActivityData?.watch_details?.model_no}{" "}
+                    {readActivityData?.watch_details?.model_desc &&
+                      `(${readActivityData?.watch_details?.model_desc})`}
                   </p>
                 </div>
                 <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
@@ -160,9 +199,9 @@ const ReadActivity = () => {
                 <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
                   <p className="dark:text-white text-black">Estimate</p>
                   <p className="text-[#11c71e] font-bold">
-                    USD{" "}
-                    {formattedNumber.format(
-                      readActivityData?.watch_details?.accepted_price
+                    {getPrice(
+                      readActivityData?.watch_details,
+                      readActivityData?.currency
                     )}
                   </p>
                 </div>
@@ -173,9 +212,7 @@ const ReadActivity = () => {
                   <p className="dark:text-white text-black">
                     {readActivityData?.assignWatchDetails?.[0]
                       ?.suggest_retail_price
-                      ? `${
-                          readActivityData?.adminUserDetail?.currency
-                        } ${Number(
+                      ? `${readActivityData?.currency} ${Number(
                           readActivityData?.assignWatchDetails?.[0]
                             ?.suggest_retail_price
                         ).toFixed(2)}`
@@ -204,6 +241,8 @@ const ReadActivity = () => {
               item={item}
               index={index}
               staffUser={staffUser}
+              adminActivitiesData={readActivityData?.adminActivities}
+              currency={readActivityData?.currency}
             />
           ))
       )}

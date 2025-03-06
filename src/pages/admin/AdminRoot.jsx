@@ -1,24 +1,24 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import Admin from "./Admin";
-import WatchHistory from "./watchHistory/WatchHistory";
-import StaffUser from "./staff/StaffUser";
-import ReadActivity from "./home/ReadActivity";
-import WatchStatus from "./watchDetail/WatchStatus";
-import Settings from "./generalSetting/Setting";
+import SellerRevenueAnalysis from "../staff/revenue_analysis/revenue_analysis_seller/SellerRevenueAnalysis";
+import BrandList from "./brandList/BrandList";
 import Estimators from "./estimators/Estimators";
-import AdminRevanueAnalysis from "./revenue_analysis/revenue_analysis_admin/AdminRevanueAnalysis";
-import EstimatorRevanueAnalysis from "./revenue_analysis/revenue_analysis_estimator/EstimatorRevanueAnalysis";
+import Settings from "./generalSetting/Setting";
+import ReadActivity from "./home/ReadActivity";
+import Language from "./language/Language";
 import AdminPerformanceAnalysis from "./performance_analysis/performance_analysis_admin/AdminPerformanceAnalysis";
 import EstimatorPerformanceAnalysis from "./performance_analysis/performance_analysis_estimator/EstimatorPerformanceAnalysis";
+import AdminRevanueAnalysis from "./revenue_analysis/revenue_analysis_admin/AdminRevanueAnalysis";
+import EstimatorRevanueAnalysis from "./revenue_analysis/revenue_analysis_estimator/EstimatorRevanueAnalysis";
 import SellerEdit from "./seller/SellerEdit";
-import BrandList from "./brandList/BrandList";
-import Language from "./language/Language";
 import SellerUserCreate from "./seller/SellerUserCreate";
-import SellerRevenueAnalysis from "../staff/revenue_analysis/revenue_analysis_seller/SellerRevenueAnalysis";
+import StaffUser from "./staff/StaffUser";
+import WatchStatus from "./watchDetail/WatchStatus";
+import WatchHistory from "./watchHistory/WatchHistory";
 // import SellerPerformanceAnalysis from "../staff/performance_analysis/performance_analysis_seller/SellerPerformanceAnalysis";
 import AccountProfile from "../staff/account_profile/AccountProfile";
 import ManageStaff from "../staff/manage_staff/ManageStaff";
+import ActivitiesTable from "./activities/ActivitiesTable";
 import EstimatorEdit from "./estimators/EstimatorEdit";
 import SellerPerformanceAnalysis from "./performance_analysis/performance_analysis_seller/SellerPerformanceAnalysis";
 
@@ -28,7 +28,7 @@ const AdminRoot = () => {
   return (
     <div>
       <Routes>
-        <Route path="/" element={<Admin />} />
+        <Route path="/" element={<ActivitiesTable />} />
         <Route path="/watch_details/watch_history" element={<WatchHistory />} />
         <Route
           path="/staff/staff_user"

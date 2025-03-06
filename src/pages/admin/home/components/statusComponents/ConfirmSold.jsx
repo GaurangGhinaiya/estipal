@@ -24,12 +24,14 @@ const ConfirmSold = (props) => {
               name={props?.item?.watch_details?.watch_id}
               value={props?.item?.user1_id}
               className={
-                props?.item?.paid_estimator === 1 ? "inactiveLink" : ""
+                props?.item?.assignWatchDetails[0]?.paid === 1
+                  ? "inactiveLink"
+                  : ""
               }
             >
               <a
                 className={`btn ${
-                  props?.item?.paid_estimator === 1
+                  props?.item?.assignWatchDetails[0]?.paid === 1
                     ? "dark_green"
                     : "dark_yellow"
                 }`}

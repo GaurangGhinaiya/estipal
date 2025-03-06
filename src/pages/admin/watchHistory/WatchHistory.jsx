@@ -5,7 +5,7 @@ import SearchBar from "../../../components/common/SearchBar";
 import SelectDropdown from "../../../components/common/SelectDropdown";
 import useDebounce from "../../../components/common/UseDebounce";
 import axiosInstance from "../../../services";
-import { statusOptions } from "../components/ActivitiesTable";
+import { statusOptions } from "../activities/ActivitiesTable";
 import AdminUserWatchHistory from "./component/AdminUserWatchHistory";
 import StaffUserWatchHistory from "./component/StaffUserWatchHistory";
 
@@ -19,34 +19,37 @@ const WatchHistory = () => {
   const [currentPage, setCurrentPage] = useState(null);
   const [recordsPerPage, setRecordsPerPage] = useState(20);
   const [totalRecords, setTotalRecords] = useState(0);
+  const [sellerId, setSellerId] = useState(null);
+  const [estimatorId, setEstimatorId] = useState(null);
   const debouncedSearchTerm = useDebounce(searchQuery, 500);
   const staffUser = JSON.parse(localStorage.getItem("staffUser"));
-  const [searchParams] = useSearchParams();
-  // Get a specific query parameter
-  const sellerId = searchParams.get("seller_id");
-  const estimatorId = searchParams.get("estimator_id");
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const page = queryParams.get("page") || 1;
     const statusQuery = queryParams.get("status") || "All";
+    const seller = queryParams.get("seller_id") || null;
+    const estimator = queryParams.get("estimator_id") || null;
+    setEstimatorId(estimator);
+    setSellerId(seller);
     setCurrentPage(Number(page));
     setStatus(statusQuery);
   }, [location.search]);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
-  };
-
-  useEffect(() => {
-    if (currentPage && status) {
-      navigate(`?page=${currentPage}&status=${status}`);
-    } else if (currentPage) {
-      navigate(`?page=${currentPage}`);
-    } else if (status) {
-      navigate(`?status=${status}`);
+    let url = `?page=${page}`;
+    if (status !== "All") {
+      url += `&status=${status}`;
     }
-  }, [currentPage, status]);
+    if (sellerId) {
+      url += `&seller_id=${sellerId}`;
+    }
+    if (estimatorId) {
+      url += `&estimator_id=${estimatorId}`;
+    }
+    navigate(url);
+  };
 
   const getWatchActivityList = async () => {
     setLoading(true);
@@ -63,7 +66,7 @@ const WatchHistory = () => {
 
     try {
       const response = await axiosInstance.get(
-        `/staffWatchActivities?page=${currentPage}&search=${searchValue}`
+        `/staffWatchActivities?page=${currentPage}&records_per_page=${10}&search=${searchValue}`
       );
       if (response?.status === 200) {
         setTotalRecords(response?.pager?.total_records);
@@ -90,13 +93,16 @@ const WatchHistory = () => {
           Watches History
         </h1>
 
-        <div className="flex justify-between items-center mb-4 gap-4 sm:gap-8 flex-wrap ">
+        <div className="flex justify-between items-center mb-4 gap-4 sm:gap-8 flex-wrap">
           <SelectDropdown
             title="Filter by Status :"
             status={status}
             setStatus={setStatus}
             options={statusOptions}
             setCurrentPage={setCurrentPage}
+            page={currentPage}
+            sellerId={sellerId}
+            estimatorId={estimatorId}
           />
 
           <SearchBar

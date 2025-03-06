@@ -12,7 +12,8 @@ import SellerInvoiceNew from "./statusComponents/SellerInvoiceNew";
 import EstimatorMultiQuotation from "./statusComponents/EstimatorMultiQuotation";
 
 const CardData = (props) => {
-  const { item, index, staffUser } = props;
+  const { item, index, staffUser, adminActivitiesData, currency } = props;
+  console.log("item: ", item);
   let prefix = "SCA";
   if (item?.admin_group === "estimator") {
     prefix = "ECA";
@@ -22,7 +23,7 @@ const CardData = (props) => {
 
   const formatPrice = (price) => {
     if (price && !isNaN(price)) {
-      return `${item?.adminUserDetail?.currency} ${Number(price)
+      return `${currency || ""} ${Number(price)
         .toFixed(2)
         .replace(/\d(?=(\d{3})+\.)/g, "$&,")}`;
     } else {
@@ -75,11 +76,11 @@ const CardData = (props) => {
     : "";
   const input_sold_price = item?.watch_details?.watch_sold_price || "";
 
-  const price_for_seller = item?.watch_details?.input_price_for_seller
-    ? `${
-        item?.currency_unit
-      } ${item?.watch_details?.input_price_for_seller.toFixed(2)}`
-    : accepted_price;
+  // const price_for_seller = item?.watch_details?.input_price_for_seller
+  //   ? `${
+  //       item?.currency_unit
+  //     } ${item?.watch_details?.input_price_for_seller.toFixed(2)}`
+  //   : accepted_price;
   const input_price_for_seller =
     item?.watch_details?.input_price_for_seller || accepted_price;
 
@@ -98,6 +99,8 @@ const CardData = (props) => {
       input_sold_price,
       input_price_for_seller,
       confirm_the_issuing_of_invoice_flag,
+      adminActivitiesData,
+      currency,
     };
     switch (item?.type) {
       case "accept_estimation":
@@ -184,7 +187,7 @@ const CardData = (props) => {
           <div className="message_box_inner">
             <h3>
               {"Commissions to estimator has been paid ("}
-              {item?.currency_unit} {item?.estimator_watch_revenue?.toFixed(2)})
+              {currency} {item?.estimator_watch_revenue?.toFixed(2)})
             </h3>
             <h3>Status: {item?.watch_status}</h3>
           </div>
@@ -260,7 +263,7 @@ const CardData = (props) => {
         <h3 className="mb-3 capitalize">
           <strong className="font-bold">From: </strong>
 
-          {`${item?.company_name} - ${item?.from_name} `}
+          {`${item?.company_name ?? ""} - ${item?.from_name ?? ""} `}
           <b className="font-bold">
             {`( ${item?.admin_group} - ID: ${prefix}${item?.user1_id} )`}
           </b>

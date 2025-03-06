@@ -174,13 +174,12 @@ const StaffUser = () => {
                             `/admin/watch_details/watch_history/?seller_id=${item?.admin_seller_id}`
                           );
                         }}
-                        className="cursor-pointer"
+                        className="cursor-pointer w-[30px] h-[30px]"
                       >
                         <img
                           alt="start"
                           id="star"
-                          width="30px"
-                          height="30px"
+                          className="w-[30px] h-[30px]"
                           style={{ filter: "invert(1)" }}
                           src="https://www.estipal.com/assets/dist/images/icons/Watch history 2.png"
                         />
@@ -190,14 +189,13 @@ const StaffUser = () => {
                           e.stopPropagation();
                           navigate(`/admin`);
                         }}
-                        className="cursor-pointer"
+                        className="cursor-pointer w-[30px] h-[30px]"
                       >
                         <img
                           alt="revanue"
-                          width="30px"
-                          height="30px"
                           style={{ filter: "invert(1)" }}
                           src="https://www.estipal.com/assets/dist/images/icons/Revenue.png"
+                          className="w-[30px] h-[30px]"
                         />
                       </div>
                       <div
@@ -207,12 +205,11 @@ const StaffUser = () => {
                             `/admin/analysis/performance_analysis/seller/${item?.admin_seller_id}`
                           );
                         }}
-                        className="cursor-pointer"
+                        className="cursor-pointer w-[30px] h-[30px]"
                       >
                         <img
                           alt="performance"
-                          width="30px"
-                          height="30px"
+                          className="w-[30px] h-[30px]"
                           style={{ filter: "invert(1)" }}
                           src="https://www.estipal.com/assets/dist/images/icons/performance.png"
                         />
