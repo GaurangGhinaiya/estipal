@@ -2,9 +2,16 @@ import React from "react";
 import NImage from "../../../../../assets/images/icons/n.png";
 import YImage from "../../../../../assets/images/icons/y.png";
 import moment from "moment";
+import { Button } from "@mui/material";
 
 const EstimatorRquiedValidation = (props) => {
   const watchDetails = props?.item?.watch_details;
+  const selectedEstimator = props?.item?.assignWatchDetails?.[0]?.estimator_id;
+
+  const passAllEstimator =
+    props?.item?.staffEstimatorQuotationDeniedDetails?.length > 0 &&
+    props?.item?.staffEstimatorQuotationDeniedDetails[0]?.watch_status ==
+      "Pass";
 
   return (
     <div>
@@ -74,20 +81,26 @@ const EstimatorRquiedValidation = (props) => {
             </td>
             <td style={{ textAlign: "right" }}>
               {props?.item?.watch_status !== "pass" && (
-                <a
-                  className={`btn btn-primary ${
-                    !props?.item?.pass_all_estimator &&
-                    !props?.item?.selected_estimator
-                      ? ""
-                      : "inactiveLink"
-                  }`}
-                  href={`/estimator_assignment/estimator_estimate_staff/${watchDetails?.est_id}/${watchDetails?.watch_unique_id}/${watchDetails?.estimated_price_admin}/${watchDetails?.est_pass_flag}`}
+                <Button
+                  className={`btn btn-primary  ${
+                    !passAllEstimator && !selectedEstimator
+                      ? "inactiveLink"
+                      : ""
+                  } ${
+                    selectedEstimator === watchDetails?.est_id
+                      ? "dark_green"
+                      : ""
+                  } ${
+                    !selectedEstimator && passAllEstimator ? "light_grey" : ""
+                  }
+ `}
+                  // href={`/estimator_assignment/estimator_estimate_staff/${watchDetails?.est_id}/${watchDetails?.watch_unique_id}/${watchDetails?.estimated_price_admin}/${watchDetails?.est_pass_flag}`}
                   style={{ minWidth: "130px" }}
                 >
-                  {props?.item?.selected_estimator === watchDetails?.est_id
+                  {selectedEstimator === watchDetails?.est_id
                     ? "Selected"
                     : "Select estimate"}
-                </a>
+                </Button>
               )}
             </td>
           </tr>

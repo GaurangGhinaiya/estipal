@@ -3,7 +3,7 @@ import Logout from "@mui/icons-material/Logout";
 import MenuIcon from "@mui/icons-material/Menu";
 import PersonIcon from "@mui/icons-material/Person";
 import { Box, Button } from "@mui/material";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Profile from "./components/Profile";
 import LightLogo from "../../assets/images/img-logo-bar-admin.png";
@@ -12,14 +12,39 @@ import DarkLogo from "../../assets/images/img-logo-login.png";
 const Header = () => {
   const navigate = useNavigate();
   const [openMenu, setOpenMenu] = React.useState(false);
-  const [openRevanueMenu, setOpenRevanueMenu] = React.useState(false);
+  const [openRevenueMenu, setOpenRevenueMenu] = React.useState(false);
   const [openPerformanceMenu, setOpenPerformanceMenu] = React.useState(false);
   const pathName = useLocation();
   const { pathname } = pathName;
   const staffUser = JSON.parse(localStorage.getItem("staffUser"));
 
-  const handleRevanueMenuClick = (event) => {
-    setOpenRevanueMenu(!openRevanueMenu);
+  const revenueMenuRef = useRef(null);
+  const performanceMenuRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        revenueMenuRef.current &&
+        !revenueMenuRef.current.contains(event.target)
+      ) {
+        setOpenRevenueMenu(false);
+      }
+      if (
+        performanceMenuRef.current &&
+        !performanceMenuRef.current.contains(event.target)
+      ) {
+        setOpenPerformanceMenu(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const handleRevenueMenuClick = (event) => {
+    setOpenRevenueMenu(!openRevenueMenu);
   };
   const handlePerformanceMenuClick = (event) => {
     setOpenPerformanceMenu(!openPerformanceMenu);
@@ -134,7 +159,7 @@ const Header = () => {
             </div>
           )}
           {!staffUser && (
-            <div className="relative">
+            <div className="relative" ref={revenueMenuRef}>
               <button
                 style={{
                   fontSize: "14px",
@@ -148,12 +173,12 @@ const Header = () => {
                       ? "bold"
                       : "normal",
                 }}
-                onClick={() => handleRevanueMenuClick()}
+                onClick={() => handleRevenueMenuClick()}
                 className=""
               >
                 Revenue Analysis <ArrowDropDownIcon />
               </button>
-              {openRevanueMenu && (
+              {openRevenueMenu && (
                 <div className="absolute bg-[#0060aa] border border-white mt-3 rounded-lg">
                   <button
                     className="block rounded-lg px-4 py-2 hover:bg-[#b3c1c5]"
@@ -196,7 +221,7 @@ const Header = () => {
             </div>
           )}
           {!staffUser && (
-            <div className="relative">
+            <div className="relative" ref={performanceMenuRef}>
               <button
                 style={{
                   fontSize: "14px",
@@ -398,12 +423,12 @@ const Header = () => {
                     ? "bold"
                     : "normal",
               }}
-              onClick={() => handleRevanueMenuClick()}
+              onClick={() => handleRevenueMenuClick()}
               className="px-4 text-[14px]"
             >
               Revenue Analysis <ArrowDropDownIcon />
             </button>
-            {openRevanueMenu && (
+            {openRevenueMenu && (
               <div className="absolute bg-[#0060aa] border border-white mt-3 rounded-lg z-20">
                 <a
                   href="/admin/analysis/revenue_analysis/admin"

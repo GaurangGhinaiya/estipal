@@ -118,11 +118,11 @@ const EstimatorMultiQuotation = (props) => {
                     ${
                       selectedEstimator == estId
                         ? autoSelected
-                          ? "!bg-[darkgreen] !text-[#ffff]"
-                          : "!bg-[#797c7f] !text-[#000]"
+                          ? "dark_green"
+                          : "light_grey"
                         : !passAllEstimator
-                        ? "!bg-[#797c7f] !text-[#000]"
-                        : "!bg-[darkgreen] !text-[#ffff]"
+                        ? "light_grey"
+                        : "dark_green"
                     }
                       }`}
                       // href={`/estimator_assignment/estimator_estimate_staff/${estId}/${value1?.watch_unique_id}/${value1?.estimated_watch_price}/${value1?.est_pass_flag}`}
@@ -152,11 +152,7 @@ const EstimatorMultiQuotation = (props) => {
             className={` !normal-case ${
               passAllEstimator || selectedEstimator ? "inactiveLink" : ""
             }
-                ${
-                  selectedEstimator
-                    ? "!bg-[#797c7f] !text-[#000]"
-                    : "!bg-[darkgreen] !text-[#ffff]"
-                }
+                ${selectedEstimator ? "light_grey" : "light_grey"}
             }`}
             // href={`/estimator_assignment/estimator_estimate_staff/${props?.item?.watch_details.est_details[0]?.est_id}/${props?.item?.watch_details.est_details[0]?.watch_unique_id}/0/pass`}
           >
