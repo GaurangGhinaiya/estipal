@@ -296,10 +296,9 @@ table.dataTable tbody td {
 }
 
 .light_grey {
-  background: #d3d3d3 !important;
-  border-color: #d3d3d3 !important;
-  opacity: 0.5;
-  border: 2px;
+  background: #797c7f !important;
+  border-color: #797c7f !important;
+   border: 2px;
   color: #000 !important;
   font-weight: 500;
   box-shadow: rgb(0 0 0 / 25%) 0px 14px 28px, rgb(0 0 0 / 22%) 0px 10px 10px;
