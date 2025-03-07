@@ -182,17 +182,19 @@ const Header = () => {
                 <div className="absolute bg-[#0060aa] border border-white mt-3 rounded-lg">
                   <button
                     className="block rounded-lg px-4 py-2 hover:bg-[#b3c1c5]"
-                    onClick={() =>
-                      navigate("/admin/analysis/revenue_analysis/admin")
-                    }
+                    onClick={() => {
+                      navigate("/admin/analysis/revenue_analysis/admin");
+                      setOpenRevenueMenu(false);
+                    }}
                   >
                     Merchant
                   </button>
                   <button
                     className="block rounded-lg  px-4 py-2 hover:bg-[#b3c1c5]"
-                    onClick={() =>
-                      navigate("/admin/analysis/revenue_analysis/estimator")
-                    }
+                    onClick={() => {
+                      navigate("/admin/analysis/revenue_analysis/estimator");
+                      setOpenRevenueMenu(false);
+                    }}
                   >
                     Estimator
                   </button>
@@ -244,17 +246,21 @@ const Header = () => {
                 <div className="absolute bg-[#0060aa] border border-white mt-3 rounded-lg">
                   <button
                     className="block rounded-lg px-4 py-2 hover:bg-[#b3c1c5]"
-                    onClick={() =>
-                      navigate("/admin/analysis/performance_analysis/admin")
-                    }
+                    onClick={() => {
+                      navigate("/admin/analysis/performance_analysis/admin");
+                      setOpenPerformanceMenu(false);
+                    }}
                   >
                     Merchant
                   </button>
                   <button
                     className="block rounded-lg  px-4 py-2 hover:bg-[#b3c1c5]"
-                    onClick={() =>
-                      navigate("/admin/analysis/performance_analysis/estimator")
-                    }
+                    onClick={() => {
+                      navigate(
+                        "/admin/analysis/performance_analysis/estimator"
+                      );
+                      setOpenPerformanceMenu(false);
+                    }}
                   >
                     Estimator
                   </button>
