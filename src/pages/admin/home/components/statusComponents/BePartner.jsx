@@ -1,7 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
+import { toast } from "react-hot-toast";
 import UrgentImage from "../../../../../assets/images/icons/Urgent 1.png";
+import axiosInstance from "../../../../../services";
 
 const BePartner = (props) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const handleConfirmPriceChange = async () => {
+    setIsLoading(true);
+
+    try {
+      const response = await axiosInstance.post(
+        `/adminActivity/confirmSellingPrice?watch_id=${props?.item?.watch_details?.watch_id}`,
+        {
+          confirmed_price: props?.item?.watch_details?.confirmed_price ?? 9600,
+        }
+      );
+      toast.success("Selling price confirmed successfully!");
+    } catch (error) {
+      toast.error("Failed to confirm selling price. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <>
       <h3>
@@ -16,7 +37,6 @@ const BePartner = (props) => {
           name="confirmed_price"
           id="confirmed_price"
           value={props?.input_confirmed_price}
-          // onChange={handleConfirmPriceChange}
         />{" "}
         {props?.item?.currency_unit}
       </h3>
@@ -41,14 +61,15 @@ const BePartner = (props) => {
               value={props?.item?.user1_id}
               className={props?.input_confirmed_price ? "inactiveLink" : ""}
             >
-              <a
-                href="javascript:void(0)"
+              <button
                 className={`btn ${
                   props?.input_confirmed_price ? "dark_green" : "dark_yellow"
                 }`}
+                onClick={handleConfirmPriceChange}
+                disabled={isLoading}
               >
-                Confirm selling price
-              </a>
+                {isLoading ? "Processing..." : "Confirm Selling Price"}
+              </button>
             </li>
           </ul>
         </div>

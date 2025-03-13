@@ -1,9 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import UrgentImage from "../../../../../assets/images/icons/Urgent 1.png";
+import axiosInstance from "../../../../../services";
+import { toast } from "react-hot-toast";
 
 const ConfirmShipmentEstipal = (props) => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleAction = async (isRequestSellingPrice, isReturn) => {
+    if (isLoading) return;
+
+    setIsLoading(true);
+
+    try {
+      const url = isReturn
+        ? `/sellers/confirmShipmentEstipalReturnSeller?watch_id=${props?.item?.watch_details?.watch_id}`
+        : `/sellers/confirmShipmentEstipal?watch_id=${props?.item?.watch_details?.watch_id}`;
+
+      const requestData = isReturn
+        ? { seller_id: props?.item?.user1_id }
+        : { isRequestSellingPrice, seller_id: props?.item?.user1_id };
+
+      await axiosInstance.post(url, requestData);
+
+      toast.success(
+        isReturn
+          ? "Shipment returned to seller successfully!"
+          : "Shipment confirmed successfully!"
+      );
+    } catch (error) {
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
-    <div className="message_box_inner ">
+    <div className="message_box_inner">
       {props?.item?.staffWatchActivityDetails?.payment_tier == 1 && (
         <>
           <h3>{`Shipment of the watch has been confirmed by the Seller.`}</h3>
@@ -19,21 +51,11 @@ const ConfirmShipmentEstipal = (props) => {
                   />
                 </span>
                 <span className="pending_status">Pending Action:</span>
-                <span>Select one of the below option</span>
+                <span>Select one of the below options</span>
               </p>
               <ul className="flex gap-3 flex-wrap justify-center items-center">
-                <li
-                  id="confirmAndRequestSellingPrice"
-                  name={props?.item?.watch_details?.watch_id}
-                  value={props?.item?.user1_id}
-                  className={
-                    props?.item?.staffWatchActivityDetails
-                      ?.confirm_acceptance_return_flag === 0
-                      ? ""
-                      : "inactiveLink"
-                  }
-                >
-                  <a
+                <li>
+                  <button
                     className={`btn ${
                       props?.item?.staffWatchActivityDetails
                         ?.confirm_acceptance_return_flag === 0
@@ -45,23 +67,14 @@ const ConfirmShipmentEstipal = (props) => {
                         ? "bg-[#006400] !border-none"
                         : "bg-[#d3d3d3] opacity-50 !text-black"
                     }`}
+                    onClick={() => handleAction(1, false)}
+                    disabled={isLoading}
                   >
                     Purchase Completed (Request Selling Price)
-                  </a>
+                  </button>
                 </li>
-                <li
-                  id="confirmTheAcceptance"
-                  name={props?.item?.watch_details?.watch_id}
-                  value={props?.item?.user1_id}
-                  className={
-                    props?.item?.staffWatchActivityDetails
-                      ?.confirm_acceptance_return_flag === 0
-                      ? ""
-                      : "inactiveLink"
-                  }
-                >
-                  <a
-                    href="javascript:void(0)"
+                <li>
+                  <button
                     className={`btn ${
                       props?.item?.staffWatchActivityDetails
                         ?.confirm_acceptance_return_flag === 0
@@ -73,23 +86,14 @@ const ConfirmShipmentEstipal = (props) => {
                         ? "bg-[#006400] !border-none"
                         : "bg-[#d3d3d3] opacity-50 !text-black"
                     }`}
+                    onClick={() => handleAction(1, false)}
+                    disabled={isLoading}
                   >
                     Purchase Completed
-                  </a>
+                  </button>
                 </li>
-                <li
-                  id="returnToSeller"
-                  name={props?.item?.watch_details?.watch_id}
-                  value={props?.item?.user1_id}
-                  className={
-                    props?.item?.staffWatchActivityDetails
-                      ?.confirm_acceptance_return_flag === 0
-                      ? ""
-                      : "inactiveLink"
-                  }
-                >
-                  <a
-                    href="javascript:void(0)"
+                <li>
+                  <button
                     className={`btn ${
                       props?.item?.staffWatchActivityDetails
                         ?.confirm_acceptance_return_flag === 0
@@ -99,9 +103,11 @@ const ConfirmShipmentEstipal = (props) => {
                         ? "bg-[#006400] !border-none"
                         : "bg-[#d3d3d3] opacity-50 !text-black"
                     }`}
+                    onClick={() => handleAction(0, true)}
+                    disabled={isLoading}
                   >
                     Return to Seller
-                  </a>
+                  </button>
                 </li>
               </ul>
             </div>
@@ -124,22 +130,11 @@ const ConfirmShipmentEstipal = (props) => {
                   />
                 </span>
                 <span className="pending_status">Pending Action:</span>
-                <span>Select one of the below option</span>
+                <span>Select one of the below options</span>
               </p>
               <ul className="flex gap-3 flex-wrap justify-center items-center">
-                <li
-                  id="confirmTheAcceptance"
-                  name={props?.item?.watch_details?.watch_id}
-                  value={props?.item?.user1_id}
-                  className={
-                    props?.item?.staffWatchActivityDetails
-                      ?.confirm_acceptance_return_flag === 0
-                      ? ""
-                      : "inactiveLink"
-                  }
-                >
-                  <a
-                    href="javascript:void(0)"
+                <li>
+                  <button
                     className={`btn ${
                       props?.item?.staffWatchActivityDetails
                         ?.confirm_acceptance_return_flag === 0
@@ -149,23 +144,14 @@ const ConfirmShipmentEstipal = (props) => {
                         ? "bg-[#006400] !border-none"
                         : "bg-[#d3d3d3] opacity-50 !text-black"
                     }`}
+                    onClick={() => handleAction(1, false)}
+                    disabled={isLoading}
                   >
                     Confirm the payment and acceptance
-                  </a>
+                  </button>
                 </li>
-                <li
-                  id="returnToSeller"
-                  name={props?.item?.watch_details?.watch_id}
-                  value={props?.item?.user1_id}
-                  className={
-                    props?.item?.staffWatchActivityDetails
-                      ?.confirm_acceptance_return_flag === 0
-                      ? ""
-                      : "inactiveLink"
-                  }
-                >
-                  <a
-                    href="javascript:void(0)"
+                <li>
+                  <button
                     className={`btn ${
                       props?.item?.staffWatchActivityDetails
                         ?.confirm_acceptance_return_flag === 0
@@ -175,9 +161,11 @@ const ConfirmShipmentEstipal = (props) => {
                         ? "bg-[#006400] !border-none"
                         : "bg-[#d3d3d3] opacity-50 !text-black"
                     }`}
+                    onClick={() => handleAction(0, true)}
+                    disabled={isLoading}
                   >
                     Return to Seller
-                  </a>
+                  </button>
                 </li>
               </ul>
             </div>
