@@ -13,7 +13,7 @@ import EstimatorMultiQuotation from "./statusComponents/EstimatorMultiQuotation"
 
 const CardData = (props) => {
   const { item, index, staffUser, adminActivitiesData, currency } = props;
-  console.log("item: ", item);
+  // console.log("item: ", item);
   let prefix = "SCA";
   if (item?.admin_group === "estimator") {
     prefix = "ECA";
@@ -76,11 +76,12 @@ const CardData = (props) => {
     : "";
   const input_sold_price = item?.watch_details?.watch_sold_price || "";
 
-  // const price_for_seller = item?.watch_details?.input_price_for_seller
-  //   ? `${
-  //       item?.currency_unit
-  //     } ${item?.watch_details?.input_price_for_seller.toFixed(2)}`
-  //   : accepted_price;
+  const price_for_seller = item?.watch_details?.price_for_seller
+    ? `${item?.currency_unit} ${item?.watch_details?.price_for_seller.toFixed(
+        2
+      )}`
+    : accepted_price;
+
   const input_price_for_seller =
     item?.watch_details?.input_price_for_seller || accepted_price;
 
@@ -98,6 +99,7 @@ const CardData = (props) => {
       input_confirmed_price,
       input_sold_price,
       input_price_for_seller,
+      price_for_seller,
       confirm_the_issuing_of_invoice_flag,
       adminActivitiesData,
       currency,

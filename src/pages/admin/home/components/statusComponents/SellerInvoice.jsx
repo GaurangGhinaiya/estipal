@@ -1,7 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import UrgentImage from "../../../../../assets/images/icons/Urgent 1.png";
+import axiosInstance from "../../../../../services";
+import { toast } from "react-hot-toast";
 
 const SellerInvoice = (props) => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleConfirmPayment = async () => {
+    setIsLoading(true);
+
+    try {
+      const response = await axiosInstance.post(
+        `/sellers/confirmPaymentToSeller?watch_id=${props?.item?.watch_details?.watch_id}`,
+        {
+          seller_id: props?.item?.user1_id,
+        }
+      );
+
+      toast.success("Payment confirmed successfully!");
+    } catch (error) {
+      toast.error("Failed to confirm payment. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="message_box_inner">
       {props?.item?.staffWatchActivityDetails?.payment_tier == 1 && (
@@ -33,17 +56,22 @@ const SellerInvoice = (props) => {
                       : ""
                   }
                 >
-                  <a
-                    href="javascript:void(0)"
+                  <button
                     className={`btn ${
                       props?.item?.staffWatchActivityDetails
                         ?.confirm_payment_flag === 1
                         ? "bg-[#006400] !border-none"
                         : "dark_yellow"
                     }`}
+                    onClick={handleConfirmPayment}
+                    disabled={
+                      isLoading ||
+                      props?.item?.staffWatchActivityDetails
+                        ?.confirm_payment_flag === 1
+                    }
                   >
-                    Confirm payment to Seller
-                  </a>
+                    {isLoading ? "Processing..." : "Confirm payment to Seller"}
+                  </button>
                 </li>
               </ul>
             </div>

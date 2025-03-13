@@ -1,7 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import UrgentImage from "../../../../../assets/images/icons/Urgent 1.png";
+import axiosInstance from "../../../../../services";
+import { toast } from "react-hot-toast";
 
 const ConfirmSold = (props) => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleConfirmPaidEstimator = async () => {
+    if (isLoading) return;
+    setIsLoading(true);
+
+    try {
+      const watchId = props?.item?.watch_details?.watch_id;
+      const url = `/adminActivity/confirmPaidEst?watch_id=${watchId}`;
+
+      await axiosInstance.post(url);
+
+      toast.success("Commission payment confirmed successfully!");
+    } catch (error) {
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="message_box_inner">
       <h3>Estipal sold the watch. This deal has been completed.</h3>
@@ -29,17 +51,19 @@ const ConfirmSold = (props) => {
                   : ""
               }
             >
-              <a
+              <button
                 className={`btn ${
                   props?.item?.assignWatchDetails[0]?.paid === 1
                     ? "dark_green"
                     : "dark_yellow"
                 }`}
-                href="javascript:void(0)"
-                // onClick={handleConfirmPaidEstimator}
+                onClick={handleConfirmPaidEstimator}
+                disabled={
+                  isLoading || props?.item?.assignWatchDetails[0]?.paid === 1
+                }
               >
-                Confirm commission payment
-              </a>
+                {isLoading ? "Processing..." : "Confirm commission payment"}
+              </button>
             </li>
           </ul>
         </div>

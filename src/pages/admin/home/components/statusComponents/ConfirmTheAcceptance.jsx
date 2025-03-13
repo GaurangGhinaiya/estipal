@@ -1,7 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import UrgentImage from "../../../../../assets/images/icons/Urgent 1.png";
+import { toast } from "react-hot-toast";
+import axiosInstance from "../../../../../services";
 
 const ConfirmTheAcceptance = (props) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [confirmedPrice, setConfirmedPrice] = useState(
+    props?.item?.watch_details?.watch_sold_price
+      ? props?.item?.adminUserDetail?.currency +
+          " " +
+          props?.item?.watch_details?.watch_sold_price
+      : props.price_for_seller
+  );
+
+  const handleConfirmSold = async () => {
+    if (isLoading) return;
+
+    setIsLoading(true);
+
+    try {
+      const url = `/adminActivity/confirmSold?watch_id=${props?.item?.watch_details?.watch_id}`;
+      const payload = { confirmed_price: confirmedPrice };
+
+      await axiosInstance.post(url, payload);
+
+      toast.success("Watch sale confirmed successfully!");
+    } catch (error) {
+      toast.error("Error confirming sale. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="message_box_inner">
       <h3>
@@ -14,18 +44,15 @@ const ConfirmTheAcceptance = (props) => {
             border: "2px solid #1760a9",
             borderRadius: "5px",
           }}
-          className={`text-center bg-[#1d2b38]  ${
+          className={`text-center bg-[#1d2b38] ${
             props?.item?.staffWatchActivityDetails?.admin_deal_done === 1
               ? "pointer-events-none"
               : ""
           }`}
           name="confirmed_sold_price"
           id="confirmed_sold_price"
-          value={
-            props?.input_sold_price
-              ? props?.sold_price
-              : props?.input_price_for_seller
-          }
+          value={confirmedPrice}
+          onChange={(e) => setConfirmedPrice(e.target.value)}
         />
       </h3>
       <h3>Status: {props?.item?.watch_status}</h3>
@@ -40,26 +67,23 @@ const ConfirmTheAcceptance = (props) => {
           </p>
           <ul className="list-unstyled list-inline">
             <li
-              // id="confirmSold"
-              // name={props?.item?.watch_details?.watch_id}
-              // value={props?.item?.user1_id}
               className={
                 props?.item?.staffWatchActivityDetails?.admin_deal_done === 1
                   ? "pointer-events-none"
                   : ""
               }
             >
-              <a
+              <button
                 className={`btn ${
                   props?.item?.staffWatchActivityDetails?.admin_deal_done === 1
                     ? "dark_green"
                     : "dark_yellow"
                 }`}
-                href="javascript:void(0)"
-                // onClick={handleConfirmSold}
+                onClick={handleConfirmSold}
+                disabled={isLoading}
               >
-                Confirm Sold
-              </a>
+                {isLoading ? "Processing..." : "Confirm Sold"}
+              </button>
             </li>
           </ul>
         </div>
