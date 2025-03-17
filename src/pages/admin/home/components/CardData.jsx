@@ -13,7 +13,7 @@ import EstimatorMultiQuotation from "./statusComponents/EstimatorMultiQuotation"
 
 const CardData = (props) => {
   const { item, index, staffUser, adminActivitiesData, currency } = props;
-  // console.log("item: ", item);
+  console.log("item: ", item);
   let prefix = "SCA";
   if (item?.admin_group === "estimator") {
     prefix = "ECA";
@@ -57,29 +57,22 @@ const CardData = (props) => {
   };
 
   const accepted_price = getAcceptedPrice();
-  const commission_price = item?.watch_details?.commission_price
-    ? formatPrice(item?.watch_details?.commission_price)
-    : "";
+  const commission_price = formatPrice(item?.watch_details?.commission_price);
 
-  const confirmed_price = item?.watch_details?.confirmed_price
-    ? formatPrice(item?.watch_details?.confirmed_price)
-    : "";
-  const input_confirmed_price = item?.watch_details?.confirmed_price || "";
+  const confirmed_price = formatPrice(item?.watch_details?.confirmed_price);
+
+  const input_confirmed_price = item?.watch_details?.confirmed_price;
 
   const accepted_price_with_commission = item?.watch_details
     ?.accepted_price_with_commission
     ? formatPrice(item?.watch_details?.accepted_price_with_commission)
     : accepted_price;
 
-  const sold_price = item?.watch_details?.watch_sold_price
-    ? formatPrice(item?.watch_details?.watch_sold_price)
-    : "";
-  const input_sold_price = item?.watch_details?.watch_sold_price || "";
+  const sold_price = formatPrice(item?.watch_details?.watch_sold_price);
+  const input_sold_price = item?.watch_details?.watch_sold_price;
 
   const price_for_seller = item?.watch_details?.price_for_seller
-    ? `${item?.currency_unit} ${item?.watch_details?.price_for_seller.toFixed(
-        2
-      )}`
+    ? `${currency} ${item?.watch_details?.price_for_seller.toFixed(2)}`
     : accepted_price;
 
   const input_price_for_seller =

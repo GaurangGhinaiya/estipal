@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import UrgentImage from "../../../../../assets/images/icons/Urgent 1.png";
 import axiosInstance from "../../../../../services";
 import { toast } from "react-hot-toast";
+import ConfirmDialog from "../../../../../components/common/ConfirmDialog";
 
 const SellerInvoiceNew = (props) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const handleConfirmPayment = async () => {
     setIsLoading(true);
@@ -18,12 +20,23 @@ const SellerInvoiceNew = (props) => {
       );
 
       toast.success("Payment confirmed successfully!");
+      window.location.reload();
     } catch (error) {
       toast.error("Failed to confirm payment. Please try again.");
     } finally {
       setIsLoading(false);
+      setDialogOpen(false);
     }
   };
+
+  const handleOpenDialog = () => {
+    setDialogOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setDialogOpen(false);
+  };
+
   return (
     <div className="message_box_inner">
       {props?.item?.staffWatchActivityDetails?.payment_tier === 1 && (
@@ -51,7 +64,7 @@ const SellerInvoiceNew = (props) => {
                   className={
                     props?.item?.staffWatchActivityDetails
                       ?.confirm_payment_flag === 1
-                      ? "inactiveLink"
+                      ? "pointer-events-none"
                       : ""
                   }
                 >
@@ -62,7 +75,7 @@ const SellerInvoiceNew = (props) => {
                         ? "bg-[#006400] !border-none"
                         : "dark_yellow"
                     }`}
-                    onClick={handleConfirmPayment}
+                    onClick={handleOpenDialog}
                     disabled={
                       isLoading ||
                       props?.item?.staffWatchActivityDetails
@@ -84,6 +97,14 @@ const SellerInvoiceNew = (props) => {
           <h3>{`Status: ${props?.item?.watch_status}`}</h3>
         </>
       )}
+
+      <ConfirmDialog
+        open={dialogOpen}
+        handleClose={handleCloseDialog}
+        handleConfirm={handleConfirmPayment}
+        title="Confirm Payment"
+        content="Are you sure you want to confirm the payment to the seller?"
+      />
     </div>
   );
 };

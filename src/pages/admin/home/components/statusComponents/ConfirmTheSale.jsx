@@ -2,17 +2,15 @@ import React, { useState } from "react";
 import UrgentImage from "../../../../../assets/images/icons/Urgent 1.png";
 import axiosInstance from "../../../../../services";
 import { toast } from "react-hot-toast";
+import ConfirmDialog from "../../../../../components/common/ConfirmDialog";
 
 const ConfirmTheSale = (props) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
-  const [confirmedPrice, setConfirmedPrice] = useState(
-    props?.item?.watch_details?.watch_sold_price
-      ? props?.item?.adminUserDetail?.currency +
-          " " +
-          props?.item?.watch_details?.watch_sold_price
-      : props.price_for_seller
-  );
+  const confirmedPrice = props?.input_confirmed_price
+    ? props?.input_confirmed_price
+    : props?.price_for_seller;
 
   const handleConfirmIssuingOfInvoice = async () => {
     setIsLoading(true);
@@ -25,12 +23,23 @@ const ConfirmTheSale = (props) => {
         }
       );
       toast.success("Invoice issued successfully!");
+      window.location.reload();
     } catch (error) {
       toast.error("Failed to issue the invoice. Please try again.");
     } finally {
       setIsLoading(false);
+      setDialogOpen(false);
     }
   };
+
+  const handleOpenDialog = () => {
+    setDialogOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setDialogOpen(false);
+  };
+
   return (
     <>
       <h3>
@@ -66,8 +75,10 @@ const ConfirmTheSale = (props) => {
                     ? "dark_green"
                     : "dark_yellow"
                 }`}
-                onClick={handleConfirmIssuingOfInvoice}
-                disabled={isLoading}
+                onClick={handleOpenDialog}
+                disabled={
+                  isLoading || props?.confirm_the_issuing_of_invoice_flag
+                }
               >
                 {isLoading ? "Processing..." : "Confirm the issuing of invoice"}
               </button>
@@ -75,6 +86,14 @@ const ConfirmTheSale = (props) => {
           </ul>
         </div>
       </div>
+
+      <ConfirmDialog
+        open={dialogOpen}
+        handleClose={handleCloseDialog}
+        handleConfirm={handleConfirmIssuingOfInvoice}
+        title="Confirm Issuing of Invoice"
+        content="Are you sure you want to confirm the issuing of the invoice?"
+      />
     </>
   );
 };

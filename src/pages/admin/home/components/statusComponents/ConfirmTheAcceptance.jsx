@@ -2,16 +2,15 @@ import React, { useState } from "react";
 import UrgentImage from "../../../../../assets/images/icons/Urgent 1.png";
 import { toast } from "react-hot-toast";
 import axiosInstance from "../../../../../services";
+import ConfirmDialog from "../../../../../components/common/ConfirmDialog";
 
 const ConfirmTheAcceptance = (props) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [confirmedPrice, setConfirmedPrice] = useState(
-    props?.item?.watch_details?.watch_sold_price
-      ? props?.item?.adminUserDetail?.currency +
-          " " +
-          props?.item?.watch_details?.watch_sold_price
-      : props.price_for_seller
-  );
+  const [dialogOpen, setDialogOpen] = useState(false);
+
+  const confirmedPrice = props?.input_sold_price
+    ? props?.sold_price
+    : props?.input_price_for_seller;
 
   const handleConfirmSold = async () => {
     if (isLoading) return;
@@ -25,11 +24,21 @@ const ConfirmTheAcceptance = (props) => {
       await axiosInstance.post(url, payload);
 
       toast.success("Watch sale confirmed successfully!");
+      window.location.reload();
     } catch (error) {
       toast.error("Error confirming sale. Please try again.");
     } finally {
       setIsLoading(false);
+      setDialogOpen(false);
     }
+  };
+
+  const handleOpenDialog = () => {
+    setDialogOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setDialogOpen(false);
   };
 
   return (
@@ -52,7 +61,7 @@ const ConfirmTheAcceptance = (props) => {
           name="confirmed_sold_price"
           id="confirmed_sold_price"
           value={confirmedPrice}
-          onChange={(e) => setConfirmedPrice(e.target.value)}
+          // onChange={(e) => setConfirmedPrice(e.target.value)}
         />
       </h3>
       <h3>Status: {props?.item?.watch_status}</h3>
@@ -79,8 +88,11 @@ const ConfirmTheAcceptance = (props) => {
                     ? "dark_green"
                     : "dark_yellow"
                 }`}
-                onClick={handleConfirmSold}
-                disabled={isLoading}
+                onClick={handleOpenDialog}
+                disabled={
+                  isLoading ||
+                  props?.item?.staffWatchActivityDetails?.admin_deal_done === 1
+                }
               >
                 {isLoading ? "Processing..." : "Confirm Sold"}
               </button>
@@ -88,6 +100,14 @@ const ConfirmTheAcceptance = (props) => {
           </ul>
         </div>
       </div>
+
+      <ConfirmDialog
+        open={dialogOpen}
+        handleClose={handleCloseDialog}
+        handleConfirm={handleConfirmSold}
+        title="Confirm Sold"
+        content="Are you sure you want to confirm the sale?"
+      />
     </div>
   );
 };

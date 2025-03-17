@@ -80,7 +80,7 @@ const SellerPerformanceAnalysis = () => {
     try {
       setTransactionLoading(true);
       const response = await axiosInstance.get(
-        `/performanceAnalysis/merchant?id=${seller_id}&page=${currentPage}&records_per_page=${recordsPerPage}&search=${searchValue}`
+        `/performanceAnalysis/seller?id=${seller_id}&page=${currentPage}&records_per_page=${recordsPerPage}&search=${searchValue}`
       );
       const transactions = response?.payload?.data?.transactions.map(
         (item) => ({

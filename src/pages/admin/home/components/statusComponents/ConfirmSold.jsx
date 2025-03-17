@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import UrgentImage from "../../../../../assets/images/icons/Urgent 1.png";
 import axiosInstance from "../../../../../services";
 import { toast } from "react-hot-toast";
+import ConfirmDialog from "../../../../../components/common/ConfirmDialog";
 
 const ConfirmSold = (props) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const handleConfirmPaidEstimator = async () => {
     if (isLoading) return;
@@ -17,11 +19,21 @@ const ConfirmSold = (props) => {
       await axiosInstance.post(url);
 
       toast.success("Commission payment confirmed successfully!");
+      window.location.reload();
     } catch (error) {
       toast.error("Something went wrong. Please try again.");
     } finally {
       setIsLoading(false);
+      setDialogOpen(false);
     }
+  };
+
+  const handleOpenDialog = () => {
+    setDialogOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setDialogOpen(false);
   };
 
   return (
@@ -47,7 +59,7 @@ const ConfirmSold = (props) => {
               value={props?.item?.user1_id}
               className={
                 props?.item?.assignWatchDetails[0]?.paid === 1
-                  ? "inactiveLink"
+                  ? "pointer-events-none"
                   : ""
               }
             >
@@ -57,7 +69,7 @@ const ConfirmSold = (props) => {
                     ? "dark_green"
                     : "dark_yellow"
                 }`}
-                onClick={handleConfirmPaidEstimator}
+                onClick={handleOpenDialog}
                 disabled={
                   isLoading || props?.item?.assignWatchDetails[0]?.paid === 1
                 }
@@ -68,6 +80,14 @@ const ConfirmSold = (props) => {
           </ul>
         </div>
       </div>
+
+      <ConfirmDialog
+        open={dialogOpen}
+        handleClose={handleCloseDialog}
+        handleConfirm={handleConfirmPaidEstimator}
+        title="Confirm Commission Payment"
+        content="Are you sure you want to confirm the commission payment?"
+      />
     </div>
   );
 };

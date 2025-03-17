@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import { toast } from "react-hot-toast";
 import UrgentImage from "../../../../../assets/images/icons/Urgent 1.png";
 import axiosInstance from "../../../../../services";
+import ConfirmDialog from "../../../../../components/common/ConfirmDialog";
 
 const BePartner = (props) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
+
   const handleConfirmPriceChange = async () => {
     setIsLoading(true);
 
@@ -12,15 +15,26 @@ const BePartner = (props) => {
       const response = await axiosInstance.post(
         `/adminActivity/confirmSellingPrice?watch_id=${props?.item?.watch_details?.watch_id}`,
         {
-          confirmed_price: props?.item?.watch_details?.confirmed_price ?? 9600,
+          confirmed_price:
+            props?.input_confirmed_price ?? props?.input_price_for_seller,
         }
       );
       toast.success("Selling price confirmed successfully!");
+      window.location.reload();
     } catch (error) {
       toast.error("Failed to confirm selling price. Please try again.");
     } finally {
       setIsLoading(false);
+      setDialogOpen(false);
     }
+  };
+
+  const handleOpenDialog = () => {
+    setDialogOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setDialogOpen(false);
   };
 
   return (
@@ -36,7 +50,7 @@ const BePartner = (props) => {
           }`}
           name="confirmed_price"
           id="confirmed_price"
-          value={props?.input_confirmed_price}
+          value={props?.input_confirmed_price ?? props?.input_price_for_seller}
         />{" "}
         {props?.item?.currency_unit}
       </h3>
@@ -65,8 +79,8 @@ const BePartner = (props) => {
                 className={`btn ${
                   props?.input_confirmed_price ? "dark_green" : "dark_yellow"
                 }`}
-                onClick={handleConfirmPriceChange}
-                disabled={isLoading}
+                onClick={handleOpenDialog}
+                disabled={isLoading || props?.input_confirmed_price}
               >
                 {isLoading ? "Processing..." : "Confirm Selling Price"}
               </button>
@@ -74,6 +88,14 @@ const BePartner = (props) => {
           </ul>
         </div>
       </div>
+
+      <ConfirmDialog
+        open={dialogOpen}
+        handleClose={handleCloseDialog}
+        handleConfirm={handleConfirmPriceChange}
+        title="Confirm Selling Price"
+        content="Are you sure you want to confirm the selling price?"
+      />
     </>
   );
 };
