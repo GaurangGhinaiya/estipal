@@ -69,9 +69,9 @@ const AccountProfile = () => {
   };
   return (
     <div className="mx-auto pb-[15px]">
-      <div className="px-0 sm:px-[20px] pt-6 flex justify-between flex-wrap gap-2 bg-gradient-to-b from-[rgba(0,96,169,0.36)] to-[rgba(255,255,255,0)]">
+      <div className="px-0 sm:px-[20px] pt-8 flex justify-between flex-wrap gap-2 bg-gradient-to-b from-[rgba(0,96,169,0.36)] to-[rgba(255,255,255,0)]">
         <div className="flex items-center">
-          <h3 className="text-[24px] font-medium px-0 sm:px-[15px] font-sans dark:text-white text-black">
+          <h3 className="text-[30px] font-medium px-0 sm:px-[15px] font-sans dark:text-white text-black">
             Account Profile
           </h3>
         </div>

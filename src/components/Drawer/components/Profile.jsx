@@ -114,7 +114,7 @@ export default function Profile() {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={handleClose} className="!cursor-default">
           <ListItemIcon>
             <PersonAdd fontSize="small" />
           </ListItemIcon>
@@ -169,7 +169,7 @@ export default function Profile() {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem onClick={handleLangClose} className="gap-2">
+        <MenuItem onClick={handleLangClose} className="gap-2 !text-[15px]">
           <ListItemIcon>
             <img
               src={EngFlag}
@@ -179,7 +179,7 @@ export default function Profile() {
           </ListItemIcon>
           English
         </MenuItem>
-        <MenuItem onClick={handleLangClose} className="gap-2">
+        <MenuItem onClick={handleLangClose} className="gap-2 !text-[15px]">
           <ListItemIcon>
             <img
               src={ThailandFlag}
@@ -189,7 +189,7 @@ export default function Profile() {
           </ListItemIcon>
           Thailand
         </MenuItem>
-        <MenuItem onClick={handleLangClose} className="gap-2">
+        <MenuItem onClick={handleLangClose} className="gap-2 !text-[15px]">
           <ListItemIcon>
             <img
               src={ItlyFlag}
@@ -199,7 +199,7 @@ export default function Profile() {
           </ListItemIcon>
           Italy
         </MenuItem>
-        <MenuItem onClick={handleLangClose} className="gap-2">
+        <MenuItem onClick={handleLangClose} className="gap-2 !text-[15px]">
           <ListItemIcon>
             <img
               src={ChinaFlag}

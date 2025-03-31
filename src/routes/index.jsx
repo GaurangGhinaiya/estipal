@@ -19,7 +19,8 @@ import Language from "../pages/admin/language/Language";
 import ProtectedRoute from "./protectedRoute";
 import PublicRoute from "./PublicRoute";
 import SellerUserCreate from "../pages/admin/seller/SellerUserCreate";
-// import SellerRevenueAnalysis from "../pages/staff/analysis/revenue_analysis/revenue_analysis_seller/SellerRevenueAnalysis";
+import SellerRevenueAnalysisStaff from "../pages/staff/revenue_analysis/revenue_analysis_seller/SellerRevenueAnalysis";
+import SellerPerformanceAnalysisStaff from "../pages/staff/performance_analysis/performance_analysis_seller/SellerPerformanceAnalysis";
 import AccountProfile from "../pages/staff/account_profile/AccountProfile";
 import ManageStaff from "../pages/staff/manage_staff/ManageStaff";
 import EstimatorEdit from "../pages/admin/estimators/EstimatorEdit";
@@ -106,6 +107,14 @@ const AppRoute = () => {
             <Route
               path="analysis/revenue_analysis/seller/:seller_id"
               element={<SellerRevenueAnalysis />}
+            />
+            <Route
+              path="analysis/revenue_analysis/seller"
+              element={<SellerRevenueAnalysisStaff />}
+            />
+            <Route
+              path="analysis/performance_analysis/seller"
+              element={<SellerPerformanceAnalysisStaff />}
             />
             <Route
               path="analysis/revenue_analysis/estimator"
