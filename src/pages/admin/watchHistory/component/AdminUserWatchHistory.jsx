@@ -114,8 +114,8 @@ const AdminUserWatchHistory = ({
                   <div
                     role="button"
                     onClick={() =>
-                        navigate(`/admin/home/readActivity/${item?.id}`)
-                      }
+                      navigate(`/admin/home/readActivity/${item?.id}`)
+                    }
                   >
                     {item?.emailIcon ? (
                       <img src={gmailIcon} width="25px" alt="img" />
@@ -192,9 +192,12 @@ const AdminUserWatchHistory = ({
                   navigate(`/admin/watch_details/watch_status/${item?.id}`)
                 }
               >
-                {item?.addedByDetail?.company_name +
-                  " - " +
-                  item?.addedByDetail?.username}
+                {`${item?.addedByDetail?.company_name || ""}${
+                  item?.addedByDetail?.company_name &&
+                  item?.addedByDetail?.username
+                    ? " - "
+                    : "-"
+                }${item?.addedByDetail?.username || ""}`}
               </td>
               <td
                 className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap cursor-pointer"
@@ -202,7 +205,8 @@ const AdminUserWatchHistory = ({
                   navigate(`/admin/watch_details/watch_status/${item?.id}`)
                 }
               >
-                USD {formattedNumber.format(item?.watch_price)} / USD{" "}
+                {item?.currency} {formattedNumber.format(item?.watch_price)} /
+                {item?.currency}{" "}
                 {formattedNumber.format(item?.estimated_watch_price)}
               </td>
               <td

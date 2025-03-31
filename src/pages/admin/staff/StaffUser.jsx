@@ -1,7 +1,7 @@
 import { Button, CircularProgress } from "@mui/material";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import PaginationComponent from "../../../components/common/PaginationComponent";
 import SearchBar from "../../../components/common/SearchBar";
 import useDebounce from "../../../components/common/UseDebounce";
@@ -9,49 +9,52 @@ import axiosInstance from "../../../services/index";
 
 const StaffUser = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [data, setData] = useState([]);
-  const [status, setStatus] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOrder, setSortOrder] = useState("asc");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [recordsPerPage, setRecordsPerPage] = useState(20);
+  const [currentPage, setCurrentPage] = useState(null);
+  const [recordsPerPage, setRecordsPerPage] = useState(10);
   const [totalRecords, setTotalRecords] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const debouncedSearchTerm = useDebounce(searchQuery, 500);
 
-  const getStaffUserData = async () => {
-    try {
-      const searchValue =
-        debouncedSearchTerm || status
-          ? JSON.stringify(
-              debouncedSearchTerm
-                ? {
-                    search: debouncedSearchTerm ? debouncedSearchTerm : "",
-                    watch_status: status,
-                  }
-                : { watch_status: status }
-            )
-          : "";
+  const getStaffUserData = async (page) => {
+    setIsLoading(true);
 
-      setIsLoading(true);
+    try {
+      const searchValue = JSON.stringify({
+        search: debouncedSearchTerm || "",
+      });
+
       const response = await axiosInstance.get(
-        `/sellers?page=${currentPage}&records_per_page=${recordsPerPage}&search=${searchValue}&sort_order=${sortOrder}`
+        `/sellers?page=${page}&records_per_page=${recordsPerPage}&search=${searchValue}&sort_order=${sortOrder}`
       );
       setData(response.payload.data);
       setTotalRecords(response?.pager?.total_records);
-      setIsLoading(false);
     } catch (error) {
-      console.log("error", error);
+      console.error("Error fetching staff user data:", error);
+    } finally {
       setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    getStaffUserData();
-  }, [currentPage, sortOrder, debouncedSearchTerm, status, searchQuery]);
+    const queryParams = new URLSearchParams(location.search);
+    const page = queryParams.get("page") || 1;
+    setCurrentPage(Number(page));
+  }, [location.search]);
+
+  useEffect(() => {
+    if (currentPage) {
+      getStaffUserData(currentPage);
+    }
+  }, [currentPage, sortOrder, debouncedSearchTerm]);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
+    let url = `?page=${page}`;
+    navigate(url);
   };
 
   return (
@@ -121,12 +124,10 @@ const StaffUser = () => {
                 </td>
               </tr>
             ) : data?.length > 0 ? (
-              data.map((item, index) => (
+              data?.map((item, index) => (
                 <tr
                   onClick={() =>
-                    navigate(
-                      `/admin/seller/seller_edit/${item?.admin_seller_id}`
-                    )
+                    navigate(`/admin/seller/seller_edit/${item?.id}`)
                   }
                   key={index}
                   className="border-b border-[#202b34]"

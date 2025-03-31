@@ -3,10 +3,12 @@ import React from "react";
 const TextInputField = (props) => {
   return (
     <div
-      style={{ backgroundColor: props?.bgColor,
-        border:props.border,
-        borderColor:props.borderColor
-       }}
+      style={{
+        backgroundColor: props?.bgColor,
+        border: props.border,
+        borderColor: props.borderColor,
+        visibility: props?.visibility,
+      }}
       className={`w-full rounded-lg px-4 py-[12px] flex items-center ${props.className}`}
     >
       <div className="text-sm dark:text-white text-black font-medium m-0 whitespace-nowrap min-w-[100px]">

@@ -10,6 +10,7 @@ const PaginationComponent = ({
   recordsPerPage,
 }) => {
   const totalPagesData = Math.ceil(totalPages / recordsPerPage);
+  console.log("totalPagesData: ", totalPagesData);
   const startRecord = (currentPage - 1) * recordsPerPage + 1;
   const endRecord = Number(currentPage) * Number(recordsPerPage);
 

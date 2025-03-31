@@ -1,14 +1,15 @@
-import React, { useState } from "react";
-import { useForm, Controller } from "react-hook-form";
-import bgImage from "../../../assets/images/img-bg-login.png";
-import axios from "axios";
-import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
-import logo from "../../../assets/images/icons/logo.png";
-import { getCurrentYear } from "../../../utils";
+import React, { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import { useNavigate, useParams } from "react-router-dom";
+import logo from "../../assets/images/icons/logo.png";
+import bgImage from "../../assets/images/img-bg-login.png";
+import axiosInstance from "../../services";
+import { getCurrentYear } from "../../utils";
 
-const Login = () => {
+const UpdatePassword = () => {
+  const { token, id, email } = useParams();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const {
@@ -17,31 +18,30 @@ const Login = () => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      username: "",
       password: "",
+      confirm_password: "",
     },
   });
   // Login handler
   const onSubmit = async (data) => {
     setLoading(true);
     try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_API_PUBLIC_BASE_URL}/login`,
-        data
+      const response = await axiosInstance.post(
+        `sellers/resetPassword?token=${token}&email=${email}&user_id=${id}`,
+        {
+          password: data.password,
+          confirm_password: data.confirm_password,
+        }
       );
-      if (response?.status === 200) {
-        toast.success(response?.data?.message);
-        localStorage.setItem("authToken", response?.data?.payload?.token);
-        localStorage.setItem("staffUser", false);
-        navigate("/admin");
-        setLoading(false);
-      }
+      console.log("response: ", response);
+      toast.success("Password updated successfully");
+      navigate("/login");
+      setLoading(false);
     } catch (error) {
       toast.error(error?.response?.data?.message);
       setLoading(false);
     }
   };
-
   return (
     <div
       className="login-container"
@@ -52,34 +52,10 @@ const Login = () => {
           <div className="logo text-center">
             <img src={logo} alt="logo" className="mx-auto" />
           </div>
-          <div className="title text-center">Sign in Estipal</div>
+          <div className="title text-center">Reset Password</div>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="form-group">
-              <label htmlFor="username">Username</label>
-              <Controller
-                name="username"
-                control={control}
-                rules={{
-                  required: "Username is required",
-                }}
-                render={({ field }) => (
-                  <input
-                    {...field}
-                    id="username"
-                    className="form-control"
-                    placeholder="Enter your username"
-                  />
-                )}
-              />
-              {errors?.username && (
-                <p className="text-red-500 text-sm">
-                  {errors?.username?.message}
-                </p>
-              )}
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="password">Password</label>
+            <div className="form-group !mb-4">
+              <label htmlFor="password">* Password</label>
               <Controller
                 name="password"
                 control={control}
@@ -103,25 +79,39 @@ const Login = () => {
               )}
             </div>
 
-            <div>
-              <button
-                className="text-[#039be5]"
-                onClick={(e) => {
-                  e.preventDefault();
-                  navigate("/login/forgot_password");
+            <div className="form-group !mb-4">
+              <label htmlFor="confirm_password">* Confirm Password</label>
+              <Controller
+                name="confirm_password"
+                control={control}
+                rules={{
+                  required: "Confirm Password is required",
                 }}
-              >
-                Forgot password?
-              </button>
+                render={({ field }) => (
+                  <input
+                    {...field}
+                    id="confirm_password"
+                    type="password"
+                    className="form-control"
+                    placeholder="Enter your confirm password"
+                  />
+                )}
+              />
+              {errors?.password && (
+                <p className="text-red-500 text-sm">
+                  {errors?.confirm_password?.message}
+                </p>
+              )}
             </div>
-            <div className="w-100-p" style={{ marginTop: "15px" }}>
+
+            <div className="w-100-p pt-2 pb-5" style={{ marginTop: "15px" }}>
               <button
                 type="submit"
-                className="btn bg-[#3c8dbc] w-full"
+                className="btn bg-[#3c8dbc] w-full !py-[7px]"
                 style={{ borderRadius: "20px" }}
               >
                 <div className="flex items-center justify-center gap-4">
-                  Sign In{" "}
+                  Submit{" "}
                   {loading && (
                     <CircularProgress size={15} className="!text-white" />
                   )}
@@ -129,6 +119,12 @@ const Login = () => {
               </button>
             </div>
           </form>
+          <button
+            className="text-[#039be5] mx-auto block text-[16px] py-[10px] px-[10px]"
+            onClick={() => navigate("/login")}
+          >
+            Go back to login
+          </button>
         </div>
         <footer>© {getCurrentYear()} Estipal - All right reserved</footer>
       </div>
@@ -136,4 +132,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default UpdatePassword;

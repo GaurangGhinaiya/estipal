@@ -1,19 +1,36 @@
-import React, { useState } from "react";
 import {
+  Checkbox,
+  FormControl,
+  ListItemText,
   MenuItem,
   Select,
-  Checkbox,
-  ListItemText,
-  FormControl,
-  InputLabel,
 } from "@mui/material";
-import supportedBrands from "../../constant/supported_brands.json"; // Import your JSON data
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axiosInstance from "../../services";
 
 const SupportedBrandsDropdown = ({
   selectedBrands,
   setSelectedBrands,
   disabled,
 }) => {
+  const navigate = useNavigate();
+  const [supportedBrands, setSupportedBrands] = useState([]);
+
+  useEffect(() => {
+    const fetchSupportedBrands = async () => {
+      try {
+        const response = await axiosInstance.get(`/watchBrands`);
+
+        setSupportedBrands(response?.payload?.data);
+      } catch (error) {
+        console.log("error: ", error);
+      }
+    };
+
+    fetchSupportedBrands();
+  }, []);
+
   const handleChange = (event) => {
     const value = event.target.value;
 
@@ -22,7 +39,7 @@ const SupportedBrandsDropdown = ({
       if (selectedBrands.length === supportedBrands.length) {
         setSelectedBrands([]); // Deselect all
       } else {
-        setSelectedBrands(supportedBrands.map((brand) => brand.label)); // Select all
+        setSelectedBrands(supportedBrands.map((brand) => brand.brand)); // Select all
       }
     } else {
       setSelectedBrands(value); // Update selected values
@@ -39,7 +56,9 @@ const SupportedBrandsDropdown = ({
         value={selectedBrands}
         onChange={handleChange}
         renderValue={(selected) =>
-          selected.length > 0 ? `${selected.length} Selected` : "Select Brands"
+          selected?.length > 0
+            ? `${selected?.length} Selected`
+            : "Select Brands"
         } // Display "X Selected"
         sx={{
           backgroundColor: "#1e252b",
@@ -58,10 +77,10 @@ const SupportedBrandsDropdown = ({
         {/* "Select All" Option */}
         <MenuItem value="all">
           <Checkbox
-            checked={selectedBrands.length === supportedBrands.length}
+            checked={selectedBrands?.length === supportedBrands?.length}
             indeterminate={
-              selectedBrands.length > 0 &&
-              selectedBrands.length < supportedBrands.length
+              selectedBrands?.length > 0 &&
+              selectedBrands?.length < supportedBrands?.length
             }
             style={{ color: "black" }}
           />
@@ -69,17 +88,17 @@ const SupportedBrandsDropdown = ({
         </MenuItem>
 
         {/* Supported Brands Options */}
-        {supportedBrands.map((brand) => (
+        {supportedBrands?.map((item) => (
           <MenuItem
-            key={brand.label}
-            value={brand.label}
+            key={item?.brand}
+            value={item?.brand}
             sx={{ color: "black" }}
           >
             <Checkbox
-              checked={selectedBrands.indexOf(brand.label) > -1}
+              checked={selectedBrands?.indexOf(item?.brand) > -1}
               style={{ color: "black" }}
             />
-            <ListItemText primary={brand.label} />
+            <ListItemText primary={item?.brand} />
           </MenuItem>
         ))}
       </Select>

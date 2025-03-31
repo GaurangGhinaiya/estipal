@@ -9,21 +9,25 @@ import ReadActivity from "../pages/admin/home/ReadActivity";
 import WatchStatus from "../pages/admin/watchDetail/WatchStatus";
 import Settings from "../pages/admin/generalSetting/Setting";
 import Estimators from "../pages/admin/estimators/Estimators";
-import AdminRevanueAnalysis from "../pages/admin/revenue_analysis/revenue_analysis_admin/AdminRevanueAnalysis";
-import EstimatorRevanueAnalysis from "../pages/admin/revenue_analysis/revenue_analysis_estimator/EstimatorRevanueAnalysis";
-import AdminPerformanceAnalysis from "../pages/admin/performance_analysis/performance_analysis_admin/AdminPerformanceAnalysis";
-import EstimatorPerformanceAnalysis from "../pages/admin/performance_analysis/performance_analysis_estimator/EstimatorPerformanceAnalysis";
+import AdminRevanueAnalysis from "../pages/admin/analysis/revenue_analysis/revenue_analysis_admin/AdminRevanueAnalysis";
+import EstimatorRevanueAnalysis from "../pages/admin/analysis/revenue_analysis/revenue_analysis_estimator/EstimatorRevanueAnalysis";
+import AdminPerformanceAnalysis from "../pages/admin/analysis/performance_analysis/performance_analysis_admin/AdminPerformanceAnalysis";
+import EstimatorPerformanceAnalysis from "../pages/admin/analysis/performance_analysis/performance_analysis_estimator/EstimatorPerformanceAnalysis";
 import SellerEdit from "../pages/admin/seller/SellerEdit";
 import BrandList from "../pages/admin/brandList/BrandList";
 import Language from "../pages/admin/language/Language";
 import ProtectedRoute from "./protectedRoute";
 import PublicRoute from "./PublicRoute";
 import SellerUserCreate from "../pages/admin/seller/SellerUserCreate";
-import SellerRevenueAnalysis from "../pages/staff/revenue_analysis/revenue_analysis_seller/SellerRevenueAnalysis";
+// import SellerRevenueAnalysis from "../pages/staff/analysis/revenue_analysis/revenue_analysis_seller/SellerRevenueAnalysis";
 import AccountProfile from "../pages/staff/account_profile/AccountProfile";
 import ManageStaff from "../pages/staff/manage_staff/ManageStaff";
 import EstimatorEdit from "../pages/admin/estimators/EstimatorEdit";
-import SellerPerformanceAnalysis from "../pages/admin/performance_analysis/performance_analysis_seller/SellerPerformanceAnalysis";
+import SellerPerformanceAnalysis from "../pages/admin/analysis/performance_analysis/performance_analysis_seller/SellerPerformanceAnalysis";
+import SellerRevenueAnalysis from "../pages/admin/analysis/revenue_analysis/revenue_analysis_seller/SellerRevenueAnalysis";
+import SellerVerification from "../pages/seller/SellerVerification";
+import UpdatePassword from "../pages/adminForgotPassword/UpdatePassword";
+import ForgotPassword from "../pages/auth/login/ForgotPassword";
 // import AddFormulaMaster from "../pages/AddFormulaMaster";
 
 const AppRoute = () => {
@@ -39,6 +43,25 @@ const AppRoute = () => {
               <Login />
             </PublicRoute>
           }
+        />
+
+        <Route
+          path="/login/forgot_password"
+          element={
+            <PublicRoute>
+              <ForgotPassword />
+            </PublicRoute>
+          }
+        />
+
+        <Route
+          path="/seller/verification/:code/:type"
+          element={<SellerVerification />}
+        />
+
+        <Route
+          path="/admin_forgot_password/update_password/:token/:id/:email"
+          element={<UpdatePassword />}
         />
 
         <Route
@@ -131,6 +154,8 @@ const AppRoute = () => {
 
             {/* <Route path="edit" element={<EditUser />} />  */}
           </Route>
+
+          {/* <Route path="/admin" element={<AdminRoot />}></Route> */}
         </Route>
       </Routes>
     </Router>

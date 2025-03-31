@@ -75,7 +75,6 @@ const WatchHistory = () => {
         setLoading(false);
       }
     } catch (error) {
-      console.log(error?.response?.data?.message);
       setLoading(false);
     }
   };

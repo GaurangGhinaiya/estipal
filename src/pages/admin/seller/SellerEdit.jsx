@@ -1,5 +1,6 @@
 import { LoadingButton } from "@mui/lab";
 import { Button } from "@mui/material";
+import axios from "axios";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -9,6 +10,7 @@ import PhoneInput, {
 } from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import { useNavigate, useParams } from "react-router-dom";
+import ConfirmDialog from "../../../components/common/ConfirmDialog";
 import CustomSwitch from "../../../components/common/CustomSwitch";
 import TextInputField from "../../../components/common/TextInputField";
 import currency from "../../../constant/currency.json";
@@ -28,16 +30,18 @@ const SellerEdit = () => {
   const [states, setStates] = useState([]);
   const [selectCountry, setSelectCountry] = useState("IN");
   const [loading, setLoading] = useState(false);
+  const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
+  const [confirmDialogLoading, setConfirmDialogLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     active: false,
     cmp_name: "",
     bank_name: "",
-    bank_address: "",
+    logistics_address: "",
     bank_account: "",
     account_number: "",
     bank_swift: "",
-    id: "",
+    unique_id: "",
     first_name: "",
     last_name: "",
     address: "",
@@ -50,13 +54,53 @@ const SellerEdit = () => {
     cnt_code: "",
     cnt_no: "",
     currency: "",
-    payment_tier: "",
+    payment_tier: 0,
     created_on: "",
     seller_logo: null,
     companyLogoPreview: "",
   });
   const [commissionData, setCommissionData] = useState([]);
-  // Fetch country data on mount
+
+  const [commissionObject, setCommissionObject] = useState({});
+
+  useEffect(() => {
+    const transformCommissionData = () => {
+      const transformedData = {
+        br1: {
+          price_range: [commissionData[0]?.from, commissionData[0]?.to],
+          value: commissionData[0]?.commission,
+        },
+        br2: {
+          price_range: [commissionData[1]?.from, commissionData[1]?.to],
+          value: commissionData[1]?.commission,
+        },
+        br3: {
+          price_range: [commissionData[2]?.from, commissionData[2]?.to],
+          value: commissionData[2]?.commission,
+        },
+        br4: {
+          price_range: [commissionData[3]?.from, commissionData[3]?.to],
+          value: commissionData[3]?.commission,
+        },
+        br5: {
+          price_range: [commissionData[4]?.from, commissionData[4]?.to],
+          value: commissionData[4]?.commission,
+        },
+        br6: {
+          price_range: [commissionData[5]?.from, commissionData[5]?.to],
+          value: commissionData[5]?.commission,
+        },
+        br7: {
+          price_range: [commissionData[6]?.from],
+          value: commissionData[6]?.commission,
+        },
+      };
+      setCommissionObject(transformedData);
+    };
+
+    transformCommissionData();
+  }, [commissionData]);
+
   useEffect(() => {
     const loadCountries = async () => {
       try {
@@ -69,7 +113,6 @@ const SellerEdit = () => {
     loadCountries();
   }, []);
 
-  // Fetch state data when the selected country changes
   useEffect(() => {
     if (selectCountry) {
       const fetchStatesData = async () => {
@@ -100,7 +143,6 @@ const SellerEdit = () => {
     }));
   }, [phone, selectPhoneCountry]);
 
-  // Handle file upload for the logo
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -110,6 +152,12 @@ const SellerEdit = () => {
         companyLogoPreview: URL.createObjectURL(file),
       });
     }
+  };
+
+  const handleCountryChange = (e) => {
+    const country = e.target.value;
+    setFormData((prev) => ({ ...prev, country, state: "" }));
+    setSelectCountry(country);
   };
 
   const getDetailById = async () => {
@@ -122,7 +170,7 @@ const SellerEdit = () => {
         ...prevFormData,
         ...seller,
         companyLogoPreview: seller?.seller_logo,
-        id: `SCA${seller?.id}`,
+        unique_id: `SCA${seller?.id}`,
         address: seller?.address,
         created_on: moment.unix(seller?.created_on).format("MMM DD,YYYY"),
       }));
@@ -145,33 +193,34 @@ const SellerEdit = () => {
   const save = async () => {
     setLoading(true);
 
-    // Create FormData object to hold the data
     const formDataToSend = new FormData();
 
-    const formattedCommissionData = commissionData?.map((item) => ({
-      from: `USD ${item?.from}`,
-      to: item?.to !== null ? `USD ${item?.to}` : "", // Handle null value
-      commission: String(item?.commission), // Convert to string
-    }));
+    // const formattedCommissionData = commissionData?.map((item) => ({
+    //   from: `USD ${item?.from}`,
+    //   to: item?.to !== null ? `USD ${item?.to}` : "",
+    //   commission: String(item?.commission),
+    // }));
 
-    const sendData = { ...formData, commission_plan: formattedCommissionData };
+    const sendData = { ...formData };
 
-    // Append non-file fields to FormData
     Object.keys(sendData).forEach((key) => {
-      if (key === "commission_plan") {
-        formDataToSend.append(
-          "commission_plan",
-          JSON.stringify(formattedCommissionData)
-        );
-      } else if (key !== "seller_logo") {
-        // Exclude seller_logo as it's a file
+      if (
+        key !== "seller_logo" &&
+        key !== "companyLogoPreview" &&
+        key !== "commission" &&
+        key !== "commission_plan" &&
+        formData[key]
+      ) {
         formDataToSend.append(key, formData[key]);
       }
     });
 
-    // Append the seller_logo file if present
     if (formData.seller_logo) {
       formDataToSend.append("seller_logo", formData.seller_logo);
+    }
+
+    if (commissionObject) {
+      formDataToSend.append("commission", JSON.stringify(commissionObject));
     }
 
     try {
@@ -185,6 +234,7 @@ const SellerEdit = () => {
         }
       );
 
+      console.log("response: ", response);
       if (response?.status === 200) {
         const message = "Estimator updated successfully!";
         toast.success(message);
@@ -192,9 +242,37 @@ const SellerEdit = () => {
       }
     } catch (error) {
       console.log("error: ", error);
-      toast.error(error?.response?.data?.payload?.error);
+      if (error?.response?.data?.payload?.error) {
+        toast.error(error?.response?.data?.payload?.error);
+      } else {
+        toast.error(error?.response?.data?.message);
+      }
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleResetPasswordClick = () => {
+    setConfirmDialogOpen(true);
+  };
+
+  const handleConfirmResetPassword = async () => {
+    setConfirmDialogOpen(false);
+    setConfirmDialogLoading(true);
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_BASE_URL}/sellers/forgetPassword`,
+        {
+          email: sellerData?.email,
+        }
+      );
+      if (response?.status === 200) {
+        toast.success(response?.data?.message);
+        setConfirmDialogLoading(false);
+      }
+    } catch (error) {
+      toast.error(error?.response?.data?.message);
+      setConfirmDialogLoading(false);
     }
   };
 
@@ -238,12 +316,14 @@ const SellerEdit = () => {
             </Button>
           )}
 
-          <Button
+          <LoadingButton
+            loading={confirmDialogLoading}
             variant="contained"
             className="!bg-[#fea31e] !normal-case !py-[5px] sm:!py-[10px] sm:!px-[40px] !px-[15px] !rounded-[50px]"
+            onClick={handleResetPasswordClick}
           >
             Reset Password
-          </Button>
+          </LoadingButton>
         </div>
       </div>
 
@@ -331,8 +411,8 @@ const SellerEdit = () => {
             onChange={handleChange}
           />
           <TextInputField
-            value={formData.bank_address}
-            name="bank_address"
+            value={formData.logistics_address}
+            name="logistics_address"
             rightTextValue=""
             type="text"
             label="Bank Address"
@@ -408,8 +488,8 @@ const SellerEdit = () => {
         <div className="">
           <TextInputField
             rightTextValue=""
-            value={formData.id}
-            name="id"
+            value={formData.unique_id}
+            name="unique_id"
             type="text"
             label="ID"
             readOnly={!isEditable}
@@ -469,28 +549,27 @@ const SellerEdit = () => {
             onChange={handleChange}
             component={
               <div className="flex w-full justify-end">
-                {isEditable ? (
-                  <select
-                    name="country"
-                    id="country"
-                    className="bg-[#1e252b] max-sm:w-[100px]"
-                    style={{ textAlignLast: "right" }}
-                    value={formData.country}
-                    readOnly={!isEditable}
-                    onChange={handleChange}
-                  >
-                    <option disabled selected>
-                      Open to select country
+                {/* {isEditable ? ( */}
+                <select
+                  name="country"
+                  id="country"
+                  className="bg-[#1e252b] max-sm:w-[100px]"
+                  style={{ textAlignLast: "right" }}
+                  value={formData.country}
+                  disabled={!isEditable}
+                  onChange={handleCountryChange}
+                >
+                  <option disabled selected>
+                    Open to select country
+                  </option>
+                  {countries?.map((item, index) => (
+                    <option value={item?.iso} key={index}>
+                      {item?.name}
                     </option>
-                    {countries.map((item, index) => (
-                      <option value={item?.code} key={index}>
-                        {item?.name}
-                      </option>
-                    ))}
-                  </select>
-                ) : (
-                  <p>{formData.country}</p>
-                )}
+                  ))}
+                </select>
+                {/* ) : (<p>{formData.country}</p> */}
+                {/* )} */}
               </div>
             }
           />
@@ -703,6 +782,13 @@ const SellerEdit = () => {
         commissionData={commissionData}
         setCommissionData={setCommissionData}
         sellerData={sellerData}
+      />
+      <ConfirmDialog
+        open={confirmDialogOpen}
+        handleClose={() => setConfirmDialogOpen(false)}
+        handleConfirm={handleConfirmResetPassword}
+        title="Confirm Reset Password"
+        content="Are you sure you want to reset the password?"
       />
     </div>
   );

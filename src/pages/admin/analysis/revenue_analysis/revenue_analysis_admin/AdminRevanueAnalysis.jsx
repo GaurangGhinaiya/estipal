@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axiosInstance from "../../../../services";
+import axiosInstance from "../../../../../services";
 import { CircularProgress } from "@mui/material";
 
 const AdminRevanueAnalysis = () => {

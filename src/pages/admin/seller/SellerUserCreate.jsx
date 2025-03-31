@@ -27,16 +27,26 @@ const SellerUserCreate = () => {
   const [states, setStates] = useState([]);
   const [selectCountry, setSelectCountry] = useState("IN");
   const [loading, setLoading] = useState(false);
+  const [commissionData, setCommissionData] = useState([
+    { from: 1005, to: 5000, commission: 14 },
+    { from: 5000, to: 10000, commission: 13 },
+    { from: 10000, to: 20000, commission: 12 },
+    { from: 20000, to: 30000, commission: 11 },
+    { from: 30000, to: 40000, commission: 10 },
+    { from: 40000, to: 50000, commission: 9 },
+    { from: 50000, to: null, commission: 8 },
+  ]);
+  const [active, setActive] = useState(false);
+  const [ip, setIp] = useState(null);
 
   const [formData, setFormData] = useState({
-    active: false,
-    company_name: "",
+    cmp_name: "",
     bank_name: "",
-    bank_address: "",
+    logistics_address: "",
     bank_account: "",
     account_number: "",
     bank_swift: "",
-    id: "",
+    unique_id: "",
     first_name: "",
     last_name: "",
     address: "",
@@ -49,14 +59,69 @@ const SellerUserCreate = () => {
     cnt_code: "",
     cnt_no: "",
     currency: "USD",
-    payment_tier: "",
+    payment_tier: 0,
     created_on: "",
-    seller_logo: null,
+    seller_logo:
+      "https://www.estipal.com/assets/dist/images/img-logo-login.svg",
     companyLogoPreview: "",
     staff_notify_flag: 0,
+    language: "en",
   });
 
-  // Fetch country data on mount
+  const [commissionObject, setCommissionObject] = useState({});
+
+  useEffect(() => {
+    const transformCommissionData = () => {
+      const transformedData = {
+        br1: {
+          price_range: [commissionData[0].from, commissionData[0].to],
+          value: commissionData[0].commission,
+        },
+        br2: {
+          price_range: [commissionData[1].from, commissionData[1].to],
+          value: commissionData[1].commission,
+        },
+        br3: {
+          price_range: [commissionData[2].from, commissionData[2].to],
+          value: commissionData[2].commission,
+        },
+        br4: {
+          price_range: [commissionData[3].from, commissionData[3].to],
+          value: commissionData[3].commission,
+        },
+        br5: {
+          price_range: [commissionData[4].from, commissionData[4].to],
+          value: commissionData[4].commission,
+        },
+        br6: {
+          price_range: [commissionData[5].from, commissionData[5].to],
+          value: commissionData[5].commission,
+        },
+        br7: {
+          price_range: [commissionData[6].from],
+          value: commissionData[6].commission,
+        },
+      };
+      setCommissionObject(transformedData);
+    };
+
+    transformCommissionData();
+  }, [commissionData]);
+
+  useEffect(() => {
+    const fetchIP = async () => {
+      try {
+        const response = await fetch("http://ip-api.com/json");
+        const data = await response.json();
+        setIp(data.query);
+      } catch (error) {
+        console.error("Error fetching IP:", error);
+      }
+    };
+
+    fetchIP();
+  }, []);
+
   useEffect(() => {
     const loadCountries = async () => {
       try {
@@ -69,7 +134,6 @@ const SellerUserCreate = () => {
     loadCountries();
   }, []);
 
-  // Fetch state data when the selected country changes
   useEffect(() => {
     if (selectCountry) {
       const fetchStatesData = async () => {
@@ -104,7 +168,7 @@ const SellerUserCreate = () => {
     const loadId = async () => {
       try {
         const nextId = await fetchNextSellerId();
-        setFormData((prev) => ({ ...prev, id: nextId }));
+        setFormData((prev) => ({ ...prev, unique_id: nextId }));
       } catch (error) {
         console.error("Error fetching next estimator ID:", error);
       }
@@ -114,7 +178,6 @@ const SellerUserCreate = () => {
     loadId();
   }, []);
 
-  // Handle file upload for the logo
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -126,7 +189,6 @@ const SellerUserCreate = () => {
     }
   };
 
-  // Event handlers
   const handleCountryChange = (e) => {
     const country = e.target.value;
     setFormData((prev) => ({ ...prev, country, state: "" }));
@@ -140,26 +202,32 @@ const SellerUserCreate = () => {
   const save = async () => {
     setLoading(true);
 
-    // Create FormData object to hold the data
     const formDataToSend = new FormData();
 
-    // Append non-file fields to FormData
     Object.keys(formData).forEach((key) => {
-      if (key !== "seller_logo" && formData[key]) {
-        // Exclude seller_logo as it's a file
+      if (
+        key !== "seller_logo" &&
+        key !== "companyLogoPreview" &&
+        formData[key]
+      ) {
         formDataToSend.append(key, formData[key]);
       }
     });
 
-    // Append the seller_logo file if present
+    formDataToSend.append("active", active);
+    formDataToSend.append("ip", ip);
     if (formData.seller_logo) {
       formDataToSend.append("seller_logo", formData.seller_logo);
+    }
+
+    if (commissionObject) {
+      formDataToSend.append("commission", JSON.stringify(commissionObject));
     }
 
     try {
       const response = await axiosInstance["post"](`/sellers`, formDataToSend, {
         headers: {
-          "Content-Type": "multipart/form-data", // Ensure that the request is treated as file upload
+          "Content-Type": "multipart/form-data",
         },
       });
 
@@ -217,22 +285,19 @@ const SellerUserCreate = () => {
                 <CustomSwitch
                   checked={formData.active}
                   onChange={(e) => {
-                    setFormData((prevData) => ({
-                      ...prevData,
-                      active: e.target.checked,
-                    }));
+                    setActive(e.target.checked);
                   }}
                 />
               </div>
             }
           />
           <TextInputField
-            value={formData.company_name}
+            value={formData.cmp_name}
             rightTextValue=""
             type="text"
             label="Company"
             placeholder="Company"
-            name="company_name"
+            name="cmp_name"
             bgColor={"#1e252b"}
             className="mb-[15px]"
             onChange={handleChange}
@@ -249,8 +314,8 @@ const SellerUserCreate = () => {
             onChange={handleChange}
           />
           <TextInputField
-            value={formData.bank_address}
-            name="bank_address"
+            value={formData.logistics_address}
+            name="logistics_address"
             rightTextValue=""
             type="text"
             label="Bank Address"
@@ -325,8 +390,8 @@ const SellerUserCreate = () => {
         <div className="">
           <TextInputField
             rightTextValue=""
-            value={formData.id}
-            name="id"
+            value={formData.unique_id}
+            name="unique_id"
             type="text"
             label="ID"
             readOnly={true}
@@ -474,9 +539,9 @@ const SellerUserCreate = () => {
                       id="tier1"
                       name="tier"
                       class="mr-2 !cursor-pointer"
-                      checked={formData.payment_tier == "Tier 1"}
+                      checked={formData.payment_tier == 1}
                       onChange={() =>
-                        setFormData({ ...formData, payment_tier: "Tier 1" })
+                        setFormData({ ...formData, payment_tier: 1 })
                       }
                     />
                     <label
@@ -492,9 +557,9 @@ const SellerUserCreate = () => {
                       id="tier2"
                       name="tier"
                       class="mr-2 !cursor-pointer"
-                      checked={formData.payment_tier == "Tier 2"}
+                      checked={formData.payment_tier == 2}
                       onChange={() =>
-                        setFormData({ ...formData, payment_tier: "Tier 2" })
+                        setFormData({ ...formData, payment_tier: 2 })
                       }
                     />
                     <label
@@ -579,7 +644,11 @@ const SellerUserCreate = () => {
         </div>
       </div>
 
-      <CommissionPlan isEditable={isEditable} />
+      <CommissionPlan
+        isEditable={isEditable}
+        commissionData={commissionData}
+        setCommissionData={setCommissionData}
+      />
     </div>
   );
 };

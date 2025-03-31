@@ -1,15 +1,14 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import SellerRevenueAnalysis from "../staff/revenue_analysis/revenue_analysis_seller/SellerRevenueAnalysis";
 import BrandList from "./brandList/BrandList";
 import Estimators from "./estimators/Estimators";
 import Settings from "./generalSetting/Setting";
 import ReadActivity from "./home/ReadActivity";
 import Language from "./language/Language";
-import AdminPerformanceAnalysis from "./performance_analysis/performance_analysis_admin/AdminPerformanceAnalysis";
-import EstimatorPerformanceAnalysis from "./performance_analysis/performance_analysis_estimator/EstimatorPerformanceAnalysis";
-import AdminRevanueAnalysis from "./revenue_analysis/revenue_analysis_admin/AdminRevanueAnalysis";
-import EstimatorRevanueAnalysis from "./revenue_analysis/revenue_analysis_estimator/EstimatorRevanueAnalysis";
+import AdminPerformanceAnalysis from "./analysis/performance_analysis/performance_analysis_admin/AdminPerformanceAnalysis";
+import EstimatorPerformanceAnalysis from "./analysis/performance_analysis/performance_analysis_estimator/EstimatorPerformanceAnalysis";
+import AdminRevanueAnalysis from "./analysis/revenue_analysis/revenue_analysis_admin/AdminRevanueAnalysis";
+import EstimatorRevanueAnalysis from "./analysis/revenue_analysis/revenue_analysis_estimator/EstimatorRevanueAnalysis";
 import SellerEdit from "./seller/SellerEdit";
 import SellerUserCreate from "./seller/SellerUserCreate";
 import StaffUser from "./staff/StaffUser";
@@ -20,7 +19,8 @@ import AccountProfile from "../staff/account_profile/AccountProfile";
 import ManageStaff from "../staff/manage_staff/ManageStaff";
 import ActivitiesTable from "./activities/ActivitiesTable";
 import EstimatorEdit from "./estimators/EstimatorEdit";
-import SellerPerformanceAnalysis from "./performance_analysis/performance_analysis_seller/SellerPerformanceAnalysis";
+import SellerPerformanceAnalysis from "./analysis/performance_analysis/performance_analysis_seller/SellerPerformanceAnalysis";
+import SellerRevenueAnalysis from "./analysis/revenue_analysis/revenue_analysis_seller/SellerRevenueAnalysis";
 
 const AdminRoot = () => {
   const staffUser = JSON.parse(localStorage.getItem("staffUser"));

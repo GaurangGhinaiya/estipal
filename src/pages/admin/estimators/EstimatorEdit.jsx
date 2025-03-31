@@ -1,3 +1,4 @@
+import { LoadingButton } from "@mui/lab";
 import { Button } from "@mui/material";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
@@ -14,14 +15,13 @@ import YearDropdown from "../../../components/common/YearsDropdown";
 import currency from "../../../constant/currency.json";
 import timeZone from "../../../constant/timeZone.json";
 import axiosInstance from "../../../services";
-import toast from "react-hot-toast";
-import AvailabilitySchedule from "./components/AvailabilitySchedule";
-import { LoadingButton } from "@mui/lab";
 import {
   fetchCountryList,
   fetchNextEstimatorId,
   fetchStateList,
 } from "../../../utils/apiUtils";
+import AvailabilitySchedule from "./components/AvailabilitySchedule";
+import toast from "react-hot-toast";
 
 const EstimatorEdit = () => {
   const navigate = useNavigate();
@@ -32,7 +32,6 @@ const EstimatorEdit = () => {
   const today = new Date();
   const formattedDate = today.toISOString().split("T")[0];
 
-  // State variables
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
   const [isEditable, setIsEditable] = useState(false);
@@ -43,8 +42,8 @@ const EstimatorEdit = () => {
   const [phone, setPhone] = useState("");
   const [selectedYears, setSelectedYears] = useState([]);
   const [selectedBrands, setSelectedBrands] = useState([]);
-  const [availabilitySchedule, setAvailabilitySchedule] = useState(
-    Array(7).fill({
+  const [availabilitySchedule, setAvailabilitySchedule] = useState([
+    {
       week_id: 0,
       from_time_1: "",
       to_time_1: "",
@@ -52,8 +51,62 @@ const EstimatorEdit = () => {
       to_time_2: "",
       from_time_3: "",
       to_time_3: "",
-    })
-  );
+    },
+    {
+      week_id: 1,
+      from_time_1: "",
+      to_time_1: "",
+      from_time_2: "",
+      to_time_2: "",
+      from_time_3: "",
+      to_time_3: "",
+    },
+    {
+      week_id: 2,
+      from_time_1: "",
+      to_time_1: "",
+      from_time_2: "",
+      to_time_2: "",
+      from_time_3: "",
+      to_time_3: "",
+    },
+    {
+      week_id: 3,
+      from_time_1: "",
+      to_time_1: "",
+      from_time_2: "",
+      to_time_2: "",
+      from_time_3: "",
+      to_time_3: "",
+    },
+    {
+      week_id: 4,
+      from_time_1: "",
+      to_time_1: "",
+      from_time_2: "",
+      to_time_2: "",
+      from_time_3: "",
+      to_time_3: "",
+    },
+    {
+      week_id: 5,
+      from_time_1: "",
+      to_time_1: "",
+      from_time_2: "",
+      to_time_2: "",
+      from_time_3: "",
+      to_time_3: "",
+    },
+    {
+      week_id: 6,
+      from_time_1: "",
+      to_time_1: "",
+      from_time_2: "",
+      to_time_2: "",
+      from_time_3: "",
+      to_time_3: "",
+    },
+  ]);
   const [formData, setFormData] = useState({
     active: 0,
     id: "",
@@ -79,11 +132,12 @@ const EstimatorEdit = () => {
     year_of_production: "",
     commission: "10",
     timezone: "",
-    estimatorDayTimeDurations: [],
+    week_data: [],
     notify_link_flag: 0,
+    // admin_id: 0,
+    // brands: ""x
   });
 
-  console.log("formData: ", formData);
   // Fetch country data on mount
   useEffect(() => {
     const loadCountries = async () => {
@@ -132,6 +186,7 @@ const EstimatorEdit = () => {
             `/estimator/detail?id=${id}`
           );
           const estimator = response.payload?.data;
+          console.log("estimator: ", estimator);
 
           setFormData({
             ...formData,
@@ -191,9 +246,9 @@ const EstimatorEdit = () => {
   useEffect(() => {
     setFormData((prev) => ({
       ...prev,
-      year_of_production: selectedYears.join(","),
-      brands: selectedBrands.join(","),
-      estimatorDayTimeDurations: availabilitySchedule,
+      year_of_production: selectedYears,
+      brands: selectedBrands,
+      week_data: availabilitySchedule,
     }));
   }, [selectedYears, selectedBrands, availabilitySchedule]);
 
@@ -214,12 +269,12 @@ const EstimatorEdit = () => {
   };
 
   const save = async () => {
+    // console.log("formData: ", formData);
     setLoading(true);
     try {
       const endpoint =
         actionType === "edit" ? `/estimator?id=${id}` : `/estimator`;
       const method = actionType === "edit" ? "put" : "post";
-
       const response = await axiosInstance[method](endpoint, formData);
       if (response?.status === 200) {
         const message =
@@ -235,7 +290,6 @@ const EstimatorEdit = () => {
       setLoading(false);
     }
   };
-  console.log("actionType", actionType);
 
   return (
     <div className="mx-auto px-[20px] sm:px-[45px] py-[20px]">
@@ -560,7 +614,7 @@ const EstimatorEdit = () => {
             placeholder="Mobile Number"
             readOnly={!isEditable}
             bgColor={"#1e252b"}
-            className="mb-[15px]"
+            className="mb-[15px] text-black dark:text-white"
             onChange={handleChange}
             component={
               <div className="flex justify-end w-full ">

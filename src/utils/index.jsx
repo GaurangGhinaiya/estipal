@@ -21,3 +21,7 @@ export const formatCurrency = (price, currency) => {
   }
   return "";
 };
+
+export const getCurrentYear = () => {
+  return new Date().getFullYear();
+};

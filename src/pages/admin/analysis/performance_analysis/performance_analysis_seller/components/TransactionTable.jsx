@@ -54,7 +54,7 @@ const TransactionTable = ({ data, sortField, sortOrder, handleSort }) => {
               W{item?.id}
             </td>
             <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap">
-              {`${item?.brand} / ${item?.collection} / ${item?.model} ${item?.reference}`}
+              {`${item?.brand} / ${item?.model} / ${item?.collection} ${item?.reference}`}
             </td>
             <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap">
               {item?.estimated_watch_price

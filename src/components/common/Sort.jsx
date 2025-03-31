@@ -4,7 +4,6 @@ export const sortData = (data, key, order) => {
   return [...data].sort((a, b) => {
     let valueA = a[key];
     let valueB = b[key];
-    console.log("valueA: ", valueA, valueB, order);
 
     // Handle undefined or null values explicitly
     if (valueA == null) valueA = "";
@@ -16,7 +15,7 @@ export const sortData = (data, key, order) => {
     }
 
     // Check if values are valid dates
-    if (   
+    if (
       moment(valueA, moment.ISO_8601, true).isValid() &&
       moment(valueB, moment.ISO_8601, true).isValid()
     ) {

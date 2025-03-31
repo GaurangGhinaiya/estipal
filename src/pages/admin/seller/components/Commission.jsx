@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import TextInputField from "../../../../components/common/TextInputField";
+import { convertCommissionData } from "../function/convertCommissionData";
 
 const CommissionPlan = (props) => {
   const {
@@ -17,15 +18,26 @@ const CommissionPlan = (props) => {
   };
 
   useEffect(() => {
-    if (sellerData?.commission_plan?.length > 0) {
-      const transformedData = sellerData?.commission_plan?.map((item) => ({
-        from: item?.from ? Number(item?.from?.replace("USD ", "")) : null,
-        to: item?.to ? Number(item?.to?.replace("USD ", "")) : null, // Handle empty string
-        commission: Number(item.commission) ?? null,
-      }));
-      setCommissionData(transformedData);
+    if (sellerData?.commission) {
+      const ConvertCommission = convertCommissionData(sellerData?.commission);
+      if (ConvertCommission?.length > 0) {
+        const transformedData = ConvertCommission?.map((item) => ({
+          from: isEditable
+            ? item?.from
+            : item?.from
+            ? `${sellerData?.currency} ${item?.from}`
+            : null,
+          to: isEditable
+            ? item?.to
+            : item?.to
+            ? `${sellerData?.currency} ${item?.to}`
+            : null,
+          commission: item.commission ? Number(item.commission) : null,
+        }));
+        setCommissionData(transformedData);
+      }
     }
-  }, [sellerData?.commission_plan]);
+  }, [sellerData, isEditable]);
 
   return (
     <div className="px-0 sm:px-[20px] ">
@@ -43,8 +55,10 @@ const CommissionPlan = (props) => {
               key={index}
             >
               <TextInputField
-                rightTextValue="(USD)"
-                type="number"
+                rightTextValue={
+                  isEditable ? `(${sellerData?.currency ?? "USD"})` : ""
+                }
+                type={isEditable ? "number" : "text"}
                 placeholder=""
                 label="From"
                 name="from"
@@ -52,6 +66,7 @@ const CommissionPlan = (props) => {
                 readOnly={!isEditable}
                 bgColor={staffUser ? "#ffffff" : "#283641"}
                 border={staffUser ? "1px solid white" : "none"}
+                visibility={row?.from !== null ? "visible" : "hidden"}
                 onChange={(e) =>
                   handleChange(index, "from", parseInt(e.target.value))
                 }
@@ -59,8 +74,10 @@ const CommissionPlan = (props) => {
               />
 
               <TextInputField
-                rightTextValue="(USD)"
-                type="number"
+                rightTextValue={
+                  isEditable ? `(${sellerData?.currency ?? "USD"})` : ""
+                }
+                type={isEditable ? "number" : "text"}
                 placeholder=""
                 label="To"
                 name="to"
@@ -68,6 +85,7 @@ const CommissionPlan = (props) => {
                 readOnly={!isEditable}
                 bgColor={staffUser ? "#ffffff" : "#283641"}
                 border={staffUser ? "1px solid black" : "none"}
+                visibility={row?.to !== null ? "visible" : "hidden"}
                 onChange={(e) =>
                   handleChange(index, "to", parseInt(e.target.value))
                 }
@@ -84,6 +102,7 @@ const CommissionPlan = (props) => {
                 readOnly={!isEditable}
                 bgColor={staffUser ? "#ffffff" : "#283641"}
                 border={staffUser ? "1px solid black" : "none"}
+                visibility={row?.commission !== null ? "visible" : "hidden"}
                 onChange={(e) =>
                   handleChange(index, "commission", parseInt(e.target.value))
                 }

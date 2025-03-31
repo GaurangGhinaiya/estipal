@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import bgImage from "../../../assets/images/img-bg-login.png";
-import axios from "axios";
+import axiosInstance from "../../../services";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
 import logo from "../../../assets/images/icons/logo.png";
 import { getCurrentYear } from "../../../utils";
+import axios from "axios";
 
-const Login = () => {
+const ForgotPassword = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const {
@@ -17,23 +18,22 @@ const Login = () => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      username: "",
-      password: "",
+      email: "",
     },
   });
-  // Login handler
+
   const onSubmit = async (data) => {
     setLoading(true);
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_PUBLIC_BASE_URL}/login`,
-        data
+        `${process.env.REACT_APP_API_BASE_URL}/sellers/forgetPassword?email`,
+        {
+          email: data?.email,
+        }
       );
       if (response?.status === 200) {
         toast.success(response?.data?.message);
-        localStorage.setItem("authToken", response?.data?.payload?.token);
-        localStorage.setItem("staffUser", false);
-        navigate("/admin");
+        // navigate("/login");
         setLoading(false);
       }
     } catch (error) {
@@ -52,76 +52,43 @@ const Login = () => {
           <div className="logo text-center">
             <img src={logo} alt="logo" className="mx-auto" />
           </div>
-          <div className="title text-center">Sign in Estipal</div>
+          <div className="title text-center">Forgot Password</div>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="form-group">
-              <label htmlFor="username">Username</label>
+            <div className="form-group !mb-4">
+              <label htmlFor="email">* Email</label>
               <Controller
-                name="username"
+                name="email"
                 control={control}
                 rules={{
-                  required: "Username is required",
+                  required: "Email is required",
+                  pattern: {
+                    value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+                    message: "Invalid email address",
+                  },
                 }}
                 render={({ field }) => (
                   <input
                     {...field}
-                    id="username"
+                    id="email"
+                    type="email"
                     className="form-control"
-                    placeholder="Enter your username"
+                    placeholder="Enter your email"
                   />
                 )}
               />
-              {errors?.username && (
-                <p className="text-red-500 text-sm">
-                  {errors?.username?.message}
-                </p>
+              {errors?.email && (
+                <p className="text-red-500 text-sm">{errors?.email?.message}</p>
               )}
             </div>
 
-            <div className="form-group">
-              <label htmlFor="password">Password</label>
-              <Controller
-                name="password"
-                control={control}
-                rules={{
-                  required: "Password is required",
-                }}
-                render={({ field }) => (
-                  <input
-                    {...field}
-                    id="password"
-                    type="password"
-                    className="form-control"
-                    placeholder="Enter your password"
-                  />
-                )}
-              />
-              {errors?.password && (
-                <p className="text-red-500 text-sm">
-                  {errors?.password?.message}
-                </p>
-              )}
-            </div>
-
-            <div>
-              <button
-                className="text-[#039be5]"
-                onClick={(e) => {
-                  e.preventDefault();
-                  navigate("/login/forgot_password");
-                }}
-              >
-                Forgot password?
-              </button>
-            </div>
-            <div className="w-100-p" style={{ marginTop: "15px" }}>
+            <div className="w-100-p pt-2 pb-5" style={{ marginTop: "15px" }}>
               <button
                 type="submit"
-                className="btn bg-[#3c8dbc] w-full"
+                className="btn bg-[#3c8dbc] w-full !py-[7px]"
                 style={{ borderRadius: "20px" }}
               >
                 <div className="flex items-center justify-center gap-4">
-                  Sign In{" "}
+                  Send{" "}
                   {loading && (
                     <CircularProgress size={15} className="!text-white" />
                   )}
@@ -129,6 +96,12 @@ const Login = () => {
               </button>
             </div>
           </form>
+          <button
+            className="text-[#039be5] mx-auto block text-[16px] py-[10px] px-[10px]"
+            onClick={() => navigate("/login")}
+          >
+            Go back to login
+          </button>
         </div>
         <footer>© {getCurrentYear()} Estipal - All right reserved</footer>
       </div>
@@ -136,4 +109,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default ForgotPassword;

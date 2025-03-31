@@ -13,7 +13,6 @@ import EstimatorMultiQuotation from "./statusComponents/EstimatorMultiQuotation"
 
 const CardData = (props) => {
   const { item, index, staffUser, adminActivitiesData, currency } = props;
-  console.log("item: ", item);
   let prefix = "SCA";
   if (item?.admin_group === "estimator") {
     prefix = "ECA";

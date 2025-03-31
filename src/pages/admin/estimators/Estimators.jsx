@@ -1,6 +1,6 @@
 import { Button, CircularProgress } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import PaginationComponent from "../../../components/common/PaginationComponent";
 import SearchBar from "../../../components/common/SearchBar";
 import useDebounce from "../../../components/common/UseDebounce";
@@ -9,53 +9,58 @@ import moment from "moment";
 
 const Estimators = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [data, setData] = useState([]);
-  const [status, setStatus] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOrder, setSortOrder] = useState("asc");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [recordsPerPage, setRecordsPerPage] = useState(20);
+  const [currentPage, setCurrentPage] = useState(null);
+  const [recordsPerPage, setRecordsPerPage] = useState(10);
   const [totalRecords, setTotalRecords] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const debouncedSearchTerm = useDebounce(searchQuery, 500);
 
-  const getEstimatorData = async () => {
-    try {
-      const searchValue =
-        debouncedSearchTerm || status
-          ? JSON.stringify(
-              debouncedSearchTerm
-                ? {
-                    search: debouncedSearchTerm ? debouncedSearchTerm : "",
-                    watch_status: status,
-                  }
-                : { watch_status: status }
-            )
-          : "";
+  const getEstimatorData = async (page) => {
+    setIsLoading(true);
 
-      setIsLoading(true);
+    try {
+      const searchValue = debouncedSearchTerm
+        ? JSON.stringify({
+            search: debouncedSearchTerm ? debouncedSearchTerm : "",
+          })
+        : "";
+
       const response = await axiosInstance.get(
-        `/estimator?page=${currentPage}&records_per_page=${recordsPerPage}&search=${searchValue}&sort_order=${sortOrder}`
+        `/estimator?page=${page}&records_per_page=${recordsPerPage}&search=${searchValue}&sort_order=${sortOrder}`
       );
       setData(response.payload.data);
       setTotalRecords(response?.pager?.total_records);
-      setIsLoading(false);
     } catch (error) {
-      console.log("error", error);
+      console.log("Error fetching Estimator user data:", error);
+    } finally {
       setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    getEstimatorData();
-  }, [currentPage, sortOrder, debouncedSearchTerm, status, searchQuery]);
+    const queryParams = new URLSearchParams(location.search);
+    const page = queryParams.get("page") || 1;
+    setCurrentPage(Number(page));
+  }, [location.search]);
+
+  useEffect(() => {
+    if (currentPage) {
+      getEstimatorData(currentPage);
+    }
+  }, [currentPage, sortOrder, debouncedSearchTerm]);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
+    let url = `?page=${page}`;
+    navigate(url);
   };
 
   return (
-    <div className="p-[15px] ">
+    <div className="p-[15px] min-h-[90vh]">
       <div className="px-0 sm:px-[15px] pt-4 flex justify-between flex-wrap">
         <h1 className="text-[30px] font-medium mb-4 px-0 sm:px-[15px] font-sans text-white">
           Estimators
@@ -83,7 +88,7 @@ const Estimators = () => {
         </div>
       </div>
 
-      <div className="w-[95.5%] overflow-auto mx-auto pt-[10px] min-h-[100vh]">
+      <div className="w-[95.5%] overflow-auto mx-auto pt-[10px] ">
         <table className="table-auto w-full text-left">
           <thead style={{ borderBottom: "2px solid #111111" }}>
             <tr>
