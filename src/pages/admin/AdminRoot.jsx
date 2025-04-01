@@ -17,6 +17,8 @@ import WatchHistory from "./watchHistory/WatchHistory";
 // import SellerPerformanceAnalysis from "../staff/performance_analysis/performance_analysis_seller/SellerPerformanceAnalysis";
 import AccountProfile from "../staff/account_profile/AccountProfile";
 import ManageStaff from "../staff/manage_staff/ManageStaff";
+import SellerRevenueAnalysisStaff from "../staff/revenue_analysis/revenue_analysis_seller/SellerRevenueAnalysis";
+import SellerPerformanceAnalysisStaff from "../staff/performance_analysis/performance_analysis_seller/SellerPerformanceAnalysis";
 import ActivitiesTable from "./activities/ActivitiesTable";
 import EstimatorEdit from "./estimators/EstimatorEdit";
 import SellerPerformanceAnalysis from "./analysis/performance_analysis/performance_analysis_seller/SellerPerformanceAnalysis";
@@ -86,6 +88,14 @@ const AdminRoot = () => {
         <Route
           path="/analysis/revenue_analysis/estimator"
           element={<EstimatorRevanueAnalysis />}
+        />
+        <Route
+          path="/analysis/revenue_analysis/seller"
+          element={<SellerRevenueAnalysisStaff />}
+        />
+        <Route
+          path="/analysis/performance_analysis/seller"
+          element={<SellerPerformanceAnalysisStaff />}
         />
         <Route
           path="/analysis/performance_analysis/admin"
