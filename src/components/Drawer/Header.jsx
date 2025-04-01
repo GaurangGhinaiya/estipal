@@ -16,7 +16,7 @@ const Header = () => {
   const [openPerformanceMenu, setOpenPerformanceMenu] = React.useState(false);
   const pathName = useLocation();
   const { pathname } = pathName;
-  const staffUser = JSON.parse(localStorage.getItem("staffUser"));
+  const userRole = localStorage.getItem("userRole");
 
   const revenueMenuRef = useRef(null);
   const performanceMenuRef = useRef(null);
@@ -65,12 +65,12 @@ const Header = () => {
           <a href="/" className="pr-[15px]">
             <img
               alt="Logo"
-              src={staffUser ? DarkLogo : LightLogo}
+              src={userRole === "admin" ? LightLogo : DarkLogo}
               className="h-[50px]"
             />
           </a>
           <div className=" text-black dark:text-[#ffff] font-bold text-[15px]">
-            {staffUser
+            {userRole === "staff"
               ? "ESTIPAL MERCHANT ADMIN CONSOLE"
               : "ESTIPAL ADMINISTRATION"}
           </div>
@@ -110,7 +110,7 @@ const Header = () => {
           >
             Watches History
           </Button>
-          {!staffUser && (
+          {userRole === "admin" && (
             <Button
               className="text-white !normal-case !text-[14px] !p-[0] !m-[0]"
               sx={{
@@ -124,7 +124,7 @@ const Header = () => {
               Merchants & Staff
             </Button>
           )}
-          {!staffUser && (
+          {userRole === "admin" && (
             <Button
               className="text-white !normal-case !text-[14px] !p-[0] !m-[0]"
               sx={{
@@ -138,7 +138,7 @@ const Header = () => {
               Estimators
             </Button>
           )}
-          {staffUser && (
+          {userRole === "staff" && (
             <div className="relative">
               <Button
                 className="text-white !normal-case !text-[14px] !p-[0] !m-[0] "
@@ -158,7 +158,7 @@ const Header = () => {
               </Button>
             </div>
           )}
-          {!staffUser && (
+          {userRole === "admin" && (
             <div className="relative" ref={revenueMenuRef}>
               <button
                 style={{
@@ -202,7 +202,7 @@ const Header = () => {
               )}
             </div>
           )}
-          {staffUser && (
+          {userRole === "staff" && (
             <div className="relative">
               <Button
                 className="text-white !normal-case !text-[14px] !p-[0] !m-[0] "
@@ -222,7 +222,7 @@ const Header = () => {
               </Button>
             </div>
           )}
-          {!staffUser && (
+          {userRole === "admin" && (
             <div className="relative" ref={performanceMenuRef}>
               <button
                 style={{
@@ -268,7 +268,7 @@ const Header = () => {
               )}
             </div>
           )}
-          {!staffUser && (
+          {userRole === "admin" && (
             <Button
               className="text-white !normal-case !text-[14px] !p-[0] !m-[0]"
               sx={{
@@ -282,7 +282,7 @@ const Header = () => {
               Brands, Collection and Models
             </Button>
           )}
-          {!staffUser && (
+          {userRole === "admin" && (
             <Button
               className="text-white !normal-case !text-[14px] !p-[0] !m-[0]"
               sx={{
@@ -296,7 +296,7 @@ const Header = () => {
               General Settings
             </Button>
           )}
-          {!staffUser && (
+          {userRole === "admin" && (
             <Button
               className="text-white !normal-case !text-[14px] !p-[0] !m-[0]"
               sx={{
@@ -310,7 +310,7 @@ const Header = () => {
               Languages
             </Button>
           )}
-          {staffUser && (
+          {userRole === "staff" && (
             <Button
               className="text-white !normal-case !text-[14px] !p-[0] !m-[0]"
               sx={{
@@ -324,7 +324,7 @@ const Header = () => {
               Manage Staff
             </Button>
           )}
-          {staffUser && (
+          {userRole === "staff" && (
             <Button
               className="text-white !normal-case !text-[14px] !p-[0] !m-[0]"
               sx={{

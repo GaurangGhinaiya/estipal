@@ -57,6 +57,7 @@ const ManageStaff = () => {
     watches_history: false,
     reset_password: false,
   });
+  const userRole = localStorage.getItem("userRole");
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -409,7 +410,7 @@ const ManageStaff = () => {
         recordsPerPage={recordsPerPage}
         handlePageChange={handlePageChange}
         data={history?.length}
-        staffUser={true}
+        userRole={userRole}
       />
     </div>
   );

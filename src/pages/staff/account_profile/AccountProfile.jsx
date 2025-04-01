@@ -10,14 +10,14 @@ import countries from "../../../constant/country.json";
 import currency from "../../../constant/currency.json";
 
 const AccountProfile = () => {
-  const staffUser = JSON.parse(localStorage.getItem("staffUser"));
+  const userRole = localStorage.getItem("userRole");
   const styles = {
     input: {
-      backgroundColor: staffUser ? "#FFFFFF" : "#1e252b", // Style for the input
+      backgroundColor: userRole === "staff" ? "#FFFFFF" : "#1e252b", // Style for the input
     },
     countrySelect: {
-      backgroundColor: staffUser ? "#ffffff" : "#1e252b", // Style for the country select
-      color: staffUser ? "black" : "white",
+      backgroundColor: userRole === "staff" ? "#ffffff" : "#1e252b", // Style for the country select
+      color: userRole === "staff" ? "black" : "white",
     },
   };
 
@@ -113,8 +113,8 @@ const AccountProfile = () => {
             label="Active"
             readOnly={!isEditable}
             //   value=""
-            bgColor={staffUser ? "#ffffff" : "#1e252b"}
-            border={staffUser ? "1px solid black" : "none"}
+            bgColor={userRole === "staff" ? "#ffffff" : "#1e252b"}
+            border={userRole === "staff" ? "1px solid black" : "none"}
             className="mb-[15px]"
             component={
               <div className="w-full flex justify-end">
@@ -138,8 +138,8 @@ const AccountProfile = () => {
             placeholder="Company"
             readOnly={!isEditable}
             name="company"
-            bgColor={staffUser ? "#ffffff" : "#1e252b"}
-            border={staffUser ? "1px solid black" : "none"}
+            bgColor={userRole === "staff" ? "#ffffff" : "#1e252b"}
+            border={userRole === "staff" ? "1px solid black" : "none"}
             className="mb-[15px]"
             onChange={handleChange}
           />
@@ -151,8 +151,8 @@ const AccountProfile = () => {
             placeholder="Bank Name"
             name="bankName"
             readOnly={!isEditable}
-            bgColor={staffUser ? "#ffffff" : "#1e252b"}
-            border={staffUser ? "1px solid black" : "none"}
+            bgColor={userRole === "staff" ? "#ffffff" : "#1e252b"}
+            border={userRole === "staff" ? "1px solid black" : "none"}
             className="mb-[15px]"
             onChange={handleChange}
           />
@@ -164,8 +164,8 @@ const AccountProfile = () => {
             label="Bank Address"
             readOnly={!isEditable}
             placeholder="Bank Address"
-            bgColor={staffUser ? "#ffffff" : "#1e252b"}
-            border={staffUser ? "1px solid black" : "none"}
+            bgColor={userRole === "staff" ? "#ffffff" : "#1e252b"}
+            border={userRole === "staff" ? "1px solid black" : "none"}
             className="mb-[15px]"
             onChange={handleChange}
           />
@@ -177,8 +177,8 @@ const AccountProfile = () => {
             label="Bank Account Name"
             readOnly={!isEditable}
             placeholder="Bank Account Name"
-            bgColor={staffUser ? "#ffffff" : "#1e252b"}
-            border={staffUser ? "1px solid black" : "none"}
+            bgColor={userRole === "staff" ? "#ffffff" : "#1e252b"}
+            border={userRole === "staff" ? "1px solid black" : "none"}
             className="mb-[15px]"
             onChange={handleChange}
           />
@@ -190,8 +190,8 @@ const AccountProfile = () => {
             label="Account Number"
             readOnly={!isEditable}
             placeholder="Account Number"
-            bgColor={staffUser ? "#ffffff" : "#1e252b"}
-            border={staffUser ? "1px solid black" : "none"}
+            bgColor={userRole === "staff" ? "#ffffff" : "#1e252b"}
+            border={userRole === "staff" ? "1px solid black" : "none"}
             className="mb-[15px]"
             onChange={handleChange}
           />
@@ -203,16 +203,16 @@ const AccountProfile = () => {
             label="Swift code/IBAN"
             readOnly={!isEditable}
             placeholder="Swift code/IBAN"
-            bgColor={staffUser ? "#ffffff" : "#1e252b"}
-            border={staffUser ? "1px solid black" : "none"}
+            bgColor={userRole === "staff" ? "#ffffff" : "#1e252b"}
+            border={userRole === "staff" ? "1px solid black" : "none"}
             className="mb-[15px]"
             onChange={handleChange}
           />
           <TextInputField
             rightTextValue=""
             label="Company Logo"
-            bgColor={staffUser ? "#ffffff" : "#1e252b"}
-            border={staffUser ? "1px solid black" : "none"}
+            bgColor={userRole === "staff" ? "#ffffff" : "#1e252b"}
+            border={userRole === "staff" ? "1px solid black" : "none"}
             readOnly={!isEditable}
             className="mb-[15px]"
             component={
@@ -249,8 +249,8 @@ const AccountProfile = () => {
             label="ID"
             placeholder="ID"
             readOnly={!isEditable}
-            bgColor={staffUser ? "#ffffff" : "#1e252b"}
-            border={staffUser ? "1px solid black" : "none"}
+            bgColor={userRole === "staff" ? "#ffffff" : "#1e252b"}
+            border={userRole === "staff" ? "1px solid black" : "none"}
             className="mb-[15px]"
             onChange={handleChange}
           />
@@ -261,8 +261,8 @@ const AccountProfile = () => {
             type="text"
             label="First Name"
             placeholder="First Name"
-            bgColor={staffUser ? "#ffffff" : "#1e252b"}
-            border={staffUser ? "1px solid black" : "none"}
+            bgColor={userRole === "staff" ? "#ffffff" : "#1e252b"}
+            border={userRole === "staff" ? "1px solid black" : "none"}
             className="mb-[15px]"
             onChange={handleChange}
           />
@@ -274,8 +274,8 @@ const AccountProfile = () => {
             label="Last Name"
             placeholder="Last Name"
             readOnly={!isEditable}
-            bgColor={staffUser ? "#ffffff" : "#1e252b"}
-            border={staffUser ? "1px solid black" : "none"}
+            bgColor={userRole === "staff" ? "#ffffff" : "#1e252b"}
+            border={userRole === "staff" ? "1px solid black" : "none"}
             className="mb-[15px]"
             onChange={handleChange}
           />
@@ -287,8 +287,8 @@ const AccountProfile = () => {
             label="Street Address"
             placeholder="Street Address"
             readOnly={!isEditable}
-            bgColor={staffUser ? "#ffffff" : "#1e252b"}
-            border={staffUser ? "1px solid black" : "none"}
+            bgColor={userRole === "staff" ? "#ffffff" : "#1e252b"}
+            border={userRole === "staff" ? "1px solid black" : "none"}
             className="mb-[15px]"
             onChange={handleChange}
           />
@@ -300,16 +300,16 @@ const AccountProfile = () => {
             label="City"
             placeholder="City"
             readOnly={!isEditable}
-            bgColor={staffUser ? "#ffffff" : "#1e252b"}
-            border={staffUser ? "1px solid black" : "none"}
+            bgColor={userRole === "staff" ? "#ffffff" : "#1e252b"}
+            border={userRole === "staff" ? "1px solid black" : "none"}
             className="mb-[15px]"
             onChange={handleChange}
           />
           <TextInputField
             rightTextValue=""
             label="Country"
-            bgColor={staffUser ? "#ffffff" : "#1e252b"}
-            border={staffUser ? "1px solid black" : "none"}
+            bgColor={userRole === "staff" ? "#ffffff" : "#1e252b"}
+            border={userRole === "staff" ? "1px solid black" : "none"}
             readOnly={!isEditable}
             className="mb-[15px]"
             onChange={handleChange}
@@ -343,8 +343,8 @@ const AccountProfile = () => {
             label="Zip/Postal Code"
             placeholder="Zip/Postal Code"
             readOnly={!isEditable}
-            bgColor={staffUser ? "#ffffff" : "#1e252b"}
-            border={staffUser ? "1px solid black" : "none"}
+            bgColor={userRole === "staff" ? "#ffffff" : "#1e252b"}
+            border={userRole === "staff" ? "1px solid black" : "none"}
             className="mb-[15px]"
             onChange={handleChange}
           />
@@ -356,8 +356,8 @@ const AccountProfile = () => {
             label="State/Province"
             readOnly={!isEditable}
             placeholder="State/Province"
-            bgColor={staffUser ? "#ffffff" : "#1e252b"}
-            border={staffUser ? "1px solid black" : "none"}
+            bgColor={userRole === "staff" ? "#ffffff" : "#1e252b"}
+            border={userRole === "staff" ? "1px solid black" : "none"}
             className="mb-[15px]"
             onChange={handleChange}
           />
@@ -368,8 +368,8 @@ const AccountProfile = () => {
             rightTextValue=""
             value={formData.tier}
             label="Seller Receives estipal payment"
-            bgColor={staffUser ? "#ffffff" : "#1e252b"}
-            border={staffUser ? "1px solid black" : "none"}
+            bgColor={userRole === "staff" ? "#ffffff" : "#1e252b"}
+            border={userRole === "staff" ? "1px solid black" : "none"}
             readOnly={!isEditable}
             className="mb-[15px]"
             onChange={handleChange}
@@ -424,8 +424,8 @@ const AccountProfile = () => {
             label="Email"
             readOnly={!isEditable}
             placeholder="Email"
-            bgColor={staffUser ? "#ffffff" : "#1e252b"}
-            border={staffUser ? "1px solid black" : "none"}
+            bgColor={userRole === "staff" ? "#ffffff" : "#1e252b"}
+            border={userRole === "staff" ? "1px solid black" : "none"}
             className="mb-[15px]"
             onChange={handleChange}
           />
@@ -436,8 +436,8 @@ const AccountProfile = () => {
             name="mobileNumber"
             type="text"
             label="Mobile Number"
-            bgColor={staffUser ? "#ffffff" : "#1e252b"}
-            border={staffUser ? "1px solid black" : "none"}
+            bgColor={userRole === "staff" ? "#ffffff" : "#1e252b"}
+            border={userRole === "staff" ? "1px solid black" : "none"}
             readOnly={!isEditable}
             className="mb-[15px]"
             onChange={handleChange}
@@ -454,7 +454,7 @@ const AccountProfile = () => {
                   className="mt-1 block w-auto rounded-md p-3 max-sm:flex-wrap"
                   placeholder="Enter phone number"
                   style={{
-                    backgroundColor: staffUser ? "#F8F8F8" : "#1e252b",
+                    backgroundColor: userRole === "staff" ? "#F8F8F8" : "#1e252b",
                   }}
                   value={formData.mobileNumber}
                   onChange={(value) => {
@@ -467,8 +467,8 @@ const AccountProfile = () => {
           <TextInputField
             rightTextValue=""
             label="Currency of Trading"
-            bgColor={staffUser ? "#ffffff" : "#1e252b"}
-            border={staffUser ? "1px solid black" : "none"}
+            bgColor={userRole === "staff" ? "#ffffff" : "#1e252b"}
+            border={userRole === "staff" ? "1px solid black" : "none"}
             readOnly={!isEditable}
             className="mb-[15px]"
             onChange={handleChange}
@@ -494,7 +494,7 @@ const AccountProfile = () => {
         </div>
       </div>
 
-      <CommissionPlan isEditable={isEditable} staffUser={staffUser} />
+      <CommissionPlan isEditable={isEditable} userRole={userRole} />
     </div>
   );
 };

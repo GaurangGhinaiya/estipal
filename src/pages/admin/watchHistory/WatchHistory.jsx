@@ -22,7 +22,7 @@ const WatchHistory = () => {
   const [sellerId, setSellerId] = useState(null);
   const [estimatorId, setEstimatorId] = useState(null);
   const debouncedSearchTerm = useDebounce(searchQuery, 500);
-  const staffUser = JSON.parse(localStorage.getItem("staffUser"));
+  const userRole = localStorage.getItem("userRole");
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
@@ -114,7 +114,7 @@ const WatchHistory = () => {
       </div>
 
       <div className="w-[95.5%] overflow-auto mx-auto pt-[10px]">
-        {staffUser ? (
+        {userRole === "staff" ? (
           <StaffUserWatchHistory
             watchActivityData={watchActivityData}
             setWatchActivityData={setWatchActivityData}
@@ -134,7 +134,7 @@ const WatchHistory = () => {
         recordsPerPage={recordsPerPage}
         handlePageChange={handlePageChange}
         data={watchActivityData}
-        staffUser={staffUser}
+        userRole={userRole}
       />
     </div>
   );

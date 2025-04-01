@@ -23,7 +23,7 @@ const SellerRevenueAnalysis = () => {
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("All");
-  const staffUser = JSON.parse(localStorage.getItem("staffUser"));
+  const userRole = localStorage.getItem("userRole");
 
   const handleSort = (key) => {
     const newOrder = sortField === key && sortOrder === "asc" ? "desc" : "asc";
@@ -181,7 +181,7 @@ const SellerRevenueAnalysis = () => {
         )}
       </div>
       <PaginationComponent
-        staffUser={staffUser}
+        userRole={userRole}
         currentPage={currentPage}
         totalPages={totalRecords}
         recordsPerPage={recordsPerPage}

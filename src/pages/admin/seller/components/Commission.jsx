@@ -5,7 +5,7 @@ import { convertCommissionData } from "../function/convertCommissionData";
 const CommissionPlan = (props) => {
   const {
     isEditable,
-    staffUser,
+    userRole,
     sellerData,
     commissionData,
     setCommissionData,
@@ -64,8 +64,8 @@ const CommissionPlan = (props) => {
                 name="from"
                 value={row?.from}
                 readOnly={!isEditable}
-                bgColor={staffUser ? "#ffffff" : "#283641"}
-                border={staffUser ? "1px solid white" : "none"}
+                bgColor={userRole === "staff" ? "#ffffff" : "#283641"}
+                border={userRole === "staff" ? "1px solid white" : "none"}
                 visibility={row?.from !== null ? "visible" : "hidden"}
                 onChange={(e) =>
                   handleChange(index, "from", parseInt(e.target.value))
@@ -83,8 +83,8 @@ const CommissionPlan = (props) => {
                 name="to"
                 value={row?.to}
                 readOnly={!isEditable}
-                bgColor={staffUser ? "#ffffff" : "#283641"}
-                border={staffUser ? "1px solid black" : "none"}
+                bgColor={userRole === "staff" ? "#ffffff" : "#283641"}
+                border={userRole === "staff" ? "1px solid black" : "none"}
                 visibility={row?.to !== null ? "visible" : "hidden"}
                 onChange={(e) =>
                   handleChange(index, "to", parseInt(e.target.value))
@@ -100,8 +100,8 @@ const CommissionPlan = (props) => {
                 name="to"
                 value={row?.commission}
                 readOnly={!isEditable}
-                bgColor={staffUser ? "#ffffff" : "#283641"}
-                border={staffUser ? "1px solid black" : "none"}
+                bgColor={userRole === "staff" ? "#ffffff" : "#283641"}
+                border={userRole === "staff" ? "1px solid black" : "none"}
                 visibility={row?.commission !== null ? "visible" : "hidden"}
                 onChange={(e) =>
                   handleChange(index, "commission", parseInt(e.target.value))

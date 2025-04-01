@@ -32,7 +32,9 @@ const Login = () => {
       if (response?.status === 200) {
         toast.success(response?.data?.message);
         localStorage.setItem("authToken", response?.data?.payload?.token);
-        localStorage.setItem("staffUser", false);
+        localStorage.setItem("userRole", "admin");
+        // localStorage.setItem("userRole", "staff");
+        window.location.reload()
         navigate("/admin");
         setLoading(false);
       }

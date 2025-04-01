@@ -1,18 +1,25 @@
+import { useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
 import "./App.css";
 import AppRoute from "./routes";
-import { useEffect, useState } from "react";
 
 function App() {
-  const userValue = JSON.parse(localStorage.getItem("staffUser"));
+  const userRole = localStorage.getItem("userRole");
 
-  const [theme, setTheme] = useState(userValue ? "light" : "dark");
+  const [theme, setTheme] = useState("");
+  
+  useEffect(() => {
+    setTheme(userRole === "admin" ? "dark" : "light");
+  }, [userRole]);
 
   useEffect(() => {
     // Update theme class dynamically if the roleValue changes
-    document.documentElement.classList.remove("light", "dark");
-    document.documentElement.classList.add(theme);
+    if (theme) {
+      document.documentElement.classList.remove("light", "dark");
+      document.documentElement.classList.add(theme);
+    }
   }, [theme]);
+
 
   return (
     <div className="bg-white dark:bg-[#283641]">
