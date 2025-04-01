@@ -23,7 +23,7 @@ import SellerPerformanceAnalysis from "./analysis/performance_analysis/performan
 import SellerRevenueAnalysis from "./analysis/revenue_analysis/revenue_analysis_seller/SellerRevenueAnalysis";
 
 const AdminRoot = () => {
-  const staffUser = JSON.parse(localStorage.getItem("staffUser"));
+  const userRole = localStorage.getItem("userRole");
 
   return (
     <div>
@@ -32,7 +32,7 @@ const AdminRoot = () => {
         <Route path="/watch_details/watch_history" element={<WatchHistory />} />
         <Route
           path="/staff/staff_user"
-          element={staffUser ? <ManageStaff /> : <StaffUser />}
+          element={userRole === "staff" ? <ManageStaff /> : <StaffUser />}
         />
         <Route path="/home/readActivity/:id" element={<ReadActivity />} />
         <Route
@@ -98,7 +98,7 @@ const AdminRoot = () => {
         <Route path="/watch_details/brand_list" element={<BrandList />} />
         <Route path="/panel/account" element={<AccountProfile />} />
 
-        {/* {staffUser && <Route
+        {/* {userRole && <Route
           path="/staff/staff_user"
           element={<ManageStaff />}
         />} */}

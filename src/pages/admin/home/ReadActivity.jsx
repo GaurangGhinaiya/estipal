@@ -11,7 +11,7 @@ const ReadActivity = () => {
   const { id } = params;
   const [readActivityData, setReadActivityData] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  const staffUser = JSON.parse(localStorage.getItem("staffUser"));
+  const userRole = localStorage.getItem("userRole");
 
   const getDetailById = async () => {
     try {
@@ -240,7 +240,7 @@ const ReadActivity = () => {
               key={index}
               item={item}
               index={index}
-              staffUser={staffUser}
+              userRole={userRole}
               adminActivitiesData={readActivityData?.adminActivities}
               currency={readActivityData?.currency}
             />

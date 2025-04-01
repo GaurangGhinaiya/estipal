@@ -40,7 +40,7 @@ const ActivitiesTable = () => {
   const [sellerId, setSellerId] = useState(null);
   const [estimatorId, setEstimatorId] = useState(null);
   const debouncedSearchTerm = useDebounce(searchQuery, 500);
-  const staffUser = JSON.parse(localStorage.getItem("staffUser"));
+  const userRole = localStorage.getItem("userRole");
 
   const { activitesData, totalRecords, isLoading, getActivityData } =
     useActivityData({
@@ -122,7 +122,7 @@ const ActivitiesTable = () => {
         </div>
       </div>
       <div className="w-[95.5%] overflow-auto mx-auto pt-[10px]">
-        {staffUser ? (
+        {userRole === "staff" ? (
           <StaffTable
             activitesData={activitesData}
             isLoading={isLoading}
@@ -145,7 +145,7 @@ const ActivitiesTable = () => {
         )}
       </div>
       <PaginationComponent
-        staffUser={staffUser}
+        userRole={userRole}
         currentPage={currentPage}
         totalPages={totalRecords}
         recordsPerPage={recordsPerPage}

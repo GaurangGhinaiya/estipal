@@ -21,7 +21,7 @@ export default function Profile() {
   const open = Boolean(anchorEl);
   const openLang = Boolean(anchorElLang);
   const navigate = useNavigate();
-  const staffUser = JSON.parse(localStorage.getItem("staffUser"));
+  const userRole = localStorage.getItem("userRole");
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -54,13 +54,13 @@ export default function Profile() {
             aria-expanded={open ? "true" : undefined}
           >
             <img
-              src={staffUser ? ProfileImg : AdminProfile}
+              src={userRole === "staff" ? ProfileImg : AdminProfile}
               alt="icon-profile"
               className="w-[30px] mr-[4px]"
             />
           </IconButton>
         </Tooltip>
-        {staffUser && <Tooltip>
+        {userRole === "staff" && <Tooltip>
           <IconButton
             onClick={handleLangOpen}
             size="small"

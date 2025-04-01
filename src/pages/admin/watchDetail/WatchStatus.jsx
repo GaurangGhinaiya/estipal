@@ -13,7 +13,7 @@ const WatchStatus = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [watchDetailData, setWatchDetailData] = useState({});
   const [loading, setLoading] = useState(true);
-  const staffUser = JSON.parse(localStorage.getItem("staffUser"));
+  const userRole = localStorage.getItem("userRole");
   const imageUrls =
     watchDetailData?.watch_pic && extractImageUrls(watchDetailData?.watch_pic);
 

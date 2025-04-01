@@ -12,7 +12,7 @@ import SellerInvoiceNew from "./statusComponents/SellerInvoiceNew";
 import EstimatorMultiQuotation from "./statusComponents/EstimatorMultiQuotation";
 
 const CardData = (props) => {
-  const { item, index, staffUser, adminActivitiesData, currency } = props;
+  const { item, index, userRole, adminActivitiesData, currency } = props;
   let prefix = "SCA";
   if (item?.admin_group === "estimator") {
     prefix = "ECA";
@@ -295,7 +295,7 @@ const CardData = (props) => {
       <hr
         className="my-5"
         style={{
-          borderTopColor: staffUser ? "#DFDFDF" : "#ffffff1a",
+          borderTopColor: userRole === "staff" ? "#DFDFDF" : "#ffffff1a",
           borderTopWidth: "2px",
         }}
       />

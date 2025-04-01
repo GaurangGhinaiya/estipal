@@ -31,7 +31,7 @@ import ForgotPassword from "../pages/auth/login/ForgotPassword";
 // import AddFormulaMaster from "../pages/AddFormulaMaster";
 
 const AppRoute = () => {
-  const staffUser = JSON.parse(localStorage.getItem("staffUser"));
+  const userRole = localStorage.getItem("userRole");
 
   return (
     <Router>
@@ -81,7 +81,7 @@ const AppRoute = () => {
             />
             <Route
               path="staff/staff_user"
-              element={staffUser ? <ManageStaff /> : <StaffUser />}
+              element={userRole === "staff" ? <ManageStaff /> : <StaffUser />}
             />
             <Route path="home/readActivity/:id" element={<ReadActivity />} />
             <Route
@@ -146,7 +146,7 @@ const AppRoute = () => {
             />
             <Route path="watch_details/brand_list" element={<BrandList />} />
             <Route path="panel/account" element={<AccountProfile />} />
-            {/* {staffUser === true && <Route
+            {/* {userRole === true && <Route
               path="staff/staff_user"
               element={<ManageStaff />}
             />} */}

@@ -2,7 +2,7 @@ import React from "react";
 import Pagination from "@mui/material/Pagination";
 
 const PaginationComponent = ({
-  staffUser,
+  userRole,
   data,
   totalPages,
   currentPage,
@@ -27,18 +27,18 @@ const PaginationComponent = ({
           onChange={(e, page) => handlePageChange(page)}
           variant="outlined"
           shape="rounded"
-          Name={`pagination ${staffUser ? "staff" : "non-staff"}`}
+          Name={`pagination ${userRole === "staff" ? "staff" : "non-staff"}`}
           sx={{
             "& .MuiButtonBase-root": {
               border: "none !important",
-              color: staffUser ? "#000000 !important" : "#ffffff !important",
+              color: userRole === "staff" ? "#000000 !important" : "#ffffff !important",
             },
             "& .Mui-selected": {
               backgroundColor: "#0060aa !important",
-              color: staffUser ? "#ffff !important" : "#ffff !important",
+              color: userRole === "staff" ? "#ffff !important" : "#ffff !important",
             },
             "& .MuiPaginationItem-root": {
-              color: staffUser ? "#000000 !important" : "#ffffff !important",
+              color: userRole === "staff" ? "#000000 !important" : "#ffffff !important",
             },
           }}
         />{" "}
