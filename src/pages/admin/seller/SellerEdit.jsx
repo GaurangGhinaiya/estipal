@@ -234,7 +234,6 @@ const SellerEdit = () => {
         }
       );
 
-      console.log("response: ", response);
       if (response?.status === 200) {
         const message = "Estimator updated successfully!";
         toast.success(message);
@@ -291,10 +290,10 @@ const SellerEdit = () => {
           {isEditable ? (
             <>
               <LoadingButton
-                loading={loading} // Add loading state
+                loading={loading}
                 variant="contained"
                 className="!bg-[#00a65a] !normal-case !py-[5px] sm:!py-[10px] sm:!px-[40px] !px-[15px] !rounded-[50px]"
-                onClick={save} // Call the save function
+                onClick={save}
               >
                 Save
               </LoadingButton>

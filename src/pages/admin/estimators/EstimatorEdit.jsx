@@ -186,7 +186,6 @@ const EstimatorEdit = () => {
             `/estimator/detail?id=${id}`
           );
           const estimator = response.payload?.data;
-          console.log("estimator: ", estimator);
 
           setFormData({
             ...formData,
@@ -269,7 +268,6 @@ const EstimatorEdit = () => {
   };
 
   const save = async () => {
-    // console.log("formData: ", formData);
     setLoading(true);
     try {
       const endpoint =
@@ -601,9 +599,9 @@ const EstimatorEdit = () => {
             type="text"
             label="Email"
             placeholder="Email"
-            readOnly={actionType === "add" ? false : true}
+            readOnly={!isEditable}
             bgColor={"#1e252b"}
-            className="mb-[15px] "
+            className="mb-[15px]"
             inputClass=""
             onChange={handleChange}
           />
