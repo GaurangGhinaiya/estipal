@@ -13,11 +13,15 @@ import ProfileImg from "../../../assets/images/icons/Profile.png";
 import EngFlag from "../../../assets/images/icons/en_flag.png";
 import ChinaFlag from "../../../assets/images/icons/cn_flag.png";
 import ItlyFlag from "../../../assets/images/icons/ita_flag.png";
-import ThailandFlag from "../../../assets/images/icons/th_flag.png";
+import SpanishFlag from "../../../assets/images/icons/esp_flag.png";
+import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 
 export default function Profile() {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const { i18n } = useTranslation();
   const [anchorElLang, setAnchorElLang] = React.useState(null);
+  const [selectedLang, setSelectedLang] = React.useState(localStorage.getItem("Language"));
   const open = Boolean(anchorEl);
   const openLang = Boolean(anchorElLang);
   const navigate = useNavigate();
@@ -32,9 +36,19 @@ export default function Profile() {
   const handleLangOpen = (event) => {
     setAnchorElLang(event.currentTarget);
   };
+
   const handleLangClose = () => {
     setAnchorElLang(null);
   };
+
+  const handleLangSelect = (lang) => {
+    console.log('lang: ', lang);
+    localStorage.setItem("Language", lang);
+    i18n.changeLanguage(lang);
+    setSelectedLang(lang); // Set selected language
+    toast.success("Language change successfully");
+  };
+
   return (
     <React.Fragment>
       <Box
@@ -70,7 +84,7 @@ export default function Profile() {
             aria-expanded={openLang ? "true" : undefined}
           >
             <img
-              src={EngFlag}
+              src={selectedLang === "en" ? EngFlag : selectedLang === "it" ? ItlyFlag : selectedLang === "es" ? SpanishFlag : ChinaFlag}
               alt="icon-profile"
               className="w-[30px] mr-[4px]"
             />
@@ -169,7 +183,15 @@ export default function Profile() {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem onClick={handleLangClose} className="gap-2 !text-[15px]">
+        <MenuItem onClick={() => {
+          handleLangSelect("en");
+          handleLangClose()
+        }} className="gap-2 !text-[15px]"
+          style={{
+            backgroundColor:
+              selectedLang === "en" ? "#e1e3e9" : "transparent", // Change color for selected language
+          }}
+        >
           <ListItemIcon>
             <img
               src={EngFlag}
@@ -179,17 +201,16 @@ export default function Profile() {
           </ListItemIcon>
           English
         </MenuItem>
-        <MenuItem onClick={handleLangClose} className="gap-2 !text-[15px]">
-          <ListItemIcon>
-            <img
-              src={ThailandFlag}
-              alt="icon-profile"
-              className="w-[30px] mr-[4px]"
-            />
-          </ListItemIcon>
-          Thailand
-        </MenuItem>
-        <MenuItem onClick={handleLangClose} className="gap-2 !text-[15px]">
+
+        <MenuItem onClick={() => {
+          handleLangSelect("it");
+          handleLangClose()
+        }} className="gap-2 !text-[15px]"
+          style={{
+            backgroundColor:
+              selectedLang === "it" ? "#e1e3e9" : "transparent", // Change color for selected language
+          }}
+        >
           <ListItemIcon>
             <img
               src={ItlyFlag}
@@ -197,9 +218,35 @@ export default function Profile() {
               className="w-[30px] mr-[4px]"
             />
           </ListItemIcon>
-          Italy
+          Italiano
         </MenuItem>
-        <MenuItem onClick={handleLangClose} className="gap-2 !text-[15px]">
+        <MenuItem onClick={() => {
+          handleLangSelect("es");
+          handleLangClose()
+        }} className="gap-2 !text-[15px]"
+          style={{
+            backgroundColor:
+              selectedLang === "es" ? "#e1e3e9" : "transparent", // Change color for selected language
+          }}
+        >
+          <ListItemIcon>
+            <img
+              src={SpanishFlag}
+              alt="icon-profile"
+              className="w-[30px] mr-[4px]"
+            />
+          </ListItemIcon>
+          Español
+        </MenuItem>
+        <MenuItem onClick={() => {
+          handleLangSelect("zh");
+          handleLangClose()
+        }} className="gap-2 !text-[15px]"
+          style={{
+            backgroundColor:
+              selectedLang === "zh" ? "#e1e3e9" : "transparent", // Change color for selected language
+          }}
+        >
           <ListItemIcon>
             <img
               src={ChinaFlag}
@@ -207,7 +254,7 @@ export default function Profile() {
               className="w-[30px] mr-[4px]"
             />
           </ListItemIcon>
-          China
+          简体中文
         </MenuItem>
 
       </Menu>

@@ -316,9 +316,15 @@ table.dataTable tbody td {
 .PhoneInputInput {
   background-color: #1e252b !important;
 }
+.staffAccount-profile .PhoneInputInput {
+  background-color: transparent !important;
+}
 
 .PhoneInputCountrySelect {
   background-color: #1e252b !important;
+}
+.staffAccount-profile .PhoneInputCountrySelect {
+  background-color: transparent !important;
 }
 
 .box_schedule_day {

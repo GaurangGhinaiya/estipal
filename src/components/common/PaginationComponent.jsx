@@ -1,5 +1,6 @@
 import React from "react";
 import Pagination from "@mui/material/Pagination";
+import { useTranslation } from "react-i18next";
 
 const PaginationComponent = ({
   userRole,
@@ -9,8 +10,8 @@ const PaginationComponent = ({
   handlePageChange,
   recordsPerPage,
 }) => {
+  const { t } = useTranslation();
   const totalPagesData = Math.ceil(totalPages / recordsPerPage);
-  console.log("totalPagesData: ", totalPagesData);
   const startRecord = (currentPage - 1) * recordsPerPage + 1;
   const endRecord = Number(currentPage) * Number(recordsPerPage);
 
@@ -18,7 +19,7 @@ const PaginationComponent = ({
     <div className="flex justify-end items-center gap-5 px-[20px] sm:px-[10px] py-[10px]">
       <div className="dark:text-[#ffff] text-black hidden sm:block">
         {data?.length > 0 ? startRecord : 0} -{" "}
-        {data?.length > 0 ? endRecord : 0} of {totalPages}
+        {data?.length > 0 ? endRecord : 0} {t("OF")} {totalPages}
       </div>
       <div className="flex items-center pt-[5px]">
         <Pagination

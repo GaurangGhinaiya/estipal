@@ -3,6 +3,7 @@ import { sortData } from "../../../../components/common/Sort";
 import ArrowDropUpRoundedIcon from "@mui/icons-material/ArrowDropUpRounded";
 import ArrowDropDownRoundedIcon from "@mui/icons-material/ArrowDropDownRounded";
 import PaginationComponent from "../../../../components/common/PaginationComponent";
+import { useTranslation } from "react-i18next";
 
 const merchantData = [
   {
@@ -212,7 +213,7 @@ const transactionData = [
 ];
 const SellerRevenueAnalysis = () => {
   const [data, setData] = useState(transactionData);
-
+  const { t } = useTranslation();
   const [sortField, setSortField] = useState(null);
   const [sortOrder, setSortOrder] = useState("asc");
   const [currentPage, setCurrentPage] = useState(1);
@@ -237,7 +238,7 @@ const SellerRevenueAnalysis = () => {
     <div className="pb-[15px] min-h-[100vh]">
       <div className="px-0 sm:px-[20px] pt-4 flex flex-col justify-between flex-wrap bg-gradient-to-b from-[rgba(0,96,169,0.36)] to-[rgba(255,255,255,0)]">
         <h1 className="text-[26px] font-medium mb-4 mt-5 px-0 sm:px-[15px] font-sans dark:text-white  text-black">
-          Revenue Analysis
+          {t("REVANUEANALYSIS")}
         </h1>
         <div className="flex items-center sm:flex-row flex-col gap-4 space-x-4 mb-1 px-4">
           <div className="flex items-center space-x-2">
@@ -245,7 +246,7 @@ const SellerRevenueAnalysis = () => {
               htmlFor="fromDate"
               className="text-md dark:text-white  text-black"
             >
-              From
+              {t("FROM")}
             </label>
             <input
               type="date"
@@ -259,7 +260,7 @@ const SellerRevenueAnalysis = () => {
               htmlFor="toDate"
               className="text-md dark:text-white  text-black"
             >
-              To
+              {t("TO")}
             </label>
             <input
               type="date"
@@ -285,7 +286,7 @@ const SellerRevenueAnalysis = () => {
           <thead style={{ borderBottom: "2px solid #111111" }}>
             <tr>
               <th className="p-2 dark:text-[#ffff] text-black text-center cursor-pointer">
-                Comapny
+                {t("STAFF")}
               </th>
               <th className="p-2 dark:text-[#ffff]  text-black text-center cursor-pointer">
                 Email
@@ -348,12 +349,9 @@ const SellerRevenueAnalysis = () => {
             <tr>
               {[
                 { key: "date", label: "Date" },
-                { key: "company", label: "Company" },
-                { key: "firstName", label: "First Name" },
-                { key: "lastName", label: "Last Name" },
+                { key: "staff", label: "Staff" },
                 { key: "watchId", label: "Watch ID" },
                 { key: "model", label: "Brand / Collection / Model" },
-                { key: "estimate", label: "Current Estimate / Accepted" },
                 { key: "status", label: "Watch Status" },
               ].map((column) => (
                 <th
@@ -383,20 +381,11 @@ const SellerRevenueAnalysis = () => {
                 <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap text-center">
                   {item?.company}
                 </td>
-                <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center">
-                  {item?.firstName}
-                </td>
-                <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap">
-                  {item?.lastName}
-                </td>
                 <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap">
                   {item?.watchId}
                 </td>
                 <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap">
                   {item?.model}
-                </td>
-                <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap">
-                  {item?.estimate}
                 </td>
                 <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap">
                   {item?.status}

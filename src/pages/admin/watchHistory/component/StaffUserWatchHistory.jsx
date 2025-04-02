@@ -10,6 +10,7 @@ import { sortData } from "../../../../components/common/Sort";
 import { useNavigate } from "react-router-dom";
 import gmailIcon from "../../../../assets/images/icons/icn-mai-light.svg";
 import gmailYellowIcon from "../../../../assets/images/icons/icn-mail-yellow.svg";
+import { useTranslation } from "react-i18next";
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 const StaffUserWatchHistory = ({
@@ -17,10 +18,10 @@ const StaffUserWatchHistory = ({
   setWatchActivityData,
   loading,
 }) => {
-  console.log("watchActivityData: ", watchActivityData);
   const [sortField, setSortField] = useState(null);
   const [sortOrder, setSortOrder] = useState("asc");
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleSort = (key) => {
     const newOrder = sortField === key && sortOrder === "asc" ? "desc" : "asc";
@@ -55,14 +56,14 @@ const StaffUserWatchHistory = ({
                 />
               ),
             },
-            { key: "id", label: "ID", isSortable: true },
-            { key: "brand", label: "Brand", isSortable: true },
-            { key: "collection", label: "Collection", isSortable: true },
-            { key: "model", label: "Model", isSortable: false },
-            { key: "serial_no", label: "Serial", isSortable: true },
-            { key: "compnay_name", label: "Added By", isSortable: true },
-            { key: "addedOn", label: "Added On", isSortable: true },
-            { key: "watch_status", label: "Status", isSortable: true },
+            { key: "id", label: `${t("ID")}`, isSortable: true },
+            { key: "brand", label: `${t("BRAND")}`, isSortable: true },
+            { key: "collection", label: `${t("COLLECTION")}`, isSortable: true },
+            { key: "model", label: `${t("MODEL")}`, isSortable: false },
+            { key: "serial_no", label: `${t("SERIAL")}`, isSortable: true },
+            { key: "compnay_name", label: `${t("ADDEDBY")}`, isSortable: true },
+            { key: "addedOn", label: `${t("ADDEDON")}`, isSortable: true },
+            { key: "watch_status", label: `${t("STATUS")}`, isSortable: true },
           ]?.map((column) => (
             <th
               key={column.key}

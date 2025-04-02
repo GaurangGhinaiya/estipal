@@ -5,9 +5,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import axiosInstance from "../../../services";
 import { extractImageUrls, formattedNumber } from "../../../utils";
 import moment from "moment";
+import { useTranslation } from "react-i18next";
 
 const WatchStatus = () => {
   const { id } = useParams();
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -301,7 +303,7 @@ const WatchStatus = () => {
       </div>
 
       <h2 className="dark:text-white text-black font-bold text-[30px] mb-2">
-        Watch history
+        {t("WATCHHISTORY")}
       </h2>
 
       <div

@@ -7,6 +7,7 @@ import useDebounce from "../../../components/common/UseDebounce";
 import AdminTable from "./components/AdminTable";
 import StaffTable from "./components/StaffTable";
 import useActivityData from "./hooks/useActivityData";
+import { useTranslation } from "react-i18next";
 
 export const statusOptions = [
   "All",
@@ -29,6 +30,7 @@ export const statusOptions = [
 const ActivitiesTable = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { t } = useTranslation();
   const [status, setStatus] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [sortField, setSortField] = useState(null);
@@ -101,11 +103,11 @@ const ActivitiesTable = () => {
     <div className=" pb-[15px] min-h-[100vh]">
       <div className="px-0 pt-6 sm:px-[20px] flex justify-between flex-wrap dark:bg-none bg-gradient-to-b from-[rgba(0,96,169,0.36)] to-[rgba(255,255,255,0)]">
         <h1 className="text-[30px] font-medium mb-4 px-0 sm:px-[15px] font-sans dark:text-white text-black">
-          Activities
+          {t("ACTIVITIES")}
         </h1>
         <div className="flex justify-between items-center mb-4 gap-4 sm:gap-8 flex-wrap ">
           <SelectDropdown
-            title="Filter by Status :"
+            title={`${t("FILTERBYSTATUS")} :`}
             status={status}
             setStatus={setStatus}
             options={statusOptions}
@@ -115,7 +117,7 @@ const ActivitiesTable = () => {
           <SearchBar
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
-            placeholder={"Search"}
+            placeholder={`${t("SEARCH")}`}
             setCurrentPage={setCurrentPage}
           />
         </div>

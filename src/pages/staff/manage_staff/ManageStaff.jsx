@@ -6,6 +6,7 @@ import StaffWatch from "../../../assets/images/icons/staffWatch.png";
 import StaffLock from "../../../assets/images/icons/Stafflock.png";
 import SearchBar from "../../../components/common/SearchBar";
 import PaginationComponent from "../../../components/common/PaginationComponent";
+import { useTranslation } from "react-i18next";
 
 const history = [
   {
@@ -36,6 +37,7 @@ const history = [
 
 const ManageStaff = () => {
   const [data, setData] = useState(history);
+  const { t } = useTranslation();
   const [archivedData, setArchivedData] = useState([]);
   const [editingIndex, setEditingIndex] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
@@ -154,7 +156,7 @@ const ManageStaff = () => {
         <div className="flex sm:flex-row flex-col w-full justify-between">
           <div className="flex flex-col">
             <h1 className="text-[30px] font-medium mb-4 px-0 sm:px-[15px] font-sans dark:text-[#ffff] text-black">
-              Manage Staff
+              {t("MANAGESTAFF")}
             </h1>
             <div className="flex sm:flex-row flex-col space-x-0 sm:gap-0 gap-4 sm:space-x-4 mb-4">
               {isAddMode || isEditMode || isArchiveMode ? (
@@ -166,38 +168,41 @@ const ManageStaff = () => {
                       isArchiveMode ? handleArchiveSelected : handleSaveStaff
                     }
                   >
-                    Save
+                    {t("SAVE")}
                   </Button>
                   <Button
                     variant="contained"
                     className="!bg-[#F0F0F0] !px-[5px] sm:!px-[40px] !py-[10px] sm:!py-[10px] !text-black !capitalize !rounded-[50px]"
                     onClick={handleCancel}
                   >
-                    Cancel
+                    {t("CANCEL")}
                   </Button>
                 </div>
               ) : (
                 <div className="flex sm:flex-row flex-col gap-2">
                   <Button
                     variant="contained"
+                    size="small"
                     className="!bg-[#3C8DBC] text-white text-nowrap !px-[5px] sm:!px-[40px] !py-[10px] sm:!py-[10px] !capitalize !rounded-[50px]"
                     onClick={handleAddStaff}
                   >
-                    Add Staff
+                    {t("ADDSTAFF")}
                   </Button>
                   <Button
                     variant="contained"
+                    size="small"
                     className="!bg-[#3C8DBC] text-white text-nowrap !px-[5px] sm:!px-[40px] !py-[10px] sm:!py-[10px] !capitalize !rounded-[50px]"
                     onClick={handleEditStaff}
                   >
-                    Edit Staff
+                    {t("EDITSTAFF")}
                   </Button>
                   <Button
                     variant="contained"
+                    size="small"
                     className="!bg-[#3C8DBC] text-white text-nowrap !px-[5px] sm:!px-[40px] !py-[10px] sm:!py-[10px] !capitalize !rounded-[50px]"
                     onClick={handleArchiveStaff}
                   >
-                    Archive Staff
+                    {t("ARCHIVESTAFF")}
                   </Button>
                 </div>
               )}
@@ -207,7 +212,7 @@ const ManageStaff = () => {
             <SearchBar
               searchQuery={searchQuery}
               setSearchQuery={setSearchQuery}
-              placeholder={"Search"}
+              placeholder={`${t("SEARCH")}`}
             />
           </div>
         </div>
@@ -223,19 +228,19 @@ const ManageStaff = () => {
                 </th>
               )}
               {[
-                { key: "online", label: "Online" },
-                { key: "active", label: "Active" },
-                { key: "name", label: "Name" },
-                { key: "email", label: "Email" },
-                { key: "mobile_no", label: "Mobile number" },
-                { key: "added_on", label: "Added on" },
-                { key: "sent/accepted", label: "Sent/Accepted" },
-                { key: "watches_history", label: "Watches History" },
-                { key: "reset_password", label: "Reset Password" },
+                { key: "online", label: `${t("ONLINE")}` },
+                { key: "active", label: `${t("ACTIVE")}` },
+                { key: "name", label: `${t("NAME")}` },
+                { key: "email", label: `${t("EMAIL")}` },
+                { key: "mobile_no", label: `${t("MOBILENUMBER")}` },
+                { key: "added_on", label:`${t("ADDEDON")}` },
+                { key: "sent/accepted", label: `${t("SENTACCEPTED")}` },
+                { key: "watches_history", label: `${t("WATCHESHISTORY")}` },
+                { key: "reset_password", label: `${t("RESETPASSWORD")}` },
               ].map((column) => (
                 <th
                   key={column.key}
-                  className="p-2 dark:text-[#ffff] text-black text-center"
+                  className="p-2 dark:text-[#ffff] text-black text-center text-nowrap"
                 >
                   {column.label}
                 </th>
@@ -351,7 +356,7 @@ const ManageStaff = () => {
                     onChange={(e) =>
                       setNewStaff({ ...newStaff, name: e.target.value })
                     }
-                    placeholder="Name"
+                    placeholder={`${t("NAME")}`}
                     className="p-2 border border-gray-300 rounded"
                   />
                 </td>
@@ -363,7 +368,7 @@ const ManageStaff = () => {
                     onChange={(e) =>
                       setNewStaff({ ...newStaff, email: e.target.value })
                     }
-                    placeholder="Email"
+                    placeholder={`${t("EMAIL")}`}
                     className="p-2 border border-gray-300 rounded"
                   />
                 </td>
@@ -378,7 +383,7 @@ const ManageStaff = () => {
                         mobile_number: e.target.value,
                       })
                     }
-                    placeholder="Mobile Number"
+                    placeholder={`${t("MOBILENUMBER")}`}
                     className="p-2 border border-gray-300 rounded"
                   />
                 </td>

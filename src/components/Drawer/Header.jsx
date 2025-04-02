@@ -8,9 +8,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Profile from "./components/Profile";
 import LightLogo from "../../assets/images/img-logo-bar-admin.png";
 import DarkLogo from "../../assets/images/img-logo-login.png";
+import { useTranslation } from "react-i18next";
 
 const Header = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [openMenu, setOpenMenu] = React.useState(false);
   const [openRevenueMenu, setOpenRevenueMenu] = React.useState(false);
   const [openPerformanceMenu, setOpenPerformanceMenu] = React.useState(false);
@@ -94,7 +96,7 @@ const Header = () => {
             }}
             onClick={() => navigate("/admin")}
           >
-            Activities
+            {t("ACTIVITIES")}
           </Button>
           <Button
             className="text-white !normal-case !text-[14px] !p-[0] !m-[0]"
@@ -108,7 +110,7 @@ const Header = () => {
             }}
             onClick={() => navigate("/admin/watch_details/watch_history")}
           >
-            Watches History
+            {t("WATCHESHISTORY")}
           </Button>
           {userRole === "admin" && (
             <Button
@@ -154,7 +156,7 @@ const Header = () => {
                   navigate("/admin/analysis/revenue_analysis/seller")
                 }
               >
-                Revenue Analysis
+                {t("REVANUEANALYSIS")}
               </Button>
             </div>
           )}
@@ -167,9 +169,9 @@ const Header = () => {
                     pathname.includes(
                       "/admin/analysis/revenue_analysis/admin"
                     ) ||
-                    pathname.includes(
-                      "/admin/analysis/revenue_analysis/estimator"
-                    )
+                      pathname.includes(
+                        "/admin/analysis/revenue_analysis/estimator"
+                      )
                       ? "bold"
                       : "normal",
                 }}
@@ -218,7 +220,7 @@ const Header = () => {
                   navigate("/admin/analysis/performance_analysis/seller")
                 }
               >
-                Performance Analysis
+                {t("PERFORMANCEANALYSIS")}
               </Button>
             </div>
           )}
@@ -231,9 +233,9 @@ const Header = () => {
                     pathname.includes(
                       "/admin/analysis/performance_analysis/admin"
                     ) ||
-                    pathname.includes(
-                      "/admin/analysis/performance_analysis/estimator"
-                    )
+                      pathname.includes(
+                        "/admin/analysis/performance_analysis/estimator"
+                      )
                       ? "bold"
                       : "normal",
                 }}
@@ -321,7 +323,7 @@ const Header = () => {
               }}
               onClick={() => navigate("/admin/staff/staff_user")}
             >
-              Manage Staff
+              {t("MANAGESTAFF")}
             </Button>
           )}
           {userRole === "staff" && (
@@ -335,7 +337,7 @@ const Header = () => {
               }}
               onClick={() => navigate("/admin/panel/account")}
             >
-              Account Profile
+              {t("ACCOUNTPROFILE")}
             </Button>
           )}
         </div>
@@ -423,9 +425,9 @@ const Header = () => {
                 fontSize: "14px",
                 fontWeight:
                   pathname.includes("/admin/analysis/revenue_analysis/admin") ||
-                  pathname.includes(
-                    "/admin/analysis/revenue_analysis/estimator"
-                  )
+                    pathname.includes(
+                      "/admin/analysis/revenue_analysis/estimator"
+                    )
                     ? "bold"
                     : "normal",
               }}
@@ -461,9 +463,9 @@ const Header = () => {
                   pathname.includes(
                     "/admin/analysis/performance_analysis/admin"
                   ) ||
-                  pathname.includes(
-                    "/admin/analysis/performance_analysis/estimator"
-                  )
+                    pathname.includes(
+                      "/admin/analysis/performance_analysis/estimator"
+                    )
                     ? "bold"
                     : "normal",
               }}

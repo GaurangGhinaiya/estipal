@@ -6,6 +6,7 @@ import moment from "moment";
 import GradeIcon from "@mui/icons-material/Grade";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import Checkbox from "@mui/material/Checkbox";
+import { useTranslation } from "react-i18next";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -19,17 +20,18 @@ const StaffTable = ({
   getImageSrc,
   currency,
 }) => {
+  const { t } = useTranslation();
   return (
     <table className="table-auto w-full text-left">
       <thead style={{ borderBottom: "2px solid #111111" }}>
         <tr>
           {[
             { key: "checkbox", label: " " },
-            { key: "from", label: "From", isSortable: true },
-            { key: "message", label: "Message", isSortable: false },
-            { key: "watchId", label: "Watch Id", isSortable: true },
-            { key: "status", label: "Status", isSortable: true },
-            { key: "received", label: "Received", isSortable: true },
+            { key: "from", label: `${t("FROM")}`, isSortable: true },
+            { key: "message", label: `${t("MESSAGE")}`, isSortable: false },
+            { key: "watchId", label: `${t("WATCHID")}`, isSortable: true },
+            { key: "status", label: `${t("STATUS")}`, isSortable: true },
+            { key: "received", label: `${t("RECEIVED")}`, isSortable: true },
           ].map((column) => (
             <th
               key={column.key}

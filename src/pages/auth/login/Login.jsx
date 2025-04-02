@@ -41,7 +41,7 @@ const Login = () => {
         } else type = response?.data?.payload?.data?.admin_group;
 
         localStorage.setItem("userRole", type);
-        // localStorage.setItem("userRole", "staff");
+        localStorage.setItem("Language", "en");
         navigate("/admin");
         window.location.reload();
         setLoading(false);
