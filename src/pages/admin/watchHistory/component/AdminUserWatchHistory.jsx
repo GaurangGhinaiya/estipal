@@ -1,4 +1,3 @@
-import React from "react";
 import ArrowDropDownRoundedIcon from "@mui/icons-material/ArrowDropDownRounded";
 import ArrowDropUpRoundedIcon from "@mui/icons-material/ArrowDropUpRounded";
 import GradeIcon from "@mui/icons-material/Grade";
@@ -6,32 +5,23 @@ import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import { CircularProgress, Tooltip } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import moment from "moment/moment";
-import { useState } from "react";
-import { sortData } from "../../../../components/common/Sort";
+import React from "react";
+// import { sortData } from "../../../../components/common/Sort";
 import { useNavigate } from "react-router-dom";
-import { formattedNumber } from "../../../../utils";
 import gmailIcon from "../../../../assets/images/icons/icn-mai-light.svg";
 import gmailYellowIcon from "../../../../assets/images/icons/icn-mail-yellow.svg";
+import { formattedNumber } from "../../../../utils";
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 const AdminUserWatchHistory = ({
   watchActivityData,
-  setWatchActivityData,
   loading,
+  handleSort,
+  sortField,
+  sortOrder,
 }) => {
-  const [sortField, setSortField] = useState(null);
-  const [sortOrder, setSortOrder] = useState("asc");
   const navigate = useNavigate();
 
-  const handleSort = (key) => {
-    const newOrder = sortField === key && sortOrder === "asc" ? "desc" : "asc";
-    setSortField(key);
-    setSortOrder(newOrder);
-
-    // Sort data and update state
-    const sortedData = sortData(watchActivityData, key, newOrder);
-    setWatchActivityData(sortedData);
-  };
   return (
     <table className="table-auto w-full text-left">
       <thead style={{ borderBottom: "2px solid #111111" }}>

@@ -95,7 +95,6 @@ const StaffTable = ({
                 activity.watch_details.price
               ).toFixed(2)}`;
             }
-            console.log("acceptedPrice: ", acceptedPrice);
 
             const isActionRequired =
               activity?.watch_details?.is_action_required || "";

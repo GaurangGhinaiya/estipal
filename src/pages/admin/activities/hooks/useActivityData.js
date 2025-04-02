@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 import axiosInstance from "../../../../services/index";
 
@@ -39,7 +40,7 @@ const useActivityData = ({
     if (currentPage) {
       getActivityData();
     }
-  }, [currentPage, sortOrder, debouncedSearchTerm, status]);
+  }, [currentPage, sortOrder, debouncedSearchTerm, status , sortOrder ,sortField ]);
 
   return { activitesData, totalRecords, isLoading, getActivityData, currency };
 };

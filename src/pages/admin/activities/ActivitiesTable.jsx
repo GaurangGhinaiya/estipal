@@ -41,7 +41,6 @@ const ActivitiesTable = () => {
   const [estimatorId, setEstimatorId] = useState(null);
   const debouncedSearchTerm = useDebounce(searchQuery, 500);
   const userRole = localStorage.getItem("userRole");
-  console.log("userRole: ", userRole);
 
   const { activitesData, totalRecords, isLoading, getActivityData, currency } =
     useActivityData({

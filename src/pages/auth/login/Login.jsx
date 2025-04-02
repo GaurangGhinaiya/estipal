@@ -23,6 +23,7 @@ const Login = () => {
   });
 
   const onSubmit = async (data) => {
+    
     setLoading(true);
     try {
       const response = await axios.post(
@@ -33,6 +34,7 @@ const Login = () => {
       if (response?.data?.status === 200) {
         toast.success(response?.data?.message);
         localStorage.setItem("authToken", response?.data?.payload?.token);
+        localStorage.setItem("userData", JSON.stringify(response?.data?.payload?.data));
 
         let type;
 
@@ -78,6 +80,12 @@ const Login = () => {
                     id="username"
                     className="form-control"
                     placeholder="Enter your username"
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        handleSubmit(onSubmit)();
+                      }
+                    }}
                   />
                 )}
               />
@@ -103,6 +111,12 @@ const Login = () => {
                     type="password"
                     className="form-control"
                     placeholder="Enter your password"
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        handleSubmit(onSubmit)();
+                      }
+                    }}
                   />
                 )}
               />
