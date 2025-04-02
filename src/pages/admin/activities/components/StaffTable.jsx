@@ -17,13 +17,14 @@ const StaffTable = ({
   sortOrder,
   navigate,
   getImageSrc,
+  currency,
 }) => {
   return (
     <table className="table-auto w-full text-left">
       <thead style={{ borderBottom: "2px solid #111111" }}>
         <tr>
           {[
-            { key: "checkbox", label: "" },
+            { key: "checkbox", label: " " },
             { key: "from", label: "From", isSortable: true },
             { key: "message", label: "Message", isSortable: false },
             { key: "watchId", label: "Watch Id", isSortable: true },
@@ -61,89 +62,122 @@ const StaffTable = ({
             </td>
           </tr>
         ) : activitesData?.length > 0 ? (
-          activitesData?.map((activity, index) => (
-            <tr
-              key={index}
-              className="border-b border-[#202b34]"
-              onClick={() =>
-                navigate(`/admin/home/readActivity/${activity?.watch_id}`)
-              }
-            >
-              <td className="px-[18px] py-[0px] text-[#ffff] text-center">
-                <div className="w-[35px]">
-                  {getImageSrc(activity) && (
-                    <a
-                      href={`/admin/home/readActivity/${activity?.id}/${activity?.watch_id}`}
-                      role="button"
-                    >
-                      <img alt="img" src={getImageSrc(activity)} width="35px" />
-                    </a>
-                  )}
-                </div>
-              </td>
-              <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center">
-                {" "}
-                <Checkbox
-                  {...label}
-                  icon={
-                    <StarOutlineIcon
-                      sx={{ color: "#494a4b", fontSize: "21px" }}
-                    />
-                  }
-                  checkedIcon={
-                    <GradeIcon sx={{ color: "#ff9300", fontSize: "21px" }} />
-                  }
-                />
-              </td>
+          activitesData?.map((activity, index) => {
+            let acceptedPrice = "";
+            if (activity?.watch_details?.seller_display_accept) {
+              acceptedPrice = `${currency} ${Number(
+                activity.watch_details.seller_display_accept
+              ).toFixed(2)}`;
+            } else if (activity?.watch_details?.estimated_price_seller) {
+              acceptedPrice = `${currency} ${Number(
+                activity.watch_details.estimated_price_seller
+              ).toFixed(2)}`;
+            } else if (activity?.watch_details?.seller_display_counter) {
+              acceptedPrice = `${currency} ${Number(
+                activity.watch_details.seller_display_counter
+              ).toFixed(2)}`;
+            } else if (activity?.watch_details?.seller_view_request_price) {
+              acceptedPrice = `${currency} ${Number(
+                activity.watch_details.seller_view_request_price
+              ).toFixed(2)}`;
+            } else if (activity?.watch_details?.seller_display_price) {
+              acceptedPrice = `${currency} ${Number(
+                activity.watch_details.seller_display_price
+              ).toFixed(2)}`;
+            } else if (activity?.watch_details?.seller_request_price) {
+              acceptedPrice = `${currency} ${Number(
+                activity.watch_details.seller_request_price
+              ).toFixed(2)}`;
+            } else if (activity?.watch_details?.price) {
+              acceptedPrice = `${currency} ${Number(
+                activity.watch_details.price
+              ).toFixed(2)}`;
+            }
+            console.log("acceptedPrice: ", acceptedPrice);
 
-              <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black cursor-pointer">
-                <Tooltip
-                  title={activity.from ? activity.from : "-"}
-                  placement="top"
-                  arrow
-                >
-                  <div className="w-[77px] text-center">
-                    {activity.from ? activity.from : "-"}
-                  </div>
-                </Tooltip>
-              </td>
+            const isActionRequired =
+              activity?.watch_details?.is_action_required || "";
 
-              <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap cursor-pointer">
-                <Tooltip
-                  title="Rolex Daytona Stainless Steel - Bracelet - Serial: 43141331 - Year: 2019 - Last requested/quoted price: USD "
-                  placement="top"
-                  arrow
-                >
-                  {activity.message} {activity?.watch_details?.brand && "( "}
-                  {activity?.watch_details?.brand}{" "}
-                  {activity?.watch_details?.model_no}{" "}
-                  {activity?.watch_details?.model_no && "Serial -"}{" "}
-                  {activity?.watch_details?.serial_no}
-                  {activity?.watch_details?.model_no && "- Year :"}{" "}
-                  {activity?.watch_details?.year_of_production}{" "}
-                  {activity?.watch_details?.model_no &&
-                    "- Last requested/quoted price: USD"}{" "}
-                  {activity?.watch_details?.price}
-                  {activity?.watch_details?.brand && ")"}
-                </Tooltip>
-              </td>
-              <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center">
-                {activity?.watch_id}
-              </td>
-              <td className="px-[18px] py-[10px] dark:text-[#ffffff] text-black text-center whitespace-nowrap">
-                {activity?.watch_status}
-              </td>
-              <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap">
-                {`${
-                  activity.created_on
-                    ? moment
-                        .unix(activity.created_on)
-                        .format("MMMM D, YYYY h:mm A")
-                    : "-"
-                }`}
-              </td>
-            </tr>
-          ))
+            return (
+              <tr
+                key={index}
+                className="border-b border-[#202b34]"
+                onClick={() =>
+                  navigate(`/admin/home/readActivity/${activity?.watch_id}`)
+                }
+              >
+                <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center">
+                  <Checkbox
+                    {...label}
+                    icon={
+                      <StarOutlineIcon
+                        sx={{ color: "#494a4b", fontSize: "21px" }}
+                      />
+                    }
+                    checkedIcon={
+                      <GradeIcon sx={{ color: "#ff9300", fontSize: "21px" }} />
+                    }
+                  />
+                </td>
+                <td className="px-[18px] py-[10px] dark:text-[#ffffff] text-black text-center whitespace-nowrap">
+                  {activity?.admin_group == "staff"
+                    ? activity?.from_name
+                    : activity?.admin_group}
+                </td>
+
+                <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap cursor-pointer">
+                  <Tooltip
+                    title={
+                      <>
+                        {" "}
+                        {activity.message}{" "}
+                        {activity?.watch_details?.brand && "( "}
+                        {activity?.watch_details?.brand}{" "}
+                        {activity?.watch_details?.model_no}{" "}
+                        {activity?.watch_details?.model_no && "Serial -"}{" "}
+                        {activity?.watch_details?.serial_no}
+                        {activity?.watch_details?.model_no && "- Year :"}{" "}
+                        {activity?.watch_details?.year_of_production}{" "}
+                        {activity?.watch_details?.model_no &&
+                          "- Last requested/quoted price: "}{" "}
+                        {acceptedPrice}
+                        {activity?.watch_details?.brand && ")"}
+                      </>
+                    }
+                    placement="top"
+                    arrow
+                  >
+                    {activity.message} {activity?.watch_details?.brand && "( "}
+                    {activity?.watch_details?.brand}{" "}
+                    {activity?.watch_details?.model_no}{" "}
+                    {activity?.watch_details?.model_no && "Serial -"}{" "}
+                    {activity?.watch_details?.serial_no}
+                    {activity?.watch_details?.model_no && "- Year :"}{" "}
+                    {activity?.watch_details?.year_of_production}{" "}
+                    {activity?.watch_details?.model_no &&
+                      "- Last requested/quoted price: "}{" "}
+                    {acceptedPrice}
+                    {activity?.watch_details?.brand && ")"}
+                  </Tooltip>
+                </td>
+                <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center">
+                  W{activity?.watch_id}
+                </td>
+                <td className="px-[18px] py-[10px] dark:text-[#ffffff] text-black text-center whitespace-nowrap">
+                  {activity?.staffWatchActivityDetails?.watch_status}
+                </td>
+                <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap">
+                  {`${
+                    activity.created_on
+                      ? moment
+                          .unix(activity.created_on)
+                          .format("MMMM D, YYYY h:mm A")
+                      : "-"
+                  }`}
+                </td>
+              </tr>
+            );
+          })
         ) : (
           <tr>
             <td

@@ -12,6 +12,7 @@ const useActivityData = ({
   const [activitesData, setActivitiesData] = useState([]);
   const [totalRecords, setTotalRecords] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [currency, setCurrency] = useState("");
 
   const getActivityData = async () => {
     try {
@@ -26,6 +27,7 @@ const useActivityData = ({
       );
       setActivitiesData(response.payload.data);
       setTotalRecords(response?.pager?.total_records);
+      setCurrency(response?.payload?.adminDetails?.currency);
     } catch (error) {
       console.log("error", error);
     } finally {
@@ -39,7 +41,7 @@ const useActivityData = ({
     }
   }, [currentPage, sortOrder, debouncedSearchTerm, status]);
 
-  return { activitesData, totalRecords, isLoading, getActivityData };
+  return { activitesData, totalRecords, isLoading, getActivityData, currency };
 };
 
 export default useActivityData;

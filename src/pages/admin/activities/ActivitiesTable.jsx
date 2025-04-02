@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import PaginationComponent from "../../../components/common/PaginationComponent";
 import SearchBar from "../../../components/common/SearchBar";
 import SelectDropdown from "../../../components/common/SelectDropdown";
-import { sortData } from "../../../components/common/Sort";
 import useDebounce from "../../../components/common/UseDebounce";
-import axiosInstance from "../../../services/index";
 import AdminTable from "./components/AdminTable";
 import StaffTable from "./components/StaffTable";
 import useActivityData from "./hooks/useActivityData";
@@ -41,8 +39,9 @@ const ActivitiesTable = () => {
   const [estimatorId, setEstimatorId] = useState(null);
   const debouncedSearchTerm = useDebounce(searchQuery, 500);
   const userRole = localStorage.getItem("userRole");
+  console.log("userRole: ", userRole);
 
-  const { activitesData, totalRecords, isLoading, getActivityData } =
+  const { activitesData, totalRecords, isLoading, getActivityData, currency } =
     useActivityData({
       currentPage,
       recordsPerPage,
@@ -131,6 +130,7 @@ const ActivitiesTable = () => {
             sortOrder={sortOrder}
             navigate={navigate}
             getImageSrc={getImageSrc}
+            currency={currency}
           />
         ) : (
           <AdminTable

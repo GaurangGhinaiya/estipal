@@ -29,6 +29,7 @@ import SellerRevenueAnalysis from "../pages/admin/analysis/revenue_analysis/reve
 import SellerVerification from "../pages/seller/SellerVerification";
 import UpdatePassword from "../pages/adminForgotPassword/UpdatePassword";
 import ForgotPassword from "../pages/auth/login/ForgotPassword";
+import Privacy from "../pages/Privacy";
 // import AddFormulaMaster from "../pages/AddFormulaMaster";
 
 const AppRoute = () => {
@@ -73,6 +74,7 @@ const AppRoute = () => {
             </ProtectedRoute>
           }
         >
+          <Route path="/privacy" element={<Privacy />} />
           {/* <Route path="/test" element={<AddFormulaMaster />} /> */}
           {/* Admin Routes */}
           <Route path="/admin" element={<AdminRoot />}>

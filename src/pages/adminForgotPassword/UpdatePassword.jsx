@@ -22,6 +22,7 @@ const UpdatePassword = () => {
       confirm_password: "",
     },
   });
+
   const onSubmit = async (data) => {
     setLoading(true);
     try {
@@ -32,6 +33,8 @@ const UpdatePassword = () => {
           confirm_password: data.confirm_password,
         }
       );
+      console.log("response: ", response);
+      localStorage.clear();
       toast.success("Password updated successfully");
       navigate("/login");
       setLoading(false);

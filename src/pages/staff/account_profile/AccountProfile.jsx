@@ -7,16 +7,16 @@ import CustomSwitch from "../../../components/common/CustomSwitch";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import countries from "../../../constant/country.json";
-import currency from "../../../constant/currency.json";
+import currency from "../../../constant/currency.json"; 
 
 const AccountProfile = () => {
   const userRole = localStorage.getItem("userRole");
   const styles = {
     input: {
-      backgroundColor: userRole === "staff" ? "#FFFFFF" : "#1e252b", // Style for the input
+      backgroundColor: userRole === "staff" ? "#FFFFFF" : "#1e252b",
     },
     countrySelect: {
-      backgroundColor: userRole === "staff" ? "#ffffff" : "#1e252b", // Style for the country select
+      backgroundColor: userRole === "staff" ? "#ffffff" : "#1e252b",
       color: userRole === "staff" ? "black" : "white",
     },
   };
@@ -56,7 +56,6 @@ const AccountProfile = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  // Handle file upload for the logo
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -447,14 +446,15 @@ const AccountProfile = () => {
                   international
                   defaultCountry="GB"
                   countryCallingCodeEditable={false}
-                  inputStyle={styles.input} // Apply input styles
+                  inputStyle={styles.input}
                   countrySelectProps={{
-                    style: styles.countrySelect, // Apply country select styles
+                    style: styles.countrySelect,
                   }}
                   className="mt-1 block w-auto rounded-md p-3 max-sm:flex-wrap"
                   placeholder="Enter phone number"
                   style={{
-                    backgroundColor: userRole === "staff" ? "#F8F8F8" : "#1e252b",
+                    backgroundColor:
+                      userRole === "staff" ? "#F8F8F8" : "#1e252b",
                   }}
                   value={formData.mobileNumber}
                   onChange={(value) => {

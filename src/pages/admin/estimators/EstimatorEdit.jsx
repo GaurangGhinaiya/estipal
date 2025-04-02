@@ -314,10 +314,10 @@ const EstimatorEdit = () => {
           {isEditable ? (
             <>
               <LoadingButton
-                loading={loading} // Add loading state
+                loading={loading}
                 variant="contained"
                 className="!bg-[#00a65a] !normal-case !py-[5px] sm:!py-[10px] sm:!px-[40px] !px-[15px] !rounded-[50px]"
-                onClick={save} // Call the save function
+                onClick={save}
               >
                 Save
               </LoadingButton>
@@ -394,7 +394,6 @@ const EstimatorEdit = () => {
             type="text"
             label="Active"
             placeholder="Active"
-            //   value=""
             readOnly={!isEditable}
             bgColor={"#1e252b"}
             className="mb-[15px]"

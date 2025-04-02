@@ -8,6 +8,8 @@ import moment from "moment/moment";
 import { useState } from "react";
 import { sortData } from "../../../../components/common/Sort";
 import { useNavigate } from "react-router-dom";
+import gmailIcon from "../../../../assets/images/icons/icn-mai-light.svg";
+import gmailYellowIcon from "../../../../assets/images/icons/icn-mail-yellow.svg";
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 const StaffUserWatchHistory = ({
@@ -15,6 +17,7 @@ const StaffUserWatchHistory = ({
   setWatchActivityData,
   loading,
 }) => {
+  console.log("watchActivityData: ", watchActivityData);
   const [sortField, setSortField] = useState(null);
   const [sortOrder, setSortOrder] = useState("asc");
   const navigate = useNavigate();
@@ -103,14 +106,14 @@ const StaffUserWatchHistory = ({
                   <div
                     role="button"
                     onClick={() =>
-                      navigate(`/admin/watch_details/watch_status/${item?.id}`)
+                      navigate(`/admin/home/readActivity/${item?.id}`)
                     }
                   >
-                    <img
-                      src="https://www.estipal.com/assets/dist/images/icons/icn-mai-light.svg"
-                      width="25px"
-                      alt="img"
-                    />
+                    {item?.emailIcon ? (
+                      <img src={gmailYellowIcon} width="25px" alt="img" />
+                    ) : (
+                      <img src={gmailIcon} width="25px" alt="img" />
+                    )}
                   </div>
                 </div>
               </td>
@@ -118,7 +121,7 @@ const StaffUserWatchHistory = ({
                 {" "}
                 <Checkbox
                   {...label}
-                  checked={item?.admin_star_selected_flag}
+                  checked={item?.star_selected_flag}
                   icon={
                     <StarOutlineIcon
                       sx={{ color: "#494a4b", fontSize: "21px" }}
@@ -149,14 +152,7 @@ const StaffUserWatchHistory = ({
                   </div>
                 </Tooltip>
               </td>
-              <td
-                className="px-[18px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap text-center cursor-pointer"
-                onClick={() =>
-                  navigate(`/admin/watch_details/watch_status/${item?.id}`)
-                }
-              >
-                {item?.collection}
-              </td>
+
               <td
                 className="px-[18px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap text-center cursor-pointer"
                 onClick={() =>
@@ -167,6 +163,15 @@ const StaffUserWatchHistory = ({
                   <div>{item?.model}</div>
                 </Tooltip>
               </td>
+              <td
+                className="px-[18px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap text-center cursor-pointer"
+                onClick={() =>
+                  navigate(`/admin/watch_details/watch_status/${item?.id}`)
+                }
+              >
+                {item?.collection}
+              </td>
+
               <td
                 className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center cursor-pointer"
                 onClick={() =>
@@ -181,7 +186,7 @@ const StaffUserWatchHistory = ({
                   navigate(`/admin/watch_details/watch_status/${item?.id}`)
                 }
               >
-                {item?.compnay_name}
+                {item?.addedByDetail?.username || ""}
               </td>
               <td
                 className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap cursor-pointer"

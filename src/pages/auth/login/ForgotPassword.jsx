@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import bgImage from "../../../assets/images/img-bg-login.png";
 import axiosInstance from "../../../services";
@@ -26,14 +26,13 @@ const ForgotPassword = () => {
     setLoading(true);
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_BASE_URL}/sellers/forgetPassword?email`,
+        `${process.env.REACT_APP_API_BASE_URL}/sellers/forgetPassword`,
         {
           email: data?.email,
         }
       );
       if (response?.status === 200) {
         toast.success(response?.data?.message);
-        // navigate("/login");
         setLoading(false);
       }
     } catch (error) {

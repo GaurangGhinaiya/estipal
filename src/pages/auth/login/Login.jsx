@@ -21,7 +21,7 @@ const Login = () => {
       password: "",
     },
   });
-  // Login handler
+
   const onSubmit = async (data) => {
     setLoading(true);
     try {
@@ -29,13 +29,21 @@ const Login = () => {
         `${process.env.REACT_APP_API_PUBLIC_BASE_URL}/login`,
         data
       );
-      if (response?.status === 200) {
+      console.log("response: ", response);
+      if (response?.data?.status === 200) {
         toast.success(response?.data?.message);
         localStorage.setItem("authToken", response?.data?.payload?.token);
-        localStorage.setItem("userRole", "admin");
+
+        let type;
+
+        if (response?.data?.payload?.data?.admin_group === "seller") {
+          type = "staff";
+        } else type = response?.data?.payload?.data?.admin_group;
+
+        localStorage.setItem("userRole", type);
         // localStorage.setItem("userRole", "staff");
-        window.location.reload()
         navigate("/admin");
+        window.location.reload();
         setLoading(false);
       }
     } catch (error) {

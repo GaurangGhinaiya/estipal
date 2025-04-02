@@ -347,3 +347,52 @@ table.dataTable tbody td {
   background-image: linear-gradient(to bottom, #0088cc, #0055cc) !important;
   text-transform: unset !important;
 }
+
+
+.Privacy_Policy{
+  padding: 50px 0 50px 0;
+}
+
+ 
+.Privacy_Policy h2 {
+    margin: 50px 0 15px 0;
+    font-size: 24px;
+}
+.Privacy_Policy ul li {
+    font-size: 17px;
+    line-height: 25px;
+    list-style: square;
+    font-weight: 400;
+    opacity: 0.9;
+}
+
+.Privacy_Policy ul {
+    padding-inline-start: 40px;
+    margin-bottom: 10px;
+}
+
+.Privacy_Policy h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    margin-top: 30px;
+    font-weight: 500;
+ }
+.Privacy_Policy p {
+    font-size: 17px;
+    line-height: 25px;
+    font-weight: 400;
+    margin-bottom: 10px;
+    opacity: 0.9;
+ }
+.Privacy_Policy p:last-of-type{
+  padding-bottom: 15px;
+}
+.Privacy_Policy h1 {
+    text-align: center;
+    margin: 0px 0 50px 0;
+    font-size: 36px;
+}
+
+.Privacy_Policy strong {
+    font-weight: 700;
+}
