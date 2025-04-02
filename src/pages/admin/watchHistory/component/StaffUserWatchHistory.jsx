@@ -5,8 +5,6 @@ import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import { CircularProgress, Tooltip } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import moment from "moment/moment";
-import { useState } from "react";
-import { sortData } from "../../../../components/common/Sort";
 import { useNavigate } from "react-router-dom";
 import gmailIcon from "../../../../assets/images/icons/icn-mai-light.svg";
 import gmailYellowIcon from "../../../../assets/images/icons/icn-mail-yellow.svg";
@@ -14,23 +12,14 @@ const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 const StaffUserWatchHistory = ({
   watchActivityData,
-  setWatchActivityData,
   loading,
+  handleSort,
+  sortField,
+  sortOrder,
 }) => {
   console.log("watchActivityData: ", watchActivityData);
-  const [sortField, setSortField] = useState(null);
-  const [sortOrder, setSortOrder] = useState("asc");
   const navigate = useNavigate();
 
-  const handleSort = (key) => {
-    const newOrder = sortField === key && sortOrder === "asc" ? "desc" : "asc";
-    setSortField(key);
-    setSortOrder(newOrder);
-
-    // Sort data and update state
-    const sortedData = sortData(watchActivityData, key, newOrder);
-    setWatchActivityData(sortedData);
-  };
   return (
     <table className="table-auto w-full text-left ">
       <thead style={{ borderBottom: "2px solid #111111" }}>

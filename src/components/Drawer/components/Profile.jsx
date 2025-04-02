@@ -14,6 +14,7 @@ import EngFlag from "../../../assets/images/icons/en_flag.png";
 import ChinaFlag from "../../../assets/images/icons/cn_flag.png";
 import ItlyFlag from "../../../assets/images/icons/ita_flag.png";
 import ThailandFlag from "../../../assets/images/icons/th_flag.png";
+import PersonIcon from '@mui/icons-material/Person';
 
 export default function Profile() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -22,6 +23,7 @@ export default function Profile() {
   const openLang = Boolean(anchorElLang);
   const navigate = useNavigate();
   const userRole = localStorage.getItem("userRole");
+  const userData = JSON.parse(localStorage.getItem("userData"));
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -116,9 +118,9 @@ export default function Profile() {
       >
         <MenuItem onClick={handleClose} className="!cursor-default">
           <ListItemIcon>
-            <PersonAdd fontSize="small" />
+            <PersonIcon fontSize="medium" />
           </ListItemIcon>
-          Signed in as admin
+          Signed in as {userData?.username}
         </MenuItem>
         <MenuItem
           onClick={() => {
