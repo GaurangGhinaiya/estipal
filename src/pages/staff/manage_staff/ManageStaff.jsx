@@ -52,7 +52,6 @@ const ManageStaff = () => {
 
   const handleEditStaff = (id) => {
     const staffToEdit = manageStaffData.find((staff) => staff.id === id);
-    console.log('staffToEdit: ', staffToEdit);
     if (staffToEdit) {
       setNewStaff({
         username: staffToEdit.username,
@@ -113,7 +112,6 @@ const ManageStaff = () => {
       ...updatedData[index],
       [name]: type === "checkbox" ? checked : value,
     };
-    console.log("updatedData", updatedData)
     // setData(updatedData);
     setNewStaff(updatedData)
     setManageStaffData(updatedData)
@@ -162,8 +160,6 @@ const ManageStaff = () => {
       cnt_no: +staffData?.cnt_no,
       active: staffData?.active,
     };
-
-    console.log("payload", payload, editingId);
 
     try {
       setIsLoading(true);
