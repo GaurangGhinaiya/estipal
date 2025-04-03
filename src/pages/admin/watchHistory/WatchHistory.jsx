@@ -23,6 +23,14 @@ const WatchHistory = () => {
   const [estimatorId, setEstimatorId] = useState(null);
   const debouncedSearchTerm = useDebounce(searchQuery, 500);
   const userRole = localStorage.getItem("userRole");
+  const [sortField, setSortField] = useState(null);
+  const [sortOrder, setSortOrder] = useState("asc");
+
+  const handleSort = (key) => {
+    const newOrder = sortField === key && sortOrder === "asc" ? "desc" : "asc";
+    setSortField(key);
+    setSortOrder(newOrder);
+  };
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
@@ -66,7 +74,7 @@ const WatchHistory = () => {
 
     try {
       const response = await axiosInstance.get(
-        `/staffWatchActivities?page=${currentPage}&records_per_page=${10}&search=${searchValue}`
+        `/staffWatchActivities?page=${currentPage}&records_per_page=${10}&search=${searchValue}&sort_order=${sortOrder}&sort_field=${sortField}`
       );
       if (response?.status === 200) {
         setTotalRecords(response?.pager?.total_records);
@@ -83,7 +91,7 @@ const WatchHistory = () => {
     if (currentPage) {
       getWatchActivityList();
     }
-  }, [currentPage, debouncedSearchTerm, status]);
+  }, [currentPage, debouncedSearchTerm, status, sortOrder, sortField]);
 
   return (
     <div className="pb-[15px] min-h-[100vh]">
@@ -117,14 +125,18 @@ const WatchHistory = () => {
         {userRole === "staff" ? (
           <StaffUserWatchHistory
             watchActivityData={watchActivityData}
-            setWatchActivityData={setWatchActivityData}
             loading={loading}
+            handleSort={handleSort}
+            sortField={sortField}
+            sortOrder={sortOrder}
           />
         ) : (
           <AdminUserWatchHistory
             watchActivityData={watchActivityData}
-            setWatchActivityData={setWatchActivityData}
             loading={loading}
+            handleSort={handleSort}
+            sortField={sortField}
+            sortOrder={sortOrder}
           />
         )}
       </div>

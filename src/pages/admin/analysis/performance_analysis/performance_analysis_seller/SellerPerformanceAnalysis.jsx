@@ -1,9 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import { CircularProgress } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { sortData } from "../../../../../components/common/Sort";
+import { useParams } from "react-router-dom";
 import PaginationComponent from "../../../../../components/common/PaginationComponent";
 import axiosInstance from "../../../../../services";
-import { useParams } from "react-router-dom";
-import { CircularProgress } from "@mui/material";
+import FilterComponent from "../../components/FilterComponent";
+import SelectStatusComponent from "./components/SelectStatusComponent";
 import SummaryTable from "./components/SummaryTable";
 import TransactionTable from "./components/TransactionTable";
 import SelectStatusComponent from "./components/SelectStatusComponent";
@@ -30,10 +32,6 @@ const SellerPerformanceAnalysis = () => {
     const newOrder = sortField === key && sortOrder === "asc" ? "desc" : "asc";
     setSortField(key);
     setSortOrder(newOrder);
-
-    // Sort data and update state
-    const sortedData = sortData(transactionData, key, newOrder);
-    setTransactionData(sortedData);
   };
 
   const handlePageChange = (page) => {
@@ -83,7 +81,7 @@ const SellerPerformanceAnalysis = () => {
     try {
       setTransactionLoading(true);
       const response = await axiosInstance.get(
-        `/performanceAnalysis/seller?id=${seller_id}&page=${currentPage}&records_per_page=${recordsPerPage}&search=${searchValue}`
+        `/performanceAnalysis/seller?id=${seller_id}&page=${currentPage}&records_per_page=${recordsPerPage}&search=${searchValue}&sort_order=${sortOrder}&sort_field=${sortField}`
       );
       const transactions = response?.payload?.data?.transactions.map(
         (item) => ({
@@ -103,9 +101,12 @@ const SellerPerformanceAnalysis = () => {
   };
 
   useEffect(() => {
-    fetchSummaryData();
     fetchTransactionData();
-  }, [currentPage, seller_id]);
+  }, [currentPage, seller_id, sortOrder, sortField]);
+
+  useEffect(() => {
+    fetchSummaryData();
+  }, [seller_id]);
 
   useEffect(() => {
     if (fromDate && toDate) {
