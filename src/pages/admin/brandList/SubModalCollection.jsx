@@ -1,18 +1,29 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../services";
 
-export const SubModalCollection = ({ isVisible, content, onClose, handleModelSubmit, modelDetails }) => {
-  const [inputValue, setInputValue] = useState(content);
-  const handleInputChange = (e) => setInputValue(e.target.value);
+export const SubModalCollection = ({
+  isVisible,
+  content,
+  onClose,
+  handleModelSubmit,
+  modelDetails,
+}) => {
+  const [serialDesc, setSerialDesc] = useState("");
+  const [serialNo, setSerialNo] = useState("");
+  const handleInputChange = (e) => setSerialDesc(e.target.value);
+  const handleInputNoChange = (e) => setSerialNo(e.target.value);
 
   const getModelDetailsById = async () => {
     try {
-      const response = await axiosInstance.get(`watchSerialNo/detail?id=${modelDetails?.id}`)
-      setInputValue(`${response?.payload?.data?.serial_no}  ${response?.payload?.data?.serial_desc ? "-" : ""}  ${response?.payload?.data?.serial_desc}`)
+      const response = await axiosInstance.get(
+        `watchSerialNo/detail?id=${modelDetails?.id}`
+      );
+      setSerialDesc(response?.payload?.data?.serial_desc);
+      setSerialNo(response?.payload?.data?.serial_no);
     } catch (error) {
-      console.log("error", error)
+      console.log("error", error);
     }
-  }
+  };
 
   useEffect(() => {
     if (isVisible) {
@@ -20,9 +31,7 @@ export const SubModalCollection = ({ isVisible, content, onClose, handleModelSub
     }
   }, [modelDetails?.id, isVisible]);
 
-  // If modal is not visible, render nothing
   if (!isVisible) return null;
-
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -40,7 +49,16 @@ export const SubModalCollection = ({ isVisible, content, onClose, handleModelSub
           <input
             type="text"
             placeholder="Type something..."
-            value={inputValue}
+            value={serialNo}
+            onChange={handleInputNoChange}
+            className="w-full p-2 border rounded-lg"
+          />
+        </div>
+        <div className="mb-4">
+          <input
+            type="text"
+            placeholder="Type something..."
+            value={serialDesc}
             onChange={handleInputChange}
             className="w-full p-2 border rounded-lg"
           />
@@ -54,7 +72,7 @@ export const SubModalCollection = ({ isVisible, content, onClose, handleModelSub
           </button>
           <button
             onClick={() => {
-              handleModelSubmit(inputValue);
+              handleModelSubmit(serialDesc, serialNo);
               // setInputValue("");
             }}
             className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"

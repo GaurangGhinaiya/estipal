@@ -8,6 +8,7 @@ import AdminTable from "./components/AdminTable";
 import StaffTable from "./components/StaffTable";
 import useActivityData from "./hooks/useActivityData";
 import { useTranslation } from "react-i18next";
+import alarmWatchImage from "../../../assets/images/icons/Alarm_watch_light.png";
 
 export const statusOptions = [
   "All",
@@ -93,7 +94,7 @@ const ActivitiesTable = () => {
       activity?.staffWatchActivityDetails?.progress === 4 ||
       activity?.staffWatchActivityDetails?.progress === 5
     ) {
-      return "https://www.estipal.com/assets/dist/images/icons/Alarm_watch_light.png";
+      return alarmWatchImage;
     }
     return "";
   };

@@ -62,7 +62,7 @@ const AppRoute = () => {
         />
 
         <Route
-          path="/admin_forgot_password/update_password/:token/:id/:email"
+          path="/admin_forgot_password/update_password/:token/:id/:email/:type"
           element={<UpdatePassword />}
         />
 
