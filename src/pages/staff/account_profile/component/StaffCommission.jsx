@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { convertCommissionData } from "../../../admin/seller/function/convertCommissionData";
 import TextInputField from "../../../../components/common/TextInputField";
+import { useTranslation } from "react-i18next";
 
 const StaffCommission = (props) => {
     const {
@@ -10,6 +11,7 @@ const StaffCommission = (props) => {
         commissionData,
         setCommissionData,
     } = props;
+    const { t } = useTranslation();
 
     const handleChange = (index, field, value) => {
         const newData = [...commissionData];
@@ -32,7 +34,7 @@ const StaffCommission = (props) => {
                         : item?.to
                             ? `${sellerData?.currency} ${item?.to}`
                             : null,
-                    commission: item.commission ? Number(item.commission) : null,
+                    commission: item?.commission ? Number(item?.commission) : null,
                 }));
                 setCommissionData(transformedData);
             }
@@ -42,7 +44,7 @@ const StaffCommission = (props) => {
     return (
         <div className="px-0 sm:px-[20px] ">
             <h3 className="text-[24px] dark:text-[#ffff] text-black mb-2">
-                Commission Plan
+                {t("COMMISSIONPLAN")}:
             </h3>
             <div
                 className="dark:bg-[#1E252B] bg-[#F8F8F8] p-6 rounded-lg w-full mb-[15px]"
@@ -56,11 +58,10 @@ const StaffCommission = (props) => {
                         >
                             <TextInputField
                                 rightTextValue={
-                                    isEditable ? `(${sellerData?.currency ?? "USD"})` : ""
+                                    `(${sellerData?.currency ?? "USD"})`
                                 }
                                 type={isEditable ? "number" : "text"}
-                                placeholder=""
-                                label="From"
+                                label={t("FROM")}
                                 name="from"
                                 value={row?.from}
                                 readOnly={!isEditable}
@@ -76,11 +77,10 @@ const StaffCommission = (props) => {
 
                             <TextInputField
                                 rightTextValue={
-                                    isEditable ? `(${sellerData?.currency ?? "USD"})` : ""
+                                    `(${sellerData?.currency ?? "USD"})`
                                 }
                                 type={isEditable ? "number" : "text"}
-                                placeholder=""
-                                label="To"
+                                label={t("TO")}
                                 name="to"
                                 value={row?.to}
                                 readOnly={!isEditable}
@@ -98,8 +98,8 @@ const StaffCommission = (props) => {
                                 rightTextValue="%"
                                 type="number"
                                 placeholder=""
-                                label="Commission"
-                                name="to"
+                                label={t("COMMISSION")}
+                                name="commission"
                                 value={row?.commission}
                                 readOnly={!isEditable}
                                 disabled={true}

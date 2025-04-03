@@ -2,18 +2,20 @@ import React from "react";
 import ArrowDropUpRoundedIcon from "@mui/icons-material/ArrowDropUpRounded";
 import ArrowDropDownRoundedIcon from "@mui/icons-material/ArrowDropDownRounded";
 import moment from "moment";
+import { useTranslation } from "react-i18next";
 
 const StaffTransactionTable = ({ data, sortField, sortOrder, handleSort }) => {
+  const { t } = useTranslation();
   return (
     <table className="table-auto w-full text-left">
       <thead style={{ borderBottom: "2px solid #111111" }}>
         <tr>
           {[
-            { key: "created_on", label: "Date" },
-            { key: "username", label: "Staff" },
-            { key: "id", label: "Watch ID" },
-            { key: "model", label: "Brand / Collection / Model" },
-            { key: "watch_status", label: "Watch Status" },
+            { key: "created_on", label: `${t("DATE")}` },
+            { key: "username", label: `${t("STAFF")}` },
+            { key: "id", label:  `${t("WATCHID")}` },
+            { key: "model", label:  `${t("BRANDCOLLECTIONMODEL")}` },
+            { key: "watch_status", label: `${t("WATCHSTATUS")}` },
           ].map((column) => (
             <th
               key={column.key}
