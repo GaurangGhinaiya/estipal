@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import axiosInstance from "../../../services";
 import { extractImageUrls, formattedNumber } from "../../../utils";
 import CardData from "./components/CardData";
+import SellerCardData from "./components/SellerCardData";
 
 const ReadActivity = () => {
   const navigate = useNavigate();
@@ -96,6 +97,38 @@ const ReadActivity = () => {
       )}`;
     } else {
       return "N/A";
+    }
+  };
+
+  const getSellerPrice = (watchDetails, currencyUnit) => {
+    if (watchDetails?.seller_display_accept) {
+      return `${currencyUnit} ${formattedNumber.format(
+        watchDetails.seller_display_accept
+      )}`;
+    } else if (watchDetails?.estimated_price_seller) {
+      return `${currencyUnit} ${formattedNumber.format(
+        watchDetails.estimated_price_seller
+      )}`;
+    } else if (watchDetails?.seller_display_counter) {
+      return `${currencyUnit} ${formattedNumber.format(
+        watchDetails.seller_display_counter
+      )}`;
+    } else if (watchDetails?.seller_view_request_price) {
+      return `${currencyUnit} ${formattedNumber.format(
+        watchDetails.seller_view_request_price
+      )}`;
+    } else if (watchDetails?.seller_display_price) {
+      return `${currencyUnit} ${formattedNumber.format(
+        watchDetails.seller_display_price
+      )}`;
+    } else if (watchDetails?.seller_request_price) {
+      return `${currencyUnit} ${formattedNumber.format(
+        watchDetails.seller_request_price
+      )}`;
+    } else if (watchDetails?.price) {
+      return `${currencyUnit} ${formattedNumber.format(watchDetails.price)}`;
+    } else {
+      return [];
     }
   };
 
@@ -199,26 +232,34 @@ const ReadActivity = () => {
                 <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
                   <p className="dark:text-white text-black">Estimate</p>
                   <p className="text-[#11c71e] font-bold">
-                    {getPrice(
-                      readActivityData?.watch_details,
-                      readActivityData?.currency
-                    )}
+                    {userRole !== "staff"
+                      ? getPrice(
+                          readActivityData?.watch_details,
+                          readActivityData?.currency
+                        )
+                      : getSellerPrice(
+                          readActivityData?.watch_details,
+                          readActivityData?.currency
+                        )}
                   </p>
                 </div>
-                <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
-                  <p className="dark:text-white text-black">
-                    Estimator suggested wholesale price
-                  </p>
-                  <p className="dark:text-white text-black">
-                    {readActivityData?.assignWatchDetails?.[0]
-                      ?.suggest_retail_price
-                      ? `${readActivityData?.currency} ${Number(
-                          readActivityData?.assignWatchDetails?.[0]
-                            ?.suggest_retail_price
-                        ).toFixed(2)}`
-                      : "0.00"}
-                  </p>
-                </div>
+
+                {userRole !== "staff" && (
+                  <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
+                    <p className="dark:text-white text-black">
+                      Estimator suggested wholesale price
+                    </p>
+                    <p className="dark:text-white text-black">
+                      {readActivityData?.assignWatchDetails?.[0]
+                        ?.suggest_retail_price
+                        ? `${readActivityData?.currency} ${Number(
+                            readActivityData?.assignWatchDetails?.[0]
+                              ?.suggest_retail_price
+                          ).toFixed(2)}`
+                        : "0.00"}
+                    </p>
+                  </div>
+                )}
               </>
             )}
           </div>
@@ -235,16 +276,27 @@ const ReadActivity = () => {
       ) : (
         readActivityData?.adminActivities
           ?.reverse()
-          ?.map((item, index) => (
-            <CardData
-              key={index}
-              item={item}
-              index={index}
-              userRole={userRole}
-              adminActivitiesData={readActivityData?.adminActivities}
-              currency={readActivityData?.currency}
-            />
-          ))
+          ?.map((item, index) =>
+            userRole !== "staff" ? (
+              <SellerCardData
+                key={index}
+                item={item}
+                index={index}
+                userRole={userRole}
+                adminActivitiesData={readActivityData?.adminActivities}
+                currency={readActivityData?.currency}
+              />
+            ) : (
+              <CardData
+                key={index}
+                item={item}
+                index={index}
+                userRole={userRole}
+                adminActivitiesData={readActivityData?.adminActivities}
+                currency={readActivityData?.currency}
+              />
+            )
+          )
       )}
     </div>
   );
