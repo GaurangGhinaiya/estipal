@@ -50,9 +50,9 @@ const FilterComponent = ({
             value={groupBy}
             onChange={(e) => setGroupBy(e.target.value)}
           >
-            <option>All</option>
-            <option>Year</option>
-            <option>Month</option>
+            <option value={"all"}>All</option>
+            <option value={"year"}>Year</option>
+            <option value={"month"}>Month</option>
           </select>
           <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
             <svg

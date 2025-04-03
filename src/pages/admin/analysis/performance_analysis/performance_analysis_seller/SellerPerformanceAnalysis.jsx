@@ -4,10 +4,10 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import PaginationComponent from "../../../../../components/common/PaginationComponent";
 import axiosInstance from "../../../../../services";
-import FilterComponent from "../../components/FilterComponent";
-import SelectStatusComponent from "./components/SelectStatusComponent";
 import SummaryTable from "./components/SummaryTable";
 import TransactionTable from "./components/TransactionTable";
+import SelectStatusComponent from "./components/SelectStatusComponent";
+import FilterComponent from "../performance_analysis_estimator/components/FilterComponent";
 
 const SellerPerformanceAnalysis = () => {
   const { seller_id } = useParams();
@@ -22,6 +22,7 @@ const SellerPerformanceAnalysis = () => {
   const [transactionLoading, setTransactionLoading] = useState(false);
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
+  const [groupBy, setGroupBy] = useState("all");
   const [selectedStatus, setSelectedStatus] = useState("All");
   const userRole = localStorage.getItem("userRole");
 
@@ -48,9 +49,11 @@ const SellerPerformanceAnalysis = () => {
     const searchValue = JSON.stringify(searchObject);
     try {
       setIsLoading(true);
-      const response = await axiosInstance.get(
-        `/staffUserRoute?search=${searchValue}`
-      );
+      const url =
+        groupBy === "all"
+          ? `/staffUserRoute?search=${searchValue}`
+          : `/staffUserRoute?search=${searchValue}&group_by=${groupBy}`;
+      const response = await axiosInstance.get(url);
       setSummaryData(response?.payload?.data);
     } catch (error) {
       console.error("Error fetching summary data:", error);
@@ -115,6 +118,10 @@ const SellerPerformanceAnalysis = () => {
     fetchSummaryData(fromDate, toDate);
   };
 
+  useEffect(() => {
+    fetchSummaryData(fromDate, toDate);
+  }, [groupBy]);
+
   const clearFilter = () => {
     setFromDate("");
     setToDate("");
@@ -135,6 +142,8 @@ const SellerPerformanceAnalysis = () => {
           setToDate={setToDate}
           applyFilter={applyFilter}
           clearFilter={clearFilter}
+          groupBy={groupBy}
+          setGroupBy={setGroupBy}
         />
         <h1 className="text-[20px] font-medium mb-4 mt-5 px-0 sm:px-[15px] font-sans dark:text-white  text-black">
           Summary
@@ -147,7 +156,7 @@ const SellerPerformanceAnalysis = () => {
             <CircularProgress />
           </div>
         ) : summaryData?.length > 0 ? (
-          <SummaryTable data={summaryData} />
+          <SummaryTable data={summaryData} groupBy={groupBy} />
         ) : (
           <div className="py-[200px] px-4 text-center text-nowrap dark:text-[#ffff] text-black font-bold">
             No Data Found

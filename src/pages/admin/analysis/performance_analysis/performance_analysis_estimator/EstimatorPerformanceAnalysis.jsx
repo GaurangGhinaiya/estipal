@@ -49,9 +49,9 @@ const EstimatorPerformanceAnalysis = () => {
       searchObject.estimator_watch_status = selectedStatus;
     }
 
-    // if (groupBy !== "All") {
-    //   searchObject.group_by = groupBy;
-    // }
+    if (groupBy !== "all") {
+      searchObject.group_by = groupBy;
+    }
 
     const searchValue = JSON.stringify(searchObject);
 
