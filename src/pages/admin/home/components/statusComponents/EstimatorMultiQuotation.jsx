@@ -4,8 +4,10 @@ import YImage from "../../../../../assets/images/icons/y.png";
 import moment from "moment";
 import { Button } from "@mui/material";
 import { formattedNumber } from "../../../../../utils";
+import { useNavigate } from "react-router-dom";
 
 const EstimatorMultiQuotation = (props) => {
+  const navigate = useNavigate();
   const watchDetails = props?.item?.watch_details;
   const estDetails = watchDetails?.est_details || [];
   const currency_unit = props?.currency;
@@ -125,8 +127,12 @@ const EstimatorMultiQuotation = (props) => {
                         : "dark_green"
                     }
                       }`}
-                      // href={`/estimator_assignment/estimator_estimate_staff/${estId}/${value1?.watch_unique_id}/${value1?.estimated_watch_price}/${value1?.est_pass_flag}`}
                       style={{ minWidth: "130px" }}
+                      onClick={() => {
+                        navigate(
+                          `/estimator_assignment/estimator_estimate_staff/${estId}/${value1?.watch_unique_id}/${value1?.estimated_watch_price}/${value1?.est_pass_flag}`
+                        );
+                      }}
                     >
                       {selectedEstimator == estId
                         ? autoSelected
@@ -154,7 +160,11 @@ const EstimatorMultiQuotation = (props) => {
             }
                 ${selectedEstimator ? "light_grey" : "light_grey"}
             }`}
-            // href={`/estimator_assignment/estimator_estimate_staff/${props?.item?.watch_details.est_details[0]?.est_id}/${props?.item?.watch_details.est_details[0]?.watch_unique_id}/0/pass`}
+            onClick={() => {
+              navigate(
+                `/estimator_assignment/estimator_estimate_staff/${props?.item?.watch_details.est_details[0]?.est_id}/${props?.item?.watch_details.est_details[0]?.watch_unique_id}/0/pass`
+              );
+            }}
           >
             {passAllEstimator ? "Passed all" : "Pass all estimate"}
           </Button>

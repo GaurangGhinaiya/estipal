@@ -29,6 +29,7 @@ const SellerEdit = () => {
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
   const [selectCountry, setSelectCountry] = useState("IN");
+  console.log("selectCountry: ", selectCountry, selectPhoneCountry);
   const [loading, setLoading] = useState(false);
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [confirmDialogLoading, setConfirmDialogLoading] = useState(false);
@@ -263,6 +264,7 @@ const SellerEdit = () => {
         `${process.env.REACT_APP_API_BASE_URL}/sellers/forgetPassword`,
         {
           email: sellerData?.email,
+          type: "seller",
         }
       );
       if (response?.status === 200) {
@@ -552,7 +554,7 @@ const SellerEdit = () => {
                 <select
                   name="country"
                   id="country"
-                  className="bg-[#1e252b] max-sm:w-[100px]"
+                  className="bg-[#1e252b] max-sm:w-[100px] max-w-[200px]"
                   style={{ textAlignLast: "right" }}
                   value={formData.country}
                   disabled={!isEditable}
@@ -723,7 +725,13 @@ const SellerEdit = () => {
                     onChange={(value) => {
                       setPhone(value);
                     }}
-                    onCountryChange={(v) => setSelectPhoneCountry(v)}
+                    onCountryChange={(v) => {
+                      if (v) {
+                        setSelectPhoneCountry(v);
+                      } else {
+                        setSelectPhoneCountry("IN");
+                      }
+                    }}
                   />
                 ) : (
                   <p>{phone}</p>

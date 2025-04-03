@@ -9,7 +9,8 @@ import axiosInstance from "../../services";
 import { getCurrentYear } from "../../utils";
 
 const UpdatePassword = () => {
-  const { token, id, email } = useParams();
+  const { token, id, email, type } = useParams();
+  console.log("type: ", type);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const {
@@ -27,7 +28,7 @@ const UpdatePassword = () => {
     setLoading(true);
     try {
       const response = await axiosInstance.post(
-        `sellers/resetPassword?token=${token}&email=${email}&user_id=${id}`,
+        `sellers/resetPassword?token=${token}&email=${email}&user_id=${id}&typeUser=${type}`,
         {
           password: data.password,
           confirm_password: data.confirm_password,

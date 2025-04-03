@@ -6,6 +6,9 @@ import SearchBar from "../../../components/common/SearchBar";
 import useDebounce from "../../../components/common/UseDebounce";
 import axiosInstance from "../../../services/index";
 import moment from "moment";
+import WatchHistoryImage from "../../../assets/images/icons/Watch history 2.png";
+import revenueImage from "../../../assets/images/icons/Revenue.png";
+import performanceImage from "../../../assets/images/icons/performance.png";
 
 const Estimators = () => {
   const navigate = useNavigate();
@@ -248,7 +251,7 @@ const Estimators = () => {
                         height="30px"
                         style={{ filter: "invert(1)" }}
                         className="cursor-pointer"
-                        src="https://www.estipal.com/assets/dist/images/icons/Watch history 2.png"
+                        src={WatchHistoryImage}
                         onClick={() =>
                           navigate(
                             `/admin/watch_details/watch_history/?estimator_id=${item?.id}`
@@ -261,7 +264,7 @@ const Estimators = () => {
                         height="30px"
                         style={{ filter: "invert(1)" }}
                         className="cursor-pointer"
-                        src="https://www.estipal.com/assets/dist/images/icons/Revenue.png"
+                        src={revenueImage}
                         onClick={() => navigate(`/admin`)}
                       />
                       <img
@@ -270,7 +273,7 @@ const Estimators = () => {
                         height="30px"
                         style={{ filter: "invert(1)" }}
                         className="cursor-pointer"
-                        src="https://www.estipal.com/assets/dist/images/icons/performance.png"
+                        src={performanceImage}
                         onClick={() =>
                           navigate(
                             `/admin/analysis/performance_analysis/estimator`

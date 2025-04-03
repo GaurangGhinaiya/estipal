@@ -278,7 +278,7 @@ const ReadActivity = () => {
           ?.reverse()
           ?.map((item, index) =>
             userRole !== "staff" ? (
-              <SellerCardData
+              <CardData
                 key={index}
                 item={item}
                 index={index}
@@ -287,7 +287,7 @@ const ReadActivity = () => {
                 currency={readActivityData?.currency}
               />
             ) : (
-              <CardData
+              <SellerCardData
                 key={index}
                 item={item}
                 index={index}

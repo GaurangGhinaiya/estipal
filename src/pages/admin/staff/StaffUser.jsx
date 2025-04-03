@@ -6,6 +6,9 @@ import PaginationComponent from "../../../components/common/PaginationComponent"
 import SearchBar from "../../../components/common/SearchBar";
 import useDebounce from "../../../components/common/UseDebounce";
 import axiosInstance from "../../../services/index";
+import WatchHistoryImage from "../../../assets/images/icons/Watch history 2.png";
+import revenueImage from "../../../assets/images/icons/Revenue.png";
+import performanceImage from "../../../assets/images/icons/performance.png";
 
 const StaffUser = () => {
   const navigate = useNavigate();
@@ -182,7 +185,7 @@ const StaffUser = () => {
                           id="star"
                           className="w-[30px] h-[30px]"
                           style={{ filter: "invert(1)" }}
-                          src="https://www.estipal.com/assets/dist/images/icons/Watch history 2.png"
+                          src={WatchHistoryImage}
                         />
                       </div>
                       <div
@@ -195,7 +198,7 @@ const StaffUser = () => {
                         <img
                           alt="revanue"
                           style={{ filter: "invert(1)" }}
-                          src="https://www.estipal.com/assets/dist/images/icons/Revenue.png"
+                          src={revenueImage}
                           className="w-[30px] h-[30px]"
                         />
                       </div>
@@ -212,7 +215,7 @@ const StaffUser = () => {
                           alt="performance"
                           className="w-[30px] h-[30px]"
                           style={{ filter: "invert(1)" }}
-                          src="https://www.estipal.com/assets/dist/images/icons/performance.png"
+                          src={performanceImage}
                         />
                       </div>
                     </div>

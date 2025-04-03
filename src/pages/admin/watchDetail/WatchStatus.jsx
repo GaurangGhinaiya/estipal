@@ -676,7 +676,7 @@ const WatchStatus = () => {
                         {item?.status_description}
                       </td>
                       <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                        {item?.adminUserDetail?.currency +
+                        {watchDetailData?.adminDetail?.currency +
                           " " +
                           item?.formatted_price}
                       </td>
