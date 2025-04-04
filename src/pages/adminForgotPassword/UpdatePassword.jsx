@@ -10,7 +10,6 @@ import { getCurrentYear } from "../../utils";
 
 const UpdatePassword = () => {
   const { token, id, email, type } = useParams();
-  console.log("type: ", type);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const {
@@ -34,7 +33,6 @@ const UpdatePassword = () => {
           confirm_password: data.confirm_password,
         }
       );
-      console.log("response: ", response);
       localStorage.clear();
       toast.success("Password updated successfully");
       navigate("/login");

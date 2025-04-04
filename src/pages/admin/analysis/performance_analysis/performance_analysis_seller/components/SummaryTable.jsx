@@ -35,7 +35,6 @@ const SummaryTable = ({ data, groupBy }) => {
       showYear: index === 0 || item.grouped_by !== arr[index - 1].grouped_by,
       formattedGroupedBy: formatGroupedBy(item.grouped_by),
     }));
-  console.log("processedData: ", processedData);
 
   return (
     <table className="table-auto w-full text-left">

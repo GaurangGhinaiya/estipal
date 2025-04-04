@@ -1,8 +1,12 @@
 import CloseIcon from "@mui/icons-material/Close";
+import { LoadingButton } from "@mui/lab";
 import { Box, Button, Modal } from "@mui/material";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
+import { FaEdit } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import StaffLock from "../../../assets/images/icons/Stafflock.png";
 import StaffWatch from "../../../assets/images/icons/staffWatch.png";
 import CustomSwitch from "../../../components/common/CustomSwitch";
@@ -10,9 +14,8 @@ import PaginationComponent from "../../../components/common/PaginationComponent"
 import SearchBar from "../../../components/common/SearchBar";
 import useDebounce from "../../../components/common/UseDebounce";
 import axiosInstance from "../../../services";
-import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
-import { FaEdit } from "react-icons/fa";
+import SaveIcon from '@mui/icons-material/Save';
+
 
 const ManageStaff = () => {
   const { t } = useTranslation();
@@ -27,6 +30,11 @@ const ManageStaff = () => {
   const [isAddMode, setIsAddMode] = useState(false);
   const [isArchiveMode, setIsArchiveMode] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
+  const [manageStaffData, setManageStaffData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [resetPasswordData, setResetPasswordData] = useState("")
+  const userRole = localStorage.getItem("userRole");
+  const debouncedSearchTerm = useDebounce(searchQuery, 500);
   const [newStaff, setNewStaff] = useState({
     username: "",
     email: "",
@@ -38,10 +46,6 @@ const ManageStaff = () => {
     watches_history: false,
     reset_password: false,
   });
-  const [manageStaffData, setManageStaffData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const userRole = localStorage.getItem("userRole");
-  const debouncedSearchTerm = useDebounce(searchQuery, 500);
 
   // Handle modal toggle
   const toggleModal = () => setOpen((prev) => !prev);
@@ -51,18 +55,18 @@ const ManageStaff = () => {
   };
 
   const handleEditStaff = (id) => {
-    const staffToEdit = manageStaffData.find((staff) => staff.id === id);
+    const staffToEdit = manageStaffData?.find((staff) => staff?.id === id);
     if (staffToEdit) {
       setNewStaff({
-        username: staffToEdit.username,
-        email: staffToEdit.email,
-        cnt_no: staffToEdit.cnt_no,
-        active: staffToEdit.active,
-        added_on: staffToEdit.created_on,
-        sent_accepted: staffToEdit.sent_accepted,
-        online: staffToEdit.is_user_login,
-        watches_history: staffToEdit.watches_history,
-        reset_password: staffToEdit.reset_password,
+        username: staffToEdit?.username,
+        email: staffToEdit?.email,
+        cnt_no: staffToEdit?.cnt_no,
+        active: staffToEdit?.active,
+        added_on: staffToEdit?.created_on,
+        sent_accepted: staffToEdit?.sent_accepted,
+        online: staffToEdit?.is_user_login,
+        watches_history: staffToEdit?.watches_history,
+        reset_password: staffToEdit?.reset_password,
       });
       setEditingId(id); // Set the ID of the row being edited
       setIsEditMode(true);
@@ -89,21 +93,68 @@ const ManageStaff = () => {
     });
   };
 
+  const handleResetPassword = async () => {
+    const payload = {
+      email: resetPasswordData?.email,
+      type: "staff",
+    };
+    try {
+      setIsLoading(true);
+      const response = await axiosInstance.post(
+        `/sellers/forgetPassword`,
+        payload
+      );
+      toast.success(response?.message);
+    } catch (error) {
+      console.error("Error resetting password:", error);
+    } finally {
+      setIsLoading(false);
+      toggleModal();
+    }
+  }
+
   const handleArchiveStaff = () => {
     setIsArchiveMode(true);
     setIsAddMode(false);
     setIsEditMode(false);
   };
 
-  const handleRowSelect = (index) => {
+  const handleRowSelect = (item, index) => {
+    setManageStaffData((prevData) => {
+      const updatedData = [...prevData];
+      updatedData[index] = {
+        ...updatedData[index],
+        is_deleted: !updatedData[index]?.is_deleted, // Toggle the is_deleted value
+      };
+      return updatedData;
+    });
+
     setSelectedRows((prevSelectedRows) => {
-      if (prevSelectedRows.includes(index)) {
-        return prevSelectedRows.filter((i) => i !== index);
+      if (prevSelectedRows?.some((archived) => archived?.id === item?.id)) {
+        return prevSelectedRows?.map((archived) =>
+          archived?.id === item?.id
+            ? { ...archived, is_deleted: !archived.is_deleted }
+            : archived
+        );
       } else {
-        return [...prevSelectedRows, index];
+        return [...prevSelectedRows, { ...item, is_deleted: true }];
       }
     });
   };
+
+  useEffect(() => {
+    if (manageStaffData?.length > 0) {
+
+      const archivedRows = manageStaffData?.filter(item => item?.is_deleted);
+      const filteredSelectedRows = selectedRows?.filter(
+        item => !archivedRows?.some(archived => archived?.id === item?.id)
+      );
+      const allData = [...filteredSelectedRows, ...archivedRows];
+      setSelectedRows(allData);
+
+    }
+  }, [manageStaffData])
+
 
   const handleNewStaffChange = (index, e) => {
     const { name, type, checked, value } = e.target;
@@ -112,27 +163,18 @@ const ManageStaff = () => {
       ...updatedData[index],
       [name]: type === "checkbox" ? checked : value,
     };
-    // setData(updatedData);
     setNewStaff(updatedData)
     setManageStaffData(updatedData)
-  };
-
-
-  const handleArchiveSelected = () => {
-    const newArchivedData = selectedRows.map((index) => manageStaffData[index]);
-    const newData = manageStaffData.filter(
-      (_, index) => !selectedRows.includes(index)
-    );
-    setManageStaffData(newData);
-    setSelectedRows([]);
-    setIsArchiveMode(false);
   };
 
   const getManageStaffList = async () => {
     const searchValue = JSON.stringify(
       debouncedSearchTerm?.includes("@")
         ? { email: debouncedSearchTerm || "" }
-        : { username: debouncedSearchTerm || "" }
+        : {
+          username: debouncedSearchTerm || "",
+          ...(isArchiveMode ? {} : { is_deleted: false })
+        }
     );
     try {
       setIsLoading(true);
@@ -149,48 +191,73 @@ const ManageStaff = () => {
   };
 
   const handleSaveStaff = async () => {
-    const isEditing = Boolean(editingId);
-    const staffData = isEditing
-      ? manageStaffData.find((staff) => staff?.id === editingId)
-      : newStaff;
 
-    const payload = {
-      username: staffData?.username,
-      email: staffData?.email,
-      cnt_no: +staffData?.cnt_no,
-      active: staffData?.active,
-    };
+    if (isArchiveMode) {
+      const idArray = selectedRows?.map((item) => ({
+        id: item?.id,
+        is_deleted: item?.is_deleted
+      }));
 
-    try {
-      setIsLoading(true);
-      const response = isEditing
-        ? await axiosInstance.put(`/manageStaffUser?id=${editingId}`, payload)
-        : await axiosInstance.post(`/manageStaffUser`, payload);
-
-      const updatedData = response?.payload?.data;
-
-      if (isEditing) {
-        setManageStaffData((prevData) =>
-          prevData.map((staff) =>
-            staff.id === editingId ? { ...staff, ...updatedData } : staff
-          )
-        );
-        toast.success("Staff updated successfully");
-      } else {
-        setManageStaffData(updatedData);
-        toast.success("Staff added successfully");
+      const payload = {
+        ids: idArray
       }
-    } catch (error) {
-      console.error(`Error ${isEditing ? "updating" : "adding"} staff:`, error);
-    } finally {
-      setIsLoading(false);
+      try {
+        setIsLoading(true);
+        const response = await axiosInstance.post("/manageStaffUser/archive", payload);
+        toast.success("Selected staff archived successfully");
+      } catch (error) {
+        console.error("Error archiving staff:", error);
+      } finally {
+        setIsLoading(false);
+      }
+      resetFormState();
+
+    } else {
+      const isEditing = Boolean(editingId);
+      const staffData = isEditing
+        ? manageStaffData.find((staff) => staff?.id === editingId)
+        : newStaff;
+
+      const payload = {
+        username: staffData?.username,
+        email: staffData?.email,
+        cnt_no: +staffData?.cnt_no,
+        active: staffData?.active,
+      };
+
+      try {
+        setIsLoading(true);
+        const response = isEditing
+          ? await axiosInstance.put(`/manageStaffUser?id=${editingId}`, payload)
+          : await axiosInstance.post(`/manageStaffUser`, payload);
+
+        const updatedData = response?.payload?.data;
+
+        if (isEditing) {
+          setManageStaffData((prevData) =>
+            prevData.map((staff) =>
+              staff.id === editingId ? { ...staff, ...updatedData } : staff
+            )
+          );
+          toast.success("Staff updated successfully");
+        } else {
+          setManageStaffData(updatedData);
+          toast.success("Staff added successfully");
+        }
+      } catch (error) {
+        console.error(`Error ${isEditing ? "updating" : "adding"} staff:`, error);
+      } finally {
+        setIsLoading(false);
+      }
+
+      // Reset states after saving
+      resetFormState();
     }
 
-    // Reset states after saving
-    resetFormState();
   };
 
   const resetFormState = () => {
+    setCurrentPage(1);
     getManageStaffList();
     setEditingId(null);
     setIsAddMode(false);
@@ -230,7 +297,7 @@ const ManageStaff = () => {
 
   useEffect(() => {
     getManageStaffList();
-  }, [currentPage, debouncedSearchTerm]);
+  }, [currentPage, debouncedSearchTerm, isArchiveMode]);
 
   return (
     <div className="pb-[15px] min-h-[100vh]">
@@ -244,18 +311,20 @@ const ManageStaff = () => {
             <div className="flex sm:flex-row flex-col space-x-0 sm:gap-0 gap-4 sm:space-x-4 mb-4">
               {isAddMode || isEditMode || isArchiveMode ? (
                 <div className="flex gap-2">
-                  <Button
+                  <LoadingButton
+                    loading={isLoading}
                     variant="contained"
-                    className="!bg-[#00a65a] !px-[5px] sm:!px-[40px] !py-[10px] sm:!py-[10px] text-white !capitalize !rounded-[50px]"
-                    onClick={
-                      isArchiveMode ? handleArchiveSelected : handleSaveStaff
-                    }
+                    loadingPosition="end"
+                    className="!bg-[#00a65a] !normal-case !py-[5px] sm:!py-[10px] !text-white sm:!px-[35px] !px-[35px] !rounded-[50px]"
+                    onClick={() => {
+                      handleSaveStaff();
+                    }}
                   >
                     {t("SAVE")}
-                  </Button>
+                  </LoadingButton>
                   <Button
                     variant="contained"
-                    className="!bg-[#F0F0F0] !px-[5px] sm:!px-[40px] !py-[10px] sm:!py-[10px] !text-black !capitalize !rounded-[50px]"
+                    className="!bg-[#F0F0F0] !px-[35px] sm:!px-[40px] !py-[10px] sm:!py-[10px] !text-black !capitalize !rounded-[50px]"
                     onClick={handleCancel}
                   >
                     {t("CANCEL")}
@@ -271,14 +340,6 @@ const ManageStaff = () => {
                   >
                     {t("ADDSTAFF")}
                   </Button>
-                  {/* <Button
-                    variant="contained"
-                    size="small"
-                    className="!bg-[#3C8DBC] text-white text-nowrap !px-[5px] sm:!px-[40px] !py-[10px] sm:!py-[10px] !capitalize !rounded-[50px]"
-                    onClick={handleEditStaff}
-                  >
-                    {t("EDITSTAFF")}
-                  </Button> */}
                   <Button
                     variant="contained"
                     size="small"
@@ -342,8 +403,8 @@ const ManageStaff = () => {
                     <td className="px-[18px] py-[10px] text-center">
                       <input
                         type="checkbox"
-                        checked={selectedRows.includes(index)}
-                        onChange={() => handleRowSelect(index)}
+                        checked={item?.is_deleted}
+                        onChange={() => handleRowSelect(item, index)}
                       />
                     </td>
                   )}
@@ -366,7 +427,7 @@ const ManageStaff = () => {
                       />
                     }
                   </td>
-                  <td className="px-[18px] py-[10px] text-center">
+                  <td className="px-[18px] py-[10px] text-center font-bold">
                     {editingId === item.id ? (
                       <input
                         type="text"
@@ -379,7 +440,7 @@ const ManageStaff = () => {
                       item?.username
                     )}
                   </td>
-                  <td className="px-[18px] py-[10px] text-center">
+                  <td className="px-[18px] py-[10px] text-center font-bold">
                     {editingId === item.id ? (
                       <input
                         type="email"
@@ -392,7 +453,7 @@ const ManageStaff = () => {
                       item?.email
                     )}
                   </td>
-                  <td className="px-[18px] py-[10px] text-center">
+                  <td className="px-[18px] py-[10px] text-center font-bold">
                     {editingId === item.id ? (
                       <input
                         type="text"
@@ -405,7 +466,7 @@ const ManageStaff = () => {
                       item?.cnt_no
                     )}
                   </td>
-                  <td className="px-[18px] py-[10px] text-center">
+                  <td className="px-[18px] py-[10px] text-center whitespace-nowrap">
                     {moment.unix(item?.created_on).format("DD MMM YYYY")}
                   </td>
                   <td className="px-[18px] py-[10px] text-center">
@@ -416,14 +477,17 @@ const ManageStaff = () => {
                       <img src={StaffWatch} alt="Watch" width="35px" />
                     </div>
                   </td>
-                  <td className="px-[18px] py-[10px] text-center cursor-pointer" onClick={() => setOpen(true)}>
+                  <td className="px-[18px] py-[10px] text-center cursor-pointer" onClick={() => {
+                    setOpen(true)
+                    setResetPasswordData(item)
+                  }}>
                     <div className="flex justify-center">
                       <img src={StaffLock} alt="Lock" width="35px" />
                     </div>
                   </td>
-                  <td >
+                  <td className="px-[18px] py-[10px] text-center cursor-pointer">
                     <button
-                      className="text-black"
+                      className="text-black "
                       onClick={(e) => {
                         e.stopPropagation(); // Prevent the edit button from triggering other events
                         handleEditStaff(item.id); // Open the modal
@@ -500,7 +564,7 @@ const ManageStaff = () => {
                     className="p-2 border border-gray-300 rounded"
                   />
                 </td>
-                <td className="px-[18px] py-[10px] text-center">
+                <td className="px-[18px] py-[10px] text-center ">
                   {moment.unix(newStaff?.added_on).format("DD MMM YYYY")}
                 </td>
                 <td className="px-[18px] py-[10px] text-center">
@@ -575,9 +639,20 @@ const ManageStaff = () => {
             justifyContent="center"
             gap={1.5}
           >
-            <Button variant="contained" style={{ backgroundColor: "#3C8DBC" }} >
+            <LoadingButton
+              loading={isLoading}
+              variant="contained"
+              loadingPosition="end"
+              className="!bg-[#3C8DBC] !text-[14px]  !text-white !px-[40px] sm:!px-[35px] !py-[10px] sm:!py-[8px]"
+              onClick={() => {
+                handleResetPassword();
+              }}
+            >
               Send
-            </Button>
+            </LoadingButton>
+            {/* <Button variant="contained" style={{ backgroundColor: "#3C8DBC" }} onClick={handleResetPassword} >
+              Send
+            </Button> */}
             <Button variant="outlined" onClick={toggleModal} sx={{ color: "#3C8DBC", borderColor: "#3C8DBC" }} >
               Cancel
             </Button>

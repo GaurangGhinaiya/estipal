@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { useForm, Controller } from "react-hook-form";
-import bgImage from "../../../assets/images/img-bg-login.png";
+import { CircularProgress } from "@mui/material";
 import axios from "axios";
+import React, { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { CircularProgress } from "@mui/material";
 import logo from "../../../assets/images/icons/logo.png";
+import bgImage from "../../../assets/images/img-bg-login.png";
 import { getCurrentYear } from "../../../utils";
 
 const Login = () => {
@@ -23,14 +23,13 @@ const Login = () => {
   });
 
   const onSubmit = async (data) => {
-    
+
     setLoading(true);
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_API_PUBLIC_BASE_URL}/login`,
         data
       );
-      console.log("response: ", response);
       if (response?.data?.status === 200) {
         toast.success(response?.data?.message);
         localStorage.setItem("authToken", response?.data?.payload?.token);

@@ -29,7 +29,6 @@ const SellerEdit = () => {
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
   const [selectCountry, setSelectCountry] = useState("IN");
-  console.log("selectCountry: ", selectCountry, selectPhoneCountry);
   const [loading, setLoading] = useState(false);
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [confirmDialogLoading, setConfirmDialogLoading] = useState(false);
