@@ -1,5 +1,5 @@
 import Logout from "@mui/icons-material/Logout";
-import PersonAdd from "@mui/icons-material/PersonAdd";
+import PersonIcon from '@mui/icons-material/Person';
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -7,16 +7,15 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Tooltip from "@mui/material/Tooltip";
 import * as React from "react";
+import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import AdminProfile from "../../../assets/images/icons/AdminProfile.png";
 import ProfileImg from "../../../assets/images/icons/Profile.png";
-import EngFlag from "../../../assets/images/icons/en_flag.png";
 import ChinaFlag from "../../../assets/images/icons/cn_flag.png";
-import ItlyFlag from "../../../assets/images/icons/ita_flag.png";
+import EngFlag from "../../../assets/images/icons/en_flag.png";
 import SpanishFlag from "../../../assets/images/icons/esp_flag.png";
-import toast from "react-hot-toast";
-import { useTranslation } from "react-i18next";
-import PersonIcon from '@mui/icons-material/Person';
+import ItlyFlag from "../../../assets/images/icons/ita_flag.png";
 
 export default function Profile() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -44,7 +43,6 @@ export default function Profile() {
   };
 
   const handleLangSelect = (lang) => {
-    console.log('lang: ', lang);
     localStorage.setItem("Language", lang);
     i18n.changeLanguage(lang);
     setSelectedLang(lang); // Set selected language

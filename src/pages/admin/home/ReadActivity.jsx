@@ -5,10 +5,12 @@ import axiosInstance from "../../../services";
 import { extractImageUrls, formattedNumber } from "../../../utils";
 import CardData from "./components/CardData";
 import SellerCardData from "./components/SellerCardData";
+import { useTranslation } from "react-i18next";
 
 const ReadActivity = () => {
   const navigate = useNavigate();
   const params = useParams();
+  const { t } = useTranslation();
   const { id } = params;
   const [readActivityData, setReadActivityData] = useState();
   const [isLoading, setIsLoading] = useState(true);
@@ -163,7 +165,7 @@ const ReadActivity = () => {
               )
             }
           >
-            View Watch Details
+            {t("VIEWWATCHDETAILS")}
           </Button>
         )}
       </div>
@@ -198,25 +200,25 @@ const ReadActivity = () => {
             ) : (
               <>
                 <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
-                  <p className="dark:text-white text-black">ID</p>
+                  <p className="dark:text-white text-black">{t("ID")}</p>
                   <p className="dark:text-white text-black">
                     W{readActivityData?.watch_id}
                   </p>
                 </div>
                 <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
-                  <p className="dark:text-white text-black">Brand</p>
+                  <p className="dark:text-white text-black">{t("BRAND")}</p>
                   <p className="dark:text-white text-black">
                     {readActivityData?.watch_details?.brand}
                   </p>
                 </div>
                 <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
-                  <p className="dark:text-white text-black">Collection</p>
+                  <p className="dark:text-white text-black">{t("COLLECTION")}</p>
                   <p className="dark:text-white text-black">
                     {readActivityData?.watch_details?.collection}
                   </p>
                 </div>
                 <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between gap-[20px] border border-gray-300 dark:border-none">
-                  <p className="dark:text-white text-black">Model</p>
+                  <p className="dark:text-white text-black">{t("MODEL")}</p>
                   <p className="dark:text-white text-black whitespace-nowrap overflow-x-auto hide-scrollbar">
                     {readActivityData?.watch_details?.model_no}{" "}
                     {readActivityData?.watch_details?.model_desc &&

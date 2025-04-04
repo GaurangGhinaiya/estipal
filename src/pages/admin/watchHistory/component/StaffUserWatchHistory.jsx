@@ -5,10 +5,10 @@ import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import { CircularProgress, Tooltip } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import moment from "moment/moment";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import gmailIcon from "../../../../assets/images/icons/icn-mai-light.svg";
 import gmailYellowIcon from "../../../../assets/images/icons/icn-mail-yellow.svg";
-import { useTranslation } from "react-i18next";
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 const StaffUserWatchHistory = ({
@@ -18,7 +18,6 @@ const StaffUserWatchHistory = ({
   sortField,
   sortOrder,
 }) => {
-  console.log("watchActivityData: ", watchActivityData);
   const navigate = useNavigate();
   const { t } = useTranslation();
 
@@ -60,15 +59,12 @@ const StaffUserWatchHistory = ({
               onClick={
                 column.isSortable ? () => handleSort(column.key) : undefined
               }
-              className={`p-2 dark:text-[#ffff] text-nowrap  text-black text-center ${
-                column.isSortable ? "cursor-pointer" : ""
-              } ${
-                column.isSortable && sortField === column.key
+              className={`p-2 dark:text-[#ffff] text-nowrap  text-black text-center ${column.isSortable ? "cursor-pointer" : ""
+                } ${column.isSortable && sortField === column.key
                   ? "active-sorting"
                   : ""
-              } ${
-                column.isSortable && sortField !== column.key ? "sorting" : ""
-              }`}
+                } ${column.isSortable && sortField !== column.key ? "sorting" : ""
+                }`}
             >
               {column.label}{" "}
               {column.isSortable &&

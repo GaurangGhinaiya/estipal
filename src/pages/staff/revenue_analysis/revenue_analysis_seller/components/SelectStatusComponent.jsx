@@ -1,9 +1,11 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 const SelectStatusComponent = ({ selectedStatus, setSelectedStatus }) => {
+  const { t } = useTranslation();
   return (
     <div className="flex items-center space-x-2 dark:text-white text-black px-14 max-md:px-[20px]">
-      <span>Select Status:</span>
+      <span>{t("SELECTSTATUS")}:</span>
       <div className="relative inline-block text-left">
         <select
           className="block appearance-none w-full dark:bg-gray-700 bg-white border border-gray-600 dark:text-white text-black py-2 px-4 pr-8 rounded leading-tight focus:outline-none dark:focus:bg-gray-600 focus:bg-white focus:border-gray-500"
