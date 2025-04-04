@@ -10,6 +10,7 @@ const SelectDropdown = ({
   page,
   sellerId,
   estimatorId,
+  staffId,
 }) => {
   const navigate = useNavigate();
 
@@ -27,6 +28,9 @@ const SelectDropdown = ({
     }
     if (estimatorId) {
       url += `&estimator_id=${estimatorId}`;
+    }
+    if (staffId) {
+      url += `&staff_id=${staffId}`;
     }
     navigate(url);
   };

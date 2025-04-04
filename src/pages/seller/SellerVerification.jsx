@@ -64,7 +64,7 @@ const SellerVerification = () => {
                 className="text-[#2e00d3] mx-auto block text-[16px] py-[10px] px-[10px]"
                 onClick={() =>
                   navigate(
-                    `/admin_forgot_password/update_password/${sellerData?.token}/${sellerData?.admin_seller_id}/${sellerData?.email}`
+                    `/admin_forgot_password/update_password/${sellerData?.token}/${sellerData?.admin_seller_id}/${sellerData?.email}/${sellerData?.type}`
                   )
                 }
               >

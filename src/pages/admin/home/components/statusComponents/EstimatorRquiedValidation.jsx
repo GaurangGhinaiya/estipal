@@ -3,8 +3,10 @@ import NImage from "../../../../../assets/images/icons/n.png";
 import YImage from "../../../../../assets/images/icons/y.png";
 import moment from "moment";
 import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const EstimatorRquiedValidation = (props) => {
+  const navigate = useNavigate();
   const watchDetails = props?.item?.watch_details;
   const selectedEstimator = props?.item?.assignWatchDetails?.[0]?.estimator_id;
 
@@ -94,7 +96,11 @@ const EstimatorRquiedValidation = (props) => {
                     !selectedEstimator && passAllEstimator ? "light_grey" : ""
                   }
  `}
-                  // href={`/estimator_assignment/estimator_estimate_staff/${watchDetails?.est_id}/${watchDetails?.watch_unique_id}/${watchDetails?.estimated_price_admin}/${watchDetails?.est_pass_flag}`}
+                  onClick={() => {
+                    navigate(
+                      `/estimator_assignment/estimator_estimate_staff/${watchDetails?.est_id}/${watchDetails?.watch_unique_id}/${watchDetails?.estimated_price_admin}/${watchDetails?.est_pass_flag}`
+                    );
+                  }}
                   style={{ minWidth: "130px" }}
                 >
                   {selectedEstimator === watchDetails?.est_id

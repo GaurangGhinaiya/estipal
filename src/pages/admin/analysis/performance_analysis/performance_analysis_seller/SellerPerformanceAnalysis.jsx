@@ -51,8 +51,8 @@ const SellerPerformanceAnalysis = () => {
       setIsLoading(true);
       const url =
         groupBy === "all"
-          ? `/staffUserRoute?search=${searchValue}`
-          : `/staffUserRoute?search=${searchValue}&group_by=${groupBy}`;
+          ? `/staffUser?search=${searchValue}`
+          : `/staffUser?search=${searchValue}&group_by=${groupBy}`;
       const response = await axiosInstance.get(url);
       setSummaryData(response?.payload?.data);
     } catch (error) {

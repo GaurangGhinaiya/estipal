@@ -41,14 +41,14 @@ const BrandList = () => {
   const handleBrandClick = (brand) => {
     setSelectedBrand(brand?.brand);
     setBrandDetails(brand);
-    setSelectedCollection(null); // Reset collection selection when a new brand is selected
-    setSelectedModel(null); // Reset model selection
+    setSelectedCollection(null);
+    setSelectedModel(null);
   };
 
   const handleCollectionClick = (collection) => {
     setCollectionDetails(collection);
     setSelectedCollection(collection?.model_no);
-    setSelectedModel(null); // Reset model selection
+    setSelectedModel(null);
   };
 
   const openModalBrand = (content) => {
@@ -548,6 +548,7 @@ const BrandList = () => {
         onClose={closeModalBrand}
         handleBrandModalSubmit={handleBrandModalSubmit}
         brandDetails={brandDetails}
+        setModalVisibleBrand={setModalVisibleBrand}
       />
       <ModalCollection
         isModalVisibleCollection={isModalVisibleCollection}

@@ -156,7 +156,7 @@ const AdminUserWatchHistory = ({
                   navigate(`/admin/watch_details/watch_status/${item?.id}`)
                 }
               >
-                {item?.collection}
+                {item?.model}
               </td>
               <td
                 className="px-[18px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap text-center cursor-pointer"
@@ -164,8 +164,8 @@ const AdminUserWatchHistory = ({
                   navigate(`/admin/watch_details/watch_status/${item?.id}`)
                 }
               >
-                <Tooltip title={item?.model} placement="top" arrow>
-                  <div>{item?.model}</div>
+                <Tooltip title={item?.collection} placement="top" arrow>
+                  <div>{item?.collection}</div>
                 </Tooltip>
               </td>
               <td

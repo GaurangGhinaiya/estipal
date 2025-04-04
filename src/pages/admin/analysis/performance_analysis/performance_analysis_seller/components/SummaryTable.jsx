@@ -4,7 +4,7 @@ import ReactSpeedometer from "react-d3-speedometer";
 const SummaryTable = ({ data, groupBy }) => {
   // Helper function to format grouped_by (e.g., "2023-07" -> "July 2023")
   const formatGroupedBy = (groupedBy) => {
-    const [year, month] = groupedBy.split("-");
+    const [year, month] = groupedBy?.split("-");
     const monthNames = [
       "January",
       "February",
@@ -24,16 +24,21 @@ const SummaryTable = ({ data, groupBy }) => {
 
   const processedData = data
     ?.sort((a, b) => {
-      const [yearA, monthA] = a.grouped_by.split("-").map(Number);
-      const [yearB, monthB] = b.grouped_by.split("-").map(Number);
-      return groupBy !== "year"
-        ? yearA - yearB || monthB - monthA
-        : yearB - yearA || monthB - monthA;
+      const [yearA, monthA] = a.grouped_by?.split("-").map(Number) || [];
+      const [yearB, monthB] = b.grouped_by?.split("-").map(Number) || [];
+      if (groupBy !== "all") {
+        return groupBy !== "year"
+          ? yearA - yearB || monthB - monthA
+          : yearB - yearA || monthB - monthA;
+      }
+      return 0;
     })
     ?.map((item, index, arr) => ({
       ...item,
-      showYear: index === 0 || item.grouped_by !== arr[index - 1].grouped_by,
-      formattedGroupedBy: formatGroupedBy(item.grouped_by),
+      showYear: index === 0 || item.grouped_by !== arr[index - 1]?.grouped_by,
+      formattedGroupedBy: item.grouped_by
+        ? formatGroupedBy(item.grouped_by)
+        : "",
     }));
   console.log("processedData: ", processedData);
 

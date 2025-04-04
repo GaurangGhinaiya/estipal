@@ -14,10 +14,19 @@ const ConfirmDialog = ({
   content,
 }) => {
   return (
-    <Dialog open={open} onClose={handleClose}>
+    <Dialog
+      open={open}
+      onClose={handleClose}
+      sx={{
+        "& .MuiDialog-paper": {
+          backgroundColor: "#283641",
+          color: "#fff",
+        },
+      }}
+    >
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>
-        <DialogContentText>{content}</DialogContentText>
+        <DialogContentText sx={{ color: "#fff" }}>{content}</DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} variant="outlined">

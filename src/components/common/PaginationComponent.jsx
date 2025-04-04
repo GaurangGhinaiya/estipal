@@ -32,14 +32,18 @@ const PaginationComponent = ({
           sx={{
             "& .MuiButtonBase-root": {
               border: "none !important",
-              color: userRole === "staff" ? "#000000 !important" : "#ffffff !important",
+              color:
+                userRole === "staff"
+                  ? "#000000 !important"
+                  : "#ffffff !important",
             },
             "& .Mui-selected": {
               backgroundColor: "#0060aa !important",
-              color: userRole === "staff" ? "#ffff !important" : "#ffff !important",
+              color:
+                userRole === "staff" ? "#ffff !important" : "#ffff !important",
             },
             "& .MuiPaginationItem-root": {
-              color: userRole === "staff" ? "#000000 !important" : "#ffffff !important",
+              color: userRole === "staff" ? "#000000 " : "#ffffff ",
             },
           }}
         />{" "}

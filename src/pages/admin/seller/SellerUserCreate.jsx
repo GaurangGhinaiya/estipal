@@ -17,6 +17,7 @@ import {
   fetchStateList,
 } from "../../../utils/apiUtils";
 import CommissionPlan from "./components/Commission";
+import { LoadingButton } from "@mui/lab";
 
 const SellerUserCreate = () => {
   const navigate = useNavigate();
@@ -238,7 +239,7 @@ const SellerUserCreate = () => {
       }
     } catch (error) {
       console.log("error: ", error);
-      toast.error(error?.response?.data?.payload?.error);
+      toast.error(error?.response?.data?.message);
     } finally {
       setLoading(false);
     }
@@ -254,13 +255,14 @@ const SellerUserCreate = () => {
         </div>
 
         <div className="flex gap-4">
-          <Button
+          <LoadingButton
+            loading={loading}
             variant="contained"
             className="!bg-[#00a65a] !normal-case !py-[5px] sm:!py-[10px] sm:!px-[40px] !px-[15px] !rounded-[50px]"
             onClick={save}
           >
             Save
-          </Button>
+          </LoadingButton>
           <Button
             variant="contained"
             className="!bg-[#ffff] !text-black !normal-case !py-[5px] sm:!py-[10px] sm:!px-[40px] !px-[15px] !rounded-[50px]"

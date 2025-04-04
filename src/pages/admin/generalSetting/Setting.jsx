@@ -6,6 +6,7 @@ import ResponseTimeLimits from "./ResponseTimeLimits";
 import axiosInstance from "../../../services";
 import toast from "react-hot-toast";
 import { LoadingButton } from "@mui/lab";
+import { ClipLoader } from "react-spinners";
 
 const Settings = () => {
   const [isEditable, setIsEditable] = useState(false);
@@ -384,6 +385,12 @@ const Settings = () => {
         setData={setData}
         currency={currency}
       />
+
+      {loading && (
+        <div className="flex fixed top-0 bottom-0 right-0 left-0 justify-center items-center">
+          <ClipLoader color="#ffffff" size={50} />
+        </div>
+      )}
     </div>
   );
 };

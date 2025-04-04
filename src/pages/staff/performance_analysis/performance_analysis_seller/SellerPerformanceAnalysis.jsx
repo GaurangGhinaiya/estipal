@@ -45,7 +45,9 @@ const SellerPerformanceAnalysis = () => {
 
     try {
       setIsLoading(true);
-      const response = await axiosInstance.get(`/staffUserRoute?search=${searchValue}`);
+      const response = await axiosInstance.get(
+        `/staffUser?search=${searchValue}`
+      );
       setSummaryData(response?.payload?.data);
     } catch (error) {
       console.error("Error fetching summary data:", error);

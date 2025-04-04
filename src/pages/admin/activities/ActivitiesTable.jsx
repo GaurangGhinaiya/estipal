@@ -57,8 +57,6 @@ const ActivitiesTable = () => {
     const newOrder = sortField === key && sortOrder === "asc" ? "desc" : "asc";
     setSortField(key);
     setSortOrder(newOrder);
-    // const sortedData = sortData(activitesData, key, newOrder);
-    // setActivitiesData(sortedData);
   };
 
   useEffect(() => {

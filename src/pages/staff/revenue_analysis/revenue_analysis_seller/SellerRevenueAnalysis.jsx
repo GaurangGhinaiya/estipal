@@ -74,7 +74,7 @@ const SellerRevenueAnalysis = () => {
     try {
       setTransactionLoading(true);
       const response = await axiosInstance.get(
-        `/staffWatchActivities?page=${currentPage}&records_per_page=${recordsPerPage}&search=${searchValue}&sort_order=${sortOrder}&sort_field=${sortField}`
+        `/staffWatchActivities?page=${currentPage}&records_per_page=${recordsPerPage}&search=${searchValue}&sort_order=${sortOrder}&sort_field=${sortField}&is_revenue_analysis=${true}`
       );
       const transactions = response?.payload?.data?.map((item) => ({
         ...item,

@@ -118,8 +118,22 @@ const AdminTable = ({
                   placement="top"
                   arrow
                 >
-                  <div className="w-[77px] text-center">
-                    {activity?.from_name ? activity?.from_name : "-"}
+                  <div className="w-[77px] text-center whitespace-nowrap">
+                    {activity?.from_name
+                      ? (activity?.company_name
+                          ? activity?.company_name + " - "
+                          : "") +
+                          activity?.from_name.length >
+                        16
+                        ? (
+                            (activity?.company_name
+                              ? activity?.company_name + " - "
+                              : "") + activity?.from_name
+                          ).substring(0, 15) + "..."
+                        : (activity?.company_name
+                            ? activity?.company_name + " - "
+                            : "") + activity?.from_name
+                      : "-"}
                   </div>
                 </Tooltip>
               </td>
@@ -155,7 +169,7 @@ const AdminTable = ({
                   {activity?.watch_details?.year_of_production}{" "}
                   {activity?.watch_details?.model_no &&
                     "- Last requested/quoted price: USD"}{" "}
-                  {activity?.watch_details?.admin_converted_price}
+                  {activity?.watch_details?.admin_converted_price ?? 0}
                   {activity?.watch_details?.brand && ")"}
                 </Tooltip>
               </td>
@@ -168,7 +182,9 @@ const AdminTable = ({
               <td className="px-[18px] py-[10px] text-[#ffff] text-center whitespace-nowrap">
                 {`${
                   activity.created_on
-                    ? moment.unix(activity.created_on).format("DD-MM-YYYY")
+                    ? moment
+                        .unix(activity.created_on)
+                        .format("MMMM DD, YYYY hh:mm A")
                     : "-"
                 }  `}
               </td>

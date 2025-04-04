@@ -23,6 +23,7 @@ const WatchHistory = () => {
   const [totalRecords, setTotalRecords] = useState(0);
   const [sellerId, setSellerId] = useState(null);
   const [estimatorId, setEstimatorId] = useState(null);
+  const [staffId, setStaff] = useState(null);
   const debouncedSearchTerm = useDebounce(searchQuery, 500);
   const userRole = localStorage.getItem("userRole");
   const [sortField, setSortField] = useState(null);
@@ -39,9 +40,11 @@ const WatchHistory = () => {
     const page = queryParams.get("page") || 1;
     const statusQuery = queryParams.get("status") || "All";
     const seller = queryParams.get("seller_id") || null;
+    const staff = queryParams.get("staff_id") || null;
     const estimator = queryParams.get("estimator_id") || null;
     setEstimatorId(estimator);
     setSellerId(seller);
+    setStaff(staff);
     setCurrentPage(Number(page));
     setStatus(statusQuery);
   }, [location.search]);
@@ -58,6 +61,9 @@ const WatchHistory = () => {
     if (estimatorId) {
       url += `&estimator_id=${estimatorId}`;
     }
+    if (staffId) {
+      url += `&staff_id=${staffId}`;
+    }
     navigate(url);
   };
 
@@ -65,12 +71,17 @@ const WatchHistory = () => {
     setLoading(true);
 
     const searchValue =
-      debouncedSearchTerm || status !== "All" || sellerId || estimatorId
+      debouncedSearchTerm ||
+      status !== "All" ||
+      sellerId ||
+      estimatorId ||
+      staffId
         ? JSON.stringify({
             ...(debouncedSearchTerm && { search: debouncedSearchTerm }),
             ...(status !== "All" && { watch_status: status }),
-            ...(sellerId && { seller_id: sellerId }),
+            ...(sellerId && { merchant_id: sellerId }),
             ...(estimatorId && { estimator_id: estimatorId }),
+            ...(staffId && { user_id: staffId }),
           })
         : "";
 
@@ -112,6 +123,7 @@ const WatchHistory = () => {
             page={currentPage}
             sellerId={sellerId}
             estimatorId={estimatorId}
+            staffId={staffId}
           />
 
           <SearchBar
