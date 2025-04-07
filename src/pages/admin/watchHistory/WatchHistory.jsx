@@ -18,6 +18,7 @@ const WatchHistory = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [watchActivityData, setWatchActivityData] = useState([]);
+  console.log("watchActivityData: ", watchActivityData);
   const [currentPage, setCurrentPage] = useState(null);
   const [recordsPerPage, setRecordsPerPage] = useState(20);
   const [totalRecords, setTotalRecords] = useState(0);

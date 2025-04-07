@@ -2,7 +2,6 @@ import React from "react";
 import ReactSpeedometer from "react-d3-speedometer";
 
 const SummaryTable = ({ data, groupBy }) => {
-  // Helper function to format grouped_by (e.g., "2023-07" -> "July 2023")
   const formatGroupedBy = (groupedBy) => {
     const [year, month] = groupedBy?.split("-");
     const monthNames = [

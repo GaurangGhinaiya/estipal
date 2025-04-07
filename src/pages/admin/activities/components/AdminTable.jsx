@@ -118,7 +118,7 @@ const AdminTable = ({
                   placement="top"
                   arrow
                 >
-                  <div className="w-[77px] text-center whitespace-nowrap">
+                  <div className="w-[77px] text-center  min-w-[200px]">
                     {activity?.from_name
                       ? (activity?.company_name
                           ? activity?.company_name + " - "
@@ -154,7 +154,7 @@ const AdminTable = ({
                          activity?.watch_details?.model_no &&
                          "- Last requested/quoted price: USD"
                        }
-                       ${activity?.watch_details?.admin_converted_price}
+                       ${activity?.watch_details?.admin_converted_price ?? 0}
                        ${activity?.watch_details?.brand && ")"}`}
                   placement="top"
                   arrow
