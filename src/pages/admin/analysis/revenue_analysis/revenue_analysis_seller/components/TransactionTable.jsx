@@ -34,7 +34,7 @@ const TransactionTable = ({ data, sortField, sortOrder, handleSort }) => {
         </tr>
       </thead>
       <tbody>
-        {data?.map((item, index) => (
+        {data?.length > 0 ? data?.map((item, index) => (
           <tr key={index} className="border-b border-[#202b34]">
             <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center">
               {moment.unix(item?.created_on).format("MMM DD,YYYY")}
@@ -54,7 +54,14 @@ const TransactionTable = ({ data, sortField, sortOrder, handleSort }) => {
               {item?.watch_status}
             </td>
           </tr>
-        ))}
+        )):
+        (
+          <tr>
+           <td className="py-[200px] px-4 text-center text-nowrap dark:text-[#ffff] text-black font-bold" colSpan={7} >
+           No Data Found
+           </td>
+          </tr>
+        )}
       </tbody>
     </table>
   );

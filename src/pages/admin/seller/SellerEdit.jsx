@@ -487,7 +487,7 @@ const SellerEdit = () => {
           <div className="flex justify-between items-start w-full" style={
             {
               backgroundColor: "#1E252B",
-              border: "1px solid #e5e7eb",
+              // border: "1px solid #e5e7eb",
               borderRadius: "8px"
 
             }
