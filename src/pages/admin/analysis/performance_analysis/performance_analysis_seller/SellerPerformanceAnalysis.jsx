@@ -133,7 +133,7 @@ const SellerPerformanceAnalysis = () => {
     <div className="pb-[15px] min-h-[100vh]">
       <div className="px-0 sm:px-[20px] pt-4 flex flex-col justify-between flex-wrap">
         <h1 className="text-[26px] font-medium mb-4 mt-5 px-0 sm:px-[15px] font-sans dark:text-white  text-black">
-          Performance Analysis
+          Performance Analysis (Merchant)
         </h1>
         <FilterComponent
           fromDate={fromDate}
@@ -176,18 +176,14 @@ const SellerPerformanceAnalysis = () => {
           <div className="py-[200px] px-4 text-center">
             <CircularProgress />
           </div>
-        ) : transactionData?.length > 0 ? (
+        ) :  (
           <TransactionTable
             data={transactionData}
             sortField={sortField}
             sortOrder={sortOrder}
             handleSort={handleSort}
           />
-        ) : (
-          <div className="py-[200px] px-4 text-center text-nowrap dark:text-[#ffff] text-black font-bold">
-            No Data Found
-          </div>
-        )}
+        ) }
       </div>
       <PaginationComponent
         userRole={userRole}

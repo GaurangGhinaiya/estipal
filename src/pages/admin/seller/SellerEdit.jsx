@@ -454,7 +454,7 @@ const SellerEdit = () => {
             className="mb-[15px]"
             onChange={handleChange}
           />
-          <TextInputField
+          {/* <TextInputField
             rightTextValue=""
             label="Company Logo"
             bgColor={"#1e252b"}
@@ -483,7 +483,57 @@ const SellerEdit = () => {
                 </div>
               </div>
             }
-          />
+          /> */}
+          <div className="flex justify-between items-start w-full" style={
+            {
+              backgroundColor: "#1E252B",
+              border: "1px solid #e5e7eb",
+              borderRadius: "8px"
+
+            }
+          }>
+            <div className="w-[35%]">
+              <TextInputField
+                label={`Company Logo`}
+              />
+            </div>
+
+            {isEditable ?
+              <div className="flex justify-end w-full py-2">
+                <div className="w-fit">
+                  <input
+                    type="file"
+                    onChange={handleFileUpload}
+                    className="w-full bg-transparent border-none outline-none ml-2  text-white placeholder-gray-400 text-right"
+                  />
+
+                  <div>
+                    {formData?.companyLogoPreview ? (
+                      <div className="mt-2">
+                        <img
+                          src={formData?.companyLogoPreview}
+                          alt="Uploaded Logo"
+                          className="w-[100px] object-cover rounded"
+                        />
+                      </div>
+                    ) : ""}
+                  </div>
+                </div>
+              </div>
+              :
+              <div className="flex items-start justify-end w-full pb-2 px-2">
+                {formData?.companyLogoPreview ? (
+                  <div className="mt-2">
+                    <img
+                      src={formData?.companyLogoPreview}
+                      alt="Uploaded Logo"
+                      className="w-[100px] object-cover rounded"
+                    />
+                  </div>
+                ) : ""}
+              </div>
+            }
+          </div>
         </div>
         <div className="">
           <TextInputField
