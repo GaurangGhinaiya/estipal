@@ -254,7 +254,7 @@ const Estimators = () => {
                         src={WatchHistoryImage}
                         onClick={() =>
                           navigate(
-                            `/admin/watch_details/watch_history/?estimator_id=${item?.id}`
+                            `/admin/watch_details/watch_history?estimator_id=${item?.id}`
                           )
                         }
                       />

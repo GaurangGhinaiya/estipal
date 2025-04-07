@@ -530,11 +530,11 @@ const SellerUserCreate = () => {
             value={formData.payment_tier}
             label="Seller Receives estipal payment"
             bgColor={"#1e252b"}
-            className="mb-[15px]"
+            className="mb-[15px] flex sm:flex-row flex-col"
             onChange={handleChange}
             component={
               <>
-                <div class="flex flex-col w-[230px] ml-auto">
+                <div class="flex sm:flex-row flex-col w-[230px] ml-auto">
                   <div class="flex items-center !cursor-pointer mb-1">
                     <input
                       type="radio"
