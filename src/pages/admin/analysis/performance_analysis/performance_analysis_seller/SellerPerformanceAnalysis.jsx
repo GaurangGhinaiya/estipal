@@ -63,7 +63,9 @@ const SellerPerformanceAnalysis = () => {
   };
 
   const fetchTransactionData = async (fromDate, toDate) => {
-    const searchObject = {};
+    const searchObject = {
+      seller_id: seller_id,
+    };
 
     if (fromDate && toDate) {
       searchObject.from = fromDate;
@@ -79,7 +81,7 @@ const SellerPerformanceAnalysis = () => {
     try {
       setTransactionLoading(true);
       const response = await axiosInstance.get(
-        `/performanceAnalysis/seller?id=${seller_id}&page=${currentPage}&records_per_page=${recordsPerPage}&search=${searchValue}&sort_order=${sortOrder}&sort_field=${sortField}`
+        `/performanceAnalysis/seller?page=${currentPage}&records_per_page=${recordsPerPage}&search=${searchValue}&sort_order=${sortOrder}&sort_field=${sortField}`
       );
       const transactions = response?.payload?.data?.transactions.map(
         (item) => ({
