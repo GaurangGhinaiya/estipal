@@ -6,7 +6,7 @@ import axiosInstance from "../../../../services";
 import SelectStatusComponent from "./components/SelectStatusComponent";
 import StaffTransactionTable from "./components/StaffTransactionTable";
 import SummaryTable from "./components/SummaryTable";
-import FilterComponent from "../../../admin/analysis/components/FilterComponent";
+import FilterComponent from "../../../admin/analysis/performance_analysis/performance_analysis_estimator/components/FilterComponent";
 
 const SellerPerformanceAnalysis = () => {
   const [summaryData, setSummaryData] = useState([]);
@@ -20,6 +20,7 @@ const SellerPerformanceAnalysis = () => {
   const [transactionLoading, setTransactionLoading] = useState(false);
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
+  const [groupBy, setGroupBy] = useState("all");
   const [selectedStatus, setSelectedStatus] = useState("All");
   const userRole = localStorage.getItem("userRole");
 
@@ -45,9 +46,11 @@ const SellerPerformanceAnalysis = () => {
 
     try {
       setIsLoading(true);
-      const response = await axiosInstance.get(
-        `/staffUser?search=${searchValue}`
-      );
+      const url =
+        groupBy === "all"
+          ? `/staffUser?search=${searchValue}`
+          : `/staffUser?search=${searchValue}&group_by=${groupBy}`;
+      const response = await axiosInstance.get(url);
       setSummaryData(response?.payload?.data);
     } catch (error) {
       console.error("Error fetching summary data:", error);
@@ -112,6 +115,10 @@ const SellerPerformanceAnalysis = () => {
     fetchSummaryData(fromDate, toDate);
   };
 
+  useEffect(() => {
+    fetchSummaryData(fromDate, toDate);
+  }, [groupBy]);
+
   const clearFilter = () => {
     setFromDate("");
     setToDate("");
@@ -132,6 +139,8 @@ const SellerPerformanceAnalysis = () => {
           setToDate={setToDate}
           applyFilter={applyFilter}
           clearFilter={clearFilter}
+          groupBy={groupBy}
+          setGroupBy={setGroupBy}
         />
         <h1 className="text-[20px] font-medium mb-4 mt-5 px-0 sm:px-[15px] font-sans dark:text-white  text-black">
           Summary
@@ -144,7 +153,7 @@ const SellerPerformanceAnalysis = () => {
             <CircularProgress />
           </div>
         ) : summaryData?.length > 0 ? (
-          <SummaryTable data={summaryData} />
+          <SummaryTable data={summaryData} groupBy={groupBy} />
         ) : (
           <div className="py-[200px] px-4 text-center text-nowrap dark:text-[#ffff] text-black font-bold">
             No Data Found

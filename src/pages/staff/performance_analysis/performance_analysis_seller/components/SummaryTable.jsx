@@ -1,11 +1,55 @@
 import React from "react";
 import ReactSpeedometer from "react-d3-speedometer";
 
-const SummaryTable = ({ data }) => {
+const SummaryTable = ({ data, groupBy }) => {
+  const formatGroupedBy = (groupedBy) => {
+    const [year, month] = groupedBy?.split("-");
+    const monthNames = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+    return `${monthNames[parseInt(month, 10) - 1]} ${year}`;
+  };
+
+  const processedData = data
+    ?.sort((a, b) => {
+      const [yearA, monthA] = a.grouped_by?.split("-").map(Number) || [];
+      const [yearB, monthB] = b.grouped_by?.split("-").map(Number) || [];
+      if (groupBy !== "all") {
+        return groupBy !== "year"
+          ? yearA - yearB || monthB - monthA
+          : yearB - yearA || monthB - monthA;
+      }
+      return 0;
+    })
+    ?.map((item, index, arr) => ({
+      ...item,
+      showYear: index === 0 || item.grouped_by !== arr[index - 1]?.grouped_by,
+      formattedGroupedBy: item.grouped_by
+        ? formatGroupedBy(item.grouped_by)
+        : "",
+    }));
+  console.log("processedData: ", processedData);
+
   return (
     <table className="table-auto w-full text-left">
       <thead style={{ borderBottom: "2px solid #111111" }}>
         <tr>
+          {groupBy !== "all" && (
+            <th className="p-2 dark:text-[#ffff] text-black text-center cursor-pointer capitalize">
+              {groupBy}
+            </th>
+          )}
           <th className="p-2 dark:text-[#ffff] text-black text-center cursor-pointer">
             Staff
           </th>
@@ -24,8 +68,17 @@ const SummaryTable = ({ data }) => {
         </tr>
       </thead>
       <tbody>
-        {data?.map((item, index) => (
+        {(groupBy !== "all" ? processedData : data)?.map((item, index) => (
           <tr key={index} className="border-b border-[#202b34]">
+            {groupBy !== "all" && (
+              <td className="px-[18px] py-[12px] dark:text-[#ffff] text-black text-center">
+                {item?.showYear
+                  ? groupBy !== "year"
+                    ? item?.formattedGroupedBy
+                    : item?.grouped_by
+                  : ""}
+              </td>
+            )}
             <td className="px-[18px] py-[12px] dark:text-[#ffff] text-black text-center">
               {item?.username}
             </td>

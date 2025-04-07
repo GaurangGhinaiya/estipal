@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { CircularProgress, Tooltip } from "@mui/material";
 import ArrowDropUpRoundedIcon from "@mui/icons-material/ArrowDropUpRounded";
 import ArrowDropDownRoundedIcon from "@mui/icons-material/ArrowDropDownRounded";
@@ -6,6 +6,8 @@ import moment from "moment";
 import GradeIcon from "@mui/icons-material/Grade";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import Checkbox from "@mui/material/Checkbox";
+import { useNavigate } from "react-router-dom";
+import axiosInstance from "../../../../services";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -15,12 +17,39 @@ const AdminTable = ({
   handleSort,
   sortField,
   sortOrder,
-  navigate,
   getImageSrc,
 }) => {
+  const [activitiesShowData, setActivitiesShowData] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setActivitiesShowData(activitesData);
+  }, [activitesData]);
+
   const handleRowClick = (watchId) => {
     navigate(`/admin/home/readActivity/${watchId}`);
     window.scrollTo(0, 0);
+  };
+
+  const handleStarClick = async (id, select) => {
+    try {
+      const response = await axiosInstance.post(
+        "adminActivity/addSelectedFaviorites",
+        {
+          id,
+          select,
+        }
+      );
+      console.log("API Response:", response.data);
+
+      setActivitiesShowData((prevData) =>
+        prevData.map((item) =>
+          item.id === id ? { ...item, star_selected_flag_admin: select } : item
+        )
+      );
+    } catch (error) {
+      console.error("API Error:", error);
+    }
   };
 
   return (
@@ -68,14 +97,14 @@ const AdminTable = ({
         </tr>
       </thead>
       <tbody>
-        {isLoading && activitesData?.length === 0 ? (
+        {isLoading && activitiesShowData?.length === 0 ? (
           <tr>
             <td colSpan={12} className="py-[200px] px-4  text-center">
               <CircularProgress />
             </td>
           </tr>
-        ) : activitesData?.length > 0 ? (
-          activitesData?.map((activity, index) => (
+        ) : activitiesShowData?.length > 0 ? (
+          activitiesShowData?.map((activity, index) => (
             <tr
               key={index}
               className="border-b border-[#202b34]"
@@ -88,11 +117,19 @@ const AdminTable = ({
                   )}
                 </div>
               </td>
-              <td className="px-[18px] py-[10px] text-[#ffff] text-center">
+              <td
+                className="px-[18px] py-[10px] text-[#ffff] text-center"
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+              >
                 {" "}
                 <Checkbox
                   {...label}
                   checked={activity?.star_selected_flag_admin}
+                  onChange={(e) =>
+                    handleStarClick(activity?.id, e.target.checked)
+                  }
                   icon={
                     <StarOutlineIcon
                       sx={{ color: "#494a4b", fontSize: "21px" }}

@@ -37,16 +37,16 @@ const FilterComponent = ({
           type="date"
           id="toDate"
           placeholder="dd-mm-yyyy"
-          className="p-2 border rounded-md text-black"
+          className="p-2 border rounded-md  text-black"
           value={toDate}
           onChange={(e) => setToDate(e.target.value)}
         />
       </div>
-      <div className="flex items-center space-x-2 text-white">
+      <div className="flex items-center space-x-2 dark:text-white text-black">
         <span>Group By:</span>
         <div className="relative inline-block text-left">
           <select
-            className="block appearance-none w-full bg-gray-700 border border-gray-600 text-white py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-gray-600 focus:border-gray-500"
+            className="block appearance-none w-full bg-gray-700   border border-gray-600 text-white py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-gray-600 focus:border-gray-500"
             value={groupBy}
             onChange={(e) => setGroupBy(e.target.value)}
           >

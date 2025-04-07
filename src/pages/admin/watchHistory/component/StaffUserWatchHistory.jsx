@@ -9,6 +9,8 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import gmailIcon from "../../../../assets/images/icons/icn-mai-light.svg";
 import gmailYellowIcon from "../../../../assets/images/icons/icn-mail-yellow.svg";
+import { useEffect, useState } from "react";
+import axiosInstance from "../../../../services";
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 const StaffUserWatchHistory = ({
@@ -20,6 +22,33 @@ const StaffUserWatchHistory = ({
 }) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+
+  const [watchActivityDataUpdate, setWatchActivityDataUpdate] = useState([]);
+
+  useEffect(() => {
+    setWatchActivityDataUpdate(watchActivityData);
+  }, [watchActivityData]);
+
+  const handleStarClick = async (id, select) => {
+    try {
+      const response = await axiosInstance.post(
+        "staffWatchActivities/addSelectedFaviorites",
+        {
+          id,
+          select,
+        }
+      );
+      console.log("API Response:", response.data);
+
+      setWatchActivityDataUpdate((prevData) =>
+        prevData.map((item) =>
+          item.id === id ? { ...item, star_selected_flag: select } : item
+        )
+      );
+    } catch (error) {
+      console.error("API Error:", error);
+    }
+  };
 
   return (
     <table className="table-auto w-full text-left ">
@@ -47,7 +76,11 @@ const StaffUserWatchHistory = ({
             },
             { key: "id", label: `${t("ID")}`, isSortable: true },
             { key: "brand", label: `${t("BRAND")}`, isSortable: true },
-            { key: "collection", label: `${t("COLLECTION")}`, isSortable: true },
+            {
+              key: "collection",
+              label: `${t("COLLECTION")}`,
+              isSortable: true,
+            },
             { key: "model", label: `${t("MODEL")}`, isSortable: false },
             { key: "serial_no", label: `${t("SERIAL")}`, isSortable: true },
             { key: "compnay_name", label: `${t("ADDEDBY")}`, isSortable: true },
@@ -59,12 +92,15 @@ const StaffUserWatchHistory = ({
               onClick={
                 column.isSortable ? () => handleSort(column.key) : undefined
               }
-              className={`p-2 dark:text-[#ffff] text-nowrap  text-black text-center ${column.isSortable ? "cursor-pointer" : ""
-                } ${column.isSortable && sortField === column.key
+              className={`p-2 dark:text-[#ffff] text-nowrap  text-black text-center ${
+                column.isSortable ? "cursor-pointer" : ""
+              } ${
+                column.isSortable && sortField === column.key
                   ? "active-sorting"
                   : ""
-                } ${column.isSortable && sortField !== column.key ? "sorting" : ""
-                }`}
+              } ${
+                column.isSortable && sortField !== column.key ? "sorting" : ""
+              }`}
             >
               {column.label}{" "}
               {column.isSortable &&
@@ -79,14 +115,14 @@ const StaffUserWatchHistory = ({
         </tr>
       </thead>
       <tbody>
-        {loading && watchActivityData?.length === 0 ? (
+        {loading && watchActivityDataUpdate?.length === 0 ? (
           <tr>
             <td colSpan={12} className="py-[200px] px-4  text-center">
               <CircularProgress />
             </td>
           </tr>
-        ) : watchActivityData?.length > 0 ? (
-          watchActivityData?.map((item, index) => (
+        ) : watchActivityDataUpdate?.length > 0 ? (
+          watchActivityDataUpdate?.map((item, index) => (
             <tr key={index} className="border-b border-[#202b34]">
               <td className="px-[18px] py-[0px] dark:text-[#ffff] text-black text-center cursor-pointer">
                 <div className="w-[35px]">
@@ -109,6 +145,7 @@ const StaffUserWatchHistory = ({
                 <Checkbox
                   {...label}
                   checked={item?.star_selected_flag}
+                  onChange={(e) => handleStarClick(item?.id, e.target.checked)}
                   icon={
                     <StarOutlineIcon
                       sx={{ color: "#494a4b", fontSize: "21px" }}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { CircularProgress, Tooltip } from "@mui/material";
 import ArrowDropUpRoundedIcon from "@mui/icons-material/ArrowDropUpRounded";
 import ArrowDropDownRoundedIcon from "@mui/icons-material/ArrowDropDownRounded";
@@ -7,6 +7,8 @@ import GradeIcon from "@mui/icons-material/Grade";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import Checkbox from "@mui/material/Checkbox";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import axiosInstance from "../../../../services";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -16,11 +18,42 @@ const StaffTable = ({
   handleSort,
   sortField,
   sortOrder,
-  navigate,
   getImageSrc,
   currency,
 }) => {
+  const [activitiesShowData, setActivitiesShowData] = useState([]);
+  const navigate = useNavigate();
   const { t } = useTranslation();
+
+  useEffect(() => {
+    setActivitiesShowData(activitesData);
+  }, [activitesData]);
+
+  const handleRowClick = (watchId) => {
+    navigate(`/admin/home/readActivity/${watchId}`);
+    window.scrollTo(0, 0);
+  };
+
+  const handleStarClick = async (id, select) => {
+    try {
+      const response = await axiosInstance.post(
+        "adminActivity/addSelectedFaviorites",
+        {
+          id,
+          select,
+        }
+      );
+      console.log("API Response:", response.data);
+
+      setActivitiesShowData((prevData) =>
+        prevData.map((item) =>
+          item.id === id ? { ...item, star_selected_flag_seller: select } : item
+        )
+      );
+    } catch (error) {
+      console.error("API Error:", error);
+    }
+  };
   return (
     <table className="table-auto w-full text-left">
       <thead style={{ borderBottom: "2px solid #111111" }}>
@@ -107,9 +140,18 @@ const StaffTable = ({
                   navigate(`/admin/home/readActivity/${activity?.watch_id}`)
                 }
               >
-                <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center">
+                <td
+                  className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
+                >
                   <Checkbox
                     {...label}
+                    checked={activity?.star_selected_flag_seller}
+                    onChange={(e) =>
+                      handleStarClick(activity?.id, e.target.checked)
+                    }
                     icon={
                       <StarOutlineIcon
                         sx={{ color: "#494a4b", fontSize: "21px" }}
