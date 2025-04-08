@@ -32,7 +32,7 @@ const StaffUserWatchHistory = ({
   const handleStarClick = async (id, select) => {
     try {
       const response = await axiosInstance.post(
-        "staffWatchActivities/addSelectedFaviorites",
+        "staffWatchActivities/addSelectedFavorite",
         {
           id,
           select,
