@@ -53,16 +53,16 @@ export default function Profile() {
     <React.Fragment>
       <Box
         sx={{
-          display: { xs: "none", md: "flex" },
-          alignItems: "center",
-          textAlign: "center",
+          display: { xs: "hidden", md: "flex" },
+          alignItems: userRole === "admin" ? "center" : "start",
+          textAlign: userRole === "admin" ? "center" : "start",
         }}
       >
         <Tooltip>
           <IconButton
             onClick={handleClick}
             size="small"
-            sx={{ ml: 2 }}
+            sx={{ ml: 2, display: { xs: "none", md: "flex" } }}
             aria-controls={open ? "account-menu" : undefined}
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
@@ -74,11 +74,11 @@ export default function Profile() {
             />
           </IconButton>
         </Tooltip>
-        {userRole === "staff" && <Tooltip>
+        {userRole === "staff" && <Tooltip className="flex">
           <IconButton
             onClick={handleLangOpen}
             size="small"
-            sx={{ ml: 2 }}
+            sx={{ ml: 1 }}
             aria-controls={openLang ? "account-menu" : undefined}
             aria-haspopup="true"
             aria-expanded={openLang ? "true" : undefined}
@@ -88,7 +88,7 @@ export default function Profile() {
               alt="icon-profile"
               className="w-[30px] mr-[4px]"
             />
-          </IconButton>
+          </IconButton><p className="p-[7px] flex lg:hidden">{selectedLang === "en" ? "English" : selectedLang === "it" ? "Italian" : selectedLang === "es" ? "Spanish" : "Chinese"}</p>
         </Tooltip>}
       </Box>
       <Menu
@@ -170,12 +170,22 @@ export default function Profile() {
                 display: "block",
                 position: "absolute",
                 top: 0,
-                right: 14,
+                // left: { xs: 0, md: 14 },
+                // right: { xs: 14, md: 0 },
+
                 width: 10,
                 height: 10,
                 bgcolor: "background.paper",
                 transform: "translateY(-50%) rotate(45deg)",
                 zIndex: 0,
+                left: 10,
+                right: 0,
+      
+                // Override for md+ (media query based)
+                "@media (min-width:900px)": {
+                  left: 110,
+                  right: 0,
+                },
               },
             },
           },

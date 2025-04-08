@@ -13,7 +13,7 @@ const FilterComponent = ({
 
   const { t } = useTranslation();
   return (
-    <div className="flex items-center sm:flex-row flex-col gap-4 space-x-4 mb-1 px-4">
+    <div className="flex items-start sm:items-center sm:flex-row flex-col gap-4 space-x-4 mb-1 px-4">
       <div className="flex items-center space-x-2">
         <label
           htmlFor="fromDate"

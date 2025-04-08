@@ -99,7 +99,7 @@ const EstimatorPerformanceAnalysis = () => {
     <div className="pb-[15px] min-h-[100vh]">
       <div className="px-0 sm:px-[20px] pt-4 flex flex-col justify-between flex-wrap">
         <h1 className="text-[26px] font-medium mb-4 mt-5 px-0 sm:px-[15px] font-sans dark:text-white  text-black">
-          Performance Analysis (Merchant)
+          Performance Analysis (Estimator)
         </h1>
         <FilterComponent
           fromDate={fromDate}
