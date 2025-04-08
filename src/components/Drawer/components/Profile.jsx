@@ -1,5 +1,5 @@
 import Logout from "@mui/icons-material/Logout";
-import PersonIcon from '@mui/icons-material/Person';
+import PersonIcon from "@mui/icons-material/Person";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -21,7 +21,9 @@ export default function Profile() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const { i18n } = useTranslation();
   const [anchorElLang, setAnchorElLang] = React.useState(null);
-  const [selectedLang, setSelectedLang] = React.useState(localStorage.getItem("Language"));
+  const [selectedLang, setSelectedLang] = React.useState(
+    localStorage.getItem("Language")
+  );
   const open = Boolean(anchorEl);
   const openLang = Boolean(anchorElLang);
   const navigate = useNavigate();
@@ -74,22 +76,41 @@ export default function Profile() {
             />
           </IconButton>
         </Tooltip>
-        {userRole === "staff" && <Tooltip className="flex">
-          <IconButton
-            onClick={handleLangOpen}
-            size="small"
-            sx={{ ml: 1 }}
-            aria-controls={openLang ? "account-menu" : undefined}
-            aria-haspopup="true"
-            aria-expanded={openLang ? "true" : undefined}
-          >
-            <img
-              src={selectedLang === "en" ? EngFlag : selectedLang === "it" ? ItlyFlag : selectedLang === "es" ? SpanishFlag : ChinaFlag}
-              alt="icon-profile"
-              className="w-[30px] mr-[4px]"
-            />
-          </IconButton><p className="p-[7px] flex lg:hidden">{selectedLang === "en" ? "English" : selectedLang === "it" ? "Italian" : selectedLang === "es" ? "Spanish" : "Chinese"}</p>
-        </Tooltip>}
+        {userRole === "staff" && (
+          <Tooltip className="flex">
+            <IconButton
+              onClick={handleLangOpen}
+              size="small"
+              sx={{ ml: 1 }}
+              aria-controls={openLang ? "account-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={openLang ? "true" : undefined}
+            >
+              <img
+                src={
+                  selectedLang === "en"
+                    ? EngFlag
+                    : selectedLang === "it"
+                    ? ItlyFlag
+                    : selectedLang === "es"
+                    ? SpanishFlag
+                    : ChinaFlag
+                }
+                alt="icon-profile"
+                className="w-[30px] mr-[4px]"
+              />
+            </IconButton>
+            <p className="p-[7px] flex lg:hidden">
+              {selectedLang === "en"
+                ? "English"
+                : selectedLang === "it"
+                ? "Italian"
+                : selectedLang === "es"
+                ? "Spanish"
+                : "Chinese"}
+            </p>
+          </Tooltip>
+        )}
       </Box>
       <Menu
         anchorEl={anchorEl}
@@ -180,7 +201,7 @@ export default function Profile() {
                 zIndex: 0,
                 left: 10,
                 right: 0,
-      
+
                 // Override for md+ (media query based)
                 "@media (min-width:900px)": {
                   left: 110,
@@ -193,13 +214,14 @@ export default function Profile() {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem onClick={() => {
-          handleLangSelect("en");
-          handleLangClose()
-        }} className="gap-2 !text-[15px]"
+        <MenuItem
+          onClick={() => {
+            handleLangSelect("en");
+            handleLangClose();
+          }}
+          className="gap-2 !text-[15px]"
           style={{
-            backgroundColor:
-              selectedLang === "en" ? "#e1e3e9" : "transparent", // Change color for selected language
+            backgroundColor: selectedLang === "en" ? "#e1e3e9" : "transparent", // Change color for selected language
           }}
         >
           <ListItemIcon>
@@ -212,13 +234,14 @@ export default function Profile() {
           English
         </MenuItem>
 
-        <MenuItem onClick={() => {
-          handleLangSelect("it");
-          handleLangClose()
-        }} className="gap-2 !text-[15px]"
+        <MenuItem
+          onClick={() => {
+            handleLangSelect("it");
+            handleLangClose();
+          }}
+          className="gap-2 !text-[15px]"
           style={{
-            backgroundColor:
-              selectedLang === "it" ? "#e1e3e9" : "transparent", // Change color for selected language
+            backgroundColor: selectedLang === "it" ? "#e1e3e9" : "transparent", // Change color for selected language
           }}
         >
           <ListItemIcon>
@@ -230,13 +253,14 @@ export default function Profile() {
           </ListItemIcon>
           Italiano
         </MenuItem>
-        <MenuItem onClick={() => {
-          handleLangSelect("es");
-          handleLangClose()
-        }} className="gap-2 !text-[15px]"
+        <MenuItem
+          onClick={() => {
+            handleLangSelect("es");
+            handleLangClose();
+          }}
+          className="gap-2 !text-[15px]"
           style={{
-            backgroundColor:
-              selectedLang === "es" ? "#e1e3e9" : "transparent", // Change color for selected language
+            backgroundColor: selectedLang === "es" ? "#e1e3e9" : "transparent", // Change color for selected language
           }}
         >
           <ListItemIcon>
@@ -248,13 +272,14 @@ export default function Profile() {
           </ListItemIcon>
           Español
         </MenuItem>
-        <MenuItem onClick={() => {
-          handleLangSelect("zh");
-          handleLangClose()
-        }} className="gap-2 !text-[15px]"
+        <MenuItem
+          onClick={() => {
+            handleLangSelect("zh");
+            handleLangClose();
+          }}
+          className="gap-2 !text-[15px]"
           style={{
-            backgroundColor:
-              selectedLang === "zh" ? "#e1e3e9" : "transparent", // Change color for selected language
+            backgroundColor: selectedLang === "zh" ? "#e1e3e9" : "transparent", // Change color for selected language
           }}
         >
           <ListItemIcon>
@@ -266,7 +291,6 @@ export default function Profile() {
           </ListItemIcon>
           简体中文
         </MenuItem>
-
       </Menu>
     </React.Fragment>
   );
