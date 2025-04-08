@@ -250,7 +250,7 @@ const Header = () => {
           }
           {
             userRole === "admin" && (
-              <div className="relative">
+              <div className="relative" >
                 <button
                   style={{
                     fontSize: "14px",
@@ -266,6 +266,7 @@ const Header = () => {
                   }}
                   onClick={() => handlePerformanceMenuClick()}
                   className=""
+
                 >
                   Performance Analysis <ArrowDropDownIcon />
                 </button>
@@ -383,7 +384,7 @@ const Header = () => {
 
       < Box
         className="bg-[#1d272e] text-white py-[11px] fixed z-[1] w-full"
-        sx={{ display: { xs: openMenu ? "block" : "none", md: "none" } }} ref={mobileNav}
+        sx={{ display: { xs: openMenu ? "block" : "none", md: "none" } }} 
       >
         <hr className="mb-3" />
         {/* Navigation Links */}
@@ -475,7 +476,7 @@ const Header = () => {
             </Button>
           )}
           {userRole === "admin" && (
-            <div className="relative mb-1" ref={revenueMenuRef}>
+            <div className="relative mb-1">
               <button
                 style={{
                   fontSize: "14px",
@@ -541,7 +542,7 @@ const Header = () => {
             </Button>
           )}
           {userRole === "admin" && (
-            <div className="relative" ref={performanceMenuRef}>
+            <div className="relative" >
               <button
                 style={{
                   fontSize: "14px",

@@ -242,7 +242,7 @@ const AccountProfile = () => {
                   <input
                     type="file"
                     onChange={handleFileUpload}
-                    className="w-full bg-transparent border-none outline-none ml-2 dark:text-white text-black placeholder-gray-400 text-right"
+                    className="w-full bg-transparent border-none outline-none ml-2 dark:text-white text-black placeholder-gray-400 text-right whitespace-pre-wrap"
                   />
 
                   <div>
