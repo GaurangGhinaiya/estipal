@@ -6,20 +6,20 @@ const SummaryTable = ({ data }) => {
     <table className="table-auto w-full text-left">
       <thead style={{ borderBottom: "2px solid #111111" }}>
         <tr>
-          <th className="p-2 dark:text-[#ffff] text-black text-center cursor-pointer">
+          <th className="p-2 dark:text-[#ffff] text-black text-center cursor-pointer whitespace-nowrap">
             Company
           </th>
-          <th className="p-2 dark:text-[#ffff] text-black text-center cursor-pointer">
+          <th className="p-2 dark:text-[#ffff] text-black text-center cursor-pointer whitespace-nowrap">
             Email
           </th>
 
-          <th className="p-2 dark:text-[#ffff] text-black text-center cursor-pointer">
+          <th className="p-2 dark:text-[#ffff] text-black text-center cursor-pointer whitespace-nowrap">
             Total Quotation Requested
           </th>
-          <th className="p-2 dark:text-[#ffff] text-black text-center cursor-pointer">
+          <th className="p-2 dark:text-[#ffff] text-black text-center cursor-pointer whitespace-nowrap">
             Total Quotation Accepted
           </th>
-          <th className="p-2 dark:text-[#ffff] text-black text-center cursor-pointer">
+          <th className="p-2 dark:text-[#ffff] text-black text-center cursor-pointer whitespace-nowrap">
             Success Rate (%)
           </th>
         </tr>

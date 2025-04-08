@@ -277,6 +277,13 @@ table.dataTable tbody td {
   border-radius: 10px;
 }
 
+@media (max-width: 768px) {
+  .select_box_inner {
+    padding: 10px 10px;
+    width: 100%;
+  }
+}
+
 .dark_yellow {
   background: #ffd966 !important;
   border-color: #dfc473 !important;

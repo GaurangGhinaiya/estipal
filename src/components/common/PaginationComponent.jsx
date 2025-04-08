@@ -16,7 +16,7 @@ const PaginationComponent = ({
   const endRecord = Number(currentPage) * Number(recordsPerPage);
 
   return (
-    <div className="flex justify-end items-center gap-5 px-[20px] sm:px-[10px] py-[10px]">
+    <div className="flex justify-end items-center gap-5   sm:px-[10px] py-[10px]">
       <div className="dark:text-[#ffff] text-black hidden sm:block">
         {data?.length > 0 ? startRecord : 0} -{" "}
         {data?.length > 0 ? endRecord : 0} {t("OF")} {totalPages}

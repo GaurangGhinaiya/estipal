@@ -111,10 +111,10 @@ const AdminRevanueAnalysis = () => {
                 <th className="p-2 text-[#ffff] text-center cursor-pointer">
                   Email
                 </th>
-                <th className="p-2 text-[#ffff] text-center cursor-pointer">
+                <th className="p-2 text-[#ffff] text-center cursor-pointer whitespace-nowrap">
                   Total sold to Estipal / Amount
                 </th>
-                <th className="p-2 text-[#ffff] text-center cursor-pointer">
+                <th className="p-2 text-[#ffff] text-center cursor-pointer whitespace-nowrap">
                   Total partner with Estipal / Amount
                 </th>
               </tr>

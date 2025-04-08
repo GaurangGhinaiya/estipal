@@ -278,7 +278,7 @@ const BrandList = () => {
   };
 
   return (
-    <div className="p-6 min-h-[83vh]">
+    <div className="sm:p-6 min-h-[83vh]">
       {isLoading && (
         <div className="flex fixed top-0 bottom-0 right-0 left-0 justify-center items-center">
           <ClipLoader color="#ffffff" size={50} />
@@ -454,7 +454,7 @@ const BrandList = () => {
         {/* Box 3: Models */}
         {selectedCollection && (
           <div className="bg-[#1E252B] p-4 rounded-lg h-[700px] overflow-hidden">
-            <div className="flex justify-between flex-col md:flex-row">
+            <div className="flex justify-between  flex-wrap">
               <div>
                 <IoCloseCircleOutline
                   color="white"
@@ -465,7 +465,7 @@ const BrandList = () => {
                   Models
                 </h2>
               </div>
-              <div className="flex mb-4">
+              <div className="flex mb-4 max-2xl:flex-wrap max-2xl:gap-[10px]">
                 <input
                   type="text"
                   placeholder="Type model"

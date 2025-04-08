@@ -37,9 +37,8 @@ const StaffTable = ({
   const handleStarClick = async (id, select) => {
     try {
       const response = await axiosInstance.post(
-        "adminActivity/addSelectedFavorite",
+        `adminActivity/addSelectedFavorite?id=${id}`,
         {
-          id,
           select,
         }
       );
@@ -90,14 +89,14 @@ const StaffTable = ({
         </tr>
       </thead>
       <tbody>
-        {isLoading && activitesData?.length === 0 ? (
+        {isLoading && activitiesShowData?.length === 0 ? (
           <tr>
             <td colSpan={12} className="py-[200px] px-4 text-center">
               <CircularProgress />
             </td>
           </tr>
-        ) : activitesData?.length > 0 ? (
-          activitesData?.map((activity, index) => {
+        ) : activitiesShowData?.length > 0 ? (
+          activitiesShowData?.map((activity, index) => {
             let acceptedPrice = "";
             if (activity?.watch_details?.seller_display_accept) {
               acceptedPrice = `${currency} ${Number(

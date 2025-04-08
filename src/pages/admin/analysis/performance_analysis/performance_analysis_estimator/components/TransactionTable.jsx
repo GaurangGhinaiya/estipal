@@ -21,7 +21,7 @@ const TransactionTable = ({ data, sortField, sortOrder, handleSort }) => {
             <th
               key={column.key}
               onClick={() => handleSort(column.key)}
-              className={`p-2 dark:text-[#ffff] text-black text-center cursor-pointer ${
+              className={`p-2 whitespace-nowrap dark:text-[#ffff] text-black text-center cursor-pointer ${
                 sortField === column.key ? "active-sorting" : "sorting"
               }`}
             >
@@ -39,16 +39,16 @@ const TransactionTable = ({ data, sortField, sortOrder, handleSort }) => {
       <tbody>
         {data?.map((item, index) => (
           <tr key={index} className="border-b border-[#202b34]">
-            <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center">
+            <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center ">
               {moment.unix(item?.estimation_assign_date).format("MMM DD,YYYY")}
             </td>
             <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap text-center">
               {item?.estimatorDetail?.company_name}
             </td>
-            <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center">
+            <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center ">
               {item?.estimatorDetail?.first_name}
             </td>
-            <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center">
+            <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center ">
               {item?.estimatorDetail?.last_name}
             </td>
             <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap">

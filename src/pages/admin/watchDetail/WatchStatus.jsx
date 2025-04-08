@@ -62,7 +62,7 @@ const WatchStatus = () => {
   };
 
   return (
-    <div className="mx-auto px-[20px] sm:px-[45px] py-[20px]">
+    <div className="mx-auto px-[10px] sm:px-[45px] py-[20px]">
       <div className="flex justify-between items-center mb-[30px] flex-wrap gap-5">
         {loading ? (
           <Skeleton variant="text" width={300} height={40} />
@@ -191,12 +191,12 @@ const WatchStatus = () => {
                 <p className="dark:text-white text-black">
                   {watchDetailData?.imageUploadDetails?.[0]?.warentee_card_year
                     ? moment
-                      .unix(
-                        watchDetailData?.imageUploadDetails?.[0]
-                          ?.warentee_card_year
-                      )
-                      .utc()
-                      .format("DD MMMM YYYY")
+                        .unix(
+                          watchDetailData?.imageUploadDetails?.[0]
+                            ?.warentee_card_year
+                        )
+                        .utc()
+                        .format("DD MMMM YYYY")
                     : "-"}
                 </p>
               </div>
@@ -223,13 +223,16 @@ const WatchStatus = () => {
                         : "0.00"}
                   </p> */}
                   <p className="dark:text-white text-black">
-                    {watchDetailData?.estimatorEssignwatchDetails?.[0]?.suggest_retail_price
-                      ? `${userRole === "staff"
-                        ? watchDetailData?.sellerDetail?.currency
-                        : watchDetailData?.adminDetail?.currency
-                      } ${Number(
-                        watchDetailData.estimatorEssignwatchDetails[0].suggest_retail_price
-                      ).toFixed(2)}`
+                    {watchDetailData?.estimatorEssignwatchDetails?.[0]
+                      ?.suggest_retail_price
+                      ? `${
+                          userRole === "staff"
+                            ? watchDetailData?.sellerDetail?.currency
+                            : watchDetailData?.adminDetail?.currency
+                        } ${Number(
+                          watchDetailData.estimatorEssignwatchDetails[0]
+                            .suggest_retail_price
+                        ).toFixed(2)}`
                       : "0.00"}
                   </p>
                 </div>
@@ -298,10 +301,11 @@ const WatchStatus = () => {
                           item?.allEstimatorAddedByDetail?.username}
                       </td>
                       <td
-                        className={`px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap ${watchDetailData?.is_selected
-                          ? "font-bold"
-                          : "font-normal"
-                          }`}
+                        className={`px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap ${
+                          watchDetailData?.is_selected
+                            ? "font-bold"
+                            : "font-normal"
+                        }`}
                       >
                         {" "}
                         {item?.estimatorDetail.company_name +
@@ -311,16 +315,17 @@ const WatchStatus = () => {
                           item?.estimatorDetail.last_name}
                       </td>
                       <td
-                        className={`px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap ${watchDetailData?.is_selected
-                          ? "font-bold"
-                          : "font-normal"
-                          }`}
+                        className={`px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap ${
+                          watchDetailData?.is_selected
+                            ? "font-bold"
+                            : "font-normal"
+                        }`}
                       >
                         {item?.estimator_watch_status == "Pass"
                           ? item?.estimator_watch_status
                           : item?.estimatorDetail?.currency +
-                          " " +
-                          item?.estimated_watch_price}{" "}
+                            " " +
+                            item?.estimated_watch_price}{" "}
                         {watchDetailData?.is_selected && "(Selected)"}
                       </td>
                       <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
@@ -370,12 +375,12 @@ const WatchStatus = () => {
                           <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                             {item?.company_name || item?.from_name
                               ? (item?.company_name ?? "") +
-                              (item?.company_name == "" ||
+                                (item?.company_name == "" ||
                                 !item?.company_name ||
                                 item?.from_name == ""
-                                ? ""
-                                : " - ") +
-                              (item?.from_name ?? "")
+                                  ? ""
+                                  : " - ") +
+                                (item?.from_name ?? "")
                               : "-"}
                           </td>
                           <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
@@ -399,12 +404,12 @@ const WatchStatus = () => {
                           <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                             {item?.company_name || item?.from_name
                               ? (item?.company_name ?? "") +
-                              (item?.company_name == "" ||
+                                (item?.company_name == "" ||
                                 !item?.company_name ||
                                 item?.from_name == ""
-                                ? ""
-                                : " - ") +
-                              (item?.from_name ?? "")
+                                  ? ""
+                                  : " - ") +
+                                (item?.from_name ?? "")
                               : "-"}
                           </td>
                           <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
@@ -430,12 +435,12 @@ const WatchStatus = () => {
                           <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                             {item?.company_name || item?.from_name
                               ? (item?.company_name ?? "") +
-                              (item?.company_name == "" ||
+                                (item?.company_name == "" ||
                                 !item?.company_name ||
                                 item?.from_name == ""
-                                ? ""
-                                : " - ") +
-                              (item?.from_name ?? "")
+                                  ? ""
+                                  : " - ") +
+                                (item?.from_name ?? "")
                               : "-"}
                           </td>
                           <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
@@ -461,12 +466,12 @@ const WatchStatus = () => {
                           <td className="px-[14px] py-[10px</tr>] dark:text-[#ffff] text-black whitespace-nowrap">
                             {item?.company_name || item?.from_name
                               ? (item?.company_name ?? "") +
-                              (item?.company_name == "" ||
+                                (item?.company_name == "" ||
                                 !item?.company_name ||
                                 item?.from_name == ""
-                                ? ""
-                                : " - ") +
-                              (item?.from_name ?? "")
+                                  ? ""
+                                  : " - ") +
+                                (item?.from_name ?? "")
                               : "-"}
                           </td>
                           <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
@@ -492,12 +497,12 @@ const WatchStatus = () => {
                           <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                             {item?.company_name || item?.from_name
                               ? (item?.company_name ?? "") +
-                              (item?.company_name == "" ||
+                                (item?.company_name == "" ||
                                 !item?.company_name ||
                                 item?.from_name == ""
-                                ? ""
-                                : " - ") +
-                              (item?.from_name ?? "")
+                                  ? ""
+                                  : " - ") +
+                                (item?.from_name ?? "")
                               : "-"}
                           </td>
                           <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
@@ -523,12 +528,12 @@ const WatchStatus = () => {
                           <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                             {item?.company_name || item?.from_name
                               ? (item?.company_name ?? "") +
-                              (item?.company_name == "" ||
+                                (item?.company_name == "" ||
                                 !item?.company_name ||
                                 item?.from_name == ""
-                                ? ""
-                                : " - ") +
-                              (item?.from_name ?? "")
+                                  ? ""
+                                  : " - ") +
+                                (item?.from_name ?? "")
                               : "-"}
                           </td>
                           <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
@@ -554,12 +559,12 @@ const WatchStatus = () => {
                           <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                             {item?.company_name || item?.from_name
                               ? (item?.company_name ?? "") +
-                              (item?.company_name == "" ||
+                                (item?.company_name == "" ||
                                 !item?.company_name ||
                                 item?.from_name == ""
-                                ? ""
-                                : " - ") +
-                              (item?.from_name ?? "")
+                                  ? ""
+                                  : " - ") +
+                                (item?.from_name ?? "")
                               : "-"}
                           </td>
                           <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
@@ -585,12 +590,12 @@ const WatchStatus = () => {
                           <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                             {item?.company_name || item?.from_name
                               ? (item?.company_name ?? "") +
-                              (item?.company_name == "" ||
+                                (item?.company_name == "" ||
                                 !item?.company_name ||
                                 item?.from_name == ""
-                                ? ""
-                                : " - ") +
-                              (item?.from_name ?? "")
+                                  ? ""
+                                  : " - ") +
+                                (item?.from_name ?? "")
                               : "-"}
                           </td>
                           <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
@@ -662,12 +667,12 @@ const WatchStatus = () => {
                           <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                             {item?.company_name || item?.from_name
                               ? (item?.company_name ?? "") +
-                              (item?.company_name == "" ||
+                                (item?.company_name == "" ||
                                 !item?.company_name ||
                                 item?.from_name == ""
-                                ? ""
-                                : " - ") +
-                              (item?.from_name ?? "")
+                                  ? ""
+                                  : " - ") +
+                                (item?.from_name ?? "")
                               : "-"}
                           </td>
                           <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
@@ -701,12 +706,12 @@ const WatchStatus = () => {
                           <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                             {item?.company_name || item?.from_name
                               ? (item?.company_name ?? "") +
-                              (item?.company_name == "" ||
+                                (item?.company_name == "" ||
                                 !item?.company_name ||
                                 item?.from_name == ""
-                                ? ""
-                                : " - ") +
-                              (item?.from_name ?? "")
+                                  ? ""
+                                  : " - ") +
+                                (item?.from_name ?? "")
                               : "-"}
                           </td>
                           <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
@@ -719,8 +724,8 @@ const WatchStatus = () => {
                                 item?.type === "Be-Partner"
                                   ? item?.watch_details?.accepted_price
                                   : item?.type === "confirm_selling_price"
-                                    ? item?.watch_details?.confirmed_price
-                                    : item?.watch_details?.commission_price
+                                  ? item?.watch_details?.confirmed_price
+                                  : item?.watch_details?.commission_price
                               ).toFixed(2)}
                           </td>
                         </tr>
@@ -792,13 +797,13 @@ const WatchStatus = () => {
                         <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                           {item?.company_name || item?.from_name
                             ? item?.company_name ??
-                            "" +
-                            ((item?.company_name == "" &&
-                              !item?.company_name) ||
-                              item?.from_name == ""
-                              ? ""
-                              : " - ") +
-                            item?.from_name
+                              "" +
+                                ((item?.company_name == "" &&
+                                  !item?.company_name) ||
+                                item?.from_name == ""
+                                  ? ""
+                                  : " - ") +
+                                item?.from_name
                             : "-"}
                         </td>
                         <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
