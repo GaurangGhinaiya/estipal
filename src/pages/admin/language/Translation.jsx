@@ -8,13 +8,9 @@ const Translation = ({ item, updateItem }) => {
   const [inputText, setInputText] = useState("");
   const [isEditData, setIsEditData] = useState(null);
 
-  // Handle modal toggle
   const toggleModal = () => setOpen((prev) => !prev);
 
-  // Handle input text update
   const handleInputChange = (e) => setInputText(e.target.value);
-
-  // Handle edit and save changes
 
   const handleEdit = () => {
     if (isEditData) {
@@ -23,11 +19,10 @@ const Translation = ({ item, updateItem }) => {
         [isEditData.code.toLowerCase()]: inputText,
       };
       updateItem(updatedItem);
-      toggleModal(); // Close modal after saving
+      toggleModal();
     }
   };
 
-  // Filter out keys that are not relevant for translation
   const translations = Object.entries(item)
     .filter(([key]) => !["id", "group_id"].includes(key))
     .map(([code, value]) => ({
@@ -52,10 +47,10 @@ const Translation = ({ item, updateItem }) => {
             <button
               className="text-yellow-500"
               onClick={(e) => {
-                e.stopPropagation(); // Prevent the edit button from triggering other events
+                e.stopPropagation();
                 setIsEditData(translation);
-                setInputText(translation.value || ""); // Pre-fill input with current value
-                toggleModal(); // Open the modal
+                setInputText(translation.value || "");
+                toggleModal();
               }}
             >
               <FaEdit size={30} />
@@ -64,7 +59,6 @@ const Translation = ({ item, updateItem }) => {
         ))}
       </div>
 
-      {/* Modal */}
       <Modal open={open} onClose={toggleModal}>
         <Box
           sx={{

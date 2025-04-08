@@ -277,7 +277,7 @@ const SellerEdit = () => {
   };
 
   return (
-    <div className="mx-auto px-[20px] sm:px-[45px] py-[20px]">
+    <div className="mx-auto px-[10px] sm:px-[45px] py-[20px]">
       <div className="flex justify-between flex-wrap gap-2">
         <div className="flex items-center">
           <h3 className="w-[100px] text-white text-[24px]">Profile</h3>
@@ -484,21 +484,19 @@ const SellerEdit = () => {
               </div>
             }
           /> */}
-          <div className="flex justify-between items-start w-full" style={
-            {
+          <div
+            className="flex justify-between items-start w-full"
+            style={{
               backgroundColor: "#1E252B",
               // border: "1px solid #e5e7eb",
-              borderRadius: "8px"
-
-            }
-          }>
+              borderRadius: "8px",
+            }}
+          >
             <div className="w-[35%]">
-              <TextInputField
-                label={`Company Logo`}
-              />
+              <TextInputField label={`Company Logo`} />
             </div>
 
-            {isEditable ?
+            {isEditable ? (
               <div className="flex justify-end w-full py-2">
                 <div className="w-fit">
                   <input
@@ -516,11 +514,13 @@ const SellerEdit = () => {
                           className="w-[100px] object-cover rounded"
                         />
                       </div>
-                    ) : ""}
+                    ) : (
+                      ""
+                    )}
                   </div>
                 </div>
               </div>
-              :
+            ) : (
               <div className="flex items-start justify-end w-full pb-2 px-2">
                 {formData?.companyLogoPreview ? (
                   <div className="mt-2">
@@ -530,9 +530,11 @@ const SellerEdit = () => {
                       className="w-[100px] object-cover rounded"
                     />
                   </div>
-                ) : ""}
+                ) : (
+                  ""
+                )}
               </div>
-            }
+            )}
           </div>
         </div>
         <div className="">

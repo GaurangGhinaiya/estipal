@@ -139,7 +139,7 @@ const ReadActivity = () => {
   }, []);
 
   return (
-    <div className="mx-auto px-[20px] sm:px-[45px] py-[20px]">
+    <div className="mx-auto px-[10px] sm:px-[45px] py-[20px]">
       <div className="flex justify-between items-center mb-[30px] flex-wrap gap-5">
         {isLoading ? (
           <Skeleton variant="text" width={300} height={40} />
@@ -212,7 +212,9 @@ const ReadActivity = () => {
                   </p>
                 </div>
                 <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
-                  <p className="dark:text-white text-black">{t("COLLECTION")}</p>
+                  <p className="dark:text-white text-black">
+                    {t("COLLECTION")}
+                  </p>
                   <p className="dark:text-white text-black">
                     {readActivityData?.watch_details?.collection}
                   </p>

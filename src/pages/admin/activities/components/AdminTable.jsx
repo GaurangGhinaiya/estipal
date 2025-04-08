@@ -34,9 +34,8 @@ const AdminTable = ({
   const handleStarClick = async (id, select) => {
     try {
       const response = await axiosInstance.post(
-        "adminActivity/addSelectedFavorite",
+        `adminActivity/addSelectedFavorite?id=${id}`,
         {
-          id,
           select,
         }
       );

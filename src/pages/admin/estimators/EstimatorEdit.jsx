@@ -151,7 +151,6 @@ const EstimatorEdit = () => {
     loadCountries();
   }, []);
 
-  // Fetch state data when the selected country changes
   useEffect(() => {
     if (selectCountry) {
       const fetchStatesData = async () => {
@@ -177,7 +176,6 @@ const EstimatorEdit = () => {
     }));
   }, [phone, selectPhoneCountry]);
 
-  // Fetch estimator details by ID only in edit mode
   useEffect(() => {
     const loadDetails = async () => {
       if (actionType === "edit") {
@@ -241,7 +239,6 @@ const EstimatorEdit = () => {
     loadDetails();
   }, [id, actionType]);
 
-  // Synchronize derived values with formData
   useEffect(() => {
     setFormData((prev) => ({
       ...prev,
@@ -251,7 +248,6 @@ const EstimatorEdit = () => {
     }));
   }, [selectedYears, selectedBrands, availabilitySchedule]);
 
-  // Event handlers
   const handleCountryChange = (e) => {
     const country = e.target.value;
     setFormData((prev) => ({ ...prev, country, state: "" }));
@@ -290,7 +286,7 @@ const EstimatorEdit = () => {
   };
 
   return (
-    <div className="mx-auto px-[20px] sm:px-[45px] py-[20px]">
+    <div className="mx-auto px-[10px] sm:px-[45px] py-[20px]">
       <div className="flex justify-between flex-wrap gap-2">
         <div className="flex items-center">
           <h3 className="w-[100px] text-black dark:text-white text-[24px] text-nowrap">

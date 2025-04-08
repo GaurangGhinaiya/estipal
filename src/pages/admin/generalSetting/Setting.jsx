@@ -163,7 +163,7 @@ const Settings = () => {
   };
 
   return (
-    <div className="mx-auto px-[20px] sm:px-[45px] py-[20px]">
+    <div className="mx-auto px-[10px] sm:px-[45px] py-[20px]">
       <div className="">
         <div className="flex sm:flex-row flex-col gap-[14px] sm:items-center justify-between mb-[15px]">
           <h1 className="text-[22px] sm:text-[28px] text-white font-medium">
