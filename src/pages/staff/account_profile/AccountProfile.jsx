@@ -1,17 +1,17 @@
 import { Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import PhoneInput from "react-phone-number-input";
+import PhoneInput, { formatPhoneNumber, getCountryCallingCode } from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import { useNavigate } from "react-router-dom";
 import TextInputField from "../../../components/common/TextInputField";
-import countries from "../../../constant/country.json";
-import { fetchStateList } from "../../../utils/apiUtils";
+import { fetchCountryList, fetchStateList } from "../../../utils/apiUtils";
 import StaffCommission from "./component/StaffCommission";
+import axiosInstance from "../../../services";
+import moment from "moment";
 
 const AccountProfile = () => {
   const userRole = localStorage.getItem("userRole");
-  const { t } = useTranslation();
   const styles = {
     input: {
       backgroundColor: userRole === "staff" ? "#FFFFFF" : "#1e252b",
@@ -21,30 +21,24 @@ const AccountProfile = () => {
       color: userRole === "staff" ? "black" : "white",
     },
   };
-
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [isEditable, setIsEditable] = useState(false);
-  const [commissionData, setCommissionData] = useState([
-    { from: 1005, to: 5000, commission: 14 },
-    { from: 5000, to: 10000, commission: 13 },
-    { from: 10000, to: 20000, commission: 12 },
-    { from: 20000, to: 30000, commission: 11 },
-    { from: 30000, to: 40000, commission: 10 },
-    { from: 40000, to: 50000, commission: 9 },
-    { from: 50000, to: null, commission: 8 },
-  ]);
-
+  const [commissionData, setCommissionData] = useState([]);
+  const [selectPhoneCountry, setSelectPhoneCountry] = useState("IN");
+  const [loading, setLoading] = useState(false);
+  const [commissionObject, setCommissionObject] = useState({});
   const [formData, setFormData] = useState({
     active: false,
-    company: "",
-    bankName: "",
-    bankAddress: "",
-    bankAccountName: "",
-    accountNumber: "",
-    swiftCode: "",
+    cmp_name: "",
+    bank_name: "",
+    bank_address: "",
+    bank_account: "",
+    account_number: "",
+    bank_swift: "",
     id: "",
-    firstName: "",
-    lastName: "",
+    first_name: "",
+    last_name: "",
     address: "",
     city: "",
     state: "",
@@ -53,15 +47,20 @@ const AccountProfile = () => {
     email: "",
     username: "",
     dial: "",
-    mobileNumber: "",
+    cnt_no: "",
     currency: "USD",
-    tier: "",
-    signUpDate: "",
+    payment_tier: 0,
+    created_on: "",
     companyLogo: null,
     companyLogoPreview: "",
   });
+  const [staffData, setStaffData] = useState();
   const [states, setStates] = useState([]);
+  const [countries, setCountries] = useState([]);
   const [selectCountry, setSelectCountry] = useState("IN");
+  const [phone, setPhone] = useState("");
+  const userData = JSON.parse(localStorage.getItem("userData"))
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -89,6 +88,152 @@ const AccountProfile = () => {
     setFormData((prev) => ({ ...prev, state: e.target.value }));
   };
 
+  const getDetailById = async () => {
+    try {
+      setLoading(true);
+      const response = await axiosInstance.get(`/sellers/detail?id=${userData?.id}`);
+      const staff = response?.payload?.data;
+      console.log('staff: ', staff);
+      setStaffData(staff);
+
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        ...staff,
+        companyLogoPreview: staff?.seller_logo,
+        unique_id: `SCA${staff?.id}`,
+        address: staff?.address,
+        created_on: moment.unix(staff?.created_on).format("MMM DD,YYYY"),
+      }));
+
+      setPhone(`+${staff?.cnt_code} ${staff?.cnt_no}`);
+      setSelectCountry(staff?.country);
+      setLoading(false);
+    } catch (error) {
+      console.log("error", error);
+      setLoading(false);
+    }
+  };
+
+
+  const save = async () => {
+    setLoading(true);
+
+    const formDataToSend = new FormData();
+
+    const sendData = { ...formData };
+
+    Object.keys(sendData).forEach((key) => {
+      if (
+        key !== "seller_logo" &&
+        key !== "companyLogoPreview" &&
+        key !== "commission" &&
+        key !== "commission_plan" &&
+        formData[key]
+      ) {
+        formDataToSend.append(key, formData[key]);
+      }
+    });
+
+    if (formData.seller_logo) {
+      formDataToSend.append("seller_logo", formData.seller_logo);
+    }
+
+    if (commissionObject) {
+      formDataToSend.append("commission", JSON.stringify(commissionObject));
+    }
+
+    // try {
+    //   const response = await axiosInstance["put"](
+    //     `/sellers?id=${id}`,
+    //     formDataToSend,
+    //     {
+    //       headers: {
+    //         "Content-Type": "multipart/form-data",
+    //       },
+    //     }
+    //   );
+
+    //   if (response?.status === 200) {
+    //     const message = "Estimator updated successfully!";
+    //     toast.success(message);
+    //     navigate("/admin/staff/staff_user");
+    //   }
+    // } catch (error) {
+    //   console.log("error: ", error);
+    //   if (error?.response?.data?.payload?.error) {
+    //     toast.error(error?.response?.data?.payload?.error);
+    //   } else {
+    //     toast.error(error?.response?.data?.message);
+    //   }
+    // } finally {
+    //   setLoading(false);
+    // }
+  };
+
+  useEffect(() => {
+    const transformCommissionData = () => {
+      const transformedData = {
+        br1: {
+          price_range: [commissionData[0]?.from, commissionData[0]?.to],
+          value: commissionData[0]?.commission,
+        },
+        br2: {
+          price_range: [commissionData[1]?.from, commissionData[1]?.to],
+          value: commissionData[1]?.commission,
+        },
+        br3: {
+          price_range: [commissionData[2]?.from, commissionData[2]?.to],
+          value: commissionData[2]?.commission,
+        },
+        br4: {
+          price_range: [commissionData[3]?.from, commissionData[3]?.to],
+          value: commissionData[3]?.commission,
+        },
+        br5: {
+          price_range: [commissionData[4]?.from, commissionData[4]?.to],
+          value: commissionData[4]?.commission,
+        },
+        br6: {
+          price_range: [commissionData[5]?.from, commissionData[5]?.to],
+          value: commissionData[5]?.commission,
+        },
+        br7: {
+          price_range: [commissionData[6]?.from],
+          value: commissionData[6]?.commission,
+        },
+      };
+      setCommissionObject(transformedData);
+    };
+
+    transformCommissionData();
+  }, [commissionData]);
+
+  useEffect(() => {
+    getDetailById();
+  }, []);
+
+  useEffect(() => {
+    const formattedPhone = formatPhoneNumber(phone);
+    const dialCode = getCountryCallingCode(selectPhoneCountry);
+
+    setFormData((prev) => ({
+      ...prev,
+      cnt_code: dialCode,
+      cnt_no: formattedPhone,
+    }));
+  }, [phone, selectPhoneCountry]);
+
+  useEffect(() => {
+    const loadCountries = async () => {
+      try {
+        const countryData = await fetchCountryList();
+        setCountries(countryData);
+      } catch (error) {
+        console.error("Failed to fetch countries:", error);
+      }
+    };
+    loadCountries();
+  }, []);
 
   useEffect(() => {
     if (selectCountry) {
@@ -105,6 +250,8 @@ const AccountProfile = () => {
   }, [selectCountry]);
 
 
+
+
   return (
     <div className="mx-auto pb-[15px]">
       <div className="px-0 sm:px-[20px] pt-8 flex justify-between flex-wrap gap-2 bg-gradient-to-b from-[rgba(0,96,169,0.36)] to-[rgba(255,255,255,0)]">
@@ -119,6 +266,7 @@ const AccountProfile = () => {
               variant="contained"
               className="!bg-[#00a65a] !normal-case !py-[5px] sm:!py-[10px] sm:!px-[40px] !px-[15px] !rounded-[50px]"
               onClick={() => {
+                save()
                 navigate("/admin/panel/account")
                 setIsEditable(false)
               }}
@@ -149,12 +297,12 @@ const AccountProfile = () => {
       <div className="px-0 sm:px-[20px] grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 w-full gap-4 my-[35px]">
         <div className="">
           <TextInputField
-            value={formData?.company}
+            value={formData?.cmp_name}
             type="text"
             label={`${t("COMAPNY")}`}
             placeholder={`${t("COMAPNY")}`}
             readOnly={!isEditable}
-            name="company"
+            name="cmp_name"
             disabled={true}
             bgColor={isEditable ? "#CCCCCC" : "#ffffff"}
             border={"1px solid black"}
@@ -162,11 +310,11 @@ const AccountProfile = () => {
             onChange={handleChange}
           />
           <TextInputField
-            value={formData?.bankName}
+            value={formData?.bank_name}
             type="text"
             label={`${t("BANKNAME")}`}
             placeholder={`${t("BANKNAME")}`}
-            name="bankName"
+            name="bank_name"
             readOnly={!isEditable}
             bgColor={"#ffffff"}
             border={"1px solid black"}
@@ -174,8 +322,8 @@ const AccountProfile = () => {
             onChange={handleChange}
           />
           <TextInputField
-            value={formData?.bankAddress}
-            name="bankAddress"
+            value={formData?.bank_address}
+            name="bank_address"
             type="text"
             label={`${t("BANKADDRESS")}`}
             readOnly={!isEditable}
@@ -186,8 +334,8 @@ const AccountProfile = () => {
             onChange={handleChange}
           />
           <TextInputField
-            value={formData?.bankAccountName}
-            name="bankAccountName"
+            value={formData?.bank_account}
+            name="bank_account"
             type="text"
             label={`${t("BANKACCOUNTNAME")}`}
             readOnly={!isEditable}
@@ -198,8 +346,8 @@ const AccountProfile = () => {
             onChange={handleChange}
           />
           <TextInputField
-            value={formData?.accountNumber}
-            name="accountNumber"
+            value={formData?.account_number}
+            name="account_number"
             type="text"
             label={`${t("ACCOUNTNUMBER")}`}
             readOnly={!isEditable}
@@ -210,8 +358,8 @@ const AccountProfile = () => {
             onChange={handleChange}
           />
           <TextInputField
-            value={formData?.swiftCode}
-            name="swiftCode"
+            value={formData?.bank_swift}
+            name="bank_swift"
             type="text"
             label={`${t("SWIFTCODEIBAN")}`}
             readOnly={!isEditable}
@@ -275,8 +423,8 @@ const AccountProfile = () => {
         </div>
         <div className="">
           <TextInputField
-            value={formData?.firstName}
-            name="firstName"
+            value={formData?.first_name}
+            name="first_name"
             type="text"
             label={`${t("FIRSTNAME")}`}
             placeholder={`${t("FIRSTNAME")}`}
@@ -287,8 +435,8 @@ const AccountProfile = () => {
             onChange={handleChange}
           />
           <TextInputField
-            value={formData?.lastName}
-            name="lastName"
+            value={formData?.last_name}
+            name="last_name"
             type="text"
             label={`${t("LASTNAME")}`}
             placeholder={`${t("LASTNAME")}`}
@@ -393,8 +541,8 @@ const AccountProfile = () => {
                     <option disabled selected value={""}>
                       Open to select country
                     </option>
-                    {countries.map((item, index) => (
-                      <option value={item?.code} key={index}>
+                    {countries?.map((item, index) => (
+                      <option value={item?.iso} key={index}>
                         {item?.name}
                       </option>
                     ))}
@@ -435,9 +583,9 @@ const AccountProfile = () => {
             onChange={handleChange}
           />
 
-          <TextInputField
-            value={formData?.mobileNumber}
-            name="mobileNumber"
+          {/* <TextInputField
+            value={formData?.cnt_no}
+            name="cnt_no"
             type="text"
             label={`${t("MOBILENUMBER")}`}
             bgColor={"#ffffff"}
@@ -464,14 +612,57 @@ const AccountProfile = () => {
                           backgroundColor:
                             "#F8F8F8",
                         }}
-                        value={formData?.mobileNumber}
+                        value={phone}
                         onChange={(value) => {
-                          setFormData({ ...formData, mobileNumber: value });
+                          setPhone(value);
                         }}
                       />
                     </div> : <p></p>
                 }
               </>
+            }
+          /> */}
+          <TextInputField
+            value={formData.cnt_no}
+            name="cnt_no"
+            type="text"
+            label={`${t("MOBILENUMBER")}`}
+            bgColor={"#ffffff"}
+            border={"1px solid #E5E7EB"}
+            readOnly={!isEditable}
+            className="mb-[15px]"
+            onChange={handleChange}
+            component={
+              <div className="flex justify-end w-full">
+                {isEditable ? (
+                  <div className="staffAccount-profile flex justify-end w-full">
+                    <PhoneInput
+                      international
+                      defaultCountry="IN"
+                      countryCallingCodeEditable={false}
+                      className="mt-1 block w-auto rounded-md p-3 max-sm:flex-wrap"
+                      placeholder="Enter phone number"
+                      style={{
+                        backgroundColor:
+                          "#F8F8F8",
+                      }}
+                      value={phone}
+                      onChange={(value) => {
+                        setPhone(value);
+                      }}
+                      onCountryChange={(v) => {
+                        if (v) {
+                          setSelectPhoneCountry(v);
+                        } else {
+                          setSelectPhoneCountry("IN");
+                        }
+                      }}
+                    />
+                  </div>
+                ) : (
+                  <p>{phone}</p>
+                )}
+              </div>
             }
           />
           <TextInputField
@@ -485,8 +676,8 @@ const AccountProfile = () => {
             className="mb-[15px]"
           />
           <TextInputField
-            value={"April 24, 2023"}
-            name="signUpDate"
+            value={formData?.created_on}
+            name="created_on"
             type="text"
             label={`${t("SIGNUPDATE")}`}
             readOnly={!isEditable}
@@ -497,7 +688,7 @@ const AccountProfile = () => {
             onChange={handleChange}
           />
 
-          <TextInputField
+          {/* <TextInputField
             value={"Tier 1: before shipping the watch"}
             name="tier"
             type="text"
@@ -506,6 +697,25 @@ const AccountProfile = () => {
             bgColor={isEditable ? "#CCCCCC" : "#ffffff"}
             border={"1px solid black"}
             className="mb-[15px]"
+          /> */}
+          <TextInputField
+            value={formData?.payment_tier === 1 ? "Tier 1: Seller receives Estipal payment before shipping the watch" : "Tier 2: after shipping the watch"}
+            label="Tier group"
+            readOnly={!isEditable}
+            disabled={true}
+            bgColor={isEditable ? "#CCCCCC" : "#ffffff"}
+            border={"1px solid #E5E7EB"}
+            className="mb-[15px]"
+            onChange={handleChange}
+            component={
+              <>
+
+                <p className="text-start w-full text-black">
+                  {formData?.payment_tier === 1 ? "Tier 1: Seller receives Estipal payment before shipping the watch" : "Tier 2: after shipping the watch"}
+                </p>
+
+              </>
+            }
           />
 
           <div className="flex justify-between items-start w-full" style={
@@ -544,7 +754,8 @@ const AccountProfile = () => {
         </div>
       </div>
 
-      <StaffCommission isEditable={isEditable} userRole={userRole} commissionData={commissionData} />
+      <StaffCommission isEditable={isEditable} userRole={userRole} commissionData={commissionData} setCommissionData={setCommissionData}
+        staffData={staffData} />
     </div>
   );
 };

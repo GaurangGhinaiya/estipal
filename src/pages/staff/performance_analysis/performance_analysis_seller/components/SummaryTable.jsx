@@ -39,7 +39,6 @@ const SummaryTable = ({ data, groupBy }) => {
         ? formatGroupedBy(item.grouped_by)
         : "",
     }));
-  console.log("processedData: ", processedData);
 
   return (
     <table className="table-auto w-full text-left">

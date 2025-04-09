@@ -6,10 +6,9 @@ import { useTranslation } from "react-i18next";
 const StaffCommission = (props) => {
     const {
         isEditable,
-        userRole,
-        sellerData,
         commissionData,
         setCommissionData,
+        staffData
     } = props;
     const { t } = useTranslation();
 
@@ -20,26 +19,26 @@ const StaffCommission = (props) => {
     };
 
     useEffect(() => {
-        if (sellerData?.commission) {
-            const ConvertCommission = convertCommissionData(sellerData?.commission);
+        if (staffData?.commission) {
+            const ConvertCommission = convertCommissionData(staffData?.commission);
             if (ConvertCommission?.length > 0) {
                 const transformedData = ConvertCommission?.map((item) => ({
                     from: isEditable
                         ? item?.from
                         : item?.from
-                            ? `${sellerData?.currency} ${item?.from}`
+                            ? `${staffData?.currency} ${item?.from}`
                             : null,
                     to: isEditable
                         ? item?.to
                         : item?.to
-                            ? `${sellerData?.currency} ${item?.to}`
+                            ? `${staffData?.currency} ${item?.to}`
                             : null,
                     commission: item?.commission ? Number(item?.commission) : null,
                 }));
                 setCommissionData(transformedData);
             }
         }
-    }, [sellerData, isEditable]);
+    }, [staffData, isEditable]);
 
     return (
         <div className="px-0 sm:px-[20px] ">
@@ -58,7 +57,7 @@ const StaffCommission = (props) => {
                         >
                             <TextInputField
                                 rightTextValue={
-                                    `(${sellerData?.currency ?? "USD"})`
+                                    `(${staffData?.currency ?? "USD"})`
                                 }
                                 type={isEditable ? "number" : "text"}
                                 label={t("FROM")}
@@ -69,15 +68,12 @@ const StaffCommission = (props) => {
                                 bgColor={isEditable ? "#CCCCCC" : "#ffffff"}
                                 border={"1px solid white"}
                                 visibility={row?.from !== null ? "visible" : "hidden"}
-                                onChange={(e) =>
-                                    handleChange(index, "from", parseInt(e.target.value))
-                                }
                                 className="mb-[15px] text-black dark:text-white"
                             />
 
                             <TextInputField
                                 rightTextValue={
-                                    `(${sellerData?.currency ?? "USD"})`
+                                    `(${staffData?.currency ?? "USD"})`
                                 }
                                 type={isEditable ? "number" : "text"}
                                 label={t("TO")}
@@ -88,9 +84,6 @@ const StaffCommission = (props) => {
                                 bgColor={isEditable ? "#CCCCCC" : "#ffffff"}
                                 border={"1px solid black"}
                                 visibility={row?.to !== null ? "visible" : "hidden"}
-                                onChange={(e) =>
-                                    handleChange(index, "to", parseInt(e.target.value))
-                                }
                                 className="mb-[15px] text-black dark:text-white"
                             />
 
@@ -106,9 +99,6 @@ const StaffCommission = (props) => {
                                 bgColor={isEditable ? "#CCCCCC" : "#ffffff"}
                                 border={"1px solid black"}
                                 visibility={row?.commission !== null ? "visible" : "hidden"}
-                                onChange={(e) =>
-                                    handleChange(index, "commission", parseInt(e.target.value))
-                                }
                                 className="mb-[15px] text-black dark:text-white"
                             />
                         </div>
