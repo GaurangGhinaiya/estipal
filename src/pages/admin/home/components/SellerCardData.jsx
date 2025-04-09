@@ -11,8 +11,10 @@ import SellerInvoice from "./statusComponents/SellerInvoice";
 import SellerInvoiceNew from "./statusComponents/SellerInvoiceNew";
 import EstimatorMultiQuotation from "./statusComponents/EstimatorMultiQuotation";
 import { sellerGetSubject } from "./SellerGetSubject";
+import { useTranslation } from "react-i18next";
 
 const SellerCardData = (props) => {
+  const { t } = useTranslation();
   const { item, index, userRole, adminActivitiesData, currency } = props;
 
   let accepted_price = "";
@@ -238,14 +240,14 @@ const SellerCardData = (props) => {
       if (item?.type === "staff_response_time_expired") {
         return (
           <h3 className="mb-3 capitalize">
-            <strong>From: </strong>
+            <span className="font-bold">{t("FROM")}: </span>
             Estipal response time limit rule
           </h3>
         );
       } else {
         return (
           <h3 className="mb-3 capitalize">
-            <strong>From: </strong>
+            <span className="font-bold">{t("FROM")}: </span>
             {item?.from_name
               ? item?.from_name.charAt(0).toUpperCase() +
                 item?.from_name.slice(1)
@@ -256,30 +258,30 @@ const SellerCardData = (props) => {
     } else if (item?.admin_group === "Estipal-Administrator") {
       return (
         <h3 className="mb-3 capitalize">
-          <strong>From: </strong>
-          Estipal-Administrator {/* 211 */}
+          <span className="font-bold">{t("FROM")}: </span>
+          {t("ESTIPALADMINISTRATOR")} {/* 211 */}
         </h3>
       );
     } else if (item?.admin_group === "estimator") {
       if (item?.type === "estimation_expired") {
         return (
           <h3 className="mb-3 capitalize">
-            <strong>From: </strong>
+            <span className="font-bold">{t("FROM")}: </span>
             Estipal response time limit rule
           </h3>
         );
       } else {
         return (
           <h3 className="mb-3 capitalize">
-            <strong>From: </strong>
-            Estimator {/* 212 */}
+            <span className="font-bold">{t("FROM")}: </span>
+            {t("ESTIMATOR")} {/* 212 */}
           </h3>
         );
       }
     } else if (item?.admin_group === "seller") {
       return (
         <h3 className="mb-3 capitalize">
-          <strong>From: </strong>
+          <span className="font-bold">{t("FROM")}: </span>
           {item?.from_name
             ? item?.from_name.charAt(0).toUpperCase() + item?.from_name.slice(1)
             : ""}
@@ -288,7 +290,7 @@ const SellerCardData = (props) => {
     } else {
       return (
         <h3 className="mb-3 capitalize">
-          <strong>From: </strong>
+          <span className="font-bold">{t("FROM")}: </span>
           {item?.admin_group
             ? item?.admin_group.charAt(0).toUpperCase() +
               item?.admin_group.slice(1)
@@ -306,6 +308,7 @@ const SellerCardData = (props) => {
     >
       <div className="border_bottom pb-4">
         {sellerGetSubject(
+          t,
           item,
           accepted_price,
           getWatchDetails,
@@ -317,7 +320,7 @@ const SellerCardData = (props) => {
         <div className="flex justify-between items-center flex-wrap">
           {renderFrom()}
           <h3 className="mb-3">
-            <strong className="font-bold">Received: </strong>
+            <strong className="font-bold">{t("RECEIVED")}: </strong>
             <span className="created_at">
               {moment.unix(item?.created_on).format("MMMM DD , YYYY h:mm A")}
             </span>
