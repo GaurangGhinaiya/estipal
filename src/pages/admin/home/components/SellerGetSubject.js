@@ -1,6 +1,7 @@
 const userRole = localStorage.getItem("userRole");
 
 export const sellerGetSubject = (
+  t,
   item,
   accepted_price,
   getWatchDetails,
@@ -9,17 +10,18 @@ export const sellerGetSubject = (
   accepted_price_with_commission,
   sold_price
 ) => {
+
   const watchDetails = item?.watch_details || {};
-  const brandDetails = `${watchDetails.brand || ""} ${
-    watchDetails.collection || ""
-  } ${watchDetails.model_no || ""} ${watchDetails.serial_no || ""}`;
+  const brandDetails = `${watchDetails.brand || ""} ${watchDetails.collection || ""
+    } ${watchDetails.model_no || ""} ${watchDetails.serial_no || ""}`;
 
   if (item?.type === "Be-Partner") {
     // 130
+    //SUBJECT;95
+    //FROM:68
     return (
       <h3 className="m-0">
-        <strong>Subject:</strong> The confirmed selection is 'Be partner with
-        Estipal', Estipal selling price confirmation is pending (
+        <span className="!font-bold">{t("SUBJECT")}:</span> {t("BEPARTNERTEXT")} (
         {`${brandDetails} - ${accepted_price}`})
       </h3>
     );
@@ -27,8 +29,8 @@ export const sellerGetSubject = (
     //167
     return (
       <h3 className="m-0">
-        <strong>Subject:</strong> The selling price confirmed by Estipal is{" "}
-        {confirmed_price}. Sale is pending (
+        <span className="!font-bold">{t("SUBJECT")}:</span> {t("CONFIRMSELLINGPRICETEXT1")}{" "}
+        {confirmed_price}. {t("CONFIRMSELLINGPRICETEXT2")} (
         {`${brandDetails} - ${accepted_price}`})
       </h3>
     );
@@ -36,15 +38,14 @@ export const sellerGetSubject = (
     //171
     return (
       <h3 className="m-0">
-        <strong>Subject:</strong> Sale has been confirmed to Estipal. Waiting to
-        receive Estipal invoice ({`${brandDetails} - ${accepted_price}`})
+        <span className="!font-bold">{t("SUBJECT")}:</span> {t("CONFIRMTHESALE")} ({`${brandDetails} - ${accepted_price}`})
       </h3>
     );
   } else if (item?.type === "confirm_the_issuing_of_invoice") {
     //172
     return (
       <h3 className="m-0">
-        <strong>Subject:</strong> Estipal issued and invoice for the amount of{" "}
+        <span className="!font-bold">{t("SUBJECT")}:</span> {t("CONFIRMISSUEINVOICETEXT")}{" "}
         {commission_price} ({`${brandDetails} - ${accepted_price}`})
       </h3>
     );
@@ -52,8 +53,7 @@ export const sellerGetSubject = (
     //176
     return (
       <h3 className="m-0">
-        <strong>Subject:</strong> Sale has been cancelled and Estipal has been
-        notified ({`${brandDetails} - ${accepted_price}`})
+        <span className="!font-bold">{t("SUBJECT")}:</span> {t("NOSALEHASEBEENMADETEXT")} ({`${brandDetails} - ${accepted_price}`})
       </h3>
     );
   } else if (item?.type === "seller_invoice_new") {
@@ -61,18 +61,22 @@ export const sellerGetSubject = (
       //178
       return (
         <h3 className="m-0">
-          <strong>Subject:</strong> A payment request of{" "}
-          {accepted_price_with_commission} has been notified to Estipal and
-          payment is pending ({`${brandDetails} - ${accepted_price}`})
+          <span className="!font-bold">{t("SUBJECT")}:</span>{" "}
+          {t("SELLERINVOICENEWTIER1TEXT").replace(
+            "{accepted_price_with_commission}",
+            accepted_price_with_commission
+          )}{" "}
+          ({`${brandDetails} - ${accepted_price}`})
         </h3>
       );
     } else if (item?.staffWatchActivityDetails?.payment_tier === 2) {
       //179
       return (
         <h3 className="m-0">
-          <strong>Subject:</strong> Shipment of the watch has to be arranged.
-          Estipal will make payment of {accepted_price_with_commission} after
-          receiving the watch ({`${brandDetails} - ${accepted_price}`})
+          <span className="!font-bold">{t("SUBJECT")}:</span> {t("SELLERINVOICENEWTIER2TEXT").replace(
+            "{accepted_price_with_commission}",
+            accepted_price_with_commission
+          )}({`${brandDetails} - ${accepted_price}`})
         </h3>
       );
     }
@@ -81,9 +85,10 @@ export const sellerGetSubject = (
       // 154
       return (
         <h3 className="m-0">
-          <strong>Subject:</strong> The confirmed selection is 'Sell to
-          Estipal', a payment request of {accepted_price_with_commission} has
-          been notified to Estipal and payment is pending (
+          <span className="!font-bold">{t("SUBJECT")}:</span> {t("SELLERINVOICETIER1TEXT").replace(
+            "{accepted_price_with_commission}",
+            accepted_price_with_commission
+          )} (
           {`${brandDetails} - ${accepted_price}`})
         </h3>
       );
@@ -91,9 +96,10 @@ export const sellerGetSubject = (
       // 155
       return (
         <h3 className="m-0">
-          <strong>Subject:</strong> The confirmed selection is 'Sell to
-          Estipal'. Shipment of the watch has to be arranged. Estipal will make
-          payment of {accepted_price_with_commission} after receiving the watch
+          <span className="!font-bold">{t("SUBJECT")}:</span> {t("SELLERINVOICETIER2TEXT").replace(
+            "{accepted_price_with_commission}",
+            accepted_price_with_commission
+          )}
           ({`${brandDetails} - ${accepted_price}`})
         </h3>
       );
@@ -102,9 +108,10 @@ export const sellerGetSubject = (
     // 157
     return (
       <h3 className="m-0">
-        <strong>Subject:</strong> Estipal confirmed the payment of{" "}
-        {accepted_price_with_commission}. Shipment of the watch to Estipal has
-        to be arranged ({`${brandDetails} - ${accepted_price}`})
+        <span className="!font-bold">{t("SUBJECT")}:</span>  {t("CONFIRMPAYMENTSELLER").replace(
+          "{accepted_price_with_commission}",
+          accepted_price_with_commission
+        )} ({`${brandDetails} - ${accepted_price}`})
       </h3>
     );
   } else if (item?.type === "confirm_shipment_estipal") {
@@ -112,8 +119,7 @@ export const sellerGetSubject = (
       //161
       return (
         <h3 className="m-0">
-          <strong>Subject:</strong> Shipment of the watch has been confirmed.
-          Waiting to receive Estipal acceptance (
+          <span className="!font-bold">{t("SUBJECT")}:</span> {t("CONFIRMSHIPMENTESTIPALTIER1")} (
           {`${brandDetails} - ${accepted_price}`})
         </h3>
       );
@@ -121,8 +127,7 @@ export const sellerGetSubject = (
       //162
       return (
         <h3 className="m-0">
-          <strong>Subject:</strong> Shipment of the watch has been confirmed.
-          Waiting to receive Estipal payment and acceptance (
+          <span className="!font-bold">{t("SUBJECT")}:</span> {t("CONFIRMSHIPMENTESTIPALTIER2")} (
           {`${brandDetails} - ${accepted_price}`})
         </h3>
       );
@@ -132,16 +137,14 @@ export const sellerGetSubject = (
       //164
       return (
         <h3 className="m-0">
-          <strong>Subject:</strong> Acceptance of the watch has been confirmed.
-          This deal has been completed ({`${brandDetails} - ${accepted_price}`})
+          <span className="!font-bold">{t("SUBJECT")}:</span> {t("CONFIRMACCEPTANCETIER1")} ({`${brandDetails} - ${accepted_price}`})
         </h3>
       );
     } else if (item?.staffWatchActivityDetails?.payment_tier === 2) {
       // 165
       return (
         <h3 className="m-0">
-          <strong>Subject:</strong> Payment and acceptance of the watch has been
-          confirmed. This deal has been completed (
+          <span className="!font-bold">{t("SUBJECT")}:</span> {t("CONFIRMACCEPTANCETIER2")} (
           {`${brandDetails} - ${accepted_price}`})
         </h3>
       );
@@ -150,15 +153,14 @@ export const sellerGetSubject = (
     //180
     return (
       <h3 className="m-0">
-        <strong>Subject:</strong> Estipal rejected the sale. The watch will be
-        returned ({`${brandDetails} - ${accepted_price}`})
+        <span className="!font-bold">{t("SUBJECT")}:</span> {t("RETURNTOSELLER")} ({`${brandDetails} - ${accepted_price}`})
       </h3>
     );
   } else if (item?.type === "accept_estimation") {
     //137
     return (
       <h3 className="m-0">
-        <strong>Subject:</strong> Staff has accepted estimation of the watch (
+        <span className="!font-bold">{t("SUBJECT")}:</span> {t("ACCEPTESTIMATION")} (
         {`${brandDetails} - ${accepted_price}`})
       </h3>
     );
@@ -166,15 +168,14 @@ export const sellerGetSubject = (
     //143
     return (
       <h3 className="m-0">
-        <strong>Subject:</strong> Estimator has sent his estimation on given
-        watch quotation ({`${brandDetails} - ${accepted_price}`})
+        <span className="!font-bold">{t("SUBJECT")}:</span> {t("ESTIMATORQUOTATION")} ({`${brandDetails} - ${accepted_price}`})
       </h3>
     );
   } else if (item?.type === "Quotation for Watch") {
     //145
     return (
       <h3 className="m-0">
-        <strong>Subject:</strong> Seller is waiting for quotation (
+        <span className="!font-bold">{t("SUBJECT")}:</span> {t("QUOTATIONFORWATCH")} (
         {`${brandDetails} - ${accepted_price}`})
       </h3>
     );
@@ -182,20 +183,19 @@ export const sellerGetSubject = (
     //147
     return (
       <h3 className="m-0">
-        <strong>Subject:</strong> Staff has placed first counter offer on
-        estimation of the watch quotation (
+        <span className="!font-bold">{t("SUBJECT")}:</span> {t("COUNTEROFFER1")} (
         {`${brandDetails} - ${accepted_price}`})
       </h3>
     );
   } else if (item?.type === "est_re-estimate") {
     const message =
       item?.message ===
-      "Estimator has placed his re-estimation on staff first counter offer"
-        ? "Estimator has placed his re-estimation on staff first counter offer" // 149
-        : "Estimator has placed his re-estimation on staff second counter offer"; //153
+        "Estimator has placed his re-estimation on staff first counter offer"
+        ? `${t("ESTREESTIMATE1")}` // 149
+        : `${t("ESTREESTIMATE2")}`; //153
     return (
       <h3 className="m-0">
-        <strong>Subject:</strong> {message} (
+        <span className="!font-bold">{t("SUBJECT")}:</span> {message} (
         {`${brandDetails} - ${accepted_price}`})
       </h3>
     );
@@ -203,8 +203,7 @@ export const sellerGetSubject = (
     //151
     return (
       <h3 className="m-0">
-        <strong>Subject:</strong> Staff has again placed counter offer on
-        estimation of the watch quotation (
+        <span className="!font-bold">{t("SUBJECT")}:</span> {t("COUNTEROFFER2")} (
         {`${brandDetails} - ${accepted_price}`})
       </h3>
     );
@@ -212,7 +211,7 @@ export const sellerGetSubject = (
     //185
     return (
       <h3 className="m-0">
-        <strong>Subject:</strong> Staff has declined the estimate request (
+        <span className="!font-bold">{t("SUBJECT")}:</span> {t("REJECTED")} (
         {`${brandDetails} - ${accepted_price}`})
       </h3>
     );
@@ -220,14 +219,13 @@ export const sellerGetSubject = (
     // 189
     return (
       <h3 className="m-0">
-        <strong>Subject:</strong> We regret to inform you that we could not
-        estimate your watch ({`${brandDetails} - ${accepted_price}`})
+        <span className="!font-bold">{t("SUBJECT")}:</span> {t("ESTIMATIONREJECTED")} ({`${brandDetails} - ${accepted_price}`})
       </h3>
     );
   } else {
     return (
       <h3 className="m-0">
-        <strong>Subject:</strong> {item?.message} (
+        <span className="!font-bold">{t("SUBJECT")}:</span> {item?.message} (
         {`${brandDetails} - ${accepted_price}`})
       </h3>
     );

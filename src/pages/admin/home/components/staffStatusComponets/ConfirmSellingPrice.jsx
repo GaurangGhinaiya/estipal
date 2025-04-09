@@ -1,3 +1,4 @@
+import { t } from "i18next";
 import React from "react";
 import UrgentImage from "../../../../../assets/images/icons/Urgent 1.png";
 
@@ -6,11 +7,13 @@ const ConfirmSellingPrice = (props) => {
     <div>
       {/* 167 */}
       <h3>
-        The selling price confirmed by Estipal is {props?.confirmed_price}. Sale
-        is pending
+        {t("CONFIRMSELLINGPRICETEXT").replace(
+          "{props?.confirmed_price}",
+          props?.confirmed_price
+        )}
       </h3>
       {/* 131 */} {/* 168 */}
-      <h3>Status: Pending Sale</h3>
+      <h3>{t("STATUS")}: {t("PENDINGSALE")}</h3>
       <div className="select_box text-center mt-20">
         <div className="select_box_inner !max-sm:p-[10px] white_select_box_inner">
           <p className="flex max-sm:flex-col items-center justify-center gap-[10px] mb-[10px]">
@@ -22,9 +25,9 @@ const ConfirmSellingPrice = (props) => {
               />
             </span>
             {/* 139 */}
-            <span className="pending_status">Pending action:</span>
+            <span className="pending_status">{t("PENDINGACTION")}:</span>
             {/* 140 */}
-            <span>Select one of the below option</span>
+            <span>{t("SELECTOPTIONBELOW")}</span>
           </p>
           <ul className="flex gap-3 flex-wrap justify-center items-center">
             <li
@@ -40,7 +43,7 @@ const ConfirmSellingPrice = (props) => {
                     : ""
                 }
               >
-                Confirm the sale {/* 169 */}
+                {t("CONFIRMTHESALE")} {/* 169 */}
               </button>
             </li>
             <li
@@ -63,7 +66,7 @@ const ConfirmSellingPrice = (props) => {
                     : ""
                 }
               >
-                No sale has been made {/* 170 */}
+                {t("NOSALEFOUND")} {/* 170 */}
               </button>
             </li>
           </ul>

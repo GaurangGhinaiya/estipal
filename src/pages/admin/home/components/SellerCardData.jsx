@@ -11,6 +11,7 @@ import SellerInvoice from "./statusComponents/SellerInvoice";
 import SellerInvoiceNew from "./statusComponents/SellerInvoiceNew";
 import EstimatorMultiQuotation from "./statusComponents/EstimatorMultiQuotation";
 import { sellerGetSubject } from "./SellerGetSubject";
+import { useTranslation } from "react-i18next";
 import AcceptEstimation from "./staffStatusComponets/AcceptEstimation";
 import ConfirmSellingPrice from "./staffStatusComponets/ConfirmSellingPrice";
 import StaffSellerInvoiceNew from "./staffStatusComponets/StaffSellerInvoiceNew";
@@ -20,6 +21,7 @@ import StaffConfirmShipmentEstipal from "./staffStatusComponets/StaffConfirmShip
 import StaffConfirmTheAcceptance from "./staffStatusComponets/StaffConfirmTheAcceptance";
 
 const SellerCardData = (props) => {
+  const { t } = useTranslation();
   const { item, index, userRole, adminActivitiesData, currency } = props;
 
   let accepted_price = "";
@@ -137,18 +139,18 @@ const SellerCardData = (props) => {
         return (
           <div className="message_box_inner">
             {/* 143 */}
-            <h3>{`Estimator has sent his estimation on given watch quotation (${accepted_price})`}</h3>
+            <h3>{`${t("ESTIMATORQUOTATION")} (${accepted_price})`}</h3>
             {/* 131 */} {/* 144 */}
-            <h3>{`Status: Quotation Received`}</h3>
+            <h3>{`${t("STATUS")}: ${t("QUOTATIONRECEIVED")}`}</h3>
           </div>
         );
       case "counter_offer_1":
         return (
           <div className="message_box_inner">
             {/* 147 */}
-            <h3>{`Staff has placed first counter offer on estimation of the watch quotation (${accepted_price})`}</h3>
+            <h3>{`${t("COUNTEROFFER1")} (${accepted_price})`}</h3>
             {/* 148 */}
-            <h3>{`Status: Pending first counter offer`}</h3>
+            <h3>{`${t("STATUS")}: ${t("PENDINGFIRSTCOUNTEROFFER")}`}</h3>
           </div>
         );
       case "est_re-estimate":
@@ -157,30 +159,32 @@ const SellerCardData = (props) => {
             <h3>
               {item?.message ===
               "Estimator has placed his re-estimation on staff first counter offer"
-                ? `Estimator has placed his re-estimation on staff first counter offer` // 149
-                : `Estimator has placed his re-estimation on staff second counter offer (${accepted_price})`}{" "}
-              {/* 153 */}
+                ? `${t("ESTREESTIMATE1")}` // 149
+                : `${t("ESTREESTIMATE2")} (${accepted_price})`}{" "}
+                {
+                    /* 153 */
+                  }
             </h3>
             {/* 150 */}
-            <h3>{`Status: Re-estimate`}</h3>
+            <h3>{`${t("STATUS")}: ${t("REESTIMATE")}`}</h3>
           </div>
         );
       case "counter_offer_2":
         return (
           <div className="message_box_inner">
             {/* 151 */}
-            <h3>{`Staff has again placed counter offer on estimation of the watch quotation (${accepted_price})`}</h3>{" "}
+            <h3>{`${t("COUNTEROFFER2")} (${accepted_price})`}</h3>{" "}
             {/* 152 */}
-            <h3>{`Status: Pending second counter offer`}</h3>
+            <h3>{`${t("STATUS")}: ${t("PENDINGSECONDCOUNTEROFFER")}`}</h3>
           </div>
         );
       case "Be-Partner":
         return (
           <div className="message_box_inner">
             {/* 130 */}
-            <h3>{`The confirmed selection is 'Be partner with Estipal', Estipal selling price confirmation is pending`}</h3>{" "}
+            <h3>{`${t("BEPARTNERTEXT")}`}</h3>{" "}
             {/* 132 */}
-            <h3>{`Status: Pending Estipal selling price confirmation`}</h3>
+            <h3>{`${t("STATUS")}: ${t("BEPARTNERSTATUSTEXT")}`}</h3>
           </div>
         );
       case "confirm_selling_price":
@@ -287,14 +291,14 @@ const SellerCardData = (props) => {
       if (item?.type === "staff_response_time_expired") {
         return (
           <h3 className="mb-3 capitalize">
-            <strong>From: </strong>
+            <span className="font-bold">{t("FROM")}: </span>
             Estipal response time limit rule
           </h3>
         );
       } else {
         return (
           <h3 className="mb-3 capitalize">
-            <strong>From: </strong>
+            <span className="font-bold">{t("FROM")}: </span>
             {item?.from_name
               ? item?.from_name.charAt(0).toUpperCase() +
                 item?.from_name.slice(1)
@@ -305,30 +309,30 @@ const SellerCardData = (props) => {
     } else if (item?.admin_group === "Estipal-Administrator") {
       return (
         <h3 className="mb-3 capitalize">
-          <strong>From: </strong>
-          Estipal-Administrator {/* 211 */}
+          <span className="font-bold">{t("FROM")}: </span>
+          {t("ESTIPALADMINISTRATOR")} {/* 211 */}
         </h3>
       );
     } else if (item?.admin_group === "estimator") {
       if (item?.type === "estimation_expired") {
         return (
           <h3 className="mb-3 capitalize">
-            <strong>From: </strong>
+            <span className="font-bold">{t("FROM")}: </span>
             Estipal response time limit rule
           </h3>
         );
       } else {
         return (
           <h3 className="mb-3 capitalize">
-            <strong>From: </strong>
-            Estimator {/* 212 */}
+            <span className="font-bold">{t("FROM")}: </span>
+            {t("ESTIMATOR")} {/* 212 */}
           </h3>
         );
       }
     } else if (item?.admin_group === "seller") {
       return (
         <h3 className="mb-3 capitalize">
-          <strong>From: </strong>
+          <span className="font-bold">{t("FROM")}: </span>
           {item?.from_name
             ? item?.from_name.charAt(0).toUpperCase() + item?.from_name.slice(1)
             : ""}
@@ -337,7 +341,7 @@ const SellerCardData = (props) => {
     } else {
       return (
         <h3 className="mb-3 capitalize">
-          <strong>From: </strong>
+          <span className="font-bold">{t("FROM")}: </span>
           {item?.admin_group
             ? item?.admin_group.charAt(0).toUpperCase() +
               item?.admin_group.slice(1)
@@ -355,6 +359,7 @@ const SellerCardData = (props) => {
     >
       <div className="border_bottom pb-4">
         {sellerGetSubject(
+          t,
           item,
           accepted_price,
           getWatchDetails,
@@ -366,7 +371,7 @@ const SellerCardData = (props) => {
         <div className="flex justify-between items-center flex-wrap">
           {renderFrom()}
           <h3 className="mb-3">
-            <strong className="font-bold">Received: </strong>
+            <strong className="font-bold">{t("RECEIVED")}: </strong>
             <span className="created_at">
               {moment.unix(item?.created_on).format("MMMM DD , YYYY h:mm A")}
             </span>

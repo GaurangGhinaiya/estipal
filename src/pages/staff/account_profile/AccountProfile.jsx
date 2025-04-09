@@ -1,7 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import PhoneInput, { formatPhoneNumber, getCountryCallingCode } from "react-phone-number-input";
+import PhoneInput, {
+  formatPhoneNumber,
+  getCountryCallingCode,
+} from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import { useNavigate } from "react-router-dom";
 import TextInputField from "../../../components/common/TextInputField";
@@ -9,6 +13,7 @@ import { fetchCountryList, fetchStateList } from "../../../utils/apiUtils";
 import StaffCommission from "./component/StaffCommission";
 import axiosInstance from "../../../services";
 import moment from "moment";
+import toast from "react-hot-toast";
 
 const AccountProfile = () => {
   const userRole = localStorage.getItem("userRole");
@@ -27,7 +32,6 @@ const AccountProfile = () => {
   const [commissionData, setCommissionData] = useState([]);
   const [selectPhoneCountry, setSelectPhoneCountry] = useState("IN");
   const [loading, setLoading] = useState(false);
-  const [commissionObject, setCommissionObject] = useState({});
   const [formData, setFormData] = useState({
     active: false,
     cmp_name: "",
@@ -59,8 +63,7 @@ const AccountProfile = () => {
   const [countries, setCountries] = useState([]);
   const [selectCountry, setSelectCountry] = useState("IN");
   const [phone, setPhone] = useState("");
-  const userData = JSON.parse(localStorage.getItem("userData"))
-
+  const userData = JSON.parse(localStorage.getItem("userData"));
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -91,9 +94,11 @@ const AccountProfile = () => {
   const getDetailById = async () => {
     try {
       setLoading(true);
-      const response = await axiosInstance.get(`/sellers/detail?id=${userData?.id}`);
+      const response = await axiosInstance.get(
+        `/sellers/detail?id=${userData?.id}`
+      );
       const staff = response?.payload?.data;
-      console.log('staff: ', staff);
+      console.log("staff: ", staff);
       setStaffData(staff);
 
       setFormData((prevFormData) => ({
@@ -114,7 +119,6 @@ const AccountProfile = () => {
     }
   };
 
-
   const save = async () => {
     setLoading(true);
 
@@ -124,93 +128,45 @@ const AccountProfile = () => {
 
     Object.keys(sendData).forEach((key) => {
       if (
-        key !== "seller_logo" &&
         key !== "companyLogoPreview" &&
-        key !== "commission" &&
-        key !== "commission_plan" &&
         formData[key]
       ) {
         formDataToSend.append(key, formData[key]);
       }
     });
 
-    if (formData.seller_logo) {
-      formDataToSend.append("seller_logo", formData.seller_logo);
+    try {
+      const response = await axiosInstance.post(
+        `/sellers/editProfile`,
+        formDataToSend,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      if (response?.status === 200) {
+        const message = "Profile updated successfully!";
+        toast.success(message);
+        getDetailById();
+        setIsEditable(false);
+      }
+    } catch (error) {
+      console.log("error: ", error);
+      if (error?.response?.data?.payload?.error) {
+        toast.error(error?.response?.data?.payload?.error);
+      } else {
+        toast.error(error?.response?.data?.message);
+      }
+    } finally {
+      setLoading(false);
     }
-
-    if (commissionObject) {
-      formDataToSend.append("commission", JSON.stringify(commissionObject));
-    }
-
-    // try {
-    //   const response = await axiosInstance["put"](
-    //     `/sellers?id=${id}`,
-    //     formDataToSend,
-    //     {
-    //       headers: {
-    //         "Content-Type": "multipart/form-data",
-    //       },
-    //     }
-    //   );
-
-    //   if (response?.status === 200) {
-    //     const message = "Estimator updated successfully!";
-    //     toast.success(message);
-    //     navigate("/admin/staff/staff_user");
-    //   }
-    // } catch (error) {
-    //   console.log("error: ", error);
-    //   if (error?.response?.data?.payload?.error) {
-    //     toast.error(error?.response?.data?.payload?.error);
-    //   } else {
-    //     toast.error(error?.response?.data?.message);
-    //   }
-    // } finally {
-    //   setLoading(false);
-    // }
   };
 
   useEffect(() => {
-    const transformCommissionData = () => {
-      const transformedData = {
-        br1: {
-          price_range: [commissionData[0]?.from, commissionData[0]?.to],
-          value: commissionData[0]?.commission,
-        },
-        br2: {
-          price_range: [commissionData[1]?.from, commissionData[1]?.to],
-          value: commissionData[1]?.commission,
-        },
-        br3: {
-          price_range: [commissionData[2]?.from, commissionData[2]?.to],
-          value: commissionData[2]?.commission,
-        },
-        br4: {
-          price_range: [commissionData[3]?.from, commissionData[3]?.to],
-          value: commissionData[3]?.commission,
-        },
-        br5: {
-          price_range: [commissionData[4]?.from, commissionData[4]?.to],
-          value: commissionData[4]?.commission,
-        },
-        br6: {
-          price_range: [commissionData[5]?.from, commissionData[5]?.to],
-          value: commissionData[5]?.commission,
-        },
-        br7: {
-          price_range: [commissionData[6]?.from],
-          value: commissionData[6]?.commission,
-        },
-      };
-      setCommissionObject(transformedData);
-    };
-
-    transformCommissionData();
-  }, [commissionData]);
-
-  useEffect(() => {
     getDetailById();
-  }, []);
+  }, [userData?.id]);
 
   useEffect(() => {
     const formattedPhone = formatPhoneNumber(phone);
@@ -249,9 +205,6 @@ const AccountProfile = () => {
     }
   }, [selectCountry]);
 
-
-
-
   return (
     <div className="mx-auto pb-[15px]">
       <div className="px-0 sm:px-[20px] pt-8 flex justify-between flex-wrap gap-2 bg-gradient-to-b from-[rgba(0,96,169,0.36)] to-[rgba(255,255,255,0)]">
@@ -266,9 +219,9 @@ const AccountProfile = () => {
               variant="contained"
               className="!bg-[#00a65a] !normal-case !py-[5px] sm:!py-[10px] sm:!px-[40px] !px-[15px] !rounded-[50px]"
               onClick={() => {
-                save()
-                navigate("/admin/panel/account")
-                setIsEditable(false)
+                save();
+                navigate("/admin/panel/account");
+                setIsEditable(false);
               }}
             >
               {t("SAVE")}
@@ -370,21 +323,19 @@ const AccountProfile = () => {
             onChange={handleChange}
           />
 
-          <div className="flex justify-between items-start w-full" style={
-            {
+          <div
+            className="flex justify-between items-start w-full"
+            style={{
               backgroundColor: "#ffffff",
               border: "1px solid #e5e7eb",
-              borderRadius: "8px"
-
-            }
-          }>
+              borderRadius: "8px",
+            }}
+          >
             <div className="w-[35%]">
-              <TextInputField
-                label={`${t("COMPANYLOGO")}`}
-              />
+              <TextInputField label={`${t("COMPANYLOGO")}`} />
             </div>
 
-            {isEditable ?
+            {isEditable ? (
               <div className="flex justify-end w-full py-2">
                 <div className="w-fit">
                   <input
@@ -402,11 +353,13 @@ const AccountProfile = () => {
                           className="w-[100px] object-cover rounded"
                         />
                       </div>
-                    ) : ""}
+                    ) : (
+                      ""
+                    )}
                   </div>
                 </div>
               </div>
-              :
+            ) : (
               <div className="flex items-start justify-end w-full pb-2 px-2">
                 {formData?.companyLogoPreview ? (
                   <div className="mt-2">
@@ -416,9 +369,11 @@ const AccountProfile = () => {
                       className="w-[100px] object-cover rounded"
                     />
                   </div>
-                ) : ""}
+                ) : (
+                  ""
+                )}
               </div>
-            }
+            )}
           </div>
         </div>
         <div className="">
@@ -505,7 +460,6 @@ const AccountProfile = () => {
               </div>
             }
           />
-
 
           <TextInputField
             value={formData?.zip}
@@ -643,8 +597,7 @@ const AccountProfile = () => {
                       className="mt-1 block w-auto rounded-md p-3 max-sm:flex-wrap"
                       placeholder="Enter phone number"
                       style={{
-                        backgroundColor:
-                          "#F8F8F8",
+                        backgroundColor: "#F8F8F8",
                       }}
                       value={phone}
                       onChange={(value) => {
@@ -699,7 +652,11 @@ const AccountProfile = () => {
             className="mb-[15px]"
           /> */}
           <TextInputField
-            value={formData?.payment_tier === 1 ? "Tier 1: Seller receives Estipal payment before shipping the watch" : "Tier 2: after shipping the watch"}
+            value={
+              formData?.payment_tier === 1
+                ? "Tier 1: Seller receives Estipal payment before shipping the watch"
+                : "Tier 2: after shipping the watch"
+            }
             label="Tier group"
             readOnly={!isEditable}
             disabled={true}
@@ -709,28 +666,26 @@ const AccountProfile = () => {
             onChange={handleChange}
             component={
               <>
-
                 <p className="text-start w-full text-black">
-                  {formData?.payment_tier === 1 ? "Tier 1: Seller receives Estipal payment before shipping the watch" : "Tier 2: after shipping the watch"}
+                  {formData?.payment_tier === 1
+                    ? "Tier 1: Seller receives Estipal payment before shipping the watch"
+                    : "Tier 2: after shipping the watch"}
                 </p>
-
               </>
             }
           />
 
-          <div className="flex justify-between items-start w-full" style={
-            {
+          <div
+            className="flex justify-between items-start w-full"
+            style={{
               backgroundColor: "#ffffff",
               border: "1px solid #e5e7eb",
-              borderRadius: "8px"
-
-            }
-          }>
+              borderRadius: "8px",
+            }}
+          >
             {/* Change Password Field */}
             <div className="w-[35%]">
-              <TextInputField
-                label={`${t("CHANGEPASSWORD")}`}
-              />
+              <TextInputField label={`${t("CHANGEPASSWORD")}`} />
             </div>
 
             <div className="">
@@ -750,12 +705,16 @@ const AccountProfile = () => {
               />
             </div>
           </div>
-
         </div>
       </div>
 
-      <StaffCommission isEditable={isEditable} userRole={userRole} commissionData={commissionData} setCommissionData={setCommissionData}
-        staffData={staffData} />
+      <StaffCommission
+        isEditable={isEditable}
+        userRole={userRole}
+        commissionData={commissionData}
+        setCommissionData={setCommissionData}
+        staffData={staffData}
+      />
     </div>
   );
 };

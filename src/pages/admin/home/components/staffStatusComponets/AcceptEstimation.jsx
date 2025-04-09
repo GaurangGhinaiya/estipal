@@ -4,15 +4,17 @@ import {
   getClassPartnerSeller,
   getClassSelfSeller,
 } from "../../../../../utils";
+import { useTranslation } from "react-i18next";
 
 const AcceptEstimation = (props) => {
+  const { t } = useTranslation();
   return (
     <div className="message_box_inner">
       <h3 className="up-arrow">
         {/* 137 */}
-        Staff has accepted estimation of the watch ({props?.accepted_price})
+        {t("ACCEPTESTIMATION")} ({props?.accepted_price})
       </h3>
-      <h3>Status: Accepted - Deal in progress</h3> {/* 138 */}
+      <h3>{t("STATUS")}: {t("ACCEPTEDDEALINPROGRESS")}</h3> {/* 138 */}
       <div className="select_box text-center mt-20">
         <div className="select_box_inner !max-sm:p-[10px] white_select_box_inner">
           <p className="flex max-sm:flex-col items-center justify-center gap-[10px] mb-[10px]">
@@ -24,9 +26,9 @@ const AcceptEstimation = (props) => {
               />
             </span>
             {/* 139 */}
-            <span className="pending_status">Pending action:</span>
+            <span className="pending_status">{t("PENDINGACTION")}:</span>
             {/* 140 */}
-            <span>Select one of the below option</span>
+            <span>{t("SELECTOPTIONBELOW")}</span>
           </p>
           <ul className="flex gap-3 flex-wrap justify-center items-center">
             <li
@@ -44,7 +46,7 @@ const AcceptEstimation = (props) => {
                   props?.item?.staffWatchActivityDetails?.self_selling_flag
                 )}
               >
-                Sell to Estipal {/* 141 */}
+                {t("SELLESTIPAL")} {/* 141 */}
               </button>
             </li>
             <li
@@ -64,7 +66,7 @@ const AcceptEstimation = (props) => {
                     ?.seller_partnership_date
                 )}
               >
-                Be partner with Estipal {/* 142 */}
+                {t("BEPARTNERWITHESTIPAL")} {/* 142 */}
               </button>
             </li>
           </ul>

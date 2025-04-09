@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { LoadingButton } from "@mui/lab";
 import { Button } from "@mui/material";
 import axios from "axios";
@@ -184,7 +185,7 @@ const SellerEdit = () => {
 
   useEffect(() => {
     getDetailById();
-  }, []);
+  }, [id]);
 
   const handleStateChange = (e) => {
     setFormData((prev) => ({ ...prev, state: e.target.value }));
@@ -235,7 +236,7 @@ const SellerEdit = () => {
       );
 
       if (response?.status === 200) {
-        const message = "Estimator updated successfully!";
+        const message = "Seller updated successfully!";
         toast.success(message);
         navigate("/admin/staff/staff_user");
       }
