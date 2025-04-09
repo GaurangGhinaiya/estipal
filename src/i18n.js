@@ -110,8 +110,22 @@ const resources = {
       ESTIMATIONREJECTED: "We regret to inform you that we could not estimate your watch",
       ESTIPALADMINISTRATOR : "Estipal-Administrator",
       ESTIMATOR:"Estimator",
-      RECEIVED:"Received"
-    
+      RECEIVED:"Received",
+      QUOTATIONRECEIVED: "Quotation Received",
+      PENDINGFIRSTCOUNTEROFFER: "Pending first counter offer",
+      REESTIMATE: "Re-estimate",
+      PENDINGSECONDCOUNTEROFFER: "Pending second counter offer",
+      BEPARTNERSTATUSTEXT : "Pending Estipal selling price confirmation",
+      ACCEPTEDDEALINPROGRESS : "Accepted - Deal in progress",
+      PENDINGACTION:"Pending action",
+      SELECTOPTIONBELOW: "Select one of the below option",
+      SELLESTIPAL:"Sell to Estipal",
+      BEPARTNERWITHESTIPAL: "Be partner with Estipal",
+      CONFIRMSELLINGPRICETEXT: "The selling price confirmed by Estipal is {props?.confirmed_price}. Sale is pending",
+      PENDINGSALE: "Pending Sale",
+      CONFIRMTHESALE: "Confirm the sale",
+      NOSALEFOUND: "No sale has been made"
+      
     },
   },
   it: {
@@ -219,7 +233,21 @@ const resources = {
       ESTIMATIONREJECTED: "Siamo spiacenti di informarti che non siamo stati in grado di stimare il tuo orologio",
       ESTIPALADMINISTRATOR : "Estipal-Amministratore",
       ESTIMATOR:"Estimatore",
-      RECEIVED:"Ricevuto"
+      RECEIVED:"Ricevuto",
+      QUOTATIONRECEIVED: "Preventivo ricevuto",
+      PENDINGFIRSTCOUNTEROFFER: "In attesa della prima controfferta",
+      REESTIMATE: "Ri-stima",
+      PENDINGSECONDCOUNTEROFFER: "In attesa della seconda contro offerta",
+      BEPARTNERSTATUSTEXT : "In attesa di conferma del prezzo di vendita di Estipal",
+      ACCEPTEDDEALINPROGRESS : "Accettato - Trattativa in corso",
+      PENDINGACTION:"Azione in attesa",
+      SELECTOPTIONBELOW: "Seleziona una delle seguenti opzioni",
+      SELLESTIPAL:"Vendi a Estipal",
+      BEPARTNERWITHESTIPAL: "Diventa partner di Estipal",
+      CONFIRMSELLINGPRICETEXT: "Il prezzo di vendita confermato da Estipal è {props?.confirmed_price}. La vendita è in sospeso",
+      PENDINGSALE: "Vendita in attesa",
+      CONFIRMTHESALE: "Conferma la vendita",
+      NOSALEFOUND: "Non è stata effettuata alcuna vendita"
 
     },
   },
@@ -328,7 +356,21 @@ const resources = {
       ESTIMATIONREJECTED: "Lamentamos informarle que no pudimos estimar su reloj.",
       ESTIPALADMINISTRATOR : "Estipal-Administrador",
       ESTIMATOR:"Estimador",
-      RECEIVED:"Recibido"
+      RECEIVED:"Recibido",
+      QUOTATIONRECEIVED: "Cotización recibida",
+      PENDINGFIRSTCOUNTEROFFER: "Pendiente primera contraoferta",
+      REESTIMATE: "Reestimar",
+      PENDINGSECONDCOUNTEROFFER: "Segunda contraoferta pendiente",
+      BEPARTNERSTATUSTEXT : "Pendiente de confirmación del precio de venta de Estipal",
+      ACCEPTEDDEALINPROGRESS : "Aceptado: oferta en curso",
+      PENDINGACTION:"Acción pendiente",
+      SELECTOPTIONBELOW: "Seleccione una de las siguientes opciones",
+      SELLESTIPAL:"Vender a Estipal",
+      BEPARTNERWITHESTIPAL: "Sea socio de Estipal",
+      CONFIRMSELLINGPRICETEXT: "El precio de venta confirmado por Estipal es {props?.confirmed_price}. La venta está pendiente",
+      PENDINGSALE: "Venta pendiente",
+      CONFIRMTHESALE: "Confirma la venta",
+      NOSALEFOUND: "No se ha realizado ninguna venta"
 
 
     },
@@ -438,8 +480,21 @@ const resources = {
       ESTIMATIONREJECTED: "很遺憾地通知您，我們無法估計您的手錶",
       ESTIPALADMINISTRATOR : "Estipal-管理員",
       ESTIMATOR:"估算器",
-      RECEIVED:"已收到"
-
+      RECEIVED:"已收到",
+      QUOTATIONRECEIVED: "收到報價",
+      PENDINGFIRSTCOUNTEROFFER: "待定第一個還價",
+      REESTIMATE: "重新估算",
+      PENDINGSECONDCOUNTEROFFER: "待定第二次還價",
+      BEPARTNERSTATUSTEXT : "待定估計售價確認",
+      ACCEPTEDDEALINPROGRESS : "已接受 - 交易進行中",
+      PENDINGACTION:"待處理",
+      SELECTOPTIONBELOW: "選擇以下選項之一",
+      SELLESTIPAL:"賣給 Estipal",
+      BEPARTNERWITHESTIPAL: "成為 Estipal 的合作夥伴",
+      CONFIRMSELLINGPRICETEXT: "Estipal 確認的售價為 {props?.confirmed_price}。 銷售待定",
+      PENDINGSALE: "待售",
+      CONFIRMTHESALE: "確認銷售",
+      NOSALEFOUND: "沒有銷售"
 
     },
   },
