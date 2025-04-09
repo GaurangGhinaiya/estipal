@@ -37,7 +37,6 @@ const StaffUserWatchHistory = ({
           select,
         }
       );
-      console.log("API Response:", response.data);
 
       setWatchActivityDataUpdate((prevData) =>
         prevData.map((item) =>

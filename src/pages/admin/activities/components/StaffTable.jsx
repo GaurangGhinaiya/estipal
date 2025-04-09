@@ -42,7 +42,6 @@ const StaffTable = ({
           select,
         }
       );
-      console.log("API Response:", response.data);
 
       setActivitiesShowData((prevData) =>
         prevData.map((item) =>

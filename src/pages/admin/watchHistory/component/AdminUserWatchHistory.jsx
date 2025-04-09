@@ -36,7 +36,6 @@ const AdminUserWatchHistory = ({
           select,
         }
       );
-      console.log("API Response:", response.data);
 
       setWatchActivityDataUpdate((prevData) =>
         prevData.map((item) =>
@@ -91,17 +90,14 @@ const AdminUserWatchHistory = ({
               onClick={
                 column.isSortable ? () => handleSort(column.key) : undefined
               }
-              className={`p-2 dark:text-[#ffff] text-nowrap text-black text-center ${
-                column.isSortable ? "cursor-pointer" : ""
-              } ${
-                column.isSortable && sortField === column.key
+              className={`p-2 dark:text-[#ffff] text-nowrap text-black text-center ${column.isSortable ? "cursor-pointer" : ""
+                } ${column.isSortable && sortField === column.key
                   ? "active-sorting"
                   : ""
-              } ${
-                column.isSortable && sortField !== column.key
+                } ${column.isSortable && sortField !== column.key
                   ? "pr-4 sorting"
                   : ""
-              }`}
+                }`}
             >
               {column.label}{" "}
               {column.isSortable &&
@@ -209,12 +205,11 @@ const AdminUserWatchHistory = ({
                   navigate(`/admin/watch_details/watch_status/${item?.id}`)
                 }
               >
-                {`${item?.addedByDetail?.company_name || ""}${
-                  item?.addedByDetail?.company_name &&
-                  item?.addedByDetail?.username
+                {`${item?.addedByDetail?.company_name || ""}${item?.addedByDetail?.company_name &&
+                    item?.addedByDetail?.username
                     ? " - "
                     : "-"
-                }${item?.addedByDetail?.username || ""}`}
+                  }${item?.addedByDetail?.username || ""}`}
               </td>
               <td
                 className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap cursor-pointer"

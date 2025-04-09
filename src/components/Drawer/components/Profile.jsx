@@ -19,7 +19,7 @@ import ItlyFlag from "../../../assets/images/icons/ita_flag.png";
 
 export default function Profile() {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const { i18n } = useTranslation();
+  const { t,i18n } = useTranslation();
   const [anchorElLang, setAnchorElLang] = React.useState(null);
   const [selectedLang, setSelectedLang] = React.useState(
     localStorage.getItem("Language")
@@ -104,10 +104,10 @@ export default function Profile() {
               {selectedLang === "en"
                 ? "English"
                 : selectedLang === "it"
-                ? "Italian"
+                ? "Italiano"
                 : selectedLang === "es"
-                ? "Spanish"
-                : "Chinese"}
+                ? "Español"
+                : "简体中文"}
             </p>
           </Tooltip>
         )}
@@ -153,7 +153,7 @@ export default function Profile() {
           <ListItemIcon>
             <PersonIcon fontSize="medium" />
           </ListItemIcon>
-          Signed in as {userData?.username}
+         <p className="font-bold"> Signed in as {userData?.username}</p>
         </MenuItem>
         <MenuItem
           onClick={() => {
@@ -164,7 +164,7 @@ export default function Profile() {
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
-          Logout
+          {t("LOGOUT")}
         </MenuItem>
       </Menu>
       <Menu

@@ -19,6 +19,7 @@ const Header = () => {
   const pathName = useLocation();
   const { pathname } = pathName;
   const userRole = localStorage.getItem("userRole");
+  const userName = JSON.parse(localStorage.getItem("userData"));
 
   const revenueMenuRef = useRef(null);
   const performanceMenuRef = useRef(null);
@@ -365,7 +366,7 @@ const Header = () => {
         <div className="flex flex-col gap-[12px] max-h-[340px] overflow-auto">
           <Button className="!text-white !normal-case !text-left !justify-start !px-[15px] !py-[10px] !font-bold">
             <PersonIcon fontSize="medium" sx={{ color: "#ffff", mr: "10px" }} />
-            Signed in as admin
+            Signed in as {userName?.username}
           </Button>
           <div>
             <Profile />
@@ -663,7 +664,7 @@ const Header = () => {
             className="!text-white !normal-case !text-left !justify-start !px-[15px] !py-[10px] !font-bold"
           >
             <Logout fontSize="medium" sx={{ color: "#ffff", mr: "10px" }} />
-            Logout
+            {t("LOGOUT")}
           </Button>
         </div>
       </Box>
