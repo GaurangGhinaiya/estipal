@@ -14,8 +14,7 @@ import PaginationComponent from "../../../components/common/PaginationComponent"
 import SearchBar from "../../../components/common/SearchBar";
 import useDebounce from "../../../components/common/UseDebounce";
 import axiosInstance from "../../../services";
-import SaveIcon from '@mui/icons-material/Save';
-
+import SaveIcon from "@mui/icons-material/Save";
 
 const ManageStaff = () => {
   const { t } = useTranslation();
@@ -32,7 +31,7 @@ const ManageStaff = () => {
   const [selectedRows, setSelectedRows] = useState([]);
   const [manageStaffData, setManageStaffData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [resetPasswordData, setResetPasswordData] = useState("")
+  const [resetPasswordData, setResetPasswordData] = useState("");
   const userRole = localStorage.getItem("userRole");
   const debouncedSearchTerm = useDebounce(searchQuery, 500);
   const [newStaff, setNewStaff] = useState({
@@ -111,7 +110,7 @@ const ManageStaff = () => {
       setIsLoading(false);
       toggleModal();
     }
-  }
+  };
 
   const handleArchiveStaff = () => {
     setIsArchiveMode(true);
@@ -144,17 +143,14 @@ const ManageStaff = () => {
 
   useEffect(() => {
     if (manageStaffData?.length > 0) {
-
-      const archivedRows = manageStaffData?.filter(item => item?.is_deleted);
+      const archivedRows = manageStaffData?.filter((item) => item?.is_deleted);
       const filteredSelectedRows = selectedRows?.filter(
-        item => !archivedRows?.some(archived => archived?.id === item?.id)
+        (item) => !archivedRows?.some((archived) => archived?.id === item?.id)
       );
       const allData = [...filteredSelectedRows, ...archivedRows];
       setSelectedRows(allData);
-
     }
-  }, [manageStaffData])
-
+  }, [manageStaffData]);
 
   const handleNewStaffChange = (index, e) => {
     const { name, type, checked, value } = e.target;
@@ -163,8 +159,8 @@ const ManageStaff = () => {
       ...updatedData[index],
       [name]: type === "checkbox" ? checked : value,
     };
-    setNewStaff(updatedData)
-    setManageStaffData(updatedData)
+    setNewStaff(updatedData);
+    setManageStaffData(updatedData);
   };
 
   const getManageStaffList = async () => {
@@ -172,9 +168,9 @@ const ManageStaff = () => {
       debouncedSearchTerm?.includes("@")
         ? { email: debouncedSearchTerm || "" }
         : {
-          username: debouncedSearchTerm || "",
-          ...(isArchiveMode ? {} : { is_deleted: false })
-        }
+            username: debouncedSearchTerm || "",
+            ...(isArchiveMode ? {} : { is_deleted: false }),
+          }
     );
     try {
       setIsLoading(true);
@@ -191,19 +187,21 @@ const ManageStaff = () => {
   };
 
   const handleSaveStaff = async () => {
-
     if (isArchiveMode) {
       const idArray = selectedRows?.map((item) => ({
         id: item?.id,
-        is_deleted: item?.is_deleted
+        is_deleted: item?.is_deleted,
       }));
 
       const payload = {
-        ids: idArray
-      }
+        ids: idArray,
+      };
       try {
         setIsLoading(true);
-        const response = await axiosInstance.post("/manageStaffUser/archive", payload);
+        const response = await axiosInstance.post(
+          "/manageStaffUser/archive",
+          payload
+        );
         toast.success("Selected staff archived successfully");
       } catch (error) {
         console.error("Error archiving staff:", error);
@@ -211,7 +209,6 @@ const ManageStaff = () => {
         setIsLoading(false);
       }
       resetFormState();
-
     } else {
       const isEditing = Boolean(editingId);
       const staffData = isEditing
@@ -225,35 +222,43 @@ const ManageStaff = () => {
         active: staffData?.active,
       };
 
-      try {
-        setIsLoading(true);
-        const response = isEditing
-          ? await axiosInstance.put(`/manageStaffUser?id=${editingId}`, payload)
-          : await axiosInstance.post(`/manageStaffUser`, payload);
+      if (staffData?.username && staffData?.email && staffData?.cnt_no) {
+        try {
+          setIsLoading(true);
+          const response = isEditing
+            ? await axiosInstance.put(
+                `/manageStaffUser?id=${editingId}`,
+                payload
+              )
+            : await axiosInstance.post(`/manageStaffUser`, payload);
 
-        const updatedData = response?.payload?.data;
+          const updatedData = response?.payload?.data;
 
-        if (isEditing) {
-          setManageStaffData((prevData) =>
-            prevData.map((staff) =>
-              staff.id === editingId ? { ...staff, ...updatedData } : staff
-            )
+          if (isEditing) {
+            setManageStaffData((prevData) =>
+              prevData.map((staff) =>
+                staff.id === editingId ? { ...staff, ...updatedData } : staff
+              )
+            );
+            toast.success("Staff updated successfully");
+          } else {
+            setManageStaffData(updatedData);
+            toast.success("Staff added successfully");
+          }
+          // Reset states after saving
+          resetFormState();
+        } catch (error) {
+          console.error(
+            `Error ${isEditing ? "updating" : "adding"} staff:`,
+            error
           );
-          toast.success("Staff updated successfully");
-        } else {
-          setManageStaffData(updatedData);
-          toast.success("Staff added successfully");
+        } finally {
+          setIsLoading(false);
         }
-      } catch (error) {
-        console.error(`Error ${isEditing ? "updating" : "adding"} staff:`, error);
-      } finally {
-        setIsLoading(false);
+      } else {
+        toast.error("Please fill all required fields !");
       }
-
-      // Reset states after saving
-      resetFormState();
     }
-
   };
 
   const resetFormState = () => {
@@ -363,7 +368,6 @@ const ManageStaff = () => {
         </div>
       </div>
 
-
       {/* Table Section */}
       <div className="w-[95.5%] overflow-auto mx-auto pt-[10px]">
         <table className="table-auto w-full text-left">
@@ -396,118 +400,140 @@ const ManageStaff = () => {
             </tr>
           </thead>
           <tbody>
-            {manageStaffData?.length > 0 ? manageStaffData?.map((item, index) => {
-              return (
-                <tr key={index} className="border-b border-[#202b34]">
-                  {isArchiveMode && (
-                    <td className="px-[18px] py-[10px] text-center">
-                      <input
-                        type="checkbox"
-                        checked={item?.is_deleted}
-                        onChange={() => handleRowSelect(item, index)}
-                      />
-                    </td>
-                  )}
-                  <td className="px-[18px] py-[10px] text-center">
-                    <span
-                      className={`${item?.is_user_login === 1 ? "dot-green" : "dot-red"}`}
-                    />
-                  </td>
-                  <td className="px-[18px] py-[10px] text-center">
-                    {editingId === item.id ?
-                      <CustomSwitch
-                        name="active"
-                        checked={item?.active}
-                        onChange={(e) => handleNewStaffChange(index, { target: { name: "active", type: "checkbox", checked: !item?.active } })}
-                      />
-                      :
-                      <CustomSwitch
-                        name={`active${index}`}
-                        checked={item?.active}
-                      />
-                    }
-                  </td>
-                  <td className="px-[18px] py-[10px] text-center font-bold">
-                    {editingId === item.id ? (
-                      <input
-                        type="text"
-                        name="username"
-                        value={item?.username}
-                        onChange={(e) => handleNewStaffChange(index, e)}
-                        className="p-2 border border-gray-300 rounded"
-                      />
-                    ) : (
-                      item?.username
-                    )}
-                  </td>
-                  <td className="px-[18px] py-[10px] text-center font-bold">
-                    {editingId === item.id ? (
-                      <input
-                        type="email"
-                        name="email"
-                        value={item?.email}
-                        onChange={(e) => handleNewStaffChange(index, e)}
-                        className="p-2 border border-gray-300 rounded"
-                      />
-                    ) : (
-                      item?.email
-                    )}
-                  </td>
-                  <td className="px-[18px] py-[10px] text-center font-bold">
-                    {editingId === item.id ? (
-                      <input
-                        type="text"
-                        name="cnt_no"
-                        value={item?.cnt_no}
-                        onChange={(e) => handleNewStaffChange(index, e)}
-                        className="p-2 border border-gray-300 rounded"
-                      />
-                    ) : (
-                      item?.cnt_no
-                    )}
-                  </td>
-                  <td className="px-[18px] py-[10px] text-center whitespace-nowrap">
-                    {moment.unix(item?.created_on).format("DD MMM YYYY")}
-                  </td>
-                  <td className="px-[18px] py-[10px] text-center">
-                    {`${item?.sent_quotations}/${item?.accepted_quotations}`}
-                  </td>
-                  <td className="px-[18px] py-[10px] text-center cursor-pointer" onClick={() => navigate(`/admin/watch_details/watch_history?staff_id=${item?.id}`)}>
-                    <div className="flex justify-center">
-                      <img src={StaffWatch} alt="Watch" width="35px" />
-                    </div>
-                  </td>
-                  <td className="px-[18px] py-[10px] text-center cursor-pointer" onClick={() => {
-                    setOpen(true)
-                    setResetPasswordData(item)
-                  }}>
-                    <div className="flex justify-center">
-                      <img src={StaffLock} alt="Lock" width="35px" />
-                    </div>
-                  </td>
-                  <td className="px-[18px] py-[10px] text-center cursor-pointer">
-                    <button
-                      className="text-black "
-                      onClick={(e) => {
-                        e.stopPropagation(); // Prevent the edit button from triggering other events
-                        handleEditStaff(item.id); // Open the modal
-                      }}
+            {manageStaffData?.length > 0
+              ? manageStaffData?.map((item, index) => {
+                  return (
+                    <tr key={index} className="border-b border-[#202b34]">
+                      {isArchiveMode && (
+                        <td className="px-[18px] py-[10px] text-center">
+                          <input
+                            type="checkbox"
+                            checked={item?.is_deleted}
+                            onChange={() => handleRowSelect(item, index)}
+                          />
+                        </td>
+                      )}
+                      <td className="px-[18px] py-[10px] text-center">
+                        <span
+                          className={`${
+                            item?.is_user_login === 1 ? "dot-green" : "dot-red"
+                          }`}
+                        />
+                      </td>
+                      <td className="px-[18px] py-[10px] text-center">
+                        {editingId === item.id ? (
+                          <CustomSwitch
+                            name="active"
+                            checked={item?.active}
+                            onChange={(e) =>
+                              handleNewStaffChange(index, {
+                                target: {
+                                  name: "active",
+                                  type: "checkbox",
+                                  checked: !item?.active,
+                                },
+                              })
+                            }
+                          />
+                        ) : (
+                          <CustomSwitch
+                            name={`active${index}`}
+                            checked={item?.active}
+                          />
+                        )}
+                      </td>
+                      <td className="px-[18px] py-[10px] text-center font-bold">
+                        {editingId === item.id ? (
+                          <input
+                            type="text"
+                            name="username"
+                            value={item?.username}
+                            onChange={(e) => handleNewStaffChange(index, e)}
+                            className="p-2 border border-gray-300 rounded"
+                          />
+                        ) : (
+                          item?.username
+                        )}
+                      </td>
+                      <td className="px-[18px] py-[10px] text-center font-bold">
+                        {editingId === item.id ? (
+                          <input
+                            type="email"
+                            name="email"
+                            value={item?.email}
+                            onChange={(e) => handleNewStaffChange(index, e)}
+                            className="p-2 border border-gray-300 rounded"
+                          />
+                        ) : (
+                          item?.email
+                        )}
+                      </td>
+                      <td className="px-[18px] py-[10px] text-center font-bold">
+                        {editingId === item.id ? (
+                          <input
+                            type="text"
+                            name="cnt_no"
+                            value={item?.cnt_no}
+                            onChange={(e) => handleNewStaffChange(index, e)}
+                            className="p-2 border border-gray-300 rounded"
+                          />
+                        ) : (
+                          item?.cnt_no
+                        )}
+                      </td>
+                      <td className="px-[18px] py-[10px] text-center whitespace-nowrap">
+                        {moment.unix(item?.created_on).format("DD MMM YYYY")}
+                      </td>
+                      <td className="px-[18px] py-[10px] text-center">
+                        {`${item?.sent_quotations}/${item?.accepted_quotations}`}
+                      </td>
+                      <td
+                        className="px-[18px] py-[10px] text-center cursor-pointer"
+                        onClick={() =>
+                          navigate(
+                            `/admin/watch_details/watch_history?staff_id=${item?.id}`
+                          )
+                        }
+                      >
+                        <div className="flex justify-center">
+                          <img src={StaffWatch} alt="Watch" width="35px" />
+                        </div>
+                      </td>
+                      <td
+                        className="px-[18px] py-[10px] text-center cursor-pointer"
+                        onClick={() => {
+                          setOpen(true);
+                          setResetPasswordData(item);
+                        }}
+                      >
+                        <div className="flex justify-center">
+                          <img src={StaffLock} alt="Lock" width="35px" />
+                        </div>
+                      </td>
+                      <td className="px-[18px] py-[10px] text-center cursor-pointer">
+                        <button
+                          className="text-black "
+                          onClick={(e) => {
+                            e.stopPropagation(); // Prevent the edit button from triggering other events
+                            handleEditStaff(item.id); // Open the modal
+                          }}
+                        >
+                          <FaEdit size={28} />
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })
+              : !isAddMode && (
+                  <tr>
+                    <td
+                      colSpan={12}
+                      className="py-[200px] px-4  text-center text-nowrap dark:text-[#ffff] text-black font-bold"
                     >
-                      <FaEdit size={28} />
-                    </button>
-                  </td>
-                </tr>
-              );
-            })
-              : <tr>
-                <td
-                  colSpan={12}
-                  className="py-[200px] px-4  text-center text-nowrap dark:text-[#ffff] text-black font-bold"
-                >
-                  No Data Found
-                </td>
-              </tr>
-            }
+                      No Data Found
+                    </td>
+                  </tr>
+                )}
 
             {isAddMode && (
               <tr>
@@ -520,10 +546,7 @@ const ManageStaff = () => {
                   <span className="dot-red" />
                 </td>
                 <td className="px-[18px] py-[10px] text-center">
-                  <CustomSwitch
-                    name="active"
-                    checked={newStaff?.active}
-                  />
+                  <CustomSwitch name="active" checked={newStaff?.active} />
                 </td>
                 <td className="px-[18px] py-[10px] text-center">
                   <input
@@ -533,6 +556,7 @@ const ManageStaff = () => {
                     onChange={(e) =>
                       setNewStaff({ ...newStaff, username: e.target.value })
                     }
+                    required
                     placeholder={`${t("NAME")}`}
                     className="p-2 border border-gray-300 rounded"
                   />
@@ -620,7 +644,7 @@ const ManageStaff = () => {
             boxShadow: 24,
             py: 2,
             borderRadius: 2,
-            border: "none"
+            border: "none",
           }}
         >
           <div
@@ -629,7 +653,8 @@ const ManageStaff = () => {
           >
             <p className="text-black font-semibold text-[18px]">
               Reset Password
-            </p> <CloseIcon className="text-black font-semibold" />
+            </p>{" "}
+            <CloseIcon className="text-black font-semibold" />
           </div>
 
           <Box
@@ -653,7 +678,11 @@ const ManageStaff = () => {
             {/* <Button variant="contained" style={{ backgroundColor: "#3C8DBC" }} onClick={handleResetPassword} >
               Send
             </Button> */}
-            <Button variant="outlined" onClick={toggleModal} sx={{ color: "#3C8DBC", borderColor: "#3C8DBC" }} >
+            <Button
+              variant="outlined"
+              onClick={toggleModal}
+              sx={{ color: "#3C8DBC", borderColor: "#3C8DBC" }}
+            >
               Cancel
             </Button>
           </Box>
