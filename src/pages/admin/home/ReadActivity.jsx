@@ -178,10 +178,7 @@ const ReadActivity = () => {
               alt="img"
               className="max-w-[350px] w-full object-cover mx-auto rounded-[8px]"
               style={{ border: "5px solid #1e252b" }}
-              src={getImageSrc(
-                readActivityData?.adminActivities?.[0]?.watch_pic,
-                readActivityData?.type
-              )}
+              src={readActivityData?.watch_pic?.[0]}
             />
           )}
         </div>

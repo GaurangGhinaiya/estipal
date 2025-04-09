@@ -9,13 +9,12 @@ const AcceptEstimation = (props) => {
   return (
     <div className="message_box_inner">
       <h3 className="up-arrow">
-        <span></span>
         {/* 137 */}
         Staff has accepted estimation of the watch ({props?.accepted_price})
       </h3>
       <h3>Status: Accepted - Deal in progress</h3> {/* 138 */}
       <div className="select_box text-center mt-20">
-        <div className="select_box_inner !max-sm:p-[10px]">
+        <div className="select_box_inner !max-sm:p-[10px] white_select_box_inner">
           <p className="flex max-sm:flex-col items-center justify-center gap-[10px] mb-[10px]">
             <span>
               <img
@@ -34,13 +33,15 @@ const AcceptEstimation = (props) => {
               id="openShipAdminPopup"
               name={props?.item?.watch_details.watch_id}
               className={
-                props?.item?.seller_action_flag === 1 ? "inactiveLink" : ""
+                props?.item?.staffWatchActivityDetails?.seller_action_flag === 1
+                  ? "inactiveLink"
+                  : ""
               }
             >
               <button
                 className={getClassSelfSeller(
-                  props?.item?.seller_action_flag,
-                  props?.item?.self_selling_flag
+                  props?.item?.staffWatchActivityDetails?.seller_action_flag,
+                  props?.item?.staffWatchActivityDetails?.self_selling_flag
                 )}
               >
                 Sell to Estipal {/* 141 */}
@@ -49,15 +50,18 @@ const AcceptEstimation = (props) => {
             <li
               id="openPartnerPopup"
               name={props?.item?.watch_details.watch_id}
-              value={accepted_price}
+              value={props?.accepted_price}
               className={
-                props?.item?.seller_action_flag === 1 ? "inactiveLink" : ""
+                props?.item?.staffWatchActivityDetails?.seller_action_flag === 1
+                  ? "inactiveLink"
+                  : ""
               }
             >
               <button
                 className={getClassPartnerSeller(
-                  props?.item?.seller_action_flag,
-                  props?.item?.seller_partnership_date
+                  props?.item?.staffWatchActivityDetails?.seller_action_flag,
+                  props?.item?.staffWatchActivityDetails
+                    ?.seller_partnership_date
                 )}
               >
                 Be partner with Estipal {/* 142 */}

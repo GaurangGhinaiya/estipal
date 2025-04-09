@@ -16,8 +16,6 @@ const WatchStatus = () => {
   const [watchDetailData, setWatchDetailData] = useState({});
   const [loading, setLoading] = useState(true);
   const userRole = localStorage.getItem("userRole");
-  const imageUrls =
-    watchDetailData?.watch_pic && extractImageUrls(watchDetailData?.watch_pic);
 
   const handleOpenDialog = (index) => {
     setSelectedIndex(index);
@@ -253,7 +251,7 @@ const WatchStatus = () => {
             <Skeleton variant="rectangular" width={200} height={200} />
           </>
         ) : (
-          imageUrls?.map((item, index) => (
+          watchDetailData?.watch_pic?.map((item, index) => (
             <div key={index} onClick={() => handleOpenDialog(index)}>
               <img
                 style={{ border: "5px solid #1e252b" }}
@@ -828,7 +826,7 @@ const WatchStatus = () => {
         handleCloseDialog={handleCloseDialog}
         selectedIndex={selectedIndex}
         setSelectedIndex={setSelectedIndex}
-        imageData={imageUrls}
+        imageData={watchDetailData?.watch_pic}
       />
     </div>
   );

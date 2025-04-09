@@ -12,6 +12,12 @@ import SellerInvoiceNew from "./statusComponents/SellerInvoiceNew";
 import EstimatorMultiQuotation from "./statusComponents/EstimatorMultiQuotation";
 import { sellerGetSubject } from "./SellerGetSubject";
 import AcceptEstimation from "./staffStatusComponets/AcceptEstimation";
+import ConfirmSellingPrice from "./staffStatusComponets/ConfirmSellingPrice";
+import StaffSellerInvoiceNew from "./staffStatusComponets/StaffSellerInvoiceNew";
+import StaffSellerInvoice from "./staffStatusComponets/StaffSellerInvoice";
+import ConfirmPaymentSeller from "./staffStatusComponets/ConfirmPaymentSeller";
+import StaffConfirmShipmentEstipal from "./staffStatusComponets/StaffConfirmShipmentEstipal";
+import StaffConfirmTheAcceptance from "./staffStatusComponets/StaffConfirmTheAcceptance";
 
 const SellerCardData = (props) => {
   const { item, index, userRole, adminActivitiesData, currency } = props;
@@ -26,65 +32,68 @@ const SellerCardData = (props) => {
 
   if (item?.type !== "confirm_sold") {
     const watchDetails = item?.watch_details || {};
-    if (watchDetails.seller_display_accept) {
-      accepted_price = `${currency} ${Number(watchDetails.seller_display_accept)
-        .toFixed(2)
-        .replace(/\d(?=(\d{3})+\.)/g, "$&,")}`;
-    } else if (watchDetails.estimated_price_seller) {
+    if (watchDetails?.seller_display_accept) {
       accepted_price = `${currency} ${Number(
-        watchDetails.estimated_price_seller
+        watchDetails?.seller_display_accept
       )
         .toFixed(2)
         .replace(/\d(?=(\d{3})+\.)/g, "$&,")}`;
-    } else if (watchDetails.seller_display_counter) {
+    } else if (watchDetails?.estimated_price_seller) {
       accepted_price = `${currency} ${Number(
-        watchDetails.seller_display_counter
+        watchDetails?.estimated_price_seller
       )
         .toFixed(2)
         .replace(/\d(?=(\d{3})+\.)/g, "$&,")}`;
-    } else if (watchDetails.seller_view_request_price) {
+    } else if (watchDetails?.seller_display_counter) {
       accepted_price = `${currency} ${Number(
-        watchDetails.seller_view_request_price
+        watchDetails?.seller_display_counter
       )
         .toFixed(2)
         .replace(/\d(?=(\d{3})+\.)/g, "$&,")}`;
-    } else if (watchDetails.seller_display_price) {
-      accepted_price = `${currency} ${Number(watchDetails.seller_display_price)
+    } else if (watchDetails?.seller_view_request_price) {
+      accepted_price = `${currency} ${Number(
+        watchDetails?.seller_view_request_price
+      )
         .toFixed(2)
         .replace(/\d(?=(\d{3})+\.)/g, "$&,")}`;
-    } else if (watchDetails.seller_request_price) {
-      accepted_price = `${currency} ${Number(watchDetails.seller_request_price)
+    } else if (watchDetails?.seller_display_price) {
+      accepted_price = `${currency} ${Number(watchDetails?.seller_display_price)
         .toFixed(2)
         .replace(/\d(?=(\d{3})+\.)/g, "$&,")}`;
-    } else if (watchDetails.price) {
-      accepted_price = `${currency} ${Number(watchDetails.price)
+    } else if (watchDetails?.seller_request_price) {
+      accepted_price = `${currency} ${Number(watchDetails?.seller_request_price)
+        .toFixed(2)
+        .replace(/\d(?=(\d{3})+\.)/g, "$&,")}`;
+    } else if (watchDetails?.price) {
+      accepted_price = `${currency} ${Number(watchDetails?.price)
         .toFixed(2)
         .replace(/\d(?=(\d{3})+\.)/g, "$&,")}`;
     }
 
-    accepted_price_with_commission = watchDetails.accepted_price_with_commission
-      ? `${currency} ${Number(watchDetails.accepted_price_with_commission)
+    accepted_price_with_commission =
+      watchDetails?.accepted_price_with_commission
+        ? `${currency} ${Number(watchDetails?.accepted_price_with_commission)
+            .toFixed(2)
+            .replace(/\d(?=(\d{3})+\.)/g, "$&,")}`
+        : accepted_price;
+
+    price_for_seller = watchDetails?.price_for_seller
+      ? `${currency} ${Number(watchDetails?.price_for_seller)
           .toFixed(2)
           .replace(/\d(?=(\d{3})+\.)/g, "$&,")}`
       : accepted_price;
 
-    price_for_seller = watchDetails.price_for_seller
-      ? `${currency} ${Number(watchDetails.price_for_seller)
-          .toFixed(2)
-          .replace(/\d(?=(\d{3})+\.)/g, "$&,")}`
-      : accepted_price;
-
-    if (watchDetails.confirmed_price) {
-      confirmed_price = `${currency} ${Number(watchDetails.confirmed_price)
+    if (watchDetails?.confirmed_price) {
+      confirmed_price = `${currency} ${Number(watchDetails?.confirmed_price)
         .toFixed(2)
         .replace(/\d(?=(\d{3})+\.)/g, "$&,")}`;
-      input_confirmed_price = watchDetails.confirmed_price;
+      input_confirmed_price = watchDetails?.confirmed_price;
     }
 
-    confirm_the_sale_flag = watchDetails.confirm_the_sale_flag || "";
+    confirm_the_sale_flag = watchDetails?.confirm_the_sale_flag || "";
 
-    commission_price = watchDetails.commission_price
-      ? `${currency} ${Number(watchDetails.commission_price)
+    commission_price = watchDetails?.commission_price
+      ? `${currency} ${Number(watchDetails?.commission_price)
           .toFixed(2)
           .replace(/\d(?=(\d{3})+\.)/g, "$&,")}`
       : "";
@@ -123,7 +132,7 @@ const SellerCardData = (props) => {
     switch (item?.type) {
       case "accept_estimation":
       case "est_counter_offer_accept":
-        return <AcceptEstimation />;
+        return <AcceptEstimation {...commonProps} />;
       case "estimator_quotation":
         return (
           <div className="message_box_inner">
@@ -149,9 +158,8 @@ const SellerCardData = (props) => {
               {item?.message ===
               "Estimator has placed his re-estimation on staff first counter offer"
                 ? `Estimator has placed his re-estimation on staff first counter offer` // 149
-                : {
-                    /* 153 */
-                  }`Estimator has placed his re-estimation on staff second counter offer (${accepted_price})`}{" "}
+                : `Estimator has placed his re-estimation on staff second counter offer (${accepted_price})`}{" "}
+              {/* 153 */}
             </h3>
             {/* 150 */}
             <h3>{`Status: Re-estimate`}</h3>
@@ -176,88 +184,98 @@ const SellerCardData = (props) => {
           </div>
         );
       case "confirm_selling_price":
-        return (
-          <>
-            <h3>
-              The selling price of {confirmed_price} has been confirmed to the
-              Seller. Sale is pending.
-            </h3>
-            <h3>Status: {item?.watch_status}</h3>
-          </>
-        );
+        return <ConfirmSellingPrice {...commonProps} />;
       case "confirm_the_sale":
-        return <ConfirmTheSale {...commonProps} />;
+        return (
+          <div className="message_box_inner">
+            {/* 171 */}
+            <h3>{`Sale has been confirmed to Estipal. Waiting to receive Estipal invoice`}</h3>{" "}
+            {/* 250 */}
+            <h3>{`Status: Completed`}</h3>
+          </div>
+        );
       case "confirm_the_issuing_of_invoice":
         return (
           <div className="message_box_inner">
-            <h3>{`Invoice for the amount of ${commission_price} has been issued to Seller.`}</h3>
-            <h3>{`Status: ${item?.watch_status}`}</h3>
+            {/* 172 */}
+            <h3>{`Estipal issued and invoice for the amount of ${commission_price}`}</h3>{" "}
+            {/* 250 */}
+            <h3>{`Status: Completed`}</h3>
           </div>
         );
       case "no_sale_has_been_made":
         return (
           <div className="message_box_inner">
-            <h3>{item?.message}</h3>
-            <h3>{`Status: ${item?.watch_status}`}</h3>
+            {/* 176 */}
+            <h3>{`Sale has been cancelled and Estipal has been notified`}</h3>{" "}
+            {/* 177 */}
+            <h3>{`Status: Not Sold`}</h3>
           </div>
         );
       case "seller_invoice_new":
-        return <SellerInvoiceNew {...commonProps} />;
+        return <StaffSellerInvoiceNew {...commonProps} />;
       case "seller_invoice":
-        return <SellerInvoice {...commonProps} />;
+        return <StaffSellerInvoice {...commonProps} />;
 
       case "confirm_payment_seller":
-        return (
-          <div className="message_box_inner">
-            <h3>{`The payment of ${accepted_price_with_commission} to the seller has been confirmed. Shipment of the watch is pending.`}</h3>
-            <h3>{`Status: ${item?.watch_status}`}</h3>
-          </div>
-        );
+        return <ConfirmPaymentSeller {...commonProps} />;
       case "confirm_shipment_estipal":
-        return <ConfirmShipmentEstipal {...commonProps} />;
+        return <StaffConfirmShipmentEstipal {...commonProps} />;
       case "confirm_the_acceptance":
-        return <ConfirmTheAcceptance {...commonProps} />;
+        return <StaffConfirmTheAcceptance {...commonProps} />;
       case "return_to_seller":
         return (
           <div className="message_box_inner">
-            <h3>
-              The sale has been rejected. The watch has to be returned to the
-              Seller.
-            </h3>
-            <h3>Status: {item?.watch_status}</h3>
+            {/* 180 */}
+            <h3>{`Estipal rejected the sale. The watch will be returned`}</h3>{" "}
+            {/* 181 */}
+            <h3>{`Status: Rejected Sale - watch to be returned to seller`}</h3>
           </div>
         );
       case "confirm_sold":
-        return <ConfirmSold {...commonProps} />;
-      case "confirm_paid_estimator":
         return (
           <div className="message_box_inner">
-            <h3>
-              {"Commissions to estimator has been paid ("}
-              {currency} {item?.estimator_watch_revenue?.toFixed(2)})
-            </h3>
-            <h3>Status: {item?.watch_status}</h3>
+            {/* 251 */}
+            <h3>{`The watch has been sold and the deal completed.`}</h3>{" "}
+            {/* 250 */}
+            <h3>{`Status: Completed`}</h3>
           </div>
         );
-      case "admin_notify_est_quotation":
+      case "Quotation for Watch":
         return (
           <div className="message_box_inner">
-            <h3>
-              {item?.message} ({accepted_price})
-            </h3>
-            <h3>Status: N/A</h3>
+            {/* 145 */}
+            <h3>{`Seller is waiting for quotation`}</h3>
+            {/* 146 */}
+            <h3>{`Status: Waiting for Quotation`}</h3>
           </div>
         );
-      case "estimator_rquied_validation":
-        return <EstimatorRquiedValidation {...commonProps} />;
-      case "estimator_multi_quotation":
-        return <EstimatorMultiQuotation {...commonProps} />;
+      case "rejected":
+        return (
+          <div className="message_box_inner">
+            {/* 185 */}
+            <h3>{`Staff has declined the estimate request`}</h3>
+            {/* 186 */}
+            <h3>{`Status: Rejected`}</h3>
+          </div>
+        );
+      case "estimation_rejected":
+        return (
+          <div className="message_box_inner">
+            {/* 189 */}
+            <h3>{`We regret to inform you that we could not estimate your watch`}</h3>
+            {/* 190 */}
+            <h3>{`Status: pass`}</h3>
+          </div>
+        );
+
       default:
         return (
           <div className="message_box_inner">
             <h3>
               {item?.message} ({accepted_price})
             </h3>
+            {/* 131 */}
             <h3>Status: {item?.watch_status}</h3>
           </div>
         );

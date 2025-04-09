@@ -1,4 +1,5 @@
 import React from "react";
+import UrgentImage from "../../../../../assets/images/icons/Urgent 1.png";
 
 const ConfirmSellingPrice = (props) => {
   return (
@@ -11,7 +12,7 @@ const ConfirmSellingPrice = (props) => {
       {/* 131 */} {/* 168 */}
       <h3>Status: Pending Sale</h3>
       <div className="select_box text-center mt-20">
-        <div className="select_box_inner !max-sm:p-[10px]">
+        <div className="select_box_inner !max-sm:p-[10px] white_select_box_inner">
           <p className="flex max-sm:flex-col items-center justify-center gap-[10px] mb-[10px]">
             <span>
               <img
@@ -44,12 +45,12 @@ const ConfirmSellingPrice = (props) => {
             </li>
             <li
               //   id={
-              //     new Date(value.time).getTime() + 30 * 24 * 60 * 60 * 1000 <=
+              //     new Date(props?.item?.time).getTime() + 30 * 24 * 60 * 60 * 1000 <=
               //     Date.now()
               //       ? "noSaleHasBeenMade"
               //       : "noSaleHasBeenMadeMsg"
               //   }
-              name={value.watch_details.watch_id}
+              name={props?.item?.watch_details.watch_id}
               value={props?.accepted_price}
               className={props?.confirm_the_sale_flag ? "inactiveLink" : ""}
             >

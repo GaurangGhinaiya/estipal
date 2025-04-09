@@ -284,6 +284,10 @@ table.dataTable tbody td {
   }
 }
 
+.white_select_box_inner {
+  background: #e1e9f0;
+}
+
 .dark_yellow {
   background: #ffd966 !important;
   border-color: #dfc473 !important;
