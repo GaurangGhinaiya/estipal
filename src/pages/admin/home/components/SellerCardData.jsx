@@ -234,55 +234,65 @@ const SellerCardData = (props) => {
   };
 
   const renderFrom = () => {
-    if (
-      item?.admin_group === "Estipal-Automated message" ||
-      item?.admin_group === "Estipal-Administrator"
-    ) {
+    if (item?.admin_group === "staff") {
+      if (item?.type === "staff_response_time_expired") {
+        return (
+          <h3 className="mb-3 capitalize">
+            <strong>From: </strong>
+            Estipal response time limit rule
+          </h3>
+        );
+      } else {
+        return (
+          <h3 className="mb-3 capitalize">
+            <strong>From: </strong>
+            {item?.from_name
+              ? item?.from_name.charAt(0).toUpperCase() +
+                item?.from_name.slice(1)
+              : ""}
+          </h3>
+        );
+      }
+    } else if (item?.admin_group === "Estipal-Administrator") {
       return (
         <h3 className="mb-3 capitalize">
           <strong>From: </strong>
-          {item?.from_name}
+          Estipal-Administrator {/* 211 */}
         </h3>
       );
-    } else if (
-      item?.type === "estimation_rejected" &&
-      item?.watch_details?.admin_action
-    ) {
+    } else if (item?.admin_group === "estimator") {
+      if (item?.type === "estimation_expired") {
+        return (
+          <h3 className="mb-3 capitalize">
+            <strong>From: </strong>
+            Estipal response time limit rule
+          </h3>
+        );
+      } else {
+        return (
+          <h3 className="mb-3 capitalize">
+            <strong>From: </strong>
+            Estimator {/* 212 */}
+          </h3>
+        );
+      }
+    } else if (item?.admin_group === "seller") {
       return (
         <h3 className="mb-3 capitalize">
           <strong>From: </strong>
-          Estipal Admin
-        </h3>
-      );
-    } else if (
-      item?.type === "estimation_rejected" &&
-      item?.watch_details?.estipal_auto
-    ) {
-      return (
-        <h3 className="mb-3 capitalize">
-          <strong>From: </strong>
-          Estipal-Automated message
-        </h3>
-      );
-    } else if (
-      item?.type === "estimation_expired" ||
-      item?.type === "staff_response_time_expired"
-    ) {
-      return (
-        <h3 className="mb-3 capitalize">
-          <strong>From: </strong>
-          Estipal response time limit rule
+          {item?.from_name
+            ? item?.from_name.charAt(0).toUpperCase() + item?.from_name.slice(1)
+            : ""}
         </h3>
       );
     } else {
       return (
         <h3 className="mb-3 capitalize">
-          <strong className="font-bold">From: </strong>
-
-          {`${item?.company_name ?? ""} - ${item?.from_name ?? ""} `}
-          <b className="font-bold">
-            {`( ${item?.admin_group} - ID: ${prefix}${item?.user1_id} )`}
-          </b>
+          <strong>From: </strong>
+          {item?.admin_group
+            ? item?.admin_group.charAt(0).toUpperCase() +
+              item?.admin_group.slice(1)
+            : ""}
         </h3>
       );
     }
