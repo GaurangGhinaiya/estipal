@@ -11,6 +11,7 @@ import SellerInvoice from "./statusComponents/SellerInvoice";
 import SellerInvoiceNew from "./statusComponents/SellerInvoiceNew";
 import EstimatorMultiQuotation from "./statusComponents/EstimatorMultiQuotation";
 import { sellerGetSubject } from "./SellerGetSubject";
+import AcceptEstimation from "./staffStatusComponets/AcceptEstimation";
 
 const SellerCardData = (props) => {
   const { item, index, userRole, adminActivitiesData, currency } = props;
@@ -117,33 +118,63 @@ const SellerCardData = (props) => {
       confirm_the_issuing_of_invoice_flag: "",
       adminActivitiesData,
       currency,
+      confirm_the_sale_flag,
     };
     switch (item?.type) {
       case "accept_estimation":
       case "est_counter_offer_accept":
-        return (
-          <>
-            <h3 className="up-arrow">
-              <span></span>
-              {item?.message} ({accepted_price})
-            </h3>
-            <h3>Status: {item?.watch_status}</h3>
-          </>
-        );
+        return <AcceptEstimation />;
       case "estimator_quotation":
+        return (
+          <div className="message_box_inner">
+            {/* 143 */}
+            <h3>{`Estimator has sent his estimation on given watch quotation (${accepted_price})`}</h3>
+            {/* 131 */} {/* 144 */}
+            <h3>{`Status: Quotation Received`}</h3>
+          </div>
+        );
       case "counter_offer_1":
+        return (
+          <div className="message_box_inner">
+            {/* 147 */}
+            <h3>{`Staff has placed first counter offer on estimation of the watch quotation (${accepted_price})`}</h3>
+            {/* 148 */}
+            <h3>{`Status: Pending first counter offer`}</h3>
+          </div>
+        );
       case "est_re-estimate":
+        return (
+          <div className="message_box_inner">
+            <h3>
+              {item?.message ===
+              "Estimator has placed his re-estimation on staff first counter offer"
+                ? `Estimator has placed his re-estimation on staff first counter offer` // 149
+                : {
+                    /* 153 */
+                  }`Estimator has placed his re-estimation on staff second counter offer (${accepted_price})`}{" "}
+            </h3>
+            {/* 150 */}
+            <h3>{`Status: Re-estimate`}</h3>
+          </div>
+        );
       case "counter_offer_2":
         return (
-          <>
-            <h3>
-              {item?.message} ({accepted_price})
-            </h3>
-            <h3>Status: {item?.watch_status}</h3>
-          </>
+          <div className="message_box_inner">
+            {/* 151 */}
+            <h3>{`Staff has again placed counter offer on estimation of the watch quotation (${accepted_price})`}</h3>{" "}
+            {/* 152 */}
+            <h3>{`Status: Pending second counter offer`}</h3>
+          </div>
         );
       case "Be-Partner":
-        return <BePartner {...commonProps} />;
+        return (
+          <div className="message_box_inner">
+            {/* 130 */}
+            <h3>{`The confirmed selection is 'Be partner with Estipal', Estipal selling price confirmation is pending`}</h3>{" "}
+            {/* 132 */}
+            <h3>{`Status: Pending Estipal selling price confirmation`}</h3>
+          </div>
+        );
       case "confirm_selling_price":
         return (
           <>
