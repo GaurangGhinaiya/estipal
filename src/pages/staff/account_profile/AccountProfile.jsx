@@ -14,6 +14,7 @@ import StaffCommission from "./component/StaffCommission";
 import axiosInstance from "../../../services";
 import moment from "moment";
 import toast from "react-hot-toast";
+import axios from "axios";
 
 const AccountProfile = () => {
   const userRole = localStorage.getItem("userRole");
@@ -64,6 +65,7 @@ const AccountProfile = () => {
   const [selectCountry, setSelectCountry] = useState("IN");
   const [phone, setPhone] = useState("");
   const userData = JSON.parse(localStorage.getItem("userData"));
+  const [localCompanyLogoPreview, setLocalCompanyLogoPreview] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -76,8 +78,8 @@ const AccountProfile = () => {
       setFormData({
         ...formData,
         companyLogo: file,
-        companyLogoPreview: URL.createObjectURL(file),
       });
+      setLocalCompanyLogoPreview(URL.createObjectURL(file));
     }
   };
 
@@ -104,7 +106,7 @@ const AccountProfile = () => {
       setFormData((prevFormData) => ({
         ...prevFormData,
         ...staff,
-        companyLogoPreview: staff?.seller_logo,
+        companyLogoPreview: staff?.companyLogo,
         unique_id: `SCA${staff?.id}`,
         address: staff?.address,
         created_on: moment.unix(staff?.created_on).format("MMM DD,YYYY"),
@@ -119,6 +121,29 @@ const AccountProfile = () => {
     }
   };
 
+  const uploadImage = async () => {
+    const formDataToSend = new FormData();
+
+    formDataToSend.append("file", formData?.companyLogo);
+    formDataToSend.append("type", 1);
+    setLoading(true);
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_PUBLIC_BASE_URL}/file`,
+        formDataToSend
+      );
+      console.log("response:Image", response);
+      if (response?.status === 200) {
+        setLoading(false);
+        return response?.data?.payload?.imageUrl;
+      }
+    } catch (error) {
+      console.log("error: ", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const save = async () => {
     setLoading(true);
 
@@ -127,13 +152,15 @@ const AccountProfile = () => {
     const sendData = { ...formData };
 
     Object.keys(sendData).forEach((key) => {
-      if (
-        key !== "companyLogoPreview" &&
-        formData[key]
-      ) {
+      if (key !== "companyLogoPreview" && formData[key]) {
         formDataToSend.append(key, formData[key]);
       }
     });
+
+    if (formData?.companyLogo?.name) {
+      const ImageUrl = await uploadImage();
+      ImageUrl && formDataToSend.append("companyLogo", ImageUrl);
+    }
 
     try {
       const response = await axiosInstance.post(
@@ -151,9 +178,10 @@ const AccountProfile = () => {
         toast.success(message);
         getDetailById();
         setIsEditable(false);
+      } else {
+        toast.error(response?.message || "Failed to update profile!");
       }
     } catch (error) {
-      console.log("error: ", error);
       if (error?.response?.data?.payload?.error) {
         toast.error(error?.response?.data?.payload?.error);
       } else {
@@ -220,8 +248,6 @@ const AccountProfile = () => {
               className="!bg-[#00a65a] !normal-case !py-[5px] sm:!py-[10px] sm:!px-[40px] !px-[15px] !rounded-[50px]"
               onClick={() => {
                 save();
-                navigate("/admin/panel/account");
-                setIsEditable(false);
               }}
             >
               {t("SAVE")}
@@ -341,14 +367,19 @@ const AccountProfile = () => {
                   <input
                     type="file"
                     onChange={handleFileUpload}
+                    accept=".png, .jpg, .jpeg, .svg"
                     className="w-full bg-transparent border-none outline-none ml-2 dark:text-white text-black placeholder-gray-400 text-right whitespace-pre-wrap"
                   />
 
                   <div>
-                    {formData?.companyLogoPreview ? (
+                    {formData?.companyLogoPreview || localCompanyLogoPreview ? (
                       <div className="mt-2">
                         <img
-                          src={formData?.companyLogoPreview}
+                          src={
+                            localCompanyLogoPreview
+                              ? localCompanyLogoPreview
+                              : `${process.env.REACT_APP_IMAGE_BASE_URL}/${formData?.companyLogoPreview}`
+                          }
                           alt="Uploaded Logo"
                           className="w-[100px] object-cover rounded"
                         />
@@ -364,7 +395,7 @@ const AccountProfile = () => {
                 {formData?.companyLogoPreview ? (
                   <div className="mt-2">
                     <img
-                      src={formData?.companyLogoPreview}
+                      src={`${process.env.REACT_APP_IMAGE_BASE_URL}/${formData?.companyLogoPreview}`}
                       alt="Uploaded Logo"
                       className="w-[100px] object-cover rounded"
                     />
