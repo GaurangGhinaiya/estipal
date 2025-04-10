@@ -234,24 +234,25 @@ const ManageStaff = () => {
 
           const updatedData = response?.payload?.data;
 
-          if (isEditing) {
-            setManageStaffData((prevData) =>
-              prevData.map((staff) =>
-                staff.id === editingId ? { ...staff, ...updatedData } : staff
-              )
-            );
-            toast.success("Staff updated successfully");
+          if (response?.status === 200) {
+            if (isEditing) {
+              setManageStaffData((prevData) =>
+                prevData.map((staff) =>
+                  staff.id === editingId ? { ...staff, ...updatedData } : staff
+                )
+              );
+              toast.success("Staff updated successfully");
+            } else {
+              setManageStaffData(updatedData);
+              toast.success("Staff added successfully");
+            }
+            // Reset states after saving
+            resetFormState();
           } else {
-            setManageStaffData(updatedData);
-            toast.success("Staff added successfully");
+            toast.error(response?.message || "Error occurred !");
           }
-          // Reset states after saving
-          resetFormState();
         } catch (error) {
-          console.error(
-            `Error ${isEditing ? "updating" : "adding"} staff:`,
-            error
-          );
+          toast.error(error?.response?.data?.message);
         } finally {
           setIsLoading(false);
         }

@@ -24,6 +24,7 @@ const StaffUserWatchHistory = ({
   const { t } = useTranslation();
 
   const [watchActivityDataUpdate, setWatchActivityDataUpdate] = useState([]);
+  console.log('watchActivityDataUpdate: ', watchActivityDataUpdate);
 
   useEffect(() => {
     setWatchActivityDataUpdate(watchActivityData);
