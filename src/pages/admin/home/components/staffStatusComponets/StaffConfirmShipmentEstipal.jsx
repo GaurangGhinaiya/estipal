@@ -1,17 +1,18 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 const StaffConfirmShipmentEstipal = (props) => {
+  const { t } = useTranslation();
   return (
     <div className="message_box_inner">
       {props?.item?.staffWatchActivityDetails?.payment_tier === 1 && (
         <>
           {/* 161 */}
           <h3>
-            Shipment of the watch has been confirmed. Waiting to receive Estipal
-            acceptance
+            {t("SHIPPINGCOMPPENDINGESTIPALACCTEXT")}
           </h3>
           {/* 131 */} {/* 163 */}
-          <h3>Status: Shipped</h3>
+          <h3>{t("STATUS")}: {t("SHIPPEDTEXT")}</h3>
         </>
       )}
 
@@ -19,11 +20,10 @@ const StaffConfirmShipmentEstipal = (props) => {
         <>
           {/* 162 */}
           <h3>
-            Shipment of the watch has been confirmed. Waiting to receive Estipal
-            payment and acceptance
+            {t("SHIPPINGCOMPPENDINGPAYMENTESTIPALACCTEXT")}
           </h3>
           {/* 131 */} {/* 183 */}
-          <h3>Status: Shipped / Pending Payment</h3>
+          <h3>{t("STATUS")}: {t("SHIPPENTPENDINGPAYMENTTEXT")}</h3>
         </>
       )}
     </div>

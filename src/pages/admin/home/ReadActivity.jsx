@@ -225,23 +225,23 @@ const ReadActivity = () => {
                   </p>
                 </div>
                 <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
-                  <p className="dark:text-white text-black">Serial Number</p>
+                  <p className="dark:text-white text-black">{t("SERIALNUMBER")}</p>
                   <p className="dark:text-white text-black">
                     {readActivityData?.watch_details?.serial_no}
                   </p>
                 </div>
                 <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
-                  <p className="dark:text-white text-black">Estimate</p>
+                  <p className="dark:text-white text-black">{t("ESTIMATE")}</p>
                   <p className="text-[#11c71e] font-bold">
                     {userRole !== "staff"
                       ? getPrice(
-                          readActivityData?.watch_details,
-                          readActivityData?.currency
-                        )
+                        readActivityData?.watch_details,
+                        readActivityData?.currency
+                      )
                       : getSellerPrice(
-                          readActivityData?.watch_details,
-                          readActivityData?.currency
-                        )}
+                        readActivityData?.watch_details,
+                        readActivityData?.currency
+                      )}
                   </p>
                 </div>
 
@@ -254,9 +254,9 @@ const ReadActivity = () => {
                       {readActivityData?.assignWatchDetails?.[0]
                         ?.suggest_retail_price
                         ? `${readActivityData?.currency} ${Number(
-                            readActivityData?.assignWatchDetails?.[0]
-                              ?.suggest_retail_price
-                          ).toFixed(2)}`
+                          readActivityData?.assignWatchDetails?.[0]
+                            ?.suggest_retail_price
+                        ).toFixed(2)}`
                         : "0.00"}
                     </p>
                   </div>
