@@ -52,3 +52,17 @@ export const getClassPartnerSeller = (
     return "btn dark_yellow";
   }
 };
+
+
+export const languageToCountry = {
+  en: 'us',   // English - United States
+  esp: 'es',   // Spanish - Spain
+  ita: 'it',   // Italian - Italy
+  cn: 'cn',   // Chinese - China
+  indu : 'in', //India
+  th: 'th',  // Thailand
+  jp : 'jp', // Japan,
+  pt : 'pt',   // Português
+  al : 'al',   //Albanian,
+  hb : 'hb' // Hebrew
+};
