@@ -156,9 +156,8 @@ const Language = () => {
               {selectedGroupsId ? selectedGroupsId?.name : "Choose a group"}
             </span>
             <span
-              className={`transform transition-transform ${
-                isOpen ? "rotate-180" : "rotate-0"
-              }`}
+              className={`transform transition-transform ${isOpen ? "rotate-180" : "rotate-0"
+                }`}
             >
               ▼
             </span>
@@ -169,11 +168,10 @@ const Language = () => {
                 <li
                   key={option?.id}
                   onClick={() => handleOptionClick(option)}
-                  className={`py-2 px-4 cursor-pointer hover:bg-blue-600 hover:text-white ${
-                    selectedGroupsId?.id === option?.id
+                  className={`py-2 px-4 cursor-pointer hover:bg-blue-600 hover:text-white ${selectedGroupsId?.id === option?.id
                       ? "bg-blue-600 text-white"
                       : "text-[white]"
-                  }`}
+                    }`}
                 >
                   {option?.name}
                 </li>
@@ -217,12 +215,11 @@ const Language = () => {
               onClick={handleCloseModal}
               className="flex justify-end pr-[16px] pb-[16px] cursor-pointer"
             >
+              <div className="text-white text-start text-[18px] font-medium px-6">
+                Are you sure you want to change the language status?
+              </div>
               <CloseIcon className="text-white font-semibold" />
             </div>
-            <div className="text-white text-center text-[18px] font-medium px-6">
-              Are you sure you want to change the language status?
-            </div>
-            <Divider className="!border-white" />
             <Box
               mt={2}
               display="flex"

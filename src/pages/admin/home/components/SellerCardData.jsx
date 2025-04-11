@@ -65,14 +65,14 @@ const SellerCardData = (props) => {
     accepted_price_with_commission =
       watchDetails?.accepted_price_with_commission
         ? `${currency} ${Number(watchDetails?.accepted_price_with_commission)
-            .toFixed(2)
-            .replace(/\d(?=(\d{3})+\.)/g, "$&,")}`
+          .toFixed(2)
+          .replace(/\d(?=(\d{3})+\.)/g, "$&,")}`
         : accepted_price;
 
     price_for_seller = watchDetails?.price_for_seller
       ? `${currency} ${Number(watchDetails?.price_for_seller)
-          .toFixed(2)
-          .replace(/\d(?=(\d{3})+\.)/g, "$&,")}`
+        .toFixed(2)
+        .replace(/\d(?=(\d{3})+\.)/g, "$&,")}`
       : accepted_price;
 
     if (watchDetails?.confirmed_price) {
@@ -86,8 +86,8 @@ const SellerCardData = (props) => {
 
     commission_price = watchDetails?.commission_price
       ? `${currency} ${Number(watchDetails?.commission_price)
-          .toFixed(2)
-          .replace(/\d(?=(\d{3})+\.)/g, "$&,")}`
+        .toFixed(2)
+        .replace(/\d(?=(\d{3})+\.)/g, "$&,")}`
       : "";
   }
 
@@ -148,7 +148,7 @@ const SellerCardData = (props) => {
           <div className="message_box_inner">
             <h3>
               {item?.message ===
-              "Estimator has placed his re-estimation on staff first counter offer"
+                "Estimator has placed his re-estimation on staff first counter offer"
                 ? `${t("ESTREESTIMATE1")}` // 149
                 : `${t("ESTREESTIMATE2")} `}{" "}
               {`(${accepted_price})`}
@@ -180,27 +180,30 @@ const SellerCardData = (props) => {
         return (
           <div className="message_box_inner">
             {/* 171 */}
-            <h3>{`Sale has been confirmed to Estipal. Waiting to receive Estipal invoice`}</h3>{" "}
+            <h3>{`${t("CONFIRMTHESALE")}`}</h3>{" "}
             {/* 250 */}
-            <h3>{`Status: Completed`}</h3>
+            <h3>{`${t("STATUS")}: ${t("COMPLETED")}`}</h3>
           </div>
         );
       case "confirm_the_issuing_of_invoice":
         return (
           <div className="message_box_inner">
             {/* 172 */}
-            <h3>{`Estipal issued and invoice for the amount of ${commission_price}`}</h3>{" "}
+            <h3>{t("CONFIRMISSUEINVOICETEXTONE").replace(
+              "{commission_price}",
+              commission_price
+            )}</h3>{" "}
             {/* 250 */}
-            <h3>{`Status: Completed`}</h3>
+            <h3>{`${t("STATUS")}: ${t("COMPLETED")}`}</h3>
           </div>
         );
       case "no_sale_has_been_made":
         return (
           <div className="message_box_inner">
             {/* 176 */}
-            <h3>{`Sale has been cancelled and Estipal has been notified`}</h3>{" "}
+            <h3>{`${t("NOSALEHASEBEENMADETEXT")}`}</h3>{" "}
             {/* 177 */}
-            <h3>{`Status: Not Sold`}</h3>
+            <h3>{`${t("STATUS")}: ${t("NOTSOLD")}`}</h3>
           </div>
         );
       case "seller_invoice_new":
@@ -218,45 +221,45 @@ const SellerCardData = (props) => {
         return (
           <div className="message_box_inner">
             {/* 180 */}
-            <h3>{`Estipal rejected the sale. The watch will be returned`}</h3>{" "}
+            <h3>{`${t("RETURNTOSELLER")}`}</h3>{" "}
             {/* 181 */}
-            <h3>{`Status: Rejected Sale - watch to be returned to seller`}</h3>
+            <h3>{`${t("STATUS")}: ${t("REJECTEDSALEFORSELLERTEXT")}`}</h3>
           </div>
         );
       case "confirm_sold":
         return (
           <div className="message_box_inner">
             {/* 251 */}
-            <h3>{`The watch has been sold and the deal completed.`}</h3>{" "}
+            <h3>{`${t("DEALCOMPLETEDFORWATCHTEXT")}`}</h3>{" "}
             {/* 250 */}
-            <h3>{`Status: Completed`}</h3>
+            <h3>{`${t("STATUS")}: ${t("COMPLETED")}`}</h3>
           </div>
         );
       case "Quotation for Watch":
         return (
           <div className="message_box_inner">
             {/* 145 */}
-            <h3>{`Seller is waiting for quotation`}</h3>
+            <h3>{`${t("QUOTATIONFORWATCH")}`}</h3>
             {/* 146 */}
-            <h3>{`Status: Waiting for Quotation`}</h3>
+            <h3>{`${t("COMPLETED")}: ${t("WAITINGFORQUOTATION")}`}</h3>
           </div>
         );
       case "rejected":
         return (
           <div className="message_box_inner">
             {/* 185 */}
-            <h3>{`Staff has declined the estimate request`}</h3>
+            <h3>{`${t("REJECTED")}`}</h3>
             {/* 186 */}
-            <h3>{`Status: Rejected`}</h3>
+            <h3>{`${t("COMPLETED")}: ${t("REJECTEDTEXT")}`}</h3>
           </div>
         );
       case "estimation_rejected":
         return (
           <div className="message_box_inner">
             {/* 189 */}
-            <h3>{`We regret to inform you that we could not estimate your watch`}</h3>
+            <h3>{`${t("ESTIMATIONREJECTED")}`}</h3>
             {/* 190 */}
-            <h3>{`Status: pass`}</h3>
+            <h3>{`${t("STATUS")}: ${t("PASSTEXT")}`}</h3>
           </div>
         );
 
@@ -267,7 +270,7 @@ const SellerCardData = (props) => {
               {item?.message} ({accepted_price})
             </h3>
             {/* 131 */}
-            <h3>Status: {item?.watch_status}</h3>
+            <h3>{t("STATUS")}: {item?.watch_status}</h3>
           </div>
         );
     }
@@ -288,7 +291,7 @@ const SellerCardData = (props) => {
             <span className="font-bold">{t("FROM")}: </span>
             {item?.from_name
               ? item?.from_name.charAt(0).toUpperCase() +
-                item?.from_name.slice(1)
+              item?.from_name.slice(1)
               : ""}
           </h3>
         );
@@ -331,7 +334,7 @@ const SellerCardData = (props) => {
           <span className="font-bold">{t("FROM")}: </span>
           {item?.admin_group
             ? item?.admin_group.charAt(0).toUpperCase() +
-              item?.admin_group.slice(1)
+            item?.admin_group.slice(1)
             : ""}
         </h3>
       );
