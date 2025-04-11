@@ -1,24 +1,14 @@
 import moment from "moment";
 import React from "react";
-import { getSubject } from "./GetSubject";
-import BePartner from "./statusComponents/BePartner";
-import ConfirmShipmentEstipal from "./statusComponents/ConfirmShipmentEstipal";
-import ConfirmSold from "./statusComponents/ConfirmSold";
-import ConfirmTheAcceptance from "./statusComponents/ConfirmTheAcceptance";
-import ConfirmTheSale from "./statusComponents/ConfirmTheSale";
-import EstimatorRquiedValidation from "./statusComponents/EstimatorRquiedValidation";
-import SellerInvoice from "./statusComponents/SellerInvoice";
-import SellerInvoiceNew from "./statusComponents/SellerInvoiceNew";
-import EstimatorMultiQuotation from "./statusComponents/EstimatorMultiQuotation";
-import { sellerGetSubject } from "./SellerGetSubject";
 import { useTranslation } from "react-i18next";
+import { sellerGetSubject } from "./SellerGetSubject";
 import AcceptEstimation from "./staffStatusComponets/AcceptEstimation";
-import ConfirmSellingPrice from "./staffStatusComponets/ConfirmSellingPrice";
-import StaffSellerInvoiceNew from "./staffStatusComponets/StaffSellerInvoiceNew";
-import StaffSellerInvoice from "./staffStatusComponets/StaffSellerInvoice";
 import ConfirmPaymentSeller from "./staffStatusComponets/ConfirmPaymentSeller";
+import ConfirmSellingPrice from "./staffStatusComponets/ConfirmSellingPrice";
 import StaffConfirmShipmentEstipal from "./staffStatusComponets/StaffConfirmShipmentEstipal";
 import StaffConfirmTheAcceptance from "./staffStatusComponets/StaffConfirmTheAcceptance";
+import StaffSellerInvoice from "./staffStatusComponets/StaffSellerInvoice";
+import StaffSellerInvoiceNew from "./staffStatusComponets/StaffSellerInvoiceNew";
 
 const SellerCardData = (props) => {
   const { t } = useTranslation();
@@ -160,11 +150,10 @@ const SellerCardData = (props) => {
               {item?.message ===
               "Estimator has placed his re-estimation on staff first counter offer"
                 ? `${t("ESTREESTIMATE1")}` // 149
-                : `${t("ESTREESTIMATE2")} (${accepted_price})`}{" "}
-                {
-                    /* 153 */
-                  }
-            </h3>
+                : `${t("ESTREESTIMATE2")} `}{" "}
+              {`(${accepted_price})`}
+            </h3>{" "}
+            {/* 153 */}
             {/* 150 */}
             <h3>{`${t("STATUS")}: ${t("REESTIMATE")}`}</h3>
           </div>
@@ -173,8 +162,7 @@ const SellerCardData = (props) => {
         return (
           <div className="message_box_inner">
             {/* 151 */}
-            <h3>{`${t("COUNTEROFFER2")} (${accepted_price})`}</h3>{" "}
-            {/* 152 */}
+            <h3>{`${t("COUNTEROFFER2")} (${accepted_price})`}</h3> {/* 152 */}
             <h3>{`${t("STATUS")}: ${t("PENDINGSECONDCOUNTEROFFER")}`}</h3>
           </div>
         );
@@ -182,8 +170,7 @@ const SellerCardData = (props) => {
         return (
           <div className="message_box_inner">
             {/* 130 */}
-            <h3>{`${t("BEPARTNERTEXT")}`}</h3>{" "}
-            {/* 132 */}
+            <h3>{`${t("BEPARTNERTEXT")}`}</h3> {/* 132 */}
             <h3>{`${t("STATUS")}: ${t("BEPARTNERSTATUSTEXT")}`}</h3>
           </div>
         );

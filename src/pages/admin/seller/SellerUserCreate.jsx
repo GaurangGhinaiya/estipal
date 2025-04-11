@@ -18,6 +18,7 @@ import {
 } from "../../../utils/apiUtils";
 import CommissionPlan from "./components/Commission";
 import { LoadingButton } from "@mui/lab";
+import axios from "axios";
 
 const SellerUserCreate = () => {
   const navigate = useNavigate();
@@ -38,6 +39,7 @@ const SellerUserCreate = () => {
     { from: 50000, to: null, commission: 8 },
   ]);
   const [active, setActive] = useState(false);
+  const [localCompanyLogoPreview, setLocalCompanyLogoPreview] = useState(null);
   const [ip, setIp] = useState(null);
 
   const [formData, setFormData] = useState({
@@ -62,8 +64,7 @@ const SellerUserCreate = () => {
     currency: "USD",
     payment_tier: 0,
     created_on: "",
-    seller_logo:
-      "https://www.estipal.com/assets/dist/images/img-logo-login.svg",
+    seller_logo: "",
     companyLogoPreview: "",
     staff_notify_flag: 0,
     language: "en",
@@ -108,6 +109,28 @@ const SellerUserCreate = () => {
 
     transformCommissionData();
   }, [commissionData]);
+
+  const uploadImage = async () => {
+    const formDataToSend = new FormData();
+    formDataToSend.append("file", formData?.companyLogo);
+    formDataToSend.append("type", 1);
+    setLoading(true);
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_PUBLIC_BASE_URL}/file`,
+        formDataToSend
+      );
+      console.log("response:Image", response);
+      if (response?.status === 200) {
+        setLoading(false);
+        return response?.data?.payload?.imageUrl;
+      }
+    } catch (error) {
+      console.log("error: ", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     const fetchIP = async () => {
@@ -185,8 +208,9 @@ const SellerUserCreate = () => {
       setFormData({
         ...formData,
         seller_logo: file,
-        companyLogoPreview: URL.createObjectURL(file),
       });
+
+      setLocalCompanyLogoPreview(URL.createObjectURL(file));
     }
   };
 
@@ -214,6 +238,11 @@ const SellerUserCreate = () => {
         formDataToSend.append(key, formData[key]);
       }
     });
+
+    if (formData?.companyLogo?.name) {
+      const ImageUrl = await uploadImage();
+      ImageUrl && formDataToSend.append("seller_logo", ImageUrl);
+    }
 
     formDataToSend.append("active", active);
     formDataToSend.append("ip", ip);
@@ -374,10 +403,18 @@ const SellerUserCreate = () => {
                   />
 
                   <div>
-                    {formData.companyLogoPreview && (
+                    {localCompanyLogoPreview ? (
                       <div className="mt-2">
                         <img
-                          src={formData?.companyLogoPreview}
+                          src={localCompanyLogoPreview}
+                          alt="Uploaded Logo"
+                          className="w-[100px] object-cover rounded"
+                        />
+                      </div>
+                    ) : (
+                      <div className="mt-2">
+                        <img
+                          src={`${process.env.REACT_APP_IMAGE_BASE_URL}/${formData?.companyLogoPreview}`}
                           alt="Uploaded Logo"
                           className="w-[100px] object-cover rounded"
                         />

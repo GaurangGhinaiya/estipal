@@ -33,6 +33,7 @@ const SellerEdit = () => {
   const [loading, setLoading] = useState(false);
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [confirmDialogLoading, setConfirmDialogLoading] = useState(false);
+  const [localCompanyLogoPreview, setLocalCompanyLogoPreview] = useState(null);
 
   const [formData, setFormData] = useState({
     active: false,
@@ -60,6 +61,7 @@ const SellerEdit = () => {
     seller_logo: null,
     companyLogoPreview: "",
   });
+  console.log("formData: ", formData);
   const [commissionData, setCommissionData] = useState([]);
 
   const [commissionObject, setCommissionObject] = useState({});
@@ -144,14 +146,37 @@ const SellerEdit = () => {
     }));
   }, [phone, selectPhoneCountry]);
 
+  const uploadImage = async () => {
+    const formDataToSend = new FormData();
+    formDataToSend.append("file", formData?.companyLogo);
+    formDataToSend.append("type", 1);
+    setLoading(true);
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_PUBLIC_BASE_URL}/file`,
+        formDataToSend
+      );
+      console.log("response:Image", response);
+      if (response?.status === 200) {
+        setLoading(false);
+        return response?.data?.payload?.imageUrl;
+      }
+    } catch (error) {
+      console.log("error: ", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
       setFormData({
         ...formData,
         seller_logo: file,
-        companyLogoPreview: URL.createObjectURL(file),
       });
+
+      setLocalCompanyLogoPreview(URL.createObjectURL(file));
     }
   };
 
@@ -216,9 +241,10 @@ const SellerEdit = () => {
       }
     });
 
-    if (formData.seller_logo) {
-      formDataToSend.append("seller_logo", formData.seller_logo);
-    }
+    if (formData?.companyLogo?.name) {
+      const ImageUrl = await uploadImage();
+      ImageUrl && formDataToSend.append("seller_logo", ImageUrl);
+    } else formDataToSend.append("seller_logo", formData?.seller_logo);
 
     if (commissionObject) {
       formDataToSend.append("commission", JSON.stringify(commissionObject));
@@ -507,16 +533,22 @@ const SellerEdit = () => {
                   />
 
                   <div>
-                    {formData?.companyLogoPreview ? (
+                    {localCompanyLogoPreview ? (
                       <div className="mt-2">
                         <img
-                          src={formData?.companyLogoPreview}
+                          src={localCompanyLogoPreview}
                           alt="Uploaded Logo"
                           className="w-[100px] object-cover rounded"
                         />
                       </div>
                     ) : (
-                      ""
+                      <div className="mt-2">
+                        <img
+                          src={`${process.env.REACT_APP_IMAGE_BASE_URL}/${formData?.companyLogoPreview}`}
+                          alt="Uploaded Logo"
+                          className="w-[100px] object-cover rounded"
+                        />
+                      </div>
                     )}
                   </div>
                 </div>

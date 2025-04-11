@@ -8,7 +8,7 @@ export const convertCommissionData = (sellerData) => {
 
   return Object.values(data)?.map((item) => ({
     from: item?.price_range?.[0],
-    to: item?.price_range?.[1] || null,
+    to: item?.price_range?.[1],
     commission: item?.value,
   }));
 };

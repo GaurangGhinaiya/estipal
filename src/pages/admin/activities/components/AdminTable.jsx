@@ -173,7 +173,7 @@ const AdminTable = ({
                 </Tooltip>
               </td>
               <td className="px-[18px] py-[10px] text-[#ffff] text-center">
-                {activity?.user1_id && `UCA${activity?.user1_id}`}
+                {activity?.user2_id && `UCA${activity?.user2_id}`}
               </td>
               <td className="px-[18px] py-[10px] text-[#ffff] whitespace-nowrap cursor-pointer">
                 <Tooltip

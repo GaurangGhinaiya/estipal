@@ -11,6 +11,7 @@ const Merchantcommissionplan = ({
   staffUser,
   currency,
 }) => {
+  console.log("commissionData: ", commissionData);
   const handleChange = (index, field, value) => {
     const newData = [...commissionData];
     newData[index][field] = value;
@@ -20,6 +21,11 @@ const Merchantcommissionplan = ({
   useEffect(() => {
     if (data?.commission_plan) {
       const ConvertCommission = convertCommissionData(data?.commission_plan);
+      console.log(
+        "ConvertCommission: ",
+        data?.commission_plan,
+        ConvertCommission
+      );
       if (
         ConvertCommission?.length > 0 &&
         JSON.stringify(commissionData) !==
@@ -44,13 +50,9 @@ const Merchantcommissionplan = ({
             ? item?.from
             : item?.from
             ? `${currency} ${item?.from}`
-            : null,
-          to: isEditable
-            ? item?.to
-            : item?.to
-            ? `${currency} ${item?.to}`
-            : null,
-          commission: item.commission ? Number(item.commission) : null,
+            : 0,
+          to: isEditable ? item?.to : item?.to ? `${currency} ${item?.to}` : 0,
+          commission: item.commission ? Number(item.commission) : 0,
         }));
         setCommissionData(transformedData);
       }
