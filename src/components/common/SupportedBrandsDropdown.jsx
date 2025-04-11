@@ -20,7 +20,7 @@ const SupportedBrandsDropdown = ({
   useEffect(() => {
     const fetchSupportedBrands = async () => {
       try {
-        const response = await axiosInstance.get(`/watchBrands`);
+        const response = await axiosInstance.get(`/watchBrands?show_all=true`);
 
         setSupportedBrands(response?.payload?.data);
       } catch (error) {

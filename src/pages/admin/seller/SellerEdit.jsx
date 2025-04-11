@@ -309,8 +309,14 @@ const SellerEdit = () => {
         <div className="flex items-center">
           <h3 className="w-[100px] text-white text-[24px]">Profile</h3>
           <div className="flex items-center gap-2">
-            <div className="bg-[#11c71d] rounded-[100%] w-[15px] h-[15px]"></div>
-            <p className="text-white">Online</p>
+            <div
+              className={`${
+                sellerData?.is_seller_login ? "bg-[#11c71d]" : "bg-[#da3832]"
+              } rounded-[100%] w-[15px] h-[15px]`}
+            ></div>
+            <p className="text-white">
+              {sellerData?.is_seller_login ? "Online" : "Offline"}
+            </p>
           </div>
         </div>
 
