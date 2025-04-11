@@ -66,7 +66,7 @@ const SellerRevenueAnalysis = () => {
     }
 
     if (selectedStatus !== "All") {
-      searchObject.watch_status = selectedStatus;
+      searchObject.watch_status_revenue = selectedStatus;
     }
 
     const searchValue = JSON.stringify(searchObject);

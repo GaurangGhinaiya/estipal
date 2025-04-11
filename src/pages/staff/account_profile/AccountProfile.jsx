@@ -15,6 +15,7 @@ import axiosInstance from "../../../services";
 import moment from "moment";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { LoadingButton } from "@mui/lab";
 
 const AccountProfile = () => {
   const userRole = localStorage.getItem("userRole");
@@ -56,7 +57,7 @@ const AccountProfile = () => {
     currency: "USD",
     payment_tier: 0,
     created_on: "",
-    companyLogo: null,
+    seller_logo: null,
     companyLogoPreview: "",
   });
   const [staffData, setStaffData] = useState();
@@ -77,7 +78,7 @@ const AccountProfile = () => {
     if (file) {
       setFormData({
         ...formData,
-        companyLogo: file,
+        seller_logo: file,
       });
       setLocalCompanyLogoPreview(URL.createObjectURL(file));
     }
@@ -100,13 +101,12 @@ const AccountProfile = () => {
         `/sellers/detail?id=${userData?.id}`
       );
       const staff = response?.payload?.data;
-      console.log("staff: ", staff);
       setStaffData(staff);
 
       setFormData((prevFormData) => ({
         ...prevFormData,
         ...staff,
-        companyLogoPreview: staff?.companyLogo,
+        companyLogoPreview: staff?.seller_logo,
         unique_id: `SCA${staff?.id}`,
         address: staff?.address,
         created_on: moment.unix(staff?.created_on).format("MMM DD,YYYY"),
@@ -124,7 +124,7 @@ const AccountProfile = () => {
   const uploadImage = async () => {
     const formDataToSend = new FormData();
 
-    formDataToSend.append("file", formData?.companyLogo);
+    formDataToSend.append("file", formData?.seller_logo);
     formDataToSend.append("type", 1);
     setLoading(true);
     try {
@@ -132,9 +132,7 @@ const AccountProfile = () => {
         `${process.env.REACT_APP_API_PUBLIC_BASE_URL}/file`,
         formDataToSend
       );
-      console.log("response:Image", response);
       if (response?.status === 200) {
-        setLoading(false);
         return response?.data?.payload?.imageUrl;
       }
     } catch (error) {
@@ -145,8 +143,6 @@ const AccountProfile = () => {
   };
 
   const save = async () => {
-    setLoading(true);
-
     const formDataToSend = new FormData();
 
     const sendData = { ...formData };
@@ -157,11 +153,12 @@ const AccountProfile = () => {
       }
     });
 
-    if (formData?.companyLogo?.name) {
+    if (formData?.seller_logo?.name) {
       const ImageUrl = await uploadImage();
-      ImageUrl && formDataToSend.append("companyLogo", ImageUrl);
+      ImageUrl && formDataToSend.append("seller_logo", ImageUrl);
     }
 
+    setLoading(true);
     try {
       const response = await axiosInstance.post(
         `/sellers/editProfile`,
@@ -243,7 +240,8 @@ const AccountProfile = () => {
         </div>
         {isEditable ? (
           <div className="flex gap-4">
-            <Button
+            <LoadingButton
+              loading={loading}
               variant="contained"
               className="!bg-[#00a65a] !normal-case !py-[5px] sm:!py-[10px] sm:!px-[40px] !px-[15px] !rounded-[50px]"
               onClick={() => {
@@ -251,7 +249,7 @@ const AccountProfile = () => {
               }}
             >
               {t("SAVE")}
-            </Button>
+            </LoadingButton>
             <Button
               variant="contained"
               className="!bg-[#ffff] !text-black !normal-case !py-[5px] sm:!py-[10px] sm:!px-[40px] !px-[15px] !rounded-[50px]"
@@ -697,7 +695,7 @@ const AccountProfile = () => {
             onChange={handleChange}
             component={
               <>
-                <p className="text-start w-full text-black">
+                <p className="text-end w-full text-black">
                   {formData?.payment_tier === 1
                     ? "Tier 1: Seller receives Estipal payment before shipping the watch"
                     : "Tier 2: after shipping the watch"}
