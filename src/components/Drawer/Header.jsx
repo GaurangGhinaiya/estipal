@@ -180,9 +180,9 @@ const Header = () => {
                     pathname.includes(
                       "/admin/analysis/revenue_analysis/admin"
                     ) ||
-                    pathname.includes(
-                      "/admin/analysis/revenue_analysis/estimator"
-                    )
+                      pathname.includes(
+                        "/admin/analysis/revenue_analysis/estimator"
+                      )
                       ? "bold"
                       : "normal",
                 }}
@@ -244,9 +244,9 @@ const Header = () => {
                     pathname.includes(
                       "/admin/analysis/performance_analysis/admin"
                     ) ||
-                    pathname.includes(
-                      "/admin/analysis/performance_analysis/estimator"
-                    )
+                      pathname.includes(
+                        "/admin/analysis/performance_analysis/estimator"
+                      )
                       ? "bold"
                       : "normal",
                 }}
@@ -359,14 +359,14 @@ const Header = () => {
       <Box
         className="bg-[#1d272e] text-white py-[11px] fixed z-[1] w-full"
         sx={{ display: { xs: openMenu ? "block" : "none", md: "none" } }}
-        // ref={mobileNav}
+      // ref={mobileNav}
       >
         <hr className="mb-3" />
         {/* Navigation Links */}
         <div className="flex flex-col gap-[12px] max-h-[340px] overflow-auto">
           <Button className="!text-white !normal-case !text-left !justify-start !px-[15px] !py-[10px] !font-bold">
             <PersonIcon fontSize="medium" sx={{ color: "#ffff", mr: "10px" }} />
-            Signed in as {userName?.username}
+            {t("SIGNINASTEXT")} {userName?.username}
           </Button>
           <div>
             <Profile />
@@ -464,9 +464,9 @@ const Header = () => {
                     pathname.includes(
                       "/admin/analysis/revenue_analysis/admin"
                     ) ||
-                    pathname.includes(
-                      "/admin/analysis/revenue_analysis/estimator"
-                    )
+                      pathname.includes(
+                        "/admin/analysis/revenue_analysis/estimator"
+                      )
                       ? "bold"
                       : "normal",
                 }}
@@ -529,9 +529,9 @@ const Header = () => {
                     pathname.includes(
                       "/admin/analysis/performance_analysis/admin"
                     ) ||
-                    pathname.includes(
-                      "/admin/analysis/performance_analysis/estimator"
-                    )
+                      pathname.includes(
+                        "/admin/analysis/performance_analysis/estimator"
+                      )
                       ? "bold"
                       : "normal",
                 }}
