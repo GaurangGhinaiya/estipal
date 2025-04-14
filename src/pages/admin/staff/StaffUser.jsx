@@ -20,6 +20,7 @@ const StaffUser = () => {
   const [recordsPerPage, setRecordsPerPage] = useState(10);
   const [totalRecords, setTotalRecords] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const userRole = localStorage.getItem("userRole");
   const debouncedSearchTerm = useDebounce(searchQuery, 500);
 
   const getStaffUserData = async (page) => {
@@ -62,7 +63,7 @@ const StaffUser = () => {
 
   return (
     <div className="p-[15px] min-h-[100vh]">
-      <div className="px-0 sm:px-[15px] flex justify-between flex-wrap">
+      <div className={`px-0 sm:px-[15px] ${userRole === "staff" ? "pt-8" : "pt-2"} flex justify-between flex-wrap`}>
         <h1 className="text-[30px] font-medium mb-4 px-0 sm:px-[15px] font-sans text-white">
           Merchants & Staff
         </h1>

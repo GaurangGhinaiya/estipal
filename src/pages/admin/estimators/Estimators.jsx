@@ -21,6 +21,8 @@ const Estimators = () => {
   const [totalRecords, setTotalRecords] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const debouncedSearchTerm = useDebounce(searchQuery, 500);
+  const userRole = localStorage.getItem("userRole");
+
 
   const getEstimatorData = async (page) => {
     setIsLoading(true);
@@ -64,7 +66,7 @@ const Estimators = () => {
 
   return (
     <div className="p-[15px] min-h-[90vh]">
-      <div className="px-0 sm:px-[15px] pt-4 flex justify-between flex-wrap">
+      <div className={`px-0 sm:px-[15px]  ${userRole === "staff" ? "pt-8" : "pt-2"} flex justify-between flex-wrap`}>
         <h1 className="text-[30px] font-medium mb-4 px-0 sm:px-[15px] font-sans text-white">
           Estimators
         </h1>

@@ -567,7 +567,7 @@ const SellerUserCreate = () => {
             value={formData.payment_tier}
             label="Seller Receives estipal payment"
             bgColor={"#1e252b"}
-            className="mb-[15px] flex sm:flex-row flex-col"
+            className="mb-[15px] flex sm:flex-row flex-col !items-start sm:items-center"
             onChange={handleChange}
             component={
               <>
@@ -638,7 +638,7 @@ const SellerUserCreate = () => {
                     international
                     defaultCountry="IN"
                     countryCallingCodeEditable={false}
-                    className="mt-1 block w-auto rounded-md p-3 max-sm:flex-wrap"
+                    className="mt-1 block w-auto rounded-md p-3 max-sm:flex-wrap !bg-[#283641]"
                     placeholder="Enter phone number"
                     style={{
                       backgroundColor: "#1e252b",
