@@ -65,14 +65,14 @@ const SellerCardData = (props) => {
     accepted_price_with_commission =
       watchDetails?.accepted_price_with_commission
         ? `${currency} ${Number(watchDetails?.accepted_price_with_commission)
-          .toFixed(2)
-          .replace(/\d(?=(\d{3})+\.)/g, "$&,")}`
+            .toFixed(2)
+            .replace(/\d(?=(\d{3})+\.)/g, "$&,")}`
         : accepted_price;
 
     price_for_seller = watchDetails?.price_for_seller
       ? `${currency} ${Number(watchDetails?.price_for_seller)
-        .toFixed(2)
-        .replace(/\d(?=(\d{3})+\.)/g, "$&,")}`
+          .toFixed(2)
+          .replace(/\d(?=(\d{3})+\.)/g, "$&,")}`
       : accepted_price;
 
     if (watchDetails?.confirmed_price) {
@@ -86,8 +86,8 @@ const SellerCardData = (props) => {
 
     commission_price = watchDetails?.commission_price
       ? `${currency} ${Number(watchDetails?.commission_price)
-        .toFixed(2)
-        .replace(/\d(?=(\d{3})+\.)/g, "$&,")}`
+          .toFixed(2)
+          .replace(/\d(?=(\d{3})+\.)/g, "$&,")}`
       : "";
   }
 
@@ -148,7 +148,7 @@ const SellerCardData = (props) => {
           <div className="message_box_inner">
             <h3>
               {item?.message ===
-                "Estimator has placed his re-estimation on staff first counter offer"
+              "Estimator has placed his re-estimation on staff first counter offer"
                 ? `${t("ESTREESTIMATE1")}` // 149
                 : `${t("ESTREESTIMATE2")} `}{" "}
               {`(${accepted_price})`}
@@ -180,8 +180,7 @@ const SellerCardData = (props) => {
         return (
           <div className="message_box_inner">
             {/* 171 */}
-            <h3>{`${t("CONFIRMTHESALE")}`}</h3>{" "}
-            {/* 250 */}
+            <h3>{`${t("CONFIRMTHESALE")}`}</h3> {/* 250 */}
             <h3>{`${t("STATUS")}: ${t("COMPLETED")}`}</h3>
           </div>
         );
@@ -189,10 +188,12 @@ const SellerCardData = (props) => {
         return (
           <div className="message_box_inner">
             {/* 172 */}
-            <h3>{t("CONFIRMISSUEINVOICETEXTONE").replace(
-              "{commission_price}",
-              commission_price
-            )}</h3>{" "}
+            <h3>
+              {t("CONFIRMISSUEINVOICETEXTONE").replace(
+                "{commission_price}",
+                commission_price
+              )}
+            </h3>{" "}
             {/* 250 */}
             <h3>{`${t("STATUS")}: ${t("COMPLETED")}`}</h3>
           </div>
@@ -201,8 +202,7 @@ const SellerCardData = (props) => {
         return (
           <div className="message_box_inner">
             {/* 176 */}
-            <h3>{`${t("NOSALEHASEBEENMADETEXT")}`}</h3>{" "}
-            {/* 177 */}
+            <h3>{`${t("NOSALEHASEBEENMADETEXT")}`}</h3> {/* 177 */}
             <h3>{`${t("STATUS")}: ${t("NOTSOLD")}`}</h3>
           </div>
         );
@@ -221,8 +221,7 @@ const SellerCardData = (props) => {
         return (
           <div className="message_box_inner">
             {/* 180 */}
-            <h3>{`${t("RETURNTOSELLER")}`}</h3>{" "}
-            {/* 181 */}
+            <h3>{`${t("RETURNTOSELLER")}`}</h3> {/* 181 */}
             <h3>{`${t("STATUS")}: ${t("REJECTEDSALEFORSELLERTEXT")}`}</h3>
           </div>
         );
@@ -230,8 +229,7 @@ const SellerCardData = (props) => {
         return (
           <div className="message_box_inner">
             {/* 251 */}
-            <h3>{`${t("DEALCOMPLETEDFORWATCHTEXT")}`}</h3>{" "}
-            {/* 250 */}
+            <h3>{`${t("DEALCOMPLETEDFORWATCHTEXT")}`}</h3> {/* 250 */}
             <h3>{`${t("STATUS")}: ${t("COMPLETED")}`}</h3>
           </div>
         );
@@ -270,7 +268,9 @@ const SellerCardData = (props) => {
               {item?.message} ({accepted_price})
             </h3>
             {/* 131 */}
-            <h3>{t("STATUS")}: {item?.watch_status}</h3>
+            <h3>
+              {t("STATUS")}: {item?.watch_status}
+            </h3>
           </div>
         );
     }
@@ -291,7 +291,7 @@ const SellerCardData = (props) => {
             <span className="font-bold">{t("FROM")}: </span>
             {item?.from_name
               ? item?.from_name.charAt(0).toUpperCase() +
-              item?.from_name.slice(1)
+                item?.from_name.slice(1)
               : ""}
           </h3>
         );
@@ -334,7 +334,7 @@ const SellerCardData = (props) => {
           <span className="font-bold">{t("FROM")}: </span>
           {item?.admin_group
             ? item?.admin_group.charAt(0).toUpperCase() +
-            item?.admin_group.slice(1)
+              item?.admin_group.slice(1)
             : ""}
         </h3>
       );

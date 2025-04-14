@@ -10,7 +10,10 @@ export const formatter = new Intl.NumberFormat("en-US", {
   maximumFractionDigits: 0,
 });
 
-export const formattedNumber = new Intl.NumberFormat("en-US");
+export const formattedNumber = new Intl.NumberFormat("en-US", {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+});
 
 export const formatCurrency = (price, currency) => {
   if (price) {
@@ -31,7 +34,7 @@ export const getClassSelfSeller = (sellerFlagAction, selfSellingFlag) => {
     if (sellerFlagAction == 1 && selfSellingFlag == 1) {
       return "btn dark_green";
     } else {
-      return "btn light_grey";
+      return "btn !bg-[#dadee1] light_grey ";
     }
   } else {
     return "btn dark_yellow";
@@ -46,7 +49,7 @@ export const getClassPartnerSeller = (
     if (sellerFlagAction === 1 && sellerPartnershipDate != "") {
       return "btn dark_green";
     } else {
-      return "btn light_grey";
+      return "btn !bg-[#dadee1] light_grey ";
     }
   } else {
     return "btn dark_yellow";

@@ -323,13 +323,15 @@ const WatchStatus = () => {
                           ? item?.estimator_watch_status
                           : item?.estimatorDetail?.currency +
                             " " +
-                            item?.estimated_watch_price}{" "}
+                            formattedNumber.format(
+                              item?.estimated_watch_price
+                            )}{" "}
                         {watchDetailData?.is_selected && "(Selected)"}
                       </td>
                       <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                         {moment
                           .unix(item?.estimation_assign_date)
-                          .format("MMM DD ,YYYY h:mm A")}
+                          .format("MMMM DD ,YYYY h:mm A")}
                       </td>
                     </tr>
                   )
@@ -387,7 +389,9 @@ const WatchStatus = () => {
                           <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                             {currency +
                               " " +
-                              Number(item?.watch_details?.price).toFixed(2)}
+                              formattedNumber.format(
+                                item?.watch_details?.price
+                              )}
                           </td>
                         </tr>
                       );
@@ -416,9 +420,9 @@ const WatchStatus = () => {
                           <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                             {currency +
                               " " +
-                              Number(
+                              formattedNumber.format(
                                 item?.watch_details?.estimated_price_seller
-                              ).toFixed(2)}
+                              )}
                           </td>
                         </tr>
                       );
@@ -447,9 +451,9 @@ const WatchStatus = () => {
                           <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                             {currency +
                               " " +
-                              Number(
+                              formattedNumber.format(
                                 item?.watch_details?.seller_display_counter
-                              ).toFixed(2)}
+                              )}
                           </td>
                         </tr>
                       );
@@ -478,9 +482,9 @@ const WatchStatus = () => {
                           <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                             {currency +
                               " " +
-                              Number(
+                              formattedNumber.format(
                                 item?.watch_details?.seller_display_counter
-                              ).toFixed(2)}
+                              )}
                           </td>
                         </tr>
                       );
@@ -509,9 +513,9 @@ const WatchStatus = () => {
                           <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                             {currency +
                               " " +
-                              Number(
+                              formattedNumber.format(
                                 item?.watch_details?.estimated_price_seller
-                              ).toFixed(2)}
+                              )}
                           </td>
                         </tr>
                       );
@@ -540,9 +544,9 @@ const WatchStatus = () => {
                           <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                             {currency +
                               " " +
-                              Number(
+                              formattedNumber.format(
                                 item?.watch_details?.accepted_price
-                              ).toFixed(2)}
+                              )}
                           </td>
                         </tr>
                       );
@@ -571,9 +575,9 @@ const WatchStatus = () => {
                           <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                             {currency +
                               " " +
-                              Number(
+                              formattedNumber.format(
                                 item?.watch_details?.seller_display_price
-                              ).toFixed(2)}
+                              )}
                           </td>
                         </tr>
                       );
@@ -602,9 +606,9 @@ const WatchStatus = () => {
                           <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                             {currency +
                               " " +
-                              Number(
+                              formattedNumber.format(
                                 item?.watch_details?.seller_request_price
-                              ).toFixed(2)}
+                              )}
                           </td>
                         </tr>
                       );
@@ -625,9 +629,9 @@ const WatchStatus = () => {
                           <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                             {currency +
                               " " +
-                              Number(
+                              formattedNumber.format(
                                 item?.watch_details?.seller_display_counter
-                              ).toFixed(2)}
+                              )}
                           </td>
                         </tr>
                       );
@@ -648,9 +652,9 @@ const WatchStatus = () => {
                           <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                             {currency +
                               " " +
-                              Number(
+                              formattedNumber.format(
                                 item?.watch_details?.estimated_price_seller
-                              ).toFixed(2)}
+                              )}
                           </td>
                         </tr>
                       );
@@ -679,9 +683,9 @@ const WatchStatus = () => {
                           <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                             {currency +
                               " " +
-                              Number(
+                              formattedNumber.format(
                                 item?.watch_details?.estimated_price_seller
-                              ).toFixed(2)}
+                              )}
                           </td>
                         </tr>
                       );
@@ -718,13 +722,13 @@ const WatchStatus = () => {
                           <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                             {currency +
                               " " +
-                              Number(
+                              formattedNumber.format(
                                 item?.type === "Be-Partner"
                                   ? item?.watch_details?.accepted_price
                                   : item?.type === "confirm_selling_price"
                                   ? item?.watch_details?.confirmed_price
                                   : item?.watch_details?.commission_price
-                              ).toFixed(2)}
+                              )}
                           </td>
                         </tr>
                       );
@@ -754,66 +758,14 @@ const WatchStatus = () => {
                           <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                             {currency +
                               " " +
-                              Number(
+                              formattedNumber.format(
                                 item?.watch_details
                                   ?.accepted_price_with_commission
-                              ).toFixed(2)}
+                              )}
                           </td>
                         </tr>
                       );
-                    } else {
-                      return (
-                        <></>
-                        // <tr key={index}>
-                        //   <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                        //     {moment
-                        //       .unix(item?.created_on)
-                        //       .format("MMMM DD ,YYYY h:mm A")}
-                        //   </td>
-                        //   <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                        //     {item?.company_name ?? "" + " - " + item?.from_name}
-                        //   </td>
-                        //   <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                        //     {item?.status_description}
-                        //   </td>
-                        //   <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                        //     {item?.adminUserDetail?.currency +
-                        //       " " +
-                        //       item?.formatted_price}
-                        //   </td>
-                        // </tr>
-                      );
                     }
-                  } else {
-                    return (
-                      <tr key={index}>
-                        <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                          {moment
-                            .unix(item?.created_on)
-                            .format("MMMM DD ,YYYY h:mm A") ?? "-"}
-                        </td>
-                        <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                          {item?.company_name || item?.from_name
-                            ? item?.company_name ??
-                              "" +
-                                ((item?.company_name == "" &&
-                                  !item?.company_name) ||
-                                item?.from_name == ""
-                                  ? ""
-                                  : " - ") +
-                                item?.from_name
-                            : "-"}
-                        </td>
-                        <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                          {item?.status_description ?? "-"}
-                        </td>
-                        <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                          {watchDetailData?.adminDetail?.currency +
-                            " " +
-                            (item?.formatted_price ?? 0)}
-                        </td>
-                      </tr>
-                    );
                   }
                 })}
             </tbody>

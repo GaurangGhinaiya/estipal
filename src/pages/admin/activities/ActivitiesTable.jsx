@@ -99,11 +99,15 @@ const ActivitiesTable = () => {
 
   return (
     <div className="pb-[15px] min-h-[100vh]">
-      <div className={`px-0 ${userRole === "staff" ? "pt-8" : "pt-6"} sm:px-[20px] flex justify-between flex-wrap dark:bg-none bg-gradient-to-b from-[rgba(0,96,169,0.36)] to-[rgba(255,255,255,0)]`}>
+      <div
+        className={`px-0 ${
+          userRole === "staff" ? "pt-8" : "pt-6"
+        } sm:px-[20px] flex justify-between flex-wrap dark:bg-none bg-gradient-to-b from-[rgba(0,96,169,0.36)] to-[rgba(255,255,255,0)]`}
+      >
         <h1 className="text-[30px] font-medium mb-4 px-0 sm:px-[15px] font-sans dark:text-white text-black">
           {t("ACTIVITIES")}
         </h1>
-        <div className="flex justify-between items-center mb-4 gap-4 sm:gap-8 flex-wrap ">
+        <div className="flex justify-between items-center mb-4 gap-4 sm:gap-8 flex-wrap">
           <SelectDropdown
             title={`${t("FILTERBYSTATUS")} :`}
             status={status}

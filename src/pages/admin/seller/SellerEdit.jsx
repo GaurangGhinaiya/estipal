@@ -61,11 +61,11 @@ const SellerEdit = () => {
     seller_logo: null,
     companyLogoPreview: "",
   });
-  console.log("formData: ", formData);
   const [commissionData, setCommissionData] = useState([]);
 
   const [commissionObject, setCommissionObject] = useState({});
 
+  console.log("formData: ", formData);
   useEffect(() => {
     const transformCommissionData = () => {
       const transformedData = {
@@ -148,7 +148,7 @@ const SellerEdit = () => {
 
   const uploadImage = async () => {
     const formDataToSend = new FormData();
-    formDataToSend.append("file", formData?.companyLogo);
+    formDataToSend.append("file", formData?.seller_logo);
     formDataToSend.append("type", 1);
     setLoading(true);
     try {
@@ -156,15 +156,14 @@ const SellerEdit = () => {
         `${process.env.REACT_APP_API_PUBLIC_BASE_URL}/file`,
         formDataToSend
       );
-      console.log("response:Image", response);
       if (response?.status === 200) {
-        setLoading(false);
+        // setLoading(false);
         return response?.data?.payload?.imageUrl;
       }
     } catch (error) {
       console.log("error: ", error);
     } finally {
-      setLoading(false);
+      // setLoading(false);
     }
   };
 
@@ -196,7 +195,7 @@ const SellerEdit = () => {
         ...prevFormData,
         ...seller,
         companyLogoPreview: seller?.seller_logo,
-        unique_id: `SCA${seller?.id}`,
+        unique_id: `SCA${seller?.admin_seller_id}`,
         address: seller?.address,
         created_on: moment.unix(seller?.created_on).format("MMM DD,YYYY"),
       }));
@@ -241,10 +240,10 @@ const SellerEdit = () => {
       }
     });
 
-    if (formData?.companyLogo?.name) {
+    if (formData?.seller_logo?.name) {
       const ImageUrl = await uploadImage();
       ImageUrl && formDataToSend.append("seller_logo", ImageUrl);
-    } else formDataToSend.append("seller_logo", formData?.seller_logo);
+    }
 
     if (commissionObject) {
       formDataToSend.append("commission", JSON.stringify(commissionObject));
@@ -550,7 +549,13 @@ const SellerEdit = () => {
                     ) : (
                       <div className="mt-2">
                         <img
-                          src={`${process.env.REACT_APP_IMAGE_BASE_URL}/${formData?.companyLogoPreview}`}
+                          src={
+                            formData?.companyLogoPreview?.startsWith(
+                              "https://cdn.estipal.com/production"
+                            )
+                              ? formData?.companyLogoPreview
+                              : `${process.env.REACT_APP_IMAGE_BASE_URL}/${formData?.companyLogoPreview}`
+                          }
                           alt="Uploaded Logo"
                           className="w-[100px] object-cover rounded"
                         />
@@ -564,7 +569,13 @@ const SellerEdit = () => {
                 {formData?.companyLogoPreview ? (
                   <div className="mt-2">
                     <img
-                      src={formData?.companyLogoPreview}
+                      src={
+                        formData?.companyLogoPreview?.startsWith(
+                          "https://cdn.estipal.com/production"
+                        )
+                          ? formData?.companyLogoPreview
+                          : `${process.env.REACT_APP_IMAGE_BASE_URL}/${formData?.companyLogoPreview}`
+                      }
                       alt="Uploaded Logo"
                       className="w-[100px] object-cover rounded"
                     />
