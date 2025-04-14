@@ -360,7 +360,7 @@ const Header = () => {
       <Box
         className="bg-[#1d272e] text-white py-[11px] fixed z-[1] w-full"
         sx={{ display: { xs: openMenu ? "block" : "none", md: "none" } }}
-        // ref={mobileNav}
+        ref={mobileNav}
       >
         <hr className="mb-3" />
         {/* Navigation Links */}

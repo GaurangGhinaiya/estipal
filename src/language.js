@@ -122,7 +122,6 @@ const translations = {
         "We regret to inform you that we could not estimate your watch",
       ESTIPALADMINISTRATOR: "Estipal-Administrator",
       ESTIMATOR: "Estimator",
-      RECEIVED: "Received",
       QUOTATIONRECEIVED: "Quotation Received",
       PENDINGFIRSTCOUNTEROFFER: "Pending first counter offer",
       REESTIMATE: "Re-estimate",
@@ -136,7 +135,7 @@ const translations = {
       CONFIRMSELLINGPRICETEXT:
         "The selling price confirmed by Estipal is {props?.confirmed_price}. Sale is pending",
       PENDINGSALE: "Pending Sale",
-      CONFIRMTHESALE: "Confirm the sale",
+      CONFIRMTHESALE1: "Confirm the sale",
       NOSALEFOUND: "No sale has been made",
       COMPLETED: "Completed",
       CONFIRMISSUEINVOICETEXTONE:
@@ -302,7 +301,6 @@ const translations = {
         "Siamo spiacenti di informarti che non siamo stati in grado di stimare il tuo orologio",
       ESTIPALADMINISTRATOR: "Estipal-Amministratore",
       ESTIMATOR: "Estimatore",
-      RECEIVED: "Ricevuto",
       QUOTATIONRECEIVED: "Preventivo ricevuto",
       PENDINGFIRSTCOUNTEROFFER: "In attesa della prima controfferta",
       REESTIMATE: "Ri-stima",
@@ -317,7 +315,7 @@ const translations = {
       CONFIRMSELLINGPRICETEXT:
         "Il prezzo di vendita confermato da Estipal è {props?.confirmed_price}. La vendita è in sospeso",
       PENDINGSALE: "Vendita in attesa",
-      CONFIRMTHESALE: "Conferma la vendita",
+      CONFIRMTHESALE1: "Conferma la vendita",
       NOSALEFOUND: "Non è stata effettuata alcuna vendita",
       COMPLETED: "Completato",
       CONFIRMISSUEINVOICETEXTONE:
@@ -482,7 +480,6 @@ const translations = {
         "Lamentamos informarle que no pudimos estimar su reloj.",
       ESTIPALADMINISTRATOR: "Estipal-Administrador",
       ESTIMATOR: "Estimador",
-      RECEIVED: "Recibido",
       QUOTATIONRECEIVED: "Cotización recibida",
       PENDINGFIRSTCOUNTEROFFER: "Pendiente primera contraoferta",
       REESTIMATE: "Reestimar",
@@ -497,7 +494,7 @@ const translations = {
       CONFIRMSELLINGPRICETEXT:
         "El precio de venta confirmado por Estipal es {props?.confirmed_price}. La venta está pendiente",
       PENDINGSALE: "Venta pendiente",
-      CONFIRMTHESALE: "Confirma la venta",
+      CONFIRMTHESALE1: "Confirma la venta",
       NOSALEFOUND: "No se ha realizado ninguna venta",
       COMPLETED: "Terminado",
       CONFIRMISSUEINVOICETEXTONE:
@@ -649,7 +646,6 @@ const translations = {
       ESTIMATIONREJECTED: "很遺憾地通知您，我們無法估計您的手錶",
       ESTIPALADMINISTRATOR: "Estipal-管理員",
       ESTIMATOR: "估算器",
-      RECEIVED: "已收到",
       QUOTATIONRECEIVED: "收到報價",
       PENDINGFIRSTCOUNTEROFFER: "待定第一個還價",
       REESTIMATE: "重新估算",
@@ -663,7 +659,7 @@ const translations = {
       CONFIRMSELLINGPRICETEXT:
         "Estipal 確認的售價為 {props?.confirmed_price}。 銷售待定",
       PENDINGSALE: "待售",
-      CONFIRMTHESALE: "確認銷售",
+      CONFIRMTHESALE1: "確認銷售",
       NOSALEFOUND: "沒有銷售",
       COMPLETED: "完全的",
       CONFIRMISSUEINVOICETEXTONE:
@@ -825,7 +821,6 @@ const translations = {
         "हमें आपको यह बताते हुए खेद है कि हम आपकी घड़ी का अनुमान नहीं लगा सके",
       ESTIPALADMINISTRATOR: "एस्टिपल-प्रशासक",
       ESTIMATOR: "क़ीमत लगानेवाला",
-      RECEIVED: "प्राप्त",
       QUOTATIONRECEIVED: "कोटेशन प्राप्त हुआ",
       PENDINGFIRSTCOUNTEROFFER: "प्रथम प्रति प्रस्ताव लंबित",
       REESTIMATE: "पुनः आकलन",
@@ -839,7 +834,7 @@ const translations = {
       CONFIRMSELLINGPRICETEXT:
         "एस्टिपल द्वारा पुष्टि की गई बिक्री कीमत {props?.confirmed_price} है। बिक्री लंबित है",
       PENDINGSALE: "लंबित बिक्री",
-      CONFIRMTHESALE: "बिक्री की पुष्टि करें",
+      CONFIRMTHESALE1: "बिक्री की पुष्टि करें",
       NOSALEFOUND: "कोई बिक्री नहीं हुई है",
       COMPLETED: "पुरा होना।",
       CONFIRMISSUEINVOICETEXTONE:
@@ -1002,7 +997,6 @@ const translations = {
         "เราขออภัยที่แจ้งให้คุณทราบว่าเราไม่สามารถประมาณการนาฬิกาของคุณได้",
       ESTIPALADMINISTRATOR: "ผู้ดูแลระบบ Estipal",
       ESTIMATOR: "ผู้ประเมิน",
-      RECEIVED: "ได้รับ",
       QUOTATIONRECEIVED: "ได้รับใบเสนอราคา",
       PENDINGFIRSTCOUNTEROFFER: "ข้อเสนอรองแรกที่รอดำเนินการ",
       REESTIMATE: "ประมาณการใหม่",
@@ -1016,7 +1010,7 @@ const translations = {
       CONFIRMSELLINGPRICETEXT:
         "ราคาขายที่ยืนยันโดย Estipal คือ {props?.confirmed_price} การขายอยู่ระหว่างดำเนินการ",
       PENDINGSALE: "การขายที่รอดำเนินการ",
-      CONFIRMTHESALE: "ยืนยันการขาย",
+      CONFIRMTHESALE1: "ยืนยันการขาย",
       NOSALEFOUND: "ไม่พบการขาย",
       COMPLETED: "เสร็จสมบูรณ์",
       CONFIRMISSUEINVOICETEXTONE:
@@ -1177,7 +1171,6 @@ const translations = {
         "申し訳ありませんが、ウォッチの見積もりを行うことができませんでした",
       ESTIPALADMINISTRATOR: "Estipal管理者",
       ESTIMATOR: "査定者",
-      RECEIVED: "受信済み",
       QUOTATIONRECEIVED: "見積もりを受け取りました",
       PENDINGFIRSTCOUNTEROFFER: "最初のカウンターオファーが保留中",
       REESTIMATE: "再見積もり",
@@ -1191,7 +1184,7 @@ const translations = {
       CONFIRMSELLINGPRICETEXT:
         "Estipalが確認した販売価格は{props?.confirmed_price}です。販売が保留中です",
       PENDINGSALE: "保留中の販売",
-      CONFIRMTHESALE: "販売を確認する",
+      CONFIRMTHESALE1: "販売を確認する",
       NOSALEFOUND: "販売が見つかりません",
       COMPLETED: "完了",
       CONFIRMISSUEINVOICETEXTONE:
@@ -1355,7 +1348,6 @@ const translations = {
         "Lamentamos informar que não conseguimos estimar seu relógio",
       ESTIPALADMINISTRATOR: "Administrador da Estipal",
       ESTIMATOR: "Avaliador",
-      RECEIVED: "Recebido",
       QUOTATIONRECEIVED: "Cotação Recebida",
       PENDINGFIRSTCOUNTEROFFER: "Primeira contraproposta pendente",
       REESTIMATE: "Reestimar",
@@ -1369,7 +1361,7 @@ const translations = {
       CONFIRMSELLINGPRICETEXT:
         "O preço de venda confirmado pela Estipal é {props?.confirmed_price}. Venda pendente",
       PENDINGSALE: "Venda Pendente",
-      CONFIRMTHESALE: "Confirmar a venda",
+      CONFIRMTHESALE1: "Confirmar a venda",
       NOSALEFOUND: "Nenhuma venda foi feita",
       COMPLETED: "Concluído",
       CONFIRMISSUEINVOICETEXTONE:
@@ -1533,7 +1525,6 @@ const translations = {
         "Na vjen keq t'ju informojmë se nuk mundëm të vlerësojmë orën tuaj",
       ESTIPALADMINISTRATOR: "Administratori i Estipal",
       ESTIMATOR: "Vlerësuesi",
-      RECEIVED: "Marrë",
       QUOTATIONRECEIVED: "Oferta e Marrë",
       PENDINGFIRSTCOUNTEROFFER: "Oferta e Parë Kundër në Pritje",
       REESTIMATE: "Rivlerësim",
@@ -1548,7 +1539,7 @@ const translations = {
       CONFIRMSELLINGPRICETEXT:
         "Çmimi i shitjes i konfirmuar nga Estipal është {props?.confirmed_price}. Shitja është në pritje",
       PENDINGSALE: "Shitja në Pritje",
-      CONFIRMTHESALE: "Konfirmo Shitjen",
+      CONFIRMTHESALE1: "Konfirmo Shitjen",
       NOSALEFOUND: "Nuk është bërë asnjë shitje",
       COMPLETED: "Përfunduar",
       CONFIRMISSUEINVOICETEXTONE:
@@ -1714,7 +1705,7 @@ const translations = {
       CONFIRMSELLINGPRICETEXT:
         "מחיר המכירה שאושר על ידי אסטיפל הוא {props?.confirmed_price}. המכירה ממתינה",
       PENDINGSALE: "מכירה ממתינה",
-      CONFIRMTHESALE: "אשר את המכירה",
+      CONFIRMTHESALE1: "אשר את המכירה",
       NOSALEFOUND: "לא בוצעה מכירה",
       COMPLETED: "הושלם",
       CONFIRMISSUEINVOICETEXTONE:

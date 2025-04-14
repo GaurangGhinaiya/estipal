@@ -87,7 +87,7 @@ const ConfirmSellingPrice = (props) => {
                 }
                 onClick={handleOpenDialog}
               >
-                {translate("CONFIRMTHESALE")} {/* 169 */}
+                {t("CONFIRMTHESALE1")} {/* 169 */}
               </button>
             </li>
             <li
