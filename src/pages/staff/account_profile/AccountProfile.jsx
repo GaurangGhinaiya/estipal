@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
+
 import PhoneInput, {
   formatPhoneNumber,
   getCountryCallingCode,
@@ -16,6 +16,7 @@ import moment from "moment";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { LoadingButton } from "@mui/lab";
+import { translate } from "../../../language";
 
 const AccountProfile = () => {
   const userRole = localStorage.getItem("userRole");
@@ -28,7 +29,7 @@ const AccountProfile = () => {
       color: userRole === "staff" ? "black" : "white",
     },
   };
-  const { t } = useTranslation();
+
   const navigate = useNavigate();
   const [isEditable, setIsEditable] = useState(false);
   const [commissionData, setCommissionData] = useState([]);
@@ -58,11 +59,11 @@ const AccountProfile = () => {
     payment_tier: 0,
     created_on: "",
     seller_logo: null,
-    new_password:"",
-    retype_password:"",
+    new_password: "",
+    retype_password: "",
     companyLogoPreview: "",
   });
-  console.log('formData: ', formData);
+  console.log("formData: ", formData);
 
   const [staffData, setStaffData] = useState();
   const [states, setStates] = useState([]);
@@ -114,8 +115,8 @@ const AccountProfile = () => {
         unique_id: `SCA${staff?.id}`,
         address: staff?.address,
         created_on: moment.unix(staff?.created_on).format("MMM DD,YYYY"),
-        new_password:"",
-        retype_password:""
+        new_password: "",
+        retype_password: "",
       }));
 
       setPhone(`+${staff?.cnt_code} ${staff?.cnt_no}`);
@@ -258,7 +259,7 @@ const AccountProfile = () => {
       <div className="px-0 sm:px-[20px] pt-8 flex justify-between flex-wrap gap-2 bg-gradient-to-b from-[rgba(0,96,169,0.36)] to-[rgba(255,255,255,0)]">
         <div className="flex items-center">
           <h3 className="text-[30px] font-medium px-0 sm:px-[15px] font-sans dark:text-white text-black">
-            {t("ACCOUNTPROFILE")}
+            {translate("ACCOUNTPROFILE")}
           </h3>
         </div>
         {isEditable ? (
@@ -271,14 +272,14 @@ const AccountProfile = () => {
                 save();
               }}
             >
-              {t("SAVE")}
+              {translate("SAVE")}
             </LoadingButton>
             <Button
               variant="contained"
               className="!bg-[#ffff] !text-black !normal-case !py-[5px] sm:!py-[10px] sm:!px-[40px] !px-[15px] !rounded-[50px]"
               onClick={() => setIsEditable(false)}
             >
-              {t("CANCEL")}
+              {translate("CANCEL")}
             </Button>
           </div>
         ) : (
@@ -288,7 +289,7 @@ const AccountProfile = () => {
               className="!bg-[#367FA9] !normal-case !py-[5px] sm:!py-[10px] sm:!px-[40px] !px-[15px] !rounded-[50px]"
               onClick={() => setIsEditable(true)}
             >
-              {t("EDITPROFILE")}
+              {translate("EDITPROFILE")}
             </Button>
           </div>
         )}
@@ -299,8 +300,8 @@ const AccountProfile = () => {
           <TextInputField
             value={formData?.cmp_name}
             type="text"
-            label={`${t("COMAPNY")}`}
-            placeholder={`${t("COMAPNY")}`}
+            label={`${translate("COMAPNY")}`}
+            placeholder={`${translate("COMAPNY")}`}
             readOnly={!isEditable}
             name="cmp_name"
             disabled={true}
@@ -312,8 +313,8 @@ const AccountProfile = () => {
           <TextInputField
             value={formData?.bank_name}
             type="text"
-            label={`${t("BANKNAME")}`}
-            placeholder={`${t("BANKNAME")}`}
+            label={`${translate("BANKNAME")}`}
+            placeholder={`${translate("BANKNAME")}`}
             name="bank_name"
             readOnly={!isEditable}
             bgColor={"#ffffff"}
@@ -325,9 +326,9 @@ const AccountProfile = () => {
             value={formData?.bank_address}
             name="bank_address"
             type="text"
-            label={`${t("BANKADDRESS")}`}
+            label={`${translate("BANKADDRESS")}`}
             readOnly={!isEditable}
-            placeholder={`${t("BANKADDRESS")}`}
+            placeholder={`${translate("BANKADDRESS")}`}
             bgColor={"#ffffff"}
             border={"1px solid black"}
             className="mb-[15px]"
@@ -337,9 +338,9 @@ const AccountProfile = () => {
             value={formData?.bank_account}
             name="bank_account"
             type="text"
-            label={`${t("BANKACCOUNTNAME")}`}
+            label={`${translate("BANKACCOUNTNAME")}`}
             readOnly={!isEditable}
-            placeholder={`${t("BANKACCOUNTNAME")}`}
+            placeholder={`${translate("BANKACCOUNTNAME")}`}
             bgColor={"#ffffff"}
             border={"1px solid black"}
             className="mb-[15px]"
@@ -349,9 +350,9 @@ const AccountProfile = () => {
             value={formData?.account_number}
             name="account_number"
             type="text"
-            label={`${t("ACCOUNTNUMBER")}`}
+            label={`${translate("ACCOUNTNUMBER")}`}
             readOnly={!isEditable}
-            placeholder={`${t("ACCOUNTNUMBER")}`}
+            placeholder={`${translate("ACCOUNTNUMBER")}`}
             bgColor={"#ffffff"}
             border={"1px solid black"}
             className="mb-[15px]"
@@ -361,9 +362,9 @@ const AccountProfile = () => {
             value={formData?.bank_swift}
             name="bank_swift"
             type="text"
-            label={`${t("SWIFTCODEIBAN")}`}
+            label={`${translate("SWIFTCODEIBAN")}`}
             readOnly={!isEditable}
-            placeholder={`${t("SWIFTCODEIBAN")}`}
+            placeholder={`${translate("SWIFTCODEIBAN")}`}
             bgColor={"#ffffff"}
             border={"1px solid black"}
             className="mb-[15px]"
@@ -379,7 +380,7 @@ const AccountProfile = () => {
             }}
           >
             <div className="w-[35%]">
-              <TextInputField label={`${t("COMPANYLOGO")}`} />
+              <TextInputField label={`${translate("COMPANYLOGO")}`} />
             </div>
 
             {isEditable ? (
@@ -433,8 +434,8 @@ const AccountProfile = () => {
             value={formData?.first_name}
             name="first_name"
             type="text"
-            label={`${t("FIRSTNAME")}`}
-            placeholder={`${t("FIRSTNAME")}`}
+            label={`${translate("FIRSTNAME")}`}
+            placeholder={`${translate("FIRSTNAME")}`}
             disabled={true}
             bgColor={isEditable ? "#CCCCCC" : "#ffffff"}
             border={"1px solid black"}
@@ -445,8 +446,8 @@ const AccountProfile = () => {
             value={formData?.last_name}
             name="last_name"
             type="text"
-            label={`${t("LASTNAME")}`}
-            placeholder={`${t("LASTNAME")}`}
+            label={`${translate("LASTNAME")}`}
+            placeholder={`${translate("LASTNAME")}`}
             readOnly={!isEditable}
             disabled={true}
             bgColor={isEditable ? "#CCCCCC" : "#ffffff"}
@@ -458,8 +459,8 @@ const AccountProfile = () => {
             value={formData?.address}
             name="address"
             type="text"
-            label={`${t("ADDRESS")}`}
-            placeholder={`${t("ADDRESS")}`}
+            label={`${translate("ADDRESS")}`}
+            placeholder={`${translate("ADDRESS")}`}
             readOnly={!isEditable}
             bgColor={"#ffffff"}
             border={"1px solid black"}
@@ -470,8 +471,8 @@ const AccountProfile = () => {
             value={formData?.city}
             name="city"
             type="text"
-            label={`${t("CITY")}`}
-            placeholder={`${t("CITY")}`}
+            label={`${translate("CITY")}`}
+            placeholder={`${translate("CITY")}`}
             readOnly={!isEditable}
             bgColor={"#ffffff"}
             border={"1px solid black"}
@@ -480,8 +481,8 @@ const AccountProfile = () => {
           />
 
           <TextInputField
-            label={`${t("STATEPROVINCE")}`}
-            placeholder={`${t("STATEPROVINCE")}`}
+            label={`${translate("STATEPROVINCE")}`}
+            placeholder={`${translate("STATEPROVINCE")}`}
             bgColor={"#ffffff"}
             border={"1px solid black"}
             className="mb-[15px]"
@@ -517,8 +518,8 @@ const AccountProfile = () => {
             value={formData?.zip}
             name="zip"
             type="text"
-            label={`${t("ZIP")}`}
-            placeholder={`${t("ZIP")}`}
+            label={`${translate("ZIP")}`}
+            placeholder={`${translate("ZIP")}`}
             readOnly={!isEditable}
             bgColor={"#ffffff"}
             border={"1px solid black"}
@@ -527,8 +528,8 @@ const AccountProfile = () => {
           />
 
           <TextInputField
-            label={`${t("COUNTRY")}`}
-            placeholder={`${t("COUNTRY")}`}
+            label={`${translate("COUNTRY")}`}
+            placeholder={`${translate("COUNTRY")}`}
             bgColor={"#ffffff"}
             border={"1px solid black"}
             className="mb-[15px]"
@@ -566,9 +567,9 @@ const AccountProfile = () => {
             value={formData?.email}
             name="email"
             type="text"
-            label={`${t("EMAIL")}`}
+            label={`${translate("EMAIL")}`}
             readOnly={!isEditable}
-            placeholder={`${t("EMAIL")}`}
+            placeholder={`${translate("EMAIL")}`}
             disabled={true}
             bgColor={isEditable ? "#CCCCCC" : "#ffffff"}
             border={"1px solid black"}
@@ -579,9 +580,9 @@ const AccountProfile = () => {
             value={formData?.username}
             name="username"
             type="text"
-            label={`${t("USERNAME")}`}
+            label={`${translate("USERNAME")}`}
             readOnly={!isEditable}
-            placeholder={`${t("USERNAME")}`}
+            placeholder={`${translate("USERNAME")}`}
             disabled={true}
             bgColor={isEditable ? "#CCCCCC" : "#ffffff"}
             border={"1px solid black"}
@@ -593,7 +594,7 @@ const AccountProfile = () => {
             value={formData?.cnt_no}
             name="cnt_no"
             type="text"
-            label={`${t("MOBILENUMBER")}`}
+            label={`${translate("MOBILENUMBER")}`}
             bgColor={"#ffffff"}
             border={"1px solid black"}
             readOnly={!isEditable}
@@ -632,7 +633,7 @@ const AccountProfile = () => {
             value={formData.cnt_no}
             name="cnt_no"
             type="text"
-            label={`${t("MOBILENUMBER")}`}
+            label={`${translate("MOBILENUMBER")}`}
             bgColor={"#ffffff"}
             border={"1px solid #E5E7EB"}
             readOnly={!isEditable}
@@ -674,7 +675,7 @@ const AccountProfile = () => {
             value={"USD"}
             name="currency"
             type="text"
-            label={`${t("CURRENCYOFTRADING")}`}
+            label={`${translate("CURRENCYOFTRADING")}`}
             disabled={true}
             bgColor={isEditable ? "#CCCCCC" : "#ffffff"}
             border={"1px solid black"}
@@ -684,7 +685,7 @@ const AccountProfile = () => {
             value={formData?.created_on}
             name="created_on"
             type="text"
-            label={`${t("SIGNUPDATE")}`}
+            label={`${translate("SIGNUPDATE")}`}
             readOnly={!isEditable}
             disabled={true}
             bgColor={isEditable ? "#CCCCCC" : "#ffffff"}
@@ -697,7 +698,7 @@ const AccountProfile = () => {
             value={"Tier 1: before shipping the watch"}
             name="tier"
             type="text"
-            label={`${t("TIERGROUP")}`}
+            label={`${translate("TIERGROUP")}`}
             disabled={true}
             bgColor={isEditable ? "#CCCCCC" : "#ffffff"}
             border={"1px solid black"}
@@ -737,12 +738,14 @@ const AccountProfile = () => {
           >
             {/* Change Password Field */}
             <div className="w-[35%] p-[18px]">
-              <p className="text-sm dark:text-white text-black font-medium m-0 whitespace-nowrap min-w-[100px]">{`${t("CHANGEPASSWORD")}`}</p> 
+              <p className="text-sm dark:text-white text-black font-medium m-0 whitespace-nowrap min-w-[100px]">{`${translate(
+                "CHANGEPASSWORD"
+              )}`}</p>
             </div>
 
             <div className="">
               <TextInputField
-                placeholder={`${t("NEWPASSWORD")}`}
+                placeholder={`${translate("NEWPASSWORD")}`}
                 type="password"
                 readOnly={!isEditable}
                 name="new_password"
@@ -753,7 +756,7 @@ const AccountProfile = () => {
 
               {/* Confirm Password Field */}
               <TextInputField
-                placeholder={`${t("CONFIRMPASSWORD")}`}
+                placeholder={`${translate("CONFIRMPASSWORD")}`}
                 type="password"
                 value={formData?.retype_password}
                 readOnly={!isEditable}

@@ -1,10 +1,4 @@
-import i18n from "i18next";
-import { initReactI18next } from "react-i18next";
-
-/**
- * resources is an object that contains all the translations for the different languages.
- */
-const resources = {
+const translations = {
   en: {
     translation: {
       ACTIVITIES: "Activities",
@@ -83,31 +77,49 @@ const resources = {
       ESTIMATE: "Estimate",
       ACTION: "Action",
       SUBJECT: "Subject",
-      BEPARTNERTEXT: "The confirmed selection is 'Be partner with Estipal', Estipal selling price confirmation is pending",
+      BEPARTNERTEXT:
+        "The confirmed selection is 'Be partner with Estipal', Estipal selling price confirmation is pending",
       CONFIRMSELLINGPRICETEXT1: "The selling price confirmed by Estipal is",
       CONFIRMSELLINGPRICETEXT2: "Sale is pending",
-      CONFIRMTHESALE: "Sale has been confirmed to Estipal. Waiting to receive Estipal invoice",
+      CONFIRMTHESALE:
+        "Sale has been confirmed to Estipal. Waiting to receive Estipal invoice",
       CONFIRMISSUEINVOICETEXT: "Estipal issued and invoice for the amount of",
-      NOSALEHASEBEENMADETEXT: "Sale has been cancelled and Estipal has been notified",
-      SELLERINVOICENEWTIER1TEXT: "A payment request of {accepted_price_with_commission} has been notified to Estipal and payment is pending",
-      SELLERINVOICENEWTIER2TEXT: "Shipment of the watch has to be arranged. Estipal will make payment of {accepted_price_with_commission} after receiving the watch",
-      SELLERINVOICETIER1TEXT: "The confirmed selection is 'Sell to Estipal', a payment request of {accepted_price_with_commission} has been notified to Estipal and payment is pending",
-      SELLERINVOICETIER2TEXT: "The confirmed selection is 'Sell to Estipal'. Shipment of the watch has to be arranged. Estipal will make payment of {accepted_price_with_commission} after receiving the watch",
-      CONFIRMPAYMENTSELLER: "Estipal confirmed the payment of {accepted_price_with_commission}. Shipment of the watch to Estipal has to be arranged",
-      CONFIRMSHIPMENTESTIPALTIER1: "Shipment of the watch has been confirmed.Waiting to receive Estipal acceptance",
-      CONFIRMSHIPMENTESTIPALTIER2: "Shipment of the watch has been confirmed.Waiting to receive Estipal payment and acceptance",
-      CONFIRMACCEPTANCETIER1: "Acceptance of the watch has been confirmed.This deal has been completed",
-      CONFIRMACCEPTANCETIER2: "Payment and acceptance of the watch has been confirmed. This deal has been completed",
+      NOSALEHASEBEENMADETEXT:
+        "Sale has been cancelled and Estipal has been notified",
+      SELLERINVOICENEWTIER1TEXT:
+        "A payment request of {accepted_price_with_commission} has been notified to Estipal and payment is pending",
+      SELLERINVOICENEWTIER2TEXT:
+        "Shipment of the watch has to be arranged. Estipal will make payment of {accepted_price_with_commission} after receiving the watch",
+      SELLERINVOICETIER1TEXT:
+        "The confirmed selection is 'Sell to Estipal', a payment request of {accepted_price_with_commission} has been notified to Estipal and payment is pending",
+      SELLERINVOICETIER2TEXT:
+        "The confirmed selection is 'Sell to Estipal'. Shipment of the watch has to be arranged. Estipal will make payment of {accepted_price_with_commission} after receiving the watch",
+      CONFIRMPAYMENTSELLER:
+        "Estipal confirmed the payment of {accepted_price_with_commission}. Shipment of the watch to Estipal has to be arranged",
+      CONFIRMSHIPMENTESTIPALTIER1:
+        "Shipment of the watch has been confirmed.Waiting to receive Estipal acceptance",
+      CONFIRMSHIPMENTESTIPALTIER2:
+        "Shipment of the watch has been confirmed.Waiting to receive Estipal payment and acceptance",
+      CONFIRMACCEPTANCETIER1:
+        "Acceptance of the watch has been confirmed.This deal has been completed",
+      CONFIRMACCEPTANCETIER2:
+        "Payment and acceptance of the watch has been confirmed. This deal has been completed",
       RETURNTOSELLER: "Estipal rejected the sale. The watch will be returned",
       ACCEPTESTIMATION: "Staff has accepted estimation of the watch",
-      ESTIMATORQUOTATION: "Estimator has sent his estimation on given watch quotation",
+      ESTIMATORQUOTATION:
+        "Estimator has sent his estimation on given watch quotation",
       QUOTATIONFORWATCH: "Seller is waiting for quotation",
-      COUNTEROFFER1: "Staff has placed first counter offer on estimation of the watch quotation",
-      ESTREESTIMATE1: "Estimator has placed his re-estimation on staff first counter offer",
-      ESTREESTIMATE2: "Estimator has placed his re-estimation on staff second counter offer",
-      COUNTEROFFER2: "Staff has again placed counter offer on estimation of the watch quotation",
+      COUNTEROFFER1:
+        "Staff has placed first counter offer on estimation of the watch quotation",
+      ESTREESTIMATE1:
+        "Estimator has placed his re-estimation on staff first counter offer",
+      ESTREESTIMATE2:
+        "Estimator has placed his re-estimation on staff second counter offer",
+      COUNTEROFFER2:
+        "Staff has again placed counter offer on estimation of the watch quotation",
       REJECTED: "Staff has declined the estimate request",
-      ESTIMATIONREJECTED: "We regret to inform you that we could not estimate your watch",
+      ESTIMATIONREJECTED:
+        "We regret to inform you that we could not estimate your watch",
       ESTIPALADMINISTRATOR: "Estipal-Administrator",
       ESTIMATOR: "Estimator",
       QUOTATIONRECEIVED: "Quotation Received",
@@ -120,36 +132,49 @@ const resources = {
       SELECTOPTIONBELOW: "Select one of the below option",
       SELLESTIPAL: "Sell to Estipal",
       BEPARTNERWITHESTIPAL: "Be partner with Estipal",
-      CONFIRMSELLINGPRICETEXT: "The selling price confirmed by Estipal is {props?.confirmed_price}. Sale is pending",
+      CONFIRMSELLINGPRICETEXT:
+        "The selling price confirmed by Estipal is {props?.confirmed_price}. Sale is pending",
       PENDINGSALE: "Pending Sale",
       CONFIRMTHESALE1: "Confirm the sale",
       NOSALEFOUND: "No sale has been made",
       COMPLETED: "Completed",
-      CONFIRMISSUEINVOICETEXTONE: "Estipal issued and invoice for the amount of ${commission_price}",
+      CONFIRMISSUEINVOICETEXTONE:
+        "Estipal issued and invoice for the amount of ${commission_price}",
       NOTSOLD: "Not Sold",
-      REJECTEDSALEFORSELLERTEXT: "Rejected Sale - watch to be returned to seller",
-      DEALCOMPLETEDFORWATCHTEXT: "The watch has been sold and the deal completed.",
+      REJECTEDSALEFORSELLERTEXT:
+        "Rejected Sale - watch to be returned to seller",
+      DEALCOMPLETEDFORWATCHTEXT:
+        "The watch has been sold and the deal completed.",
       WAITINGFORQUOTATION: "Waiting for Quotation",
       REJECTEDTEXT: "Rejected",
       PASSTEXT: "pass",
-      PENDINGPAYMENTTIER1TEXTONE: "A payment request of {props?.accepted_price_with_commission} has been notified to Estipal and payment is pending",
-      PENDINGPAYMENTTIER2TEXTONE: "Shipment of the watch has to be arranged. Estipal will make payment of {props?.accepted_price_with_commission} after receiving the watch",
+      PENDINGPAYMENTTIER1TEXTONE:
+        "A payment request of {props?.accepted_price_with_commission} has been notified to Estipal and payment is pending",
+      PENDINGPAYMENTTIER2TEXTONE:
+        "Shipment of the watch has to be arranged. Estipal will make payment of {props?.accepted_price_with_commission} after receiving the watch",
       PENDINGESTIPALPAYMENT: "Pending Estipal Payment",
       PENDINGSHIPPING: "Pending Shipping",
       CONFIRMATIONREQUIREDTEXT: "Confirmation is required",
       CONFIRMSHIPMENTESTIPALTEXT: "Confirm shipment to Estipal",
-      CONFIRMSELECTIONTIER1TEXT: "The confirmed selection is 'Sell to Estipal', a payment request of {props?.accepted_price_with_commission} has been notified to Estipal and payment is pending",
-      CONFIRMSELECTIONTIER2TEXT: "The confirmed selection is 'Sell to Estipal'. Shipment of the watch has to be arranged. Estipal will make payment of {props?.accepted_price_with_commission} after receiving the watch",
-      CONFIRMPAYMENTSELLERONE: "Estipal confirmed the payment of {props?.accepted_price_with_commission}. Shipment of the watch to Estipal has to be arranged",
+      CONFIRMSELECTIONTIER1TEXT:
+        "The confirmed selection is 'Sell to Estipal', a payment request of {props?.accepted_price_with_commission} has been notified to Estipal and payment is pending",
+      CONFIRMSELECTIONTIER2TEXT:
+        "The confirmed selection is 'Sell to Estipal'. Shipment of the watch has to be arranged. Estipal will make payment of {props?.accepted_price_with_commission} after receiving the watch",
+      CONFIRMPAYMENTSELLERONE:
+        "Estipal confirmed the payment of {props?.accepted_price_with_commission}. Shipment of the watch to Estipal has to be arranged",
       PAIDPENDINGSHIPPING: "Paid / Pending Shipping",
-      SHIPPINGCOMPPENDINGESTIPALACCTEXT: "Shipment of the watch has been confirmed. Waiting to receive Estipal acceptance",
+      SHIPPINGCOMPPENDINGESTIPALACCTEXT:
+        "Shipment of the watch has been confirmed. Waiting to receive Estipal acceptance",
       SHIPPEDTEXT: "Shipped",
-      SHIPPINGCOMPPENDINGPAYMENTESTIPALACCTEXT: "Shipment of the watch has been confirmed. Waiting to receive Estipal payment and acceptance",
+      SHIPPINGCOMPPENDINGPAYMENTESTIPALACCTEXT:
+        "Shipment of the watch has been confirmed. Waiting to receive Estipal payment and acceptance",
       SHIPPENTPENDINGPAYMENTTEXT: "Shipped / Pending Payment",
-      ACCEPTDEALCOMPLETEDTEXT: "Acceptance of the watch has been confirmed. This deal has been completed",
-      PAYMENTACCEPTDEALCOMPLETEDTEXT: "Payment and acceptance of the watch has been confirmed. This deal has been completed",
+      ACCEPTDEALCOMPLETEDTEXT:
+        "Acceptance of the watch has been confirmed. This deal has been completed",
+      PAYMENTACCEPTDEALCOMPLETEDTEXT:
+        "Payment and acceptance of the watch has been confirmed. This deal has been completed",
       PAIDSOLDTEXT: "Paid / Sold",
-      SIGNINASTEXT: "Signed in as"
+      SIGNINASTEXT: "Signed in as",
     },
   },
   ita: {
@@ -230,73 +255,106 @@ const resources = {
       ESTIMATE: "Stima",
       ACTION: "Action",
       SUBJECT: "Soggetto",
-      BEPARTNERTEXT: "La selezione confermata è 'Be partner with Estipal', la conferma del prezzo di vendita di Estipal è in attesa",
+      BEPARTNERTEXT:
+        "La selezione confermata è 'Be partner with Estipal', la conferma del prezzo di vendita di Estipal è in attesa",
       CONFIRMSELLINGPRICETEXT1: "Il prezzo di vendita confermato da Estipal è",
       CONFIRMSELLINGPRICETEXT2: "La vendita è in sospeso",
-      CONFIRMTHESALE: "La vendita è stata confermata a Estipal. In attesa di ricevere la fattura Estipal",
+      CONFIRMTHESALE:
+        "La vendita è stata confermata a Estipal. In attesa di ricevere la fattura Estipal",
       CONFIRMISSUEINVOICETEXT: "Stipal emesso e fattura per l'importo di",
-      NOSALEHASEBEENMADETEXT: "La vendita è stata annullata e Estipal è stato informato",
-      SELLERINVOICENEWTIER1TEXT: "Una richiesta di pagamento di {accepted_price_with_commission} è stata notificata a Estipal e il pagamento è in sospeso",
-      SELLERINVOICENEWTIER2TEXT: "La spedizione dell'orologio deve essere concordata. Estipal effettuerà il pagamento di {accepted_price_with_commission} dopo aver ricevuto l'orologio",
-      SELLERINVOICETIER1TEXT: "La selezione confermata è 'Vendi a Estipal', una richiesta di pagamento di {accepted_price_with_commission} è stata notificata a Estipal e il pagamento è in sospeso",
-      SELLERINVOICETIER2TEXT: "La selezione confermata è 'Vendi a Estipal'. La spedizione dell'orologio deve essere concordata. Estipal effettuerà il pagamento di {accepted_price_with_commission} dopo aver ricevuto l'orologio",
-      CONFIRMPAYMENTSELLER: "Estipal ha confermato il pagamento di {accepted_price_with_commission}. La spedizione dell'orologio a Estipal deve essere concordata",
-      CONFIRMSHIPMENTESTIPALTIER1: "La spedizione dell'orologio è stata confermata. In attesa di ricevere l'accettazione di Estipal",
-      CONFIRMSHIPMENTESTIPALTIER2: "La spedizione dell'orologio è stata confermata. In attesa di ricevere il pagamento e l'accettazione di Estipal",
-      CONFIRMACCEPTANCETIER1: "L'accettazione dell'orologio è stata confermata. Questo accordo è stato completato",
-      CONFIRMACCEPTANCETIER2: "Il pagamento e l'accettazione dell'orologio sono stati confermati. Questo accordo è stato completato",
-      RETURNTOSELLER: "Estipal ha rifiutato la vendita. L'orologio verrà restituito",
+      NOSALEHASEBEENMADETEXT:
+        "La vendita è stata annullata e Estipal è stato informato",
+      SELLERINVOICENEWTIER1TEXT:
+        "Una richiesta di pagamento di {accepted_price_with_commission} è stata notificata a Estipal e il pagamento è in sospeso",
+      SELLERINVOICENEWTIER2TEXT:
+        "La spedizione dell'orologio deve essere concordata. Estipal effettuerà il pagamento di {accepted_price_with_commission} dopo aver ricevuto l'orologio",
+      SELLERINVOICETIER1TEXT:
+        "La selezione confermata è 'Vendi a Estipal', una richiesta di pagamento di {accepted_price_with_commission} è stata notificata a Estipal e il pagamento è in sospeso",
+      SELLERINVOICETIER2TEXT:
+        "La selezione confermata è 'Vendi a Estipal'. La spedizione dell'orologio deve essere concordata. Estipal effettuerà il pagamento di {accepted_price_with_commission} dopo aver ricevuto l'orologio",
+      CONFIRMPAYMENTSELLER:
+        "Estipal ha confermato il pagamento di {accepted_price_with_commission}. La spedizione dell'orologio a Estipal deve essere concordata",
+      CONFIRMSHIPMENTESTIPALTIER1:
+        "La spedizione dell'orologio è stata confermata. In attesa di ricevere l'accettazione di Estipal",
+      CONFIRMSHIPMENTESTIPALTIER2:
+        "La spedizione dell'orologio è stata confermata. In attesa di ricevere il pagamento e l'accettazione di Estipal",
+      CONFIRMACCEPTANCETIER1:
+        "L'accettazione dell'orologio è stata confermata. Questo accordo è stato completato",
+      CONFIRMACCEPTANCETIER2:
+        "Il pagamento e l'accettazione dell'orologio sono stati confermati. Questo accordo è stato completato",
+      RETURNTOSELLER:
+        "Estipal ha rifiutato la vendita. L'orologio verrà restituito",
       ACCEPTESTIMATION: "Il personale ha accettato la stima dell'orologio",
-      ESTIMATORQUOTATION: "Il valutatore ha inviato la sua stima su una determinata quotazione dell'orologio",
+      ESTIMATORQUOTATION:
+        "Il valutatore ha inviato la sua stima su una determinata quotazione dell'orologio",
       QUOTATIONFORWATCH: "Il venditore è in attesa di preventivo",
-      COUNTEROFFER1: "Il personale ha posto la prima controfferta sulla stima della quotazione dell'orologio",
-      ESTREESTIMATE1: "Il valutatore ha posto la sua nuova stima sulla prima contro offerta del personale",
-      ESTREESTIMATE2: "Il valutatore ha posto la sua nuova stima sulla seconda contro offerta del personale",
-      COUNTEROFFER2: "Il personale ha nuovamente presentato una controfferta sulla stima della quotazione dell'orologio",
+      COUNTEROFFER1:
+        "Il personale ha posto la prima controfferta sulla stima della quotazione dell'orologio",
+      ESTREESTIMATE1:
+        "Il valutatore ha posto la sua nuova stima sulla prima contro offerta del personale",
+      ESTREESTIMATE2:
+        "Il valutatore ha posto la sua nuova stima sulla seconda contro offerta del personale",
+      COUNTEROFFER2:
+        "Il personale ha nuovamente presentato una controfferta sulla stima della quotazione dell'orologio",
       REJECTED: "Il personale ha rifiutato la richiesta di preventivo",
-      ESTIMATIONREJECTED: "Siamo spiacenti di informarti che non siamo stati in grado di stimare il tuo orologio",
+      ESTIMATIONREJECTED:
+        "Siamo spiacenti di informarti che non siamo stati in grado di stimare il tuo orologio",
       ESTIPALADMINISTRATOR: "Estipal-Amministratore",
       ESTIMATOR: "Estimatore",
       QUOTATIONRECEIVED: "Preventivo ricevuto",
       PENDINGFIRSTCOUNTEROFFER: "In attesa della prima controfferta",
       REESTIMATE: "Ri-stima",
       PENDINGSECONDCOUNTEROFFER: "In attesa della seconda contro offerta",
-      BEPARTNERSTATUSTEXT: "In attesa di conferma del prezzo di vendita di Estipal",
+      BEPARTNERSTATUSTEXT:
+        "In attesa di conferma del prezzo di vendita di Estipal",
       ACCEPTEDDEALINPROGRESS: "Accettato - Trattativa in corso",
       PENDINGACTION: "Azione in attesa",
       SELECTOPTIONBELOW: "Seleziona una delle seguenti opzioni",
       SELLESTIPAL: "Vendi a Estipal",
       BEPARTNERWITHESTIPAL: "Diventa partner di Estipal",
-      CONFIRMSELLINGPRICETEXT: "Il prezzo di vendita confermato da Estipal è {props?.confirmed_price}. La vendita è in sospeso",
+      CONFIRMSELLINGPRICETEXT:
+        "Il prezzo di vendita confermato da Estipal è {props?.confirmed_price}. La vendita è in sospeso",
       PENDINGSALE: "Vendita in attesa",
       CONFIRMTHESALE1: "Conferma la vendita",
       NOSALEFOUND: "Non è stata effettuata alcuna vendita",
       COMPLETED: "Completato",
-      CONFIRMISSUEINVOICETEXTONE: "Stipal emesso e fattura per l'importo di {commission_price}",
+      CONFIRMISSUEINVOICETEXTONE:
+        "Stipal emesso e fattura per l'importo di {commission_price}",
       NOTSOLD: "Non venduto",
-      REJECTEDSALEFORSELLERTEXT: "Vendita rifiutata - orologio da restituire al venditore",
-      DEALCOMPLETEDFORWATCHTEXT: "L'orologio è stato venduto e l'affare concluso.",
+      REJECTEDSALEFORSELLERTEXT:
+        "Vendita rifiutata - orologio da restituire al venditore",
+      DEALCOMPLETEDFORWATCHTEXT:
+        "L'orologio è stato venduto e l'affare concluso.",
       WAITINGFORQUOTATION: "In attesa di preventivo",
       REJECTEDTEXT: "Respinto",
       PASSTEXT: "passaggio",
-      PENDINGPAYMENTTIER1TEXTONE: "Una richiesta di pagamento di {props?.accepted_price_with_commission} è stata notificata a Estipal e il pagamento è in sospeso",
-      PENDINGPAYMENTTIER2TEXTONE: "La spedizione dell'orologio deve essere concordata. Estipal effettuerà il pagamento di {props?.accepted_price_with_commission} dopo aver ricevuto l'orologio",
+      PENDINGPAYMENTTIER1TEXTONE:
+        "Una richiesta di pagamento di {props?.accepted_price_with_commission} è stata notificata a Estipal e il pagamento è in sospeso",
+      PENDINGPAYMENTTIER2TEXTONE:
+        "La spedizione dell'orologio deve essere concordata. Estipal effettuerà il pagamento di {props?.accepted_price_with_commission} dopo aver ricevuto l'orologio",
       PENDINGESTIPALPAYMENT: "In attesa di pagamento Estipal",
       PENDINGSHIPPING: "In attesa di spedizione",
       CONFIRMATIONREQUIREDTEXT: "È necessaria la conferma",
       CONFIRMSHIPMENTESTIPALTEXT: "Conferma la spedizione a Estipal",
-      CONFIRMSELECTIONTIER1TEXT: "La selezione confermata è 'Vendi a Estipal', una richiesta di pagamento di {props?.accepted_price_with_commission} è stata notificata a Estipal e il pagamento è in sospeso",
-      CONFIRMSELECTIONTIER2TEXT: "La selezione confermata è 'Vendi a Estipal'. La spedizione dell'orologio deve essere concordata. Estipal effettuerà il pagamento di {props?.accepted_price_with_commission} dopo aver ricevuto l'orologio",
-      CONFIRMPAYMENTSELLERONE: "Estipal ha confermato il pagamento di {props?.accepted_price_with_commission}. La spedizione dell'orologio a Estipal deve essere concordata",
+      CONFIRMSELECTIONTIER1TEXT:
+        "La selezione confermata è 'Vendi a Estipal', una richiesta di pagamento di {props?.accepted_price_with_commission} è stata notificata a Estipal e il pagamento è in sospeso",
+      CONFIRMSELECTIONTIER2TEXT:
+        "La selezione confermata è 'Vendi a Estipal'. La spedizione dell'orologio deve essere concordata. Estipal effettuerà il pagamento di {props?.accepted_price_with_commission} dopo aver ricevuto l'orologio",
+      CONFIRMPAYMENTSELLERONE:
+        "Estipal ha confermato il pagamento di {props?.accepted_price_with_commission}. La spedizione dell'orologio a Estipal deve essere concordata",
       PAIDPENDINGSHIPPING: "Pagato/Spedizione in attesa",
-      SHIPPINGCOMPPENDINGESTIPALACCTEXT: "La spedizione dell'orologio è stata confermata. In attesa di ricevere l'accettazione di Estipal",
+      SHIPPINGCOMPPENDINGESTIPALACCTEXT:
+        "La spedizione dell'orologio è stata confermata. In attesa di ricevere l'accettazione di Estipal",
       SHIPPEDTEXT: "Spedito",
-      SHIPPINGCOMPPENDINGPAYMENTESTIPALACCTEXT: "La spedizione dell'orologio è stata confermata. In attesa di ricevere il pagamento e l'accettazione di Estipal",
+      SHIPPINGCOMPPENDINGPAYMENTESTIPALACCTEXT:
+        "La spedizione dell'orologio è stata confermata. In attesa di ricevere il pagamento e l'accettazione di Estipal",
       SHIPPENTPENDINGPAYMENTTEXT: "Spedito / In attesa di pagamento",
-      ACCEPTDEALCOMPLETEDTEXT: "L'accettazione dell'orologio è stata confermata. Questo accordo è stato completato",
-      PAYMENTACCEPTDEALCOMPLETEDTEXT: "Il pagamento e l'accettazione dell'orologio sono stati confermati. Questo accordo è stato completato",
+      ACCEPTDEALCOMPLETEDTEXT:
+        "L'accettazione dell'orologio è stata confermata. Questo accordo è stato completato",
+      PAYMENTACCEPTDEALCOMPLETEDTEXT:
+        "Il pagamento e l'accettazione dell'orologio sono stati confermati. Questo accordo è stato completato",
       PAIDSOLDTEXT: "Pagato/venduto",
-      SIGNINASTEXT: "Accedi come"
+      SIGNINASTEXT: "Accedi come",
     },
   },
   esp: {
@@ -377,73 +435,104 @@ const resources = {
       ESTIMATE: "Estimar",
       ACTION: "Acción",
       SUBJECT: "Sujeto",
-      BEPARTNERTEXT: "La selección confirmada es 'Ser socio de Estipal', la confirmación del precio de venta de Estipal está pendiente",
+      BEPARTNERTEXT:
+        "La selección confirmada es 'Ser socio de Estipal', la confirmación del precio de venta de Estipal está pendiente",
       CONFIRMSELLINGPRICETEXT1: "El precio de venta confirmado por Estipal es",
       CONFIRMSELLINGPRICETEXT2: "La venta está pendiente",
-      CONFIRMTHESALE: "Se ha confirmado la venta a Estipal. Esperando recibir factura de Estipal",
+      CONFIRMTHESALE:
+        "Se ha confirmado la venta a Estipal. Esperando recibir factura de Estipal",
       CONFIRMISSUEINVOICETEXT: "Estipal emitido y factura por el monto de",
-      NOSALEHASEBEENMADETEXT: "La venta ha sido cancelada y Estipal ha sido notificado.",
-      SELLERINVOICENEWTIER1TEXT: "Se ha notificado a Estipal una solicitud de pago de {accept_price_with_commission} y el pago está pendiente",
-      SELLERINVOICENEWTIER2TEXT: "Se debe organizar el envío del reloj. Estipal realizará el pago de {accept_price_with_commission} después de recibir el reloj",
-      SELLERINVOICETIER1TEXT: "La selección confirmada es 'Vender a Estipal', se ha notificado a Estipal una solicitud de pago de {accept_price_with_commission} y el pago está pendiente",
-      SELLERINVOICETIER2TEXT: "La selección confirmada es 'Vender a Estipal'. Se debe organizar el envío del reloj. Estipal realizará el pago de {accept_price_with_commission} después de recibir el reloj",
-      CONFIRMPAYMENTSELLER: "Estipal confirmó el pago de {accept_price_with_commission}. Se debe concertar el envío del reloj a Estipal",
-      CONFIRMSHIPMENTESTIPALTIER1: "Se ha confirmado el envío del reloj. A la espera de recibir la aceptación de Estipal",
-      CONFIRMSHIPMENTESTIPALTIER2: "Se ha confirmado el envío del reloj. A la espera de recibir el pago y la aceptación de Estipal",
-      CONFIRMACCEPTANCETIER1: "Se ha confirmado la aceptación del reloj. Este trato se ha completado",
-      CONFIRMACCEPTANCETIER2: "Se ha confirmado el pago y la aceptación del reloj. Este trato se ha completado",
+      NOSALEHASEBEENMADETEXT:
+        "La venta ha sido cancelada y Estipal ha sido notificado.",
+      SELLERINVOICENEWTIER1TEXT:
+        "Se ha notificado a Estipal una solicitud de pago de {accept_price_with_commission} y el pago está pendiente",
+      SELLERINVOICENEWTIER2TEXT:
+        "Se debe organizar el envío del reloj. Estipal realizará el pago de {accept_price_with_commission} después de recibir el reloj",
+      SELLERINVOICETIER1TEXT:
+        "La selección confirmada es 'Vender a Estipal', se ha notificado a Estipal una solicitud de pago de {accept_price_with_commission} y el pago está pendiente",
+      SELLERINVOICETIER2TEXT:
+        "La selección confirmada es 'Vender a Estipal'. Se debe organizar el envío del reloj. Estipal realizará el pago de {accept_price_with_commission} después de recibir el reloj",
+      CONFIRMPAYMENTSELLER:
+        "Estipal confirmó el pago de {accept_price_with_commission}. Se debe concertar el envío del reloj a Estipal",
+      CONFIRMSHIPMENTESTIPALTIER1:
+        "Se ha confirmado el envío del reloj. A la espera de recibir la aceptación de Estipal",
+      CONFIRMSHIPMENTESTIPALTIER2:
+        "Se ha confirmado el envío del reloj. A la espera de recibir el pago y la aceptación de Estipal",
+      CONFIRMACCEPTANCETIER1:
+        "Se ha confirmado la aceptación del reloj. Este trato se ha completado",
+      CONFIRMACCEPTANCETIER2:
+        "Se ha confirmado el pago y la aceptación del reloj. Este trato se ha completado",
       RETURNTOSELLER: "Estipal rechazó la venta. El reloj será devuelto",
       ACCEPTESTIMATION: "El personal ha aceptado la estimación del reloj.",
-      ESTIMATORQUOTATION: "El estimador ha enviado su estimación sobre una cita de reloj determinada.",
+      ESTIMATORQUOTATION:
+        "El estimador ha enviado su estimación sobre una cita de reloj determinada.",
       QUOTATIONFORWATCH: "El vendedor está esperando cotización",
-      COUNTEROFFER1: "El personal ha realizado la primera contraoferta en la estimación de la cotización del reloj.",
-      ESTREESTIMATE1: "Estimator ha colocado su reestimación en la primera contraoferta del personal",
-      ESTREESTIMATE2: "El estimador ha colocado su nueva estimación en la segunda contraoferta del personal",
-      COUNTEROFFER2: "El personal ha vuelto a colocar una contraoferta en la estimación de la cotización del reloj.",
+      COUNTEROFFER1:
+        "El personal ha realizado la primera contraoferta en la estimación de la cotización del reloj.",
+      ESTREESTIMATE1:
+        "Estimator ha colocado su reestimación en la primera contraoferta del personal",
+      ESTREESTIMATE2:
+        "El estimador ha colocado su nueva estimación en la segunda contraoferta del personal",
+      COUNTEROFFER2:
+        "El personal ha vuelto a colocar una contraoferta en la estimación de la cotización del reloj.",
       REJECTED: "El personal ha rechazado la solicitud de presupuesto",
-      ESTIMATIONREJECTED: "Lamentamos informarle que no pudimos estimar su reloj.",
+      ESTIMATIONREJECTED:
+        "Lamentamos informarle que no pudimos estimar su reloj.",
       ESTIPALADMINISTRATOR: "Estipal-Administrador",
       ESTIMATOR: "Estimador",
       QUOTATIONRECEIVED: "Cotización recibida",
       PENDINGFIRSTCOUNTEROFFER: "Pendiente primera contraoferta",
       REESTIMATE: "Reestimar",
       PENDINGSECONDCOUNTEROFFER: "Segunda contraoferta pendiente",
-      BEPARTNERSTATUSTEXT: "Pendiente de confirmación del precio de venta de Estipal",
+      BEPARTNERSTATUSTEXT:
+        "Pendiente de confirmación del precio de venta de Estipal",
       ACCEPTEDDEALINPROGRESS: "Aceptado: oferta en curso",
       PENDINGACTION: "Acción pendiente",
       SELECTOPTIONBELOW: "Seleccione una de las siguientes opciones",
       SELLESTIPAL: "Vender a Estipal",
       BEPARTNERWITHESTIPAL: "Sea socio de Estipal",
-      CONFIRMSELLINGPRICETEXT: "El precio de venta confirmado por Estipal es {props?.confirmed_price}. La venta está pendiente",
+      CONFIRMSELLINGPRICETEXT:
+        "El precio de venta confirmado por Estipal es {props?.confirmed_price}. La venta está pendiente",
       PENDINGSALE: "Venta pendiente",
       CONFIRMTHESALE1: "Confirma la venta",
       NOSALEFOUND: "No se ha realizado ninguna venta",
       COMPLETED: "Terminado",
-      CONFIRMISSUEINVOICETEXTONE: "Estipal emitido y factura por el monto de {commission_price}",
+      CONFIRMISSUEINVOICETEXTONE:
+        "Estipal emitido y factura por el monto de {commission_price}",
       NOTSOLD: "No vendido",
-      REJECTEDSALEFORSELLERTEXT: "Venta rechazada: el reloj se devolverá al vendedor",
+      REJECTEDSALEFORSELLERTEXT:
+        "Venta rechazada: el reloj se devolverá al vendedor",
       DEALCOMPLETEDFORWATCHTEXT: "El reloj se vendió y el trato se completó.",
       WAITINGFORQUOTATION: "Esperando cotización",
       REJECTEDTEXT: "Rechazado",
       PASSTEXT: "aprobar",
-      PENDINGPAYMENTTIER1TEXTONE: "Se ha notificado a Estipal una solicitud de pago de {props?.accept_price_with_commission} y el pago está pendiente",
-      PENDINGPAYMENTTIER2TEXTONE: "Se debe organizar el envío del reloj. Estipal realizará el pago de {props?.accept_price_with_commission} después de recibir el reloj",
+      PENDINGPAYMENTTIER1TEXTONE:
+        "Se ha notificado a Estipal una solicitud de pago de {props?.accept_price_with_commission} y el pago está pendiente",
+      PENDINGPAYMENTTIER2TEXTONE:
+        "Se debe organizar el envío del reloj. Estipal realizará el pago de {props?.accept_price_with_commission} después de recibir el reloj",
       PENDINGESTIPALPAYMENT: "Pago Estipal pendiente",
       PENDINGSHIPPING: "Pendiente de envío",
       CONFIRMATIONREQUIREDTEXT: "Se requiere confirmación",
       CONFIRMSHIPMENTESTIPALTEXT: "Confirmar envío a Estipal",
-      CONFIRMSELECTIONTIER1TEXT: "La selección confirmada es 'Vender a Estipal', se ha notificado a Estipal una solicitud de pago de {props?.accept_price_with_commission} y el pago está pendiente",
-      CONFIRMSELECTIONTIER2TEXT: "La selección confirmada es 'Vender a Estipal'. Se debe organizar el envío del reloj. Estipal realizará el pago de {props?.accept_price_with_commission} después de recibir el reloj",
-      CONFIRMPAYMENTSELLERONE: "Estipal confirmó el pago de {props?.accept_price_with_commission}. Se debe concertar el envío del reloj a Estipal",
+      CONFIRMSELECTIONTIER1TEXT:
+        "La selección confirmada es 'Vender a Estipal', se ha notificado a Estipal una solicitud de pago de {props?.accept_price_with_commission} y el pago está pendiente",
+      CONFIRMSELECTIONTIER2TEXT:
+        "La selección confirmada es 'Vender a Estipal'. Se debe organizar el envío del reloj. Estipal realizará el pago de {props?.accept_price_with_commission} después de recibir el reloj",
+      CONFIRMPAYMENTSELLERONE:
+        "Estipal confirmó el pago de {props?.accept_price_with_commission}. Se debe concertar el envío del reloj a Estipal",
       PAIDPENDINGSHIPPING: "Envío pagado / pendiente",
-      SHIPPINGCOMPPENDINGESTIPALACCTEXT: "Se ha confirmado el envío del reloj. A la espera de recibir la aceptación de Estipal",
+      SHIPPINGCOMPPENDINGESTIPALACCTEXT:
+        "Se ha confirmado el envío del reloj. A la espera de recibir la aceptación de Estipal",
       SHIPPEDTEXT: "Enviado",
-      SHIPPINGCOMPPENDINGPAYMENTESTIPALACCTEXT: "Se ha confirmado el envío del reloj. A la espera de recibir el pago y la aceptación de Estipal",
+      SHIPPINGCOMPPENDINGPAYMENTESTIPALACCTEXT:
+        "Se ha confirmado el envío del reloj. A la espera de recibir el pago y la aceptación de Estipal",
       SHIPPENTPENDINGPAYMENTTEXT: "Enviado / Pago pendiente",
-      ACCEPTDEALCOMPLETEDTEXT: "Se ha confirmado la aceptación del reloj. Este trato se ha completado",
-      PAYMENTACCEPTDEALCOMPLETEDTEXT: "Se ha confirmado el pago y la aceptación del reloj. Este trato se ha completado",
+      ACCEPTDEALCOMPLETEDTEXT:
+        "Se ha confirmado la aceptación del reloj. Este trato se ha completado",
+      PAYMENTACCEPTDEALCOMPLETEDTEXT:
+        "Se ha confirmado el pago y la aceptación del reloj. Este trato se ha completado",
       PAIDSOLDTEXT: "Pagado / vendido",
-      SIGNINASTEXT: "Inició sesión como"
+      SIGNINASTEXT: "Inició sesión como",
     },
   },
   cn: {
@@ -530,13 +619,19 @@ const resources = {
       CONFIRMTHESALE: "已向 Estipal 確認出售。 等待收到 Estipal 發票",
       CONFIRMISSUEINVOICETEXT: "針對 的金額發出的估算值和發票",
       NOSALEHASEBEENMADETEXT: "銷售已取消，Estipal 已收到通知",
-      SELLERINVOICENEWTIER1TEXT: "{accepted_price_with_commission} 的付款請求已通知 Estipal，付款待處理",
-      SELLERINVOICENEWTIER2TEXT: "必須安排手錶的運輸。 Estipal 將在收到手錶後支付 {accepted_price_with_commission}",
-      SELLERINVOICETIER1TEXT: "確認的選擇是“出售給 Estipal”，{accepted_price_with_commission} 的付款請求已通知 Estipal，付款待處理",
-      SELLERINVOICETIER2TEXT: "確認的選擇是“賣給 Estipal”。 必須安排手錶的運輸。 Estipal 將在收到手錶後支付 {accepted_price_with_commission}",
-      CONFIRMPAYMENTSELLER: "Estipal 確認支付了 {accepted_price_with_commission}。 必須安排將手錶運送到 Estipal",
+      SELLERINVOICENEWTIER1TEXT:
+        "{accepted_price_with_commission} 的付款請求已通知 Estipal，付款待處理",
+      SELLERINVOICENEWTIER2TEXT:
+        "必須安排手錶的運輸。 Estipal 將在收到手錶後支付 {accepted_price_with_commission}",
+      SELLERINVOICETIER1TEXT:
+        "確認的選擇是“出售給 Estipal”，{accepted_price_with_commission} 的付款請求已通知 Estipal，付款待處理",
+      SELLERINVOICETIER2TEXT:
+        "確認的選擇是“賣給 Estipal”。 必須安排手錶的運輸。 Estipal 將在收到手錶後支付 {accepted_price_with_commission}",
+      CONFIRMPAYMENTSELLER:
+        "Estipal 確認支付了 {accepted_price_with_commission}。 必須安排將手錶運送到 Estipal",
       CONFIRMSHIPMENTESTIPALTIER1: "手錶已確認發貨。 等待收到 Estipal 接受",
-      CONFIRMSHIPMENTESTIPALTIER2: "手錶已確認發貨。 等待收到 Estipal 付款和接受",
+      CONFIRMSHIPMENTESTIPALTIER2:
+        "手錶已確認發貨。 等待收到 Estipal 付款和接受",
       CONFIRMACCEPTANCETIER1: "手錶已被接受。 這筆交易已經完成",
       CONFIRMACCEPTANCETIER2: "手錶的付款和驗收已確認。 這筆交易已經完成",
       RETURNTOSELLER: "埃斯蒂帕爾拒絕了這筆交易。 手錶將被退回",
@@ -561,36 +656,46 @@ const resources = {
       SELECTOPTIONBELOW: "選擇以下選項之一",
       SELLESTIPAL: "賣給 Estipal",
       BEPARTNERWITHESTIPAL: "成為 Estipal 的合作夥伴",
-      CONFIRMSELLINGPRICETEXT: "Estipal 確認的售價為 {props?.confirmed_price}。 銷售待定",
+      CONFIRMSELLINGPRICETEXT:
+        "Estipal 確認的售價為 {props?.confirmed_price}。 銷售待定",
       PENDINGSALE: "待售",
       CONFIRMTHESALE1: "確認銷售",
       NOSALEFOUND: "沒有銷售",
       COMPLETED: "完全的",
-      CONFIRMISSUEINVOICETEXTONE: "針對 {commission_price} 的金額發出的估算值和發票",
+      CONFIRMISSUEINVOICETEXTONE:
+        "針對 {commission_price} 的金額發出的估算值和發票",
       NOTSOLD: "不出售",
       REJECTEDSALEFORSELLERTEXT: "拒絕銷售 - 手錶將退還給賣家",
       DEALCOMPLETEDFORWATCHTEXT: "手表已售出，交易完成。",
       WAITINGFORQUOTATION: "等待報價",
       REJECTEDTEXT: "拒絕了",
       PASSTEXT: "經過",
-      PENDINGPAYMENTTIER1TEXTONE: "{props?.accepted_price_with_commission} 的付款請求已通知 Estipal，付款待處理",
-      PENDINGPAYMENTTIER2TEXTONE: "必須安排手錶的運輸。 Estipal 將在收到手錶後支付 {props?.accepted_price_with_commission}",
+      PENDINGPAYMENTTIER1TEXTONE:
+        "{props?.accepted_price_with_commission} 的付款請求已通知 Estipal，付款待處理",
+      PENDINGPAYMENTTIER2TEXTONE:
+        "必須安排手錶的運輸。 Estipal 將在收到手錶後支付 {props?.accepted_price_with_commission}",
       PENDINGESTIPALPAYMENT: "待定的估計付款",
       PENDINGSHIPPING: "待發貨",
       CONFIRMATIONREQUIREDTEXT: "需要確認",
       CONFIRMSHIPMENTESTIPALTEXT: "確認發貨到 Estipal",
-      CONFIRMSELECTIONTIER1TEXT: "確認的選擇是“出售給 Estipal”，{props?.accepted_price_with_commission} 的付款請求已通知 Estipal，付款待處理",
-      CONFIRMSELECTIONTIER2TEXT: "確認的選擇是“賣給 Estipal”。 必須安排手錶的運輸。 Estipal 將在收到手錶後支付 {props?.accepted_price_with_commission}",
-      CONFIRMPAYMENTSELLERONE: "Estipal 確認支付了 {props?.accepted_price_with_commission}。 必須安排將手錶運送到 Estipal",
+      CONFIRMSELECTIONTIER1TEXT:
+        "確認的選擇是“出售給 Estipal”，{props?.accepted_price_with_commission} 的付款請求已通知 Estipal，付款待處理",
+      CONFIRMSELECTIONTIER2TEXT:
+        "確認的選擇是“賣給 Estipal”。 必須安排手錶的運輸。 Estipal 將在收到手錶後支付 {props?.accepted_price_with_commission}",
+      CONFIRMPAYMENTSELLERONE:
+        "Estipal 確認支付了 {props?.accepted_price_with_commission}。 必須安排將手錶運送到 Estipal",
       PAIDPENDINGSHIPPING: "已付款/待發貨",
-      SHIPPINGCOMPPENDINGESTIPALACCTEXT: "手錶已確認發貨。 等待收到 Estipal 接受",
+      SHIPPINGCOMPPENDINGESTIPALACCTEXT:
+        "手錶已確認發貨。 等待收到 Estipal 接受",
       SHIPPEDTEXT: "已發貨",
-      SHIPPINGCOMPPENDINGPAYMENTESTIPALACCTEXT: "手錶已確認發貨。 等待收到 Estipal 付款和接受",
+      SHIPPINGCOMPPENDINGPAYMENTESTIPALACCTEXT:
+        "手錶已確認發貨。 等待收到 Estipal 付款和接受",
       SHIPPENTPENDINGPAYMENTTEXT: "已發貨/待付款",
       ACCEPTDEALCOMPLETEDTEXT: "手錶已被接受。 這筆交易已經完成",
-      PAYMENTACCEPTDEALCOMPLETEDTEXT: "手錶的付款和驗收已確認。 這筆交易已經完成",
+      PAYMENTACCEPTDEALCOMPLETEDTEXT:
+        "手錶的付款和驗收已確認。 這筆交易已經完成",
       PAIDSOLDTEXT: "已付/已售",
-      SIGNINASTEXT: "登录身份"
+      SIGNINASTEXT: "登录身份",
     },
   },
   indu: {
@@ -671,31 +776,49 @@ const resources = {
       ESTIMATE: "अनुमान लगाना",
       ACTION: "कार्रवाई",
       SUBJECT: "विषय",
-      BEPARTNERTEXT: "पुष्टिकृत चयन 'एस्टिपल के साथ भागीदार बनें' है, एस्टिपल विक्रय मूल्य की पुष्टि लंबित है",
+      BEPARTNERTEXT:
+        "पुष्टिकृत चयन 'एस्टिपल के साथ भागीदार बनें' है, एस्टिपल विक्रय मूल्य की पुष्टि लंबित है",
       CONFIRMSELLINGPRICETEXT1: "एस्टिपल द्वारा पुष्टि की गई बिक्री कीमत है",
       CONFIRMSELLINGPRICETEXT2: "बिक्री बाकी है",
-      CONFIRMTHESALE: "एस्टिपल को बिक्री की पुष्टि हो गई है। एस्टिपल इनवॉइस प्राप्त होने की प्रतीक्षा है",
+      CONFIRMTHESALE:
+        "एस्टिपल को बिक्री की पुष्टि हो गई है। एस्टिपल इनवॉइस प्राप्त होने की प्रतीक्षा है",
       CONFIRMISSUEINVOICETEXT: "एस्टिपल जारी किया गया और राशि के लिए चालान",
-      NOSALEHASEBEENMADETEXT: "बिक्री रद्द कर दी गई है और एस्टिपल को सूचित कर दिया गया है",
-      SELLERINVOICENEWTIER1TEXT: "{accepted_price_with_commission} का भुगतान अनुरोध एस्टिपल को सूचित कर दिया गया है और भुगतान लंबित है",
-      SELLERINVOICENEWTIER2TEXT: "घड़ी की शिपमेंट की व्यवस्था करनी होगी। एस्टिपल घड़ी प्राप्त करने के बाद {accepted_price_with_commission} का भुगतान करेगा",
-      SELLERINVOICETIER1TEXT: "पुष्टि की गई चयन 'एस्टिपल को बेचें' है, {accepted_price_with_commission} का भुगतान अनुरोध एस्टिपल को अधिसूचित किया गया है और भुगतान लंबित है",
-      SELLERINVOICETIER2TEXT: "पुष्टि की गई चयन 'एस्टिपल को बेचें' है। घड़ी की शिपमेंट की व्यवस्था करनी होगी। घड़ी प्राप्त करने के बाद एस्टिपल {accepted_price_with_commission} का भुगतान करेगा",
-      CONFIRMPAYMENTSELLER: "एस्टिपल ने {accepted_price_with_commission} के भुगतान की पुष्टि की है। एस्टिपल को घड़ी की शिपमेंट की व्यवस्था करनी होगी",
-      CONFIRMSHIPMENTESTIPALTIER1: "घड़ी की शिपमेंट की पुष्टि हो गई है। एस्टिपल स्वीकृति प्राप्त करने की प्रतीक्षा कर रहा है",
-      CONFIRMSHIPMENTESTIPALTIER2: "घड़ी की शिपमेंट की पुष्टि हो गई है। एस्टिपल भुगतान और स्वीकृति प्राप्त करने की प्रतीक्षा कर रहा है",
-      CONFIRMACCEPTANCETIER1: "घड़ी की स्वीकृति की पुष्टि हो गई है। यह सौदा पूरा हो गया है",
-      CONFIRMACCEPTANCETIER2: "घड़ी का भुगतान और स्वीकृति की पुष्टि हो गई है। यह सौदा पूरा हो गया है",
-      RETURNTOSELLER: "एस्टिपल ने बिक्री को अस्वीकार कर दिया। घड़ी वापस कर दी जाएगी",
+      NOSALEHASEBEENMADETEXT:
+        "बिक्री रद्द कर दी गई है और एस्टिपल को सूचित कर दिया गया है",
+      SELLERINVOICENEWTIER1TEXT:
+        "{accepted_price_with_commission} का भुगतान अनुरोध एस्टिपल को सूचित कर दिया गया है और भुगतान लंबित है",
+      SELLERINVOICENEWTIER2TEXT:
+        "घड़ी की शिपमेंट की व्यवस्था करनी होगी। एस्टिपल घड़ी प्राप्त करने के बाद {accepted_price_with_commission} का भुगतान करेगा",
+      SELLERINVOICETIER1TEXT:
+        "पुष्टि की गई चयन 'एस्टिपल को बेचें' है, {accepted_price_with_commission} का भुगतान अनुरोध एस्टिपल को अधिसूचित किया गया है और भुगतान लंबित है",
+      SELLERINVOICETIER2TEXT:
+        "पुष्टि की गई चयन 'एस्टिपल को बेचें' है। घड़ी की शिपमेंट की व्यवस्था करनी होगी। घड़ी प्राप्त करने के बाद एस्टिपल {accepted_price_with_commission} का भुगतान करेगा",
+      CONFIRMPAYMENTSELLER:
+        "एस्टिपल ने {accepted_price_with_commission} के भुगतान की पुष्टि की है। एस्टिपल को घड़ी की शिपमेंट की व्यवस्था करनी होगी",
+      CONFIRMSHIPMENTESTIPALTIER1:
+        "घड़ी की शिपमेंट की पुष्टि हो गई है। एस्टिपल स्वीकृति प्राप्त करने की प्रतीक्षा कर रहा है",
+      CONFIRMSHIPMENTESTIPALTIER2:
+        "घड़ी की शिपमेंट की पुष्टि हो गई है। एस्टिपल भुगतान और स्वीकृति प्राप्त करने की प्रतीक्षा कर रहा है",
+      CONFIRMACCEPTANCETIER1:
+        "घड़ी की स्वीकृति की पुष्टि हो गई है। यह सौदा पूरा हो गया है",
+      CONFIRMACCEPTANCETIER2:
+        "घड़ी का भुगतान और स्वीकृति की पुष्टि हो गई है। यह सौदा पूरा हो गया है",
+      RETURNTOSELLER:
+        "एस्टिपल ने बिक्री को अस्वीकार कर दिया। घड़ी वापस कर दी जाएगी",
       ACCEPTESTIMATION: "स्टाफ ने घड़ी का आकलन स्वीकार कर लिया है",
-      ESTIMATORQUOTATION: "अनुमानक ने दिए गए घड़ी उद्धरण पर अपना अनुमान भेजा है",
+      ESTIMATORQUOTATION:
+        "अनुमानक ने दिए गए घड़ी उद्धरण पर अपना अनुमान भेजा है",
       QUOTATIONFORWATCH: "विक्रेता कोटेशन का इंतजार कर रहा है",
       COUNTEROFFER1: "स्टाफ ने घड़ी की कीमत के आकलन पर पहला काउंटर ऑफर रखा है",
-      ESTREESTIMATE1: "आकलनकर्ता ने स्टाफ के पहले काउंटर ऑफर पर अपना पुनः आकलन रखा है",
-      ESTREESTIMATE2: "आकलनकर्ता ने स्टाफ के दूसरे काउंटर ऑफर पर अपना पुनः आकलन रखा है",
-      COUNTEROFFER2: "स्टाफ ने घड़ी की कीमत के आकलन पर फिर से जवाबी प्रस्ताव रखा है",
+      ESTREESTIMATE1:
+        "आकलनकर्ता ने स्टाफ के पहले काउंटर ऑफर पर अपना पुनः आकलन रखा है",
+      ESTREESTIMATE2:
+        "आकलनकर्ता ने स्टाफ के दूसरे काउंटर ऑफर पर अपना पुनः आकलन रखा है",
+      COUNTEROFFER2:
+        "स्टाफ ने घड़ी की कीमत के आकलन पर फिर से जवाबी प्रस्ताव रखा है",
       REJECTED: "कर्मचारियों ने अनुमान अनुरोध अस्वीकार कर दिया है",
-      ESTIMATIONREJECTED: "हमें आपको यह बताते हुए खेद है कि हम आपकी घड़ी का अनुमान नहीं लगा सके",
+      ESTIMATIONREJECTED:
+        "हमें आपको यह बताते हुए खेद है कि हम आपकी घड़ी का अनुमान नहीं लगा सके",
       ESTIPALADMINISTRATOR: "एस्टिपल-प्रशासक",
       ESTIMATOR: "क़ीमत लगानेवाला",
       QUOTATIONRECEIVED: "कोटेशन प्राप्त हुआ",
@@ -708,36 +831,48 @@ const resources = {
       SELECTOPTIONBELOW: "नीचे दिए गए विकल्पों में से एक का चयन करें",
       SELLESTIPAL: "एस्टिपल को बेचें",
       BEPARTNERWITHESTIPAL: "एस्टिपल के साथ भागीदार बनें",
-      CONFIRMSELLINGPRICETEXT: "एस्टिपल द्वारा पुष्टि की गई बिक्री कीमत {props?.confirmed_price} है। बिक्री लंबित है",
+      CONFIRMSELLINGPRICETEXT:
+        "एस्टिपल द्वारा पुष्टि की गई बिक्री कीमत {props?.confirmed_price} है। बिक्री लंबित है",
       PENDINGSALE: "लंबित बिक्री",
       CONFIRMTHESALE1: "बिक्री की पुष्टि करें",
       NOSALEFOUND: "कोई बिक्री नहीं हुई है",
       COMPLETED: "पुरा होना।",
-      CONFIRMISSUEINVOICETEXTONE: "एस्टिपल ने ${commission_price} की राशि के लिए चालान जारी किया",
+      CONFIRMISSUEINVOICETEXTONE:
+        "एस्टिपल ने ${commission_price} की राशि के लिए चालान जारी किया",
       NOTSOLD: "नहीं बिका",
-      REJECTEDSALEFORSELLERTEXT: "अस्वीकृत बिक्री - घड़ी विक्रेता को वापस की जाएगी",
+      REJECTEDSALEFORSELLERTEXT:
+        "अस्वीकृत बिक्री - घड़ी विक्रेता को वापस की जाएगी",
       DEALCOMPLETEDFORWATCHTEXT: "घड़ी बिक गई है और सौदा पूरा हो गया है।",
       WAITINGFORQUOTATION: "कोटेशन का इंतजार",
       REJECTEDTEXT: "अस्वीकार कर दिया",
       PASSTEXT: "pass",
-      PENDINGPAYMENTTIER1TEXTONE: "{props?.accepted_price_with_commission} का भुगतान अनुरोध एस्टिपल को सूचित कर दिया गया है और भुगतान लंबित है",
-      PENDINGPAYMENTTIER2TEXTONE: "घड़ी की शिपमेंट की व्यवस्था करनी होगी। एस्टिपल घड़ी प्राप्त करने के बाद {props?.accepted_price_with_commission} का भुगतान करेगा",
+      PENDINGPAYMENTTIER1TEXTONE:
+        "{props?.accepted_price_with_commission} का भुगतान अनुरोध एस्टिपल को सूचित कर दिया गया है और भुगतान लंबित है",
+      PENDINGPAYMENTTIER2TEXTONE:
+        "घड़ी की शिपमेंट की व्यवस्था करनी होगी। एस्टिपल घड़ी प्राप्त करने के बाद {props?.accepted_price_with_commission} का भुगतान करेगा",
       PENDINGESTIPALPAYMENT: "लंबित एस्टिपल भुगतान",
       PENDINGSHIPPING: "लंबित शिपिंग",
       CONFIRMATIONREQUIREDTEXT: "पुष्टि आवश्यक है",
       CONFIRMSHIPMENTESTIPALTEXT: "एस्टिपल को शिपमेंट की पुष्टि करें",
-      CONFIRMSELECTIONTIER1TEXT: "पुष्टि की गई चयन 'एस्टिपल को बेचें' है, {props?.accepted_price_with_commission} का भुगतान अनुरोध एस्टिपल को सूचित कर दिया गया है और भुगतान लंबित है",
-      CONFIRMSELECTIONTIER2TEXT: "पुष्टि की गई चयन 'एस्टिपल को बेचें' है। घड़ी की शिपमेंट की व्यवस्था करनी होगी। घड़ी प्राप्त करने के बाद एस्टिपल {props?.accepted_price_with_commission} का भुगतान करेगा",
-      CONFIRMPAYMENTSELLERONE: "एस्टिपल ने {props?.accepted_price_with_commission} के भुगतान की पुष्टि की है। एस्टिपल को घड़ी की शिपमेंट की व्यवस्था करनी होगी",
+      CONFIRMSELECTIONTIER1TEXT:
+        "पुष्टि की गई चयन 'एस्टिपल को बेचें' है, {props?.accepted_price_with_commission} का भुगतान अनुरोध एस्टिपल को सूचित कर दिया गया है और भुगतान लंबित है",
+      CONFIRMSELECTIONTIER2TEXT:
+        "पुष्टि की गई चयन 'एस्टिपल को बेचें' है। घड़ी की शिपमेंट की व्यवस्था करनी होगी। घड़ी प्राप्त करने के बाद एस्टिपल {props?.accepted_price_with_commission} का भुगतान करेगा",
+      CONFIRMPAYMENTSELLERONE:
+        "एस्टिपल ने {props?.accepted_price_with_commission} के भुगतान की पुष्टि की है। एस्टिपल को घड़ी की शिपमेंट की व्यवस्था करनी होगी",
       PAIDPENDINGSHIPPING: "भुगतान / लंबित शिपिंग",
-      SHIPPINGCOMPPENDINGESTIPALACCTEXT: "घड़ी की शिपमेंट की पुष्टि हो गई है। एस्टिपल स्वीकृति प्राप्त करने की प्रतीक्षा कर रहा है",
+      SHIPPINGCOMPPENDINGESTIPALACCTEXT:
+        "घड़ी की शिपमेंट की पुष्टि हो गई है। एस्टिपल स्वीकृति प्राप्त करने की प्रतीक्षा कर रहा है",
       SHIPPEDTEXT: "भेजा गया",
-      SHIPPINGCOMPPENDINGPAYMENTESTIPALACCTEXT: "घड़ी की शिपमेंट की पुष्टि हो गई है। एस्टिपल भुगतान और स्वीकृति प्राप्त करने की प्रतीक्षा कर रहा है",
+      SHIPPINGCOMPPENDINGPAYMENTESTIPALACCTEXT:
+        "घड़ी की शिपमेंट की पुष्टि हो गई है। एस्टिपल भुगतान और स्वीकृति प्राप्त करने की प्रतीक्षा कर रहा है",
       SHIPPENTPENDINGPAYMENTTEXT: "भेजा गया / भुगतान लंबित",
-      ACCEPTDEALCOMPLETEDTEXT: "घड़ी की स्वीकृति की पुष्टि हो गई है। यह सौदा पूरा हो गया है",
-      PAYMENTACCEPTDEALCOMPLETEDTEXT: "घड़ी का भुगतान और स्वीकृति की पुष्टि हो गई है। यह सौदा पूरा हो गया है",
+      ACCEPTDEALCOMPLETEDTEXT:
+        "घड़ी की स्वीकृति की पुष्टि हो गई है। यह सौदा पूरा हो गया है",
+      PAYMENTACCEPTDEALCOMPLETEDTEXT:
+        "घड़ी का भुगतान और स्वीकृति की पुष्टि हो गई है। यह सौदा पूरा हो गया है",
       PAIDSOLDTEXT: "भुगतान किया गया / बेचा गया",
-      SIGNINASTEXT: "इस रूप में साइन इन किया"
+      SIGNINASTEXT: "इस रूप में साइन इन किया",
     },
   },
   th: {
@@ -818,31 +953,48 @@ const resources = {
       ESTIMATE: "ประมาณการ",
       ACTION: "การกระทำ",
       SUBJECT: "หัวข้อ",
-      BEPARTNERTEXT: "การเลือกที่ยืนยันคือ 'เป็นพันธมิตรกับ Estipal' การยืนยันราคาขายของ Estipal กำลังรอดำเนินการ",
+      BEPARTNERTEXT:
+        "การเลือกที่ยืนยันคือ 'เป็นพันธมิตรกับ Estipal' การยืนยันราคาขายของ Estipal กำลังรอดำเนินการ",
       CONFIRMSELLINGPRICETEXT1: "ราคาขายที่ยืนยันโดย Estipal คือ",
       CONFIRMSELLINGPRICETEXT2: "การขายอยู่ระหว่างดำเนินการ",
-      CONFIRMTHESALE: "การขายได้รับการยืนยันกับ Estipal กำลังรอรับใบแจ้งหนี้จาก Estipal",
+      CONFIRMTHESALE:
+        "การขายได้รับการยืนยันกับ Estipal กำลังรอรับใบแจ้งหนี้จาก Estipal",
       CONFIRMISSUEINVOICETEXT: "Estipal ออกใบแจ้งหนี้สำหรับจำนวนเงิน",
       NOSALEHASEBEENMADETEXT: "การขายถูกยกเลิกและ Estipal ได้รับแจ้งแล้ว",
-      SELLERINVOICENEWTIER1TEXT: "คำขอชำระเงิน {accepted_price_with_commission} ได้รับแจ้งไปยัง Estipal และการชำระเงินอยู่ระหว่างดำเนินการ",
-      SELLERINVOICENEWTIER2TEXT: "ต้องจัดส่งนาฬิกา Estipal จะชำระเงิน {accepted_price_with_commission} หลังจากได้รับนาฬิกา",
-      SELLERINVOICETIER1TEXT: "การเลือกที่ยืนยันคือ 'ขายให้ Estipal' คำขอชำระเงิน {accepted_price_with_commission} ได้รับแจ้งไปยัง Estipal และการชำระเงินอยู่ระหว่างดำเนินการ",
-      SELLERINVOICETIER2TEXT: "การเลือกที่ยืนยันคือ 'ขายให้ Estipal' ต้องจัดส่งนาฬิกา Estipal จะชำระเงิน {accepted_price_with_commission} หลังจากได้รับนาฬิกา",
-      CONFIRMPAYMENTSELLER: "Estipal ยืนยันการชำระเงิน {accepted_price_with_commission} ต้องจัดส่งนาฬิกาไปยัง Estipal",
-      CONFIRMSHIPMENTESTIPALTIER1: "การจัดส่งนาฬิกาได้รับการยืนยัน กำลังรอการยอมรับจาก Estipal",
-      CONFIRMSHIPMENTESTIPALTIER2: "การจัดส่งนาฬิกาได้รับการยืนยัน กำลังรอการชำระเงินและการยอมรับจาก Estipal",
-      CONFIRMACCEPTANCETIER1: "การยอมรับนาฬิกาได้รับการยืนยัน ข้อตกลงนี้เสร็จสมบูรณ์",
-      CONFIRMACCEPTANCETIER2: "การชำระเงินและการยอมรับนาฬิกาได้รับการยืนยัน ข้อตกลงนี้เสร็จสมบูรณ์",
+      SELLERINVOICENEWTIER1TEXT:
+        "คำขอชำระเงิน {accepted_price_with_commission} ได้รับแจ้งไปยัง Estipal และการชำระเงินอยู่ระหว่างดำเนินการ",
+      SELLERINVOICENEWTIER2TEXT:
+        "ต้องจัดส่งนาฬิกา Estipal จะชำระเงิน {accepted_price_with_commission} หลังจากได้รับนาฬิกา",
+      SELLERINVOICETIER1TEXT:
+        "การเลือกที่ยืนยันคือ 'ขายให้ Estipal' คำขอชำระเงิน {accepted_price_with_commission} ได้รับแจ้งไปยัง Estipal และการชำระเงินอยู่ระหว่างดำเนินการ",
+      SELLERINVOICETIER2TEXT:
+        "การเลือกที่ยืนยันคือ 'ขายให้ Estipal' ต้องจัดส่งนาฬิกา Estipal จะชำระเงิน {accepted_price_with_commission} หลังจากได้รับนาฬิกา",
+      CONFIRMPAYMENTSELLER:
+        "Estipal ยืนยันการชำระเงิน {accepted_price_with_commission} ต้องจัดส่งนาฬิกาไปยัง Estipal",
+      CONFIRMSHIPMENTESTIPALTIER1:
+        "การจัดส่งนาฬิกาได้รับการยืนยัน กำลังรอการยอมรับจาก Estipal",
+      CONFIRMSHIPMENTESTIPALTIER2:
+        "การจัดส่งนาฬิกาได้รับการยืนยัน กำลังรอการชำระเงินและการยอมรับจาก Estipal",
+      CONFIRMACCEPTANCETIER1:
+        "การยอมรับนาฬิกาได้รับการยืนยัน ข้อตกลงนี้เสร็จสมบูรณ์",
+      CONFIRMACCEPTANCETIER2:
+        "การชำระเงินและการยอมรับนาฬิกาได้รับการยืนยัน ข้อตกลงนี้เสร็จสมบูรณ์",
       RETURNTOSELLER: "Estipal ปฏิเสธการขาย นาฬิกาจะถูกส่งคืน",
       ACCEPTESTIMATION: "พนักงานยอมรับการประมาณการของนาฬิกา",
-      ESTIMATORQUOTATION: "ผู้ประเมินได้ส่งการประมาณการของเขาเกี่ยวกับใบเสนอราคานาฬิกาที่กำหนด",
+      ESTIMATORQUOTATION:
+        "ผู้ประเมินได้ส่งการประมาณการของเขาเกี่ยวกับใบเสนอราคานาฬิกาที่กำหนด",
       QUOTATIONFORWATCH: "ผู้ขายกำลังรอใบเสนอราคา",
-      COUNTEROFFER1: "พนักงานได้เสนอข้อเสนอแรกรองจากการประมาณการของใบเสนอราคานาฬิกา",
-      ESTREESTIMATE1: "ผู้ประเมินได้เสนอการประมาณการใหม่ของเขาเกี่ยวกับข้อเสนอแรกรองของพนักงาน",
-      ESTREESTIMATE2: "ผู้ประเมินได้เสนอการประมาณการใหม่ของเขาเกี่ยวกับข้อเสนอที่สองรองของพนักงาน",
-      COUNTEROFFER2: "พนักงานได้เสนอข้อเสนอรองอีกครั้งจากการประมาณการของใบเสนอราคานาฬิกา",
+      COUNTEROFFER1:
+        "พนักงานได้เสนอข้อเสนอแรกรองจากการประมาณการของใบเสนอราคานาฬิกา",
+      ESTREESTIMATE1:
+        "ผู้ประเมินได้เสนอการประมาณการใหม่ของเขาเกี่ยวกับข้อเสนอแรกรองของพนักงาน",
+      ESTREESTIMATE2:
+        "ผู้ประเมินได้เสนอการประมาณการใหม่ของเขาเกี่ยวกับข้อเสนอที่สองรองของพนักงาน",
+      COUNTEROFFER2:
+        "พนักงานได้เสนอข้อเสนอรองอีกครั้งจากการประมาณการของใบเสนอราคานาฬิกา",
       REJECTED: "พนักงานปฏิเสธคำขอประมาณการ",
-      ESTIMATIONREJECTED: "เราขออภัยที่แจ้งให้คุณทราบว่าเราไม่สามารถประมาณการนาฬิกาของคุณได้",
+      ESTIMATIONREJECTED:
+        "เราขออภัยที่แจ้งให้คุณทราบว่าเราไม่สามารถประมาณการนาฬิกาของคุณได้",
       ESTIPALADMINISTRATOR: "ผู้ดูแลระบบ Estipal",
       ESTIMATOR: "ผู้ประเมิน",
       QUOTATIONRECEIVED: "ได้รับใบเสนอราคา",
@@ -855,36 +1007,47 @@ const resources = {
       SELECTOPTIONBELOW: "เลือกหนึ่งในตัวเลือกด้านล่าง",
       SELLESTIPAL: "ขายให้ Estipal",
       BEPARTNERWITHESTIPAL: "เป็นพันธมิตรกับ Estipal",
-      CONFIRMSELLINGPRICETEXT: "ราคาขายที่ยืนยันโดย Estipal คือ {props?.confirmed_price} การขายอยู่ระหว่างดำเนินการ",
+      CONFIRMSELLINGPRICETEXT:
+        "ราคาขายที่ยืนยันโดย Estipal คือ {props?.confirmed_price} การขายอยู่ระหว่างดำเนินการ",
       PENDINGSALE: "การขายที่รอดำเนินการ",
       CONFIRMTHESALE1: "ยืนยันการขาย",
       NOSALEFOUND: "ไม่พบการขาย",
       COMPLETED: "เสร็จสมบูรณ์",
-      CONFIRMISSUEINVOICETEXTONE: "Estipal ออกใบแจ้งหนี้สำหรับจำนวนเงิน {commission_price}",
+      CONFIRMISSUEINVOICETEXTONE:
+        "Estipal ออกใบแจ้งหนี้สำหรับจำนวนเงิน {commission_price}",
       NOTSOLD: "ไม่ได้ขาย",
       REJECTEDSALEFORSELLERTEXT: "การขายถูกปฏิเสธ - นาฬิกาจะถูกส่งคืนให้ผู้ขาย",
       DEALCOMPLETEDFORWATCHTEXT: "นาฬิกาถูกขายและข้อตกลงเสร็จสมบูรณ์",
       WAITINGFORQUOTATION: "กำลังรอใบเสนอราคา",
       REJECTEDTEXT: "ถูกปฏิเสธ",
       PASSTEXT: "ผ่าน",
-      PENDINGPAYMENTTIER1TEXTONE: "คำขอชำระเงิน {accepted_price_with_commission} ได้รับแจ้งไปยัง Estipal และการชำระเงินอยู่ระหว่างดำเนินการ",
-      PENDINGPAYMENTTIER2TEXTONE: "ต้องจัดส่งนาฬิกา Estipal จะชำระเงิน {props?.accepted_price_with_commission} หลังจากได้รับนาฬิกา",
+      PENDINGPAYMENTTIER1TEXTONE:
+        "คำขอชำระเงิน {accepted_price_with_commission} ได้รับแจ้งไปยัง Estipal และการชำระเงินอยู่ระหว่างดำเนินการ",
+      PENDINGPAYMENTTIER2TEXTONE:
+        "ต้องจัดส่งนาฬิกา Estipal จะชำระเงิน {props?.accepted_price_with_commission} หลังจากได้รับนาฬิกา",
       PENDINGESTIPALPAYMENT: "การชำระเงินของ Estipal ที่รอดำเนินการ",
       PENDINGSHIPPING: "การจัดส่งที่รอดำเนินการ",
       CONFIRMATIONREQUIREDTEXT: "ต้องการการยืนยัน",
       CONFIRMSHIPMENTESTIPALTEXT: "ยืนยันการจัดส่งไปยัง Estipal",
-      CONFIRMSELECTIONTIER1TEXT: "การเลือกที่ยืนยันคือ 'ขายให้ Estipal' คำขอชำระเงิน {props?.accepted_price_with_commission} ได้รับแจ้งไปยัง Estipal และการชำระเงินอยู่ระหว่างดำเนินการ",
-      CONFIRMSELECTIONTIER2TEXT: "การเลือกที่ยืนยันคือ 'ขายให้ Estipal' ต้องจัดส่งนาฬิกา Estipal จะชำระเงิน {props?.accepted_price_with_commission} หลังจากได้รับนาฬิกา",
-      CONFIRMPAYMENTSELLERONE: "Estipal ยืนยันการชำระเงิน {props?.accepted_price_with_commission} ต้องจัดส่งนาฬิกาไปยัง Estipal",
+      CONFIRMSELECTIONTIER1TEXT:
+        "การเลือกที่ยืนยันคือ 'ขายให้ Estipal' คำขอชำระเงิน {props?.accepted_price_with_commission} ได้รับแจ้งไปยัง Estipal และการชำระเงินอยู่ระหว่างดำเนินการ",
+      CONFIRMSELECTIONTIER2TEXT:
+        "การเลือกที่ยืนยันคือ 'ขายให้ Estipal' ต้องจัดส่งนาฬิกา Estipal จะชำระเงิน {props?.accepted_price_with_commission} หลังจากได้รับนาฬิกา",
+      CONFIRMPAYMENTSELLERONE:
+        "Estipal ยืนยันการชำระเงิน {props?.accepted_price_with_commission} ต้องจัดส่งนาฬิกาไปยัง Estipal",
       PAIDPENDINGSHIPPING: "ชำระเงินแล้ว / การจัดส่งที่รอดำเนินการ",
-      SHIPPINGCOMPPENDINGESTIPALACCTEXT: "การจัดส่งนาฬิกาได้รับการยืนยัน กำลังรอการยอมรับจาก Estipal",
+      SHIPPINGCOMPPENDINGESTIPALACCTEXT:
+        "การจัดส่งนาฬิกาได้รับการยืนยัน กำลังรอการยอมรับจาก Estipal",
       SHIPPEDTEXT: "จัดส่งแล้ว",
-      SHIPPINGCOMPPENDINGPAYMENTESTIPALACCTEXT: "การจัดส่งนาฬิกาได้รับการยืนยัน กำลังรอการชำระเงินและการยอมรับจาก Estipal",
+      SHIPPINGCOMPPENDINGPAYMENTESTIPALACCTEXT:
+        "การจัดส่งนาฬิกาได้รับการยืนยัน กำลังรอการชำระเงินและการยอมรับจาก Estipal",
       SHIPPENTPENDINGPAYMENTTEXT: "จัดส่งแล้ว / การชำระเงินที่รอดำเนินการ",
-      ACCEPTDEALCOMPLETEDTEXT: "การยอมรับนาฬิกาได้รับการยืนยัน ข้อตกลงนี้เสร็จสมบูรณ์",
-      PAYMENTACCEPTDEALCOMPLETEDTEXT: "การชำระเงินและการยอมรับนาฬิกาได้รับการยืนยัน ข้อตกลงนี้เสร็จสมบูรณ์",
+      ACCEPTDEALCOMPLETEDTEXT:
+        "การยอมรับนาฬิกาได้รับการยืนยัน ข้อตกลงนี้เสร็จสมบูรณ์",
+      PAYMENTACCEPTDEALCOMPLETEDTEXT:
+        "การชำระเงินและการยอมรับนาฬิกาได้รับการยืนยัน ข้อตกลงนี้เสร็จสมบูรณ์",
       PAIDSOLDTEXT: "ชำระเงินแล้ว / ขายแล้ว",
-      SIGNINASTEXT: "ลงชื่อเข้าใช้ในฐานะ"
+      SIGNINASTEXT: "ลงชื่อเข้าใช้ในฐานะ",
     },
   },
   jp: {
@@ -965,31 +1128,47 @@ const resources = {
       ESTIMATE: "見積もり",
       ACTION: "アクション",
       SUBJECT: "件名",
-      BEPARTNERTEXT: "確認された選択は「Estipalとパートナーになる」です。Estipalの販売価格確認が保留中です",
+      BEPARTNERTEXT:
+        "確認された選択は「Estipalとパートナーになる」です。Estipalの販売価格確認が保留中です",
       CONFIRMSELLINGPRICETEXT1: "Estipalが確認した販売価格は",
       CONFIRMSELLINGPRICETEXT2: "販売が保留中です",
-      CONFIRMTHESALE: "販売がEstipalに確認されました。Estipalの請求書を受け取るのを待っています",
+      CONFIRMTHESALE:
+        "販売がEstipalに確認されました。Estipalの請求書を受け取るのを待っています",
       CONFIRMISSUEINVOICETEXT: "Estipalが金額の請求書を発行しました",
       NOSALEHASEBEENMADETEXT: "販売がキャンセルされ、Estipalに通知されました",
-      SELLERINVOICENEWTIER1TEXT: "{accepted_price_with_commission}の支払いリクエストがEstipalに通知され、支払いが保留中です",
-      SELLERINVOICENEWTIER2TEXT: "ウォッチの配送を手配する必要があります。Estipalはウォッチを受け取った後に{accepted_price_with_commission}を支払います",
-      SELLERINVOICETIER1TEXT: "確認された選択は「Estipalに販売する」です。{accepted_price_with_commission}の支払いリクエストがEstipalに通知され、支払いが保留中です",
-      SELLERINVOICETIER2TEXT: "確認された選択は「Estipalに販売する」です。ウォッチの配送を手配する必要があります。Estipalはウォッチを受け取った後に{accepted_price_with_commission}を支払います",
-      CONFIRMPAYMENTSELLER: "Estipalが{accepted_price_with_commission}の支払いを確認しました。ウォッチをEstipalに配送する必要があります",
-      CONFIRMSHIPMENTESTIPALTIER1: "ウォッチの配送が確認されました。Estipalの受け入れを待っています",
-      CONFIRMSHIPMENTESTIPALTIER2: "ウォッチの配送が確認されました。Estipalの支払いと受け入れを待っています",
-      CONFIRMACCEPTANCETIER1: "ウォッチの受け入れが確認されました。この取引は完了しました",
-      CONFIRMACCEPTANCETIER2: "ウォッチの支払いと受け入れが確認されました。この取引は完了しました",
+      SELLERINVOICENEWTIER1TEXT:
+        "{accepted_price_with_commission}の支払いリクエストがEstipalに通知され、支払いが保留中です",
+      SELLERINVOICENEWTIER2TEXT:
+        "ウォッチの配送を手配する必要があります。Estipalはウォッチを受け取った後に{accepted_price_with_commission}を支払います",
+      SELLERINVOICETIER1TEXT:
+        "確認された選択は「Estipalに販売する」です。{accepted_price_with_commission}の支払いリクエストがEstipalに通知され、支払いが保留中です",
+      SELLERINVOICETIER2TEXT:
+        "確認された選択は「Estipalに販売する」です。ウォッチの配送を手配する必要があります。Estipalはウォッチを受け取った後に{accepted_price_with_commission}を支払います",
+      CONFIRMPAYMENTSELLER:
+        "Estipalが{accepted_price_with_commission}の支払いを確認しました。ウォッチをEstipalに配送する必要があります",
+      CONFIRMSHIPMENTESTIPALTIER1:
+        "ウォッチの配送が確認されました。Estipalの受け入れを待っています",
+      CONFIRMSHIPMENTESTIPALTIER2:
+        "ウォッチの配送が確認されました。Estipalの支払いと受け入れを待っています",
+      CONFIRMACCEPTANCETIER1:
+        "ウォッチの受け入れが確認されました。この取引は完了しました",
+      CONFIRMACCEPTANCETIER2:
+        "ウォッチの支払いと受け入れが確認されました。この取引は完了しました",
       RETURNTOSELLER: "Estipalが販売を拒否しました。ウォッチは返送されます",
       ACCEPTESTIMATION: "スタッフがウォッチの見積もりを承認しました",
       ESTIMATORQUOTATION: "査定者が指定されたウォッチの見積もりを送信しました",
       QUOTATIONFORWATCH: "売り手が見積もりを待っています",
-      COUNTEROFFER1: "スタッフがウォッチの見積もりに対して最初のカウンターオファーを出しました",
-      ESTREESTIMATE1: "査定者がスタッフの最初のカウンターオファーに対して再見積もりを行いました",
-      ESTREESTIMATE2: "査定者がスタッフの2回目のカウンターオファーに対して再見積もりを行いました",
-      COUNTEROFFER2: "スタッフがウォッチの見積もりに対して再度カウンターオファーを出しました",
+      COUNTEROFFER1:
+        "スタッフがウォッチの見積もりに対して最初のカウンターオファーを出しました",
+      ESTREESTIMATE1:
+        "査定者がスタッフの最初のカウンターオファーに対して再見積もりを行いました",
+      ESTREESTIMATE2:
+        "査定者がスタッフの2回目のカウンターオファーに対して再見積もりを行いました",
+      COUNTEROFFER2:
+        "スタッフがウォッチの見積もりに対して再度カウンターオファーを出しました",
       REJECTED: "スタッフが見積もりリクエストを拒否しました",
-      ESTIMATIONREJECTED: "申し訳ありませんが、ウォッチの見積もりを行うことができませんでした",
+      ESTIMATIONREJECTED:
+        "申し訳ありませんが、ウォッチの見積もりを行うことができませんでした",
       ESTIPALADMINISTRATOR: "Estipal管理者",
       ESTIMATOR: "査定者",
       QUOTATIONRECEIVED: "見積もりを受け取りました",
@@ -1002,36 +1181,48 @@ const resources = {
       SELECTOPTIONBELOW: "以下のオプションから選択してください",
       SELLESTIPAL: "Estipalに販売する",
       BEPARTNERWITHESTIPAL: "Estipalとパートナーになる",
-      CONFIRMSELLINGPRICETEXT: "Estipalが確認した販売価格は{props?.confirmed_price}です。販売が保留中です",
+      CONFIRMSELLINGPRICETEXT:
+        "Estipalが確認した販売価格は{props?.confirmed_price}です。販売が保留中です",
       PENDINGSALE: "保留中の販売",
       CONFIRMTHESALE1: "販売を確認する",
       NOSALEFOUND: "販売が見つかりません",
       COMPLETED: "完了",
-      CONFIRMISSUEINVOICETEXTONE: "Estipalが{commission_price}の金額で請求書を発行しました",
+      CONFIRMISSUEINVOICETEXTONE:
+        "Estipalが{commission_price}の金額で請求書を発行しました",
       NOTSOLD: "未販売",
-      REJECTEDSALEFORSELLERTEXT: "販売が拒否されました - ウォッチは売り手に返送されます",
+      REJECTEDSALEFORSELLERTEXT:
+        "販売が拒否されました - ウォッチは売り手に返送されます",
       DEALCOMPLETEDFORWATCHTEXT: "ウォッチが販売され、取引が完了しました",
       WAITINGFORQUOTATION: "見積もりを待っています",
       REJECTEDTEXT: "拒否されました",
       PASSTEXT: "合格",
-      PENDINGPAYMENTTIER1TEXTONE: "{props?.accepted_price_with_commission}の支払いリクエストがEstipalに通知され、支払いが保留中です",
-      PENDINGPAYMENTTIER2TEXTONE: "ウォッチの配送を手配する必要があります。Estipalはウォッチを受け取った後に{props?.accepted_price_with_commission}を支払います",
+      PENDINGPAYMENTTIER1TEXTONE:
+        "{props?.accepted_price_with_commission}の支払いリクエストがEstipalに通知され、支払いが保留中です",
+      PENDINGPAYMENTTIER2TEXTONE:
+        "ウォッチの配送を手配する必要があります。Estipalはウォッチを受け取った後に{props?.accepted_price_with_commission}を支払います",
       PENDINGESTIPALPAYMENT: "Estipalの支払いが保留中",
       PENDINGSHIPPING: "配送が保留中",
       CONFIRMATIONREQUIREDTEXT: "確認が必要です",
       CONFIRMSHIPMENTESTIPALTEXT: "Estipalへの配送を確認する",
-      CONFIRMSELECTIONTIER1TEXT: "確認された選択は「Estipalに販売する」です。{props?.accepted_price_with_commission}の支払いリクエストがEstipalに通知され、支払いが保留中です",
-      CONFIRMSELECTIONTIER2TEXT: "確認された選択は「Estipalに販売する」です。ウォッチの配送を手配する必要があります。Estipalはウォッチを受け取った後に{props?.accepted_price_with_commission}を支払います",
-      CONFIRMPAYMENTSELLERONE: "Estipalが{props?.accepted_price_with_commission}の支払いを確認しました。ウォッチをEstipalに配送する必要があります",
+      CONFIRMSELECTIONTIER1TEXT:
+        "確認された選択は「Estipalに販売する」です。{props?.accepted_price_with_commission}の支払いリクエストがEstipalに通知され、支払いが保留中です",
+      CONFIRMSELECTIONTIER2TEXT:
+        "確認された選択は「Estipalに販売する」です。ウォッチの配送を手配する必要があります。Estipalはウォッチを受け取った後に{props?.accepted_price_with_commission}を支払います",
+      CONFIRMPAYMENTSELLERONE:
+        "Estipalが{props?.accepted_price_with_commission}の支払いを確認しました。ウォッチをEstipalに配送する必要があります",
       PAIDPENDINGSHIPPING: "支払い済み / 配送保留中",
-      SHIPPINGCOMPPENDINGESTIPALACCTEXT: "ウォッチの配送が確認されました。Estipalの受け入れを待っています",
+      SHIPPINGCOMPPENDINGESTIPALACCTEXT:
+        "ウォッチの配送が確認されました。Estipalの受け入れを待っています",
       SHIPPEDTEXT: "配送済み",
-      SHIPPINGCOMPPENDINGPAYMENTESTIPALACCTEXT: "ウォッチの配送が確認されました。Estipalの支払いと受け入れを待っています",
+      SHIPPINGCOMPPENDINGPAYMENTESTIPALACCTEXT:
+        "ウォッチの配送が確認されました。Estipalの支払いと受け入れを待っています",
       SHIPPENTPENDINGPAYMENTTEXT: "配送済み / 支払い保留中",
-      ACCEPTDEALCOMPLETEDTEXT: "ウォッチの受け入れが確認されました。この取引は完了しました",
-      PAYMENTACCEPTDEALCOMPLETEDTEXT: "ウォッチの支払いと受け入れが確認されました。この取引は完了しました",
+      ACCEPTDEALCOMPLETEDTEXT:
+        "ウォッチの受け入れが確認されました。この取引は完了しました",
+      PAYMENTACCEPTDEALCOMPLETEDTEXT:
+        "ウォッチの支払いと受け入れが確認されました。この取引は完了しました",
       PAIDSOLDTEXT: "支払い済み / 販売済み",
-      SIGNINASTEXT: "としてサインイン"
+      SIGNINASTEXT: "としてサインイン",
     },
   },
   pt: {
@@ -1112,31 +1303,49 @@ const resources = {
       ESTIMATE: "Estimativa",
       ACTION: "Ação",
       SUBJECT: "Assunto",
-      BEPARTNERTEXT: "A seleção confirmada é 'Seja parceiro da Estipal', a confirmação do preço de venda da Estipal está pendente",
+      BEPARTNERTEXT:
+        "A seleção confirmada é 'Seja parceiro da Estipal', a confirmação do preço de venda da Estipal está pendente",
       CONFIRMSELLINGPRICETEXT1: "O preço de venda confirmado pela Estipal é",
       CONFIRMSELLINGPRICETEXT2: "Venda pendente",
-      CONFIRMTHESALE: "A venda foi confirmada para a Estipal. Aguardando a fatura da Estipal",
+      CONFIRMTHESALE:
+        "A venda foi confirmada para a Estipal. Aguardando a fatura da Estipal",
       CONFIRMISSUEINVOICETEXT: "A Estipal emitiu uma fatura no valor de",
-      NOSALEHASEBEENMADETEXT: "A venda foi cancelada e a Estipal foi notificada",
-      SELLERINVOICENEWTIER1TEXT: "Um pedido de pagamento de {accepted_price_with_commission} foi notificado à Estipal e o pagamento está pendente",
-      SELLERINVOICENEWTIER2TEXT: "O envio do relógio deve ser organizado. A Estipal fará o pagamento de {accepted_price_with_commission} após receber o relógio",
-      SELLERINVOICETIER1TEXT: "A seleção confirmada é 'Vender para a Estipal', um pedido de pagamento de {accepted_price_with_commission} foi notificado à Estipal e o pagamento está pendente",
-      SELLERINVOICETIER2TEXT: "A seleção confirmada é 'Vender para a Estipal'. O envio do relógio deve ser organizado. A Estipal fará o pagamento de {accepted_price_with_commission} após receber o relógio",
-      CONFIRMPAYMENTSELLER: "A Estipal confirmou o pagamento de {accepted_price_with_commission}. O envio do relógio para a Estipal deve ser organizado",
-      CONFIRMSHIPMENTESTIPALTIER1: "O envio do relógio foi confirmado. Aguardando a aceitação da Estipal",
-      CONFIRMSHIPMENTESTIPALTIER2: "O envio do relógio foi confirmado. Aguardando o pagamento e a aceitação da Estipal",
-      CONFIRMACCEPTANCETIER1: "A aceitação do relógio foi confirmada. Este negócio foi concluído",
-      CONFIRMACCEPTANCETIER2: "O pagamento e a aceitação do relógio foram confirmados. Este negócio foi concluído",
+      NOSALEHASEBEENMADETEXT:
+        "A venda foi cancelada e a Estipal foi notificada",
+      SELLERINVOICENEWTIER1TEXT:
+        "Um pedido de pagamento de {accepted_price_with_commission} foi notificado à Estipal e o pagamento está pendente",
+      SELLERINVOICENEWTIER2TEXT:
+        "O envio do relógio deve ser organizado. A Estipal fará o pagamento de {accepted_price_with_commission} após receber o relógio",
+      SELLERINVOICETIER1TEXT:
+        "A seleção confirmada é 'Vender para a Estipal', um pedido de pagamento de {accepted_price_with_commission} foi notificado à Estipal e o pagamento está pendente",
+      SELLERINVOICETIER2TEXT:
+        "A seleção confirmada é 'Vender para a Estipal'. O envio do relógio deve ser organizado. A Estipal fará o pagamento de {accepted_price_with_commission} após receber o relógio",
+      CONFIRMPAYMENTSELLER:
+        "A Estipal confirmou o pagamento de {accepted_price_with_commission}. O envio do relógio para a Estipal deve ser organizado",
+      CONFIRMSHIPMENTESTIPALTIER1:
+        "O envio do relógio foi confirmado. Aguardando a aceitação da Estipal",
+      CONFIRMSHIPMENTESTIPALTIER2:
+        "O envio do relógio foi confirmado. Aguardando o pagamento e a aceitação da Estipal",
+      CONFIRMACCEPTANCETIER1:
+        "A aceitação do relógio foi confirmada. Este negócio foi concluído",
+      CONFIRMACCEPTANCETIER2:
+        "O pagamento e a aceitação do relógio foram confirmados. Este negócio foi concluído",
       RETURNTOSELLER: "A Estipal rejeitou a venda. O relógio será devolvido",
       ACCEPTESTIMATION: "A equipe aceitou a estimativa do relógio",
-      ESTIMATORQUOTATION: "O avaliador enviou sua estimativa sobre a cotação do relógio fornecida",
+      ESTIMATORQUOTATION:
+        "O avaliador enviou sua estimativa sobre a cotação do relógio fornecida",
       QUOTATIONFORWATCH: "O vendedor está aguardando a cotação",
-      COUNTEROFFER1: "A equipe fez a primeira contraproposta na estimativa da cotação do relógio",
-      ESTREESTIMATE1: "O avaliador fez uma nova estimativa na primeira contraproposta da equipe",
-      ESTREESTIMATE2: "O avaliador fez uma nova estimativa na segunda contraproposta da equipe",
-      COUNTEROFFER2: "A equipe fez novamente uma contraproposta na estimativa da cotação do relógio",
+      COUNTEROFFER1:
+        "A equipe fez a primeira contraproposta na estimativa da cotação do relógio",
+      ESTREESTIMATE1:
+        "O avaliador fez uma nova estimativa na primeira contraproposta da equipe",
+      ESTREESTIMATE2:
+        "O avaliador fez uma nova estimativa na segunda contraproposta da equipe",
+      COUNTEROFFER2:
+        "A equipe fez novamente uma contraproposta na estimativa da cotação do relógio",
       REJECTED: "A equipe recusou o pedido de estimativa",
-      ESTIMATIONREJECTED: "Lamentamos informar que não conseguimos estimar seu relógio",
+      ESTIMATIONREJECTED:
+        "Lamentamos informar que não conseguimos estimar seu relógio",
       ESTIPALADMINISTRATOR: "Administrador da Estipal",
       ESTIMATOR: "Avaliador",
       QUOTATIONRECEIVED: "Cotação Recebida",
@@ -1149,36 +1358,48 @@ const resources = {
       SELECTOPTIONBELOW: "Selecione uma das opções abaixo",
       SELLESTIPAL: "Vender para a Estipal",
       BEPARTNERWITHESTIPAL: "Seja parceiro da Estipal",
-      CONFIRMSELLINGPRICETEXT: "O preço de venda confirmado pela Estipal é {props?.confirmed_price}. Venda pendente",
+      CONFIRMSELLINGPRICETEXT:
+        "O preço de venda confirmado pela Estipal é {props?.confirmed_price}. Venda pendente",
       PENDINGSALE: "Venda Pendente",
       CONFIRMTHESALE1: "Confirmar a venda",
       NOSALEFOUND: "Nenhuma venda foi feita",
       COMPLETED: "Concluído",
-      CONFIRMISSUEINVOICETEXTONE: "A Estipal emitiu uma fatura no valor de {commission_price}",
+      CONFIRMISSUEINVOICETEXTONE:
+        "A Estipal emitiu uma fatura no valor de {commission_price}",
       NOTSOLD: "Não Vendido",
-      REJECTEDSALEFORSELLERTEXT: "Venda Rejeitada - relógio será devolvido ao vendedor",
+      REJECTEDSALEFORSELLERTEXT:
+        "Venda Rejeitada - relógio será devolvido ao vendedor",
       DEALCOMPLETEDFORWATCHTEXT: "O relógio foi vendido e o negócio concluído.",
       WAITINGFORQUOTATION: "Aguardando Cotação",
       REJECTEDTEXT: "Rejeitado",
       PASSTEXT: "passar",
-      PENDINGPAYMENTTIER1TEXTONE: "Um pedido de pagamento de {props?.accepted_price_with_commission} foi notificado à Estipal e o pagamento está pendente",
-      PENDINGPAYMENTTIER2TEXTONE: "O envio do relógio deve ser organizado. A Estipal fará o pagamento de {props?.accepted_price_with_commission} após receber o relógio",
+      PENDINGPAYMENTTIER1TEXTONE:
+        "Um pedido de pagamento de {props?.accepted_price_with_commission} foi notificado à Estipal e o pagamento está pendente",
+      PENDINGPAYMENTTIER2TEXTONE:
+        "O envio do relógio deve ser organizado. A Estipal fará o pagamento de {props?.accepted_price_with_commission} após receber o relógio",
       PENDINGESTIPALPAYMENT: "Pagamento da Estipal Pendente",
       PENDINGSHIPPING: "Envio Pendente",
       CONFIRMATIONREQUIREDTEXT: "Confirmação necessária",
       CONFIRMSHIPMENTESTIPALTEXT: "Confirmar envio para a Estipal",
-      CONFIRMSELECTIONTIER1TEXT: "A seleção confirmada é 'Vender para a Estipal', um pedido de pagamento de {props?.accepted_price_with_commission} foi notificado à Estipal e o pagamento está pendente",
-      CONFIRMSELECTIONTIER2TEXT: "A seleção confirmada é 'Vender para a Estipal'. O envio do relógio deve ser organizado. A Estipal fará o pagamento de {props?.accepted_price_with_commission} após receber o relógio",
-      CONFIRMPAYMENTSELLERONE: "A Estipal confirmou o pagamento de {props?.accepted_price_with_commission}. O envio do relógio para a Estipal deve ser organizado",
+      CONFIRMSELECTIONTIER1TEXT:
+        "A seleção confirmada é 'Vender para a Estipal', um pedido de pagamento de {props?.accepted_price_with_commission} foi notificado à Estipal e o pagamento está pendente",
+      CONFIRMSELECTIONTIER2TEXT:
+        "A seleção confirmada é 'Vender para a Estipal'. O envio do relógio deve ser organizado. A Estipal fará o pagamento de {props?.accepted_price_with_commission} após receber o relógio",
+      CONFIRMPAYMENTSELLERONE:
+        "A Estipal confirmou o pagamento de {props?.accepted_price_with_commission}. O envio do relógio para a Estipal deve ser organizado",
       PAIDPENDINGSHIPPING: "Pago / Envio Pendente",
-      SHIPPINGCOMPPENDINGESTIPALACCTEXT: "O envio do relógio foi confirmado. Aguardando a aceitação da Estipal",
+      SHIPPINGCOMPPENDINGESTIPALACCTEXT:
+        "O envio do relógio foi confirmado. Aguardando a aceitação da Estipal",
       SHIPPEDTEXT: "Enviado",
-      SHIPPINGCOMPPENDINGPAYMENTESTIPALACCTEXT: "O envio do relógio foi confirmado. Aguardando o pagamento e a aceitação da Estipal",
+      SHIPPINGCOMPPENDINGPAYMENTESTIPALACCTEXT:
+        "O envio do relógio foi confirmado. Aguardando o pagamento e a aceitação da Estipal",
       SHIPPENTPENDINGPAYMENTTEXT: "Enviado / Pagamento Pendente",
-      ACCEPTDEALCOMPLETEDTEXT: "A aceitação do relógio foi confirmada. Este negócio foi concluído",
-      PAYMENTACCEPTDEALCOMPLETEDTEXT: "O pagamento e a aceitação do relógio foram confirmados. Este negócio foi concluído",
+      ACCEPTDEALCOMPLETEDTEXT:
+        "A aceitação do relógio foi confirmada. Este negócio foi concluído",
+      PAYMENTACCEPTDEALCOMPLETEDTEXT:
+        "O pagamento e a aceitação do relógio foram confirmados. Este negócio foi concluído",
       PAIDSOLDTEXT: "Pago / Vendido",
-      SIGNINASTEXT: "Conectado como"
+      SIGNINASTEXT: "Conectado como",
     },
   },
   al: {
@@ -1259,73 +1480,105 @@ const resources = {
       ESTIMATE: "Vlerësim",
       ACTION: "Veprim",
       SUBJECT: "Subjekti",
-      BEPARTNERTEXT: "Zgjedhja e konfirmuar është 'Bëhu partner me Estipal', konfirmimi i çmimit të shitjes nga Estipal është në pritje",
-      CONFIRMSELLINGPRICETEXT1: "Çmimi i shitjes i konfirmuar nga Estipal është",
+      BEPARTNERTEXT:
+        "Zgjedhja e konfirmuar është 'Bëhu partner me Estipal', konfirmimi i çmimit të shitjes nga Estipal është në pritje",
+      CONFIRMSELLINGPRICETEXT1:
+        "Çmimi i shitjes i konfirmuar nga Estipal është",
       CONFIRMSELLINGPRICETEXT2: "Shitja është në pritje",
-      CONFIRMTHESALE: "Shitja është konfirmuar te Estipal. Duke pritur për faturën nga Estipal",
+      CONFIRMTHESALE:
+        "Shitja është konfirmuar te Estipal. Duke pritur për faturën nga Estipal",
       CONFIRMISSUEINVOICETEXT: "Estipal ka lëshuar një faturë për shumën",
       NOSALEHASEBEENMADETEXT: "Shitja është anuluar dhe Estipal është njoftuar",
-      SELLERINVOICENEWTIER1TEXT: "Një kërkesë për pagesë prej {accepted_price_with_commission} është njoftuar te Estipal dhe pagesa është në pritje",
-      SELLERINVOICENEWTIER2TEXT: "Duhet të organizohet dërgesa e orës. Estipal do të bëjë pagesën prej {accepted_price_with_commission} pas marrjes së orës",
-      SELLERINVOICETIER1TEXT: "Zgjedhja e konfirmuar është 'Shite te Estipal', një kërkesë për pagesë prej {accepted_price_with_commission} është njoftuar te Estipal dhe pagesa është në pritje",
-      SELLERINVOICETIER2TEXT: "Zgjedhja e konfirmuar është 'Shite te Estipal'. Duhet të organizohet dërgesa e orës. Estipal do të bëjë pagesën prej {accepted_price_with_commission} pas marrjes së orës",
-      CONFIRMPAYMENTSELLER: "Estipal ka konfirmuar pagesën prej {accepted_price_with_commission}. Duhet të organizohet dërgesa e orës te Estipal",
-      CONFIRMSHIPMENTESTIPALTIER1: "Dërgesa e orës është konfirmuar. Duke pritur për pranimin nga Estipal",
-      CONFIRMSHIPMENTESTIPALTIER2: "Dërgesa e orës është konfirmuar. Duke pritur për pagesën dhe pranimin nga Estipal",
-      CONFIRMACCEPTANCETIER1: "Pranimi i orës është konfirmuar. Marrëveshja është përfunduar",
-      CONFIRMACCEPTANCETIER2: "Pagesa dhe pranimi i orës janë konfirmuar. Marrëveshja është përfunduar",
+      SELLERINVOICENEWTIER1TEXT:
+        "Një kërkesë për pagesë prej {accepted_price_with_commission} është njoftuar te Estipal dhe pagesa është në pritje",
+      SELLERINVOICENEWTIER2TEXT:
+        "Duhet të organizohet dërgesa e orës. Estipal do të bëjë pagesën prej {accepted_price_with_commission} pas marrjes së orës",
+      SELLERINVOICETIER1TEXT:
+        "Zgjedhja e konfirmuar është 'Shite te Estipal', një kërkesë për pagesë prej {accepted_price_with_commission} është njoftuar te Estipal dhe pagesa është në pritje",
+      SELLERINVOICETIER2TEXT:
+        "Zgjedhja e konfirmuar është 'Shite te Estipal'. Duhet të organizohet dërgesa e orës. Estipal do të bëjë pagesën prej {accepted_price_with_commission} pas marrjes së orës",
+      CONFIRMPAYMENTSELLER:
+        "Estipal ka konfirmuar pagesën prej {accepted_price_with_commission}. Duhet të organizohet dërgesa e orës te Estipal",
+      CONFIRMSHIPMENTESTIPALTIER1:
+        "Dërgesa e orës është konfirmuar. Duke pritur për pranimin nga Estipal",
+      CONFIRMSHIPMENTESTIPALTIER2:
+        "Dërgesa e orës është konfirmuar. Duke pritur për pagesën dhe pranimin nga Estipal",
+      CONFIRMACCEPTANCETIER1:
+        "Pranimi i orës është konfirmuar. Marrëveshja është përfunduar",
+      CONFIRMACCEPTANCETIER2:
+        "Pagesa dhe pranimi i orës janë konfirmuar. Marrëveshja është përfunduar",
       RETURNTOSELLER: "Estipal ka refuzuar shitjen. Ora do të kthehet",
       ACCEPTESTIMATION: "Stafi ka pranuar vlerësimin e orës",
-      ESTIMATORQUOTATION: "Vlerësuesi ka dërguar vlerësimin e tij për ofertën e dhënë të orës",
+      ESTIMATORQUOTATION:
+        "Vlerësuesi ka dërguar vlerësimin e tij për ofertën e dhënë të orës",
       QUOTATIONFORWATCH: "Shitësi është duke pritur për ofertën",
-      COUNTEROFFER1: "Stafi ka bërë ofertën e parë kundër për vlerësimin e ofertës së orës",
-      ESTREESTIMATE1: "Vlerësuesi ka bërë një rivlerësim për ofertën e parë kundër të stafit",
-      ESTREESTIMATE2: "Vlerësuesi ka bërë një rivlerësim për ofertën e dytë kundër të stafit",
-      COUNTEROFFER2: "Stafi ka bërë përsëri një ofertë kundër për vlerësimin e ofertës së orës",
+      COUNTEROFFER1:
+        "Stafi ka bërë ofertën e parë kundër për vlerësimin e ofertës së orës",
+      ESTREESTIMATE1:
+        "Vlerësuesi ka bërë një rivlerësim për ofertën e parë kundër të stafit",
+      ESTREESTIMATE2:
+        "Vlerësuesi ka bërë një rivlerësim për ofertën e dytë kundër të stafit",
+      COUNTEROFFER2:
+        "Stafi ka bërë përsëri një ofertë kundër për vlerësimin e ofertës së orës",
       REJECTED: "Stafi ka refuzuar kërkesën për vlerësim",
-      ESTIMATIONREJECTED: "Na vjen keq t'ju informojmë se nuk mundëm të vlerësojmë orën tuaj",
+      ESTIMATIONREJECTED:
+        "Na vjen keq t'ju informojmë se nuk mundëm të vlerësojmë orën tuaj",
       ESTIPALADMINISTRATOR: "Administratori i Estipal",
       ESTIMATOR: "Vlerësuesi",
       QUOTATIONRECEIVED: "Oferta e Marrë",
       PENDINGFIRSTCOUNTEROFFER: "Oferta e Parë Kundër në Pritje",
       REESTIMATE: "Rivlerësim",
       PENDINGSECONDCOUNTEROFFER: "Oferta e Dytë Kundër në Pritje",
-      BEPARTNERSTATUSTEXT: "Konfirmimi i çmimit të shitjes nga Estipal është në pritje",
+      BEPARTNERSTATUSTEXT:
+        "Konfirmimi i çmimit të shitjes nga Estipal është në pritje",
       ACCEPTEDDEALINPROGRESS: "Pranuar - Marrëveshja në Progres",
       PENDINGACTION: "Veprimi në Pritje",
       SELECTOPTIONBELOW: "Zgjidhni një nga opsionet më poshtë",
       SELLESTIPAL: "Shite te Estipal",
       BEPARTNERWITHESTIPAL: "Bëhu partner me Estipal",
-      CONFIRMSELLINGPRICETEXT: "Çmimi i shitjes i konfirmuar nga Estipal është {props?.confirmed_price}. Shitja është në pritje",
+      CONFIRMSELLINGPRICETEXT:
+        "Çmimi i shitjes i konfirmuar nga Estipal është {props?.confirmed_price}. Shitja është në pritje",
       PENDINGSALE: "Shitja në Pritje",
       CONFIRMTHESALE1: "Konfirmo Shitjen",
       NOSALEFOUND: "Nuk është bërë asnjë shitje",
       COMPLETED: "Përfunduar",
-      CONFIRMISSUEINVOICETEXTONE: "Estipal ka lëshuar një faturë për shumën {commission_price}",
+      CONFIRMISSUEINVOICETEXTONE:
+        "Estipal ka lëshuar një faturë për shumën {commission_price}",
       NOTSOLD: "Nuk është Shitur",
-      REJECTEDSALEFORSELLERTEXT: "Shitja është Refuzuar - ora do të kthehet te shitësi",
-      DEALCOMPLETEDFORWATCHTEXT: "Ora është shitur dhe marrëveshja është përfunduar",
+      REJECTEDSALEFORSELLERTEXT:
+        "Shitja është Refuzuar - ora do të kthehet te shitësi",
+      DEALCOMPLETEDFORWATCHTEXT:
+        "Ora është shitur dhe marrëveshja është përfunduar",
       WAITINGFORQUOTATION: "Duke Pritur për Ofertën",
       REJECTEDTEXT: "Refuzuar",
       PASSTEXT: "Kaluar",
-      PENDINGPAYMENTTIER1TEXTONE: "Një kërkesë për pagesë prej {props?.accepted_price_with_commission} është njoftuar te Estipal dhe pagesa është në pritje",
-      PENDINGPAYMENTTIER2TEXTONE: "Duhet të organizohet dërgesa e orës. Estipal do të bëjë pagesën prej {props?.accepted_price_with_commission} pas marrjes së orës",
+      PENDINGPAYMENTTIER1TEXTONE:
+        "Një kërkesë për pagesë prej {props?.accepted_price_with_commission} është njoftuar te Estipal dhe pagesa është në pritje",
+      PENDINGPAYMENTTIER2TEXTONE:
+        "Duhet të organizohet dërgesa e orës. Estipal do të bëjë pagesën prej {props?.accepted_price_with_commission} pas marrjes së orës",
       PENDINGESTIPALPAYMENT: "Pagesa nga Estipal në Pritje",
       PENDINGSHIPPING: "Dërgesa në Pritje",
       CONFIRMATIONREQUIREDTEXT: "Kërkohet Konfirmim",
       CONFIRMSHIPMENTESTIPALTEXT: "Konfirmo dërgesën te Estipal",
-      CONFIRMSELECTIONTIER1TEXT: "Zgjedhja e konfirmuar është 'Shite te Estipal', një kërkesë për pagesë prej {props?.accepted_price_with_commission} është njoftuar te Estipal dhe pagesa është në pritje",
-      CONFIRMSELECTIONTIER2TEXT: "Zgjedhja e konfirmuar është 'Shite te Estipal'. Duhet të organizohet dërgesa e orës. Estipal do të bëjë pagesën prej {props?.accepted_price_with_commission} pas marrjes së orës",
-      CONFIRMPAYMENTSELLERONE: "Estipal ka konfirmuar pagesën prej {props?.accepted_price_with_commission}. Duhet të organizohet dërgesa e orës te Estipal",
+      CONFIRMSELECTIONTIER1TEXT:
+        "Zgjedhja e konfirmuar është 'Shite te Estipal', një kërkesë për pagesë prej {props?.accepted_price_with_commission} është njoftuar te Estipal dhe pagesa është në pritje",
+      CONFIRMSELECTIONTIER2TEXT:
+        "Zgjedhja e konfirmuar është 'Shite te Estipal'. Duhet të organizohet dërgesa e orës. Estipal do të bëjë pagesën prej {props?.accepted_price_with_commission} pas marrjes së orës",
+      CONFIRMPAYMENTSELLERONE:
+        "Estipal ka konfirmuar pagesën prej {props?.accepted_price_with_commission}. Duhet të organizohet dërgesa e orës te Estipal",
       PAIDPENDINGSHIPPING: "Paguar / Dërgesa në Pritje",
-      SHIPPINGCOMPPENDINGESTIPALACCTEXT: "Dërgesa e orës është konfirmuar. Duke pritur për pranimin nga Estipal",
+      SHIPPINGCOMPPENDINGESTIPALACCTEXT:
+        "Dërgesa e orës është konfirmuar. Duke pritur për pranimin nga Estipal",
       SHIPPEDTEXT: "Dërguar",
-      SHIPPINGCOMPPENDINGPAYMENTESTIPALACCTEXT: "Dërgesa e orës është konfirmuar. Duke pritur për pagesën dhe pranimin nga Estipal",
+      SHIPPINGCOMPPENDINGPAYMENTESTIPALACCTEXT:
+        "Dërgesa e orës është konfirmuar. Duke pritur për pagesën dhe pranimin nga Estipal",
       SHIPPENTPENDINGPAYMENTTEXT: "Dërguar / Pagesa në Pritje",
-      ACCEPTDEALCOMPLETEDTEXT: "Pranimi i orës është konfirmuar. Marrëveshja është përfunduar",
-      PAYMENTACCEPTDEALCOMPLETEDTEXT: "Pagesa dhe pranimi i orës janë konfirmuar. Marrëveshja është përfunduar",
+      ACCEPTDEALCOMPLETEDTEXT:
+        "Pranimi i orës është konfirmuar. Marrëveshja është përfunduar",
+      PAYMENTACCEPTDEALCOMPLETEDTEXT:
+        "Pagesa dhe pranimi i orës janë konfirmuar. Marrëveshja është përfunduar",
       PAIDSOLDTEXT: "Paguar / Shitur",
-      SIGNINASTEXT: "Hyr si"
+      SIGNINASTEXT: "Hyr si",
     },
   },
   hb: {
@@ -1406,17 +1659,23 @@ const resources = {
       ESTIMATE: "הערכה",
       ACTION: "פעולה",
       SUBJECT: "נושא",
-      BEPARTNERTEXT: "הבחירה שאושרה היא 'להיות שותף עם אסטיפל', ממתינים לאישור מחיר המכירה",
+      BEPARTNERTEXT:
+        "הבחירה שאושרה היא 'להיות שותף עם אסטיפל', ממתינים לאישור מחיר המכירה",
       CONFIRMSELLINGPRICETEXT1: "מחיר המכירה שאושר על ידי אסטיפל הוא",
       CONFIRMSELLINGPRICETEXT2: "המכירה ממתינה",
       CONFIRMTHESALE: "המכירה אושרה לאסטיפל. ממתינים לחשבונית מאסטיפל",
       CONFIRMISSUEINVOICETEXT: "אסטיפל הוציאה חשבונית בסך",
       NOSALEHASEBEENMADETEXT: "המכירה בוטלה ואסטיפל עודכנה",
-      SELLERINVOICENEWTIER1TEXT: "בקשת תשלום על סך {accepted_price_with_commission} נשלחה לאסטיפל והתשלום ממתין",
-      SELLERINVOICENEWTIER2TEXT: "יש לארגן משלוח של השעון. אסטיפל תשלם לאחר קבלת השעון",
-      SELLERINVOICETIER1TEXT: "הבחירה שאושרה היא 'מכירה לאסטיפל', בקשת תשלום על סך {accepted_price_with_commission} נשלחה לאסטיפל והתשלום ממתין",
-      SELLERINVOICETIER2TEXT: "הבחירה שאושרה היא 'מכירה לאסטיפל'. יש לארגן משלוח של השעון. אסטיפל תשלם לאחר קבלת השעון",
-      CONFIRMPAYMENTSELLER: "אסטיפל אישרה תשלום של {accepted_price_with_commission}. יש לארגן משלוח",
+      SELLERINVOICENEWTIER1TEXT:
+        "בקשת תשלום על סך {accepted_price_with_commission} נשלחה לאסטיפל והתשלום ממתין",
+      SELLERINVOICENEWTIER2TEXT:
+        "יש לארגן משלוח של השעון. אסטיפל תשלם לאחר קבלת השעון",
+      SELLERINVOICETIER1TEXT:
+        "הבחירה שאושרה היא 'מכירה לאסטיפל', בקשת תשלום על סך {accepted_price_with_commission} נשלחה לאסטיפל והתשלום ממתין",
+      SELLERINVOICETIER2TEXT:
+        "הבחירה שאושרה היא 'מכירה לאסטיפל'. יש לארגן משלוח של השעון. אסטיפל תשלם לאחר קבלת השעון",
+      CONFIRMPAYMENTSELLER:
+        "אסטיפל אישרה תשלום של {accepted_price_with_commission}. יש לארגן משלוח",
       CONFIRMSHIPMENTESTIPALTIER1: "המשלוח אושר. ממתינים לאישור מאסטיפל",
       CONFIRMSHIPMENTESTIPALTIER2: "המשלוח אושר. ממתינים לתשלום ואישור מאסטיפל",
       CONFIRMACCEPTANCETIER1: "האישור לשעון התקבל. העסקה הושלמה",
@@ -1443,57 +1702,50 @@ const resources = {
       SELECTOPTIONBELOW: "בחר אפשרות מהבאות",
       SELLESTIPAL: "מכירה לאסטיפל",
       BEPARTNERWITHESTIPAL: "להיות שותף עם אסטיפל",
-      CONFIRMSELLINGPRICETEXT: "מחיר המכירה שאושר על ידי אסטיפל הוא {props?.confirmed_price}. המכירה ממתינה",
+      CONFIRMSELLINGPRICETEXT:
+        "מחיר המכירה שאושר על ידי אסטיפל הוא {props?.confirmed_price}. המכירה ממתינה",
       PENDINGSALE: "מכירה ממתינה",
       CONFIRMTHESALE1: "אשר את המכירה",
       NOSALEFOUND: "לא בוצעה מכירה",
       COMPLETED: "הושלם",
-      CONFIRMISSUEINVOICETEXTONE: "אסטיפל הוציאה חשבונית על סך ${commission_price}",
+      CONFIRMISSUEINVOICETEXTONE:
+        "אסטיפל הוציאה חשבונית על סך ${commission_price}",
       NOTSOLD: "לא נמכר",
       REJECTEDSALEFORSELLERTEXT: "המכירה נדחתה - השעון יוחזר למוכר",
       DEALCOMPLETEDFORWATCHTEXT: "השעון נמכר והעסקה הושלמה.",
       WAITINGFORQUOTATION: "ממתין להצעת מחיר",
       REJECTEDTEXT: "נדחה",
       PASSTEXT: "עובר",
-      PENDINGPAYMENTTIER1TEXTONE: "בקשת תשלום של {props?.accepted_price_with_commission} נשלחה לאסטיפל והתשלום ממתין",
-      PENDINGPAYMENTTIER2TEXTONE: "יש לארגן משלוח. התשלום יתבצע לאחר קבלת השעון",
+      PENDINGPAYMENTTIER1TEXTONE:
+        "בקשת תשלום של {props?.accepted_price_with_commission} נשלחה לאסטיפל והתשלום ממתין",
+      PENDINGPAYMENTTIER2TEXTONE:
+        "יש לארגן משלוח. התשלום יתבצע לאחר קבלת השעון",
       PENDINGESTIPALPAYMENT: "ממתין לתשלום מאסטיפל",
       PENDINGSHIPPING: "ממתין למשלוח",
       CONFIRMATIONREQUIREDTEXT: "נדרשת אישור",
       CONFIRMSHIPMENTESTIPALTEXT: "אשר משלוח לאסטיפל",
-      CONFIRMSELECTIONTIER1TEXT: "הבחירה היא 'מכירה לאסטיפל', בקשת תשלום נשלחה על סך {props?.accepted_price_with_commission}",
-      CONFIRMSELECTIONTIER2TEXT: "הבחירה היא 'מכירה לאסטיפל'. משלוח צריך להתבצע, תשלום יתבצע לאחר קבלה",
-      CONFIRMPAYMENTSELLERONE: "אסטיפל אישרה תשלום על סך {props?.accepted_price_with_commission}. יש לארגן משלוח",
+      CONFIRMSELECTIONTIER1TEXT:
+        "הבחירה היא 'מכירה לאסטיפל', בקשת תשלום נשלחה על סך {props?.accepted_price_with_commission}",
+      CONFIRMSELECTIONTIER2TEXT:
+        "הבחירה היא 'מכירה לאסטיפל'. משלוח צריך להתבצע, תשלום יתבצע לאחר קבלה",
+      CONFIRMPAYMENTSELLERONE:
+        "אסטיפל אישרה תשלום על סך {props?.accepted_price_with_commission}. יש לארגן משלוח",
       PAIDPENDINGSHIPPING: "שולם / ממתין למשלוח",
       SHIPPINGCOMPPENDINGESTIPALACCTEXT: "המשלוח אושר. ממתינים לאישור מאסטיפל",
       SHIPPEDTEXT: "נשלח",
-      SHIPPINGCOMPPENDINGPAYMENTESTIPALACCTEXT: "המשלוח אושר. ממתינים לתשלום ואישור",
+      SHIPPINGCOMPPENDINGPAYMENTESTIPALACCTEXT:
+        "המשלוח אושר. ממתינים לתשלום ואישור",
       SHIPPENTPENDINGPAYMENTTEXT: "נשלח / ממתין לתשלום",
       ACCEPTDEALCOMPLETEDTEXT: "האישור התקבל. העסקה הושלמה",
       PAYMENTACCEPTDEALCOMPLETEDTEXT: "התשלום והאישור התקבלו. העסקה הושלמה",
       PAIDSOLDTEXT: "שולם / נמכר",
-      SIGNINASTEXT: "מחובר בתור"
-    }
-  }
+      SIGNINASTEXT: "מחובר בתור",
+    },
+  },
 };
 
-/**
- * i18n is initialized with the resources object and the language to use.
- * The keySeparator option is set to false because we do not use keys in form messages.welcome.
- * The interpolation option is set to false because we do not use interpolation in form messages.welcome.
- */
-const savedLanguage = localStorage.getItem("Language") || "en";
+let savedLanguage = localStorage.getItem("Language") || "en";
 
-i18n
-  .use(initReactI18next) // passes i18n down to react-i18next
-  .init({
-    resources,
-    lng: savedLanguage,
-    keySeparator: false, // we do not use keys in form messages.welcome
-
-    interpolation: {
-      escapeValue: false, // react already safes from xss
-    },
-  });
-
-export default i18n;
+export const translate = (key) => {
+  return translations[savedLanguage]?.translation?.[key];
+};

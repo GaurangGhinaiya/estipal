@@ -1,19 +1,60 @@
-import { t } from "i18next";
-import React from "react";
+import React, { useState } from "react";
 import UrgentImage from "../../../../../assets/images/icons/Urgent 1.png";
+import axiosInstance from "../../../../../services";
+import toast from "react-hot-toast";
+import ConfirmDialog from "../../../../../components/common/ConfirmDialog";
+import { translate } from "../../../../../language";
 
 const ConfirmSellingPrice = (props) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
+
+  const confirmedPrice = props?.input_confirmed_price
+    ? props?.input_confirmed_price
+    : props?.price_for_seller;
+
+  const handleConfirmSale = async () => {
+    if (isLoading) return;
+
+    setIsLoading(true);
+
+    try {
+      const url = `/adminActivity/confirmTheSale?watch_id=${props?.item?.watch_details?.watch_id}`;
+      const payload = { confirmed_price: confirmedPrice };
+
+      const response = await axiosInstance.post(url, payload);
+
+      toast.success(response?.message);
+      window.location.reload();
+    } catch (error) {
+      toast.error(error?.response?.data?.message);
+    } finally {
+      setIsLoading(false);
+      setDialogOpen(false);
+    }
+  };
+
+  const handleOpenDialog = () => {
+    setDialogOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setDialogOpen(false);
+  };
+
   return (
     <div>
       {/* 167 */}
       <h3>
-        {t("CONFIRMSELLINGPRICETEXT").replace(
+        {translate("CONFIRMSELLINGPRICETEXT").replace(
           "{props?.confirmed_price}",
           props?.confirmed_price
         )}
       </h3>
       {/* 131 */} {/* 168 */}
-      <h3>{t("STATUS")}: {t("PENDINGSALE")}</h3>
+      <h3>
+        {translate("STATUS")}: {translate("PENDINGSALE")}
+      </h3>
       <div className="select_box text-center mt-20">
         <div className="select_box_inner !max-sm:p-[10px] white_select_box_inner">
           <p className="flex max-sm:flex-col items-center justify-center gap-[10px] mb-[10px]">
@@ -25,9 +66,11 @@ const ConfirmSellingPrice = (props) => {
               />
             </span>
             {/* 139 */}
-            <span className="pending_status">{t("PENDINGACTION")}:</span>
+            <span className="pending_status">
+              {translate("PENDINGACTION")}:
+            </span>
             {/* 140 */}
-            <span>{t("SELECTOPTIONBELOW")}</span>
+            <span>{translate("SELECTOPTIONBELOW")}</span>
           </p>
           <ul className="flex gap-3 flex-wrap justify-center items-center">
             <li
@@ -40,8 +83,9 @@ const ConfirmSellingPrice = (props) => {
                     ? props?.confirm_the_sale_flag === 1
                       ? "btn dark_green"
                       : "btn dark_yellow"
-                    : ""
+                    : "text-[#3c8dbc]"
                 }
+                onClick={handleOpenDialog}
               >
                 {t("CONFIRMTHESALE1")} {/* 169 */}
               </button>
@@ -63,15 +107,24 @@ const ConfirmSellingPrice = (props) => {
                     ? props?.confirm_the_sale_flag === 2
                       ? "btn dark_green"
                       : "btn dark_yellow"
-                    : ""
+                    : "text-[#3c8dbc]"
                 }
               >
-                {t("NOSALEFOUND")} {/* 170 */}
+                {translate("NOSALEFOUND")} {/* 170 */}
               </button>
             </li>
           </ul>
         </div>
       </div>
+      <ConfirmDialog
+        open={dialogOpen}
+        handleClose={handleCloseDialog}
+        handleConfirm={handleConfirmSale}
+        title="Confirm the sale"
+        content=""
+        type={"staff"}
+        loading={isLoading}
+      />
     </div>
   );
 };

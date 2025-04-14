@@ -2,15 +2,15 @@
 import { CircularProgress } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import PaginationComponent from "../../../../components/common/PaginationComponent";
-import { useTranslation } from "react-i18next";
+
 import axiosInstance from "../../../../services";
 import FilterComponent from "../../../admin/analysis/components/FilterComponent";
 import SelectStatusComponent from "./components/SelectStatusComponent";
 import StaffTransactionTable from "./components/StaffTransactionTable";
 import SummaryTable from "./components/SummaryTable";
+import { translate } from "../../../../language";
 
 const SellerRevenueAnalysis = () => {
-  const { t } = useTranslation();
   const [summaryData, setSummaryData] = useState([]);
   const [transactionData, setTransactionData] = useState([]);
   const [sortField, setSortField] = useState(null);
@@ -121,7 +121,7 @@ const SellerRevenueAnalysis = () => {
     <div className="pb-[15px] min-h-[100vh]">
       <div className="px-0 sm:px-[20px] pt-4 flex flex-col justify-between flex-wrap bg-gradient-to-b from-[rgba(0,96,169,0.36)] to-[rgba(255,255,255,0)]">
         <h1 className="text-[30px] font-medium mb-4 mt-5 px-0 sm:px-[15px] font-sans dark:text-white  text-black">
-          {t("REVANUEANALYSIS")}
+          {translate("REVANUEANALYSIS")}
         </h1>
         <FilterComponent
           fromDate={fromDate}
@@ -132,7 +132,7 @@ const SellerRevenueAnalysis = () => {
           clearFilter={clearFilter}
         />
         <h1 className="text-[20px] font-medium mb-4 mt-5 px-0 sm:px-[15px] font-sans dark:text-white  text-black">
-          {t("SUMMARY")}
+          {translate("SUMMARY")}
         </h1>
       </div>
 
@@ -151,7 +151,7 @@ const SellerRevenueAnalysis = () => {
       </div>
 
       <h1 className=" text-[20px] font-medium mb-4 mt-5 px-0 sm:px-[48px] font-sans dark:text-white text-black">
-        {t("TRANSACTIONS")}
+        {translate("TRANSACTIONS")}
       </h1>
       <SelectStatusComponent
         selectedStatus={selectedStatus}

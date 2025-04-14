@@ -6,9 +6,10 @@ import moment from "moment";
 import GradeIcon from "@mui/icons-material/Grade";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import Checkbox from "@mui/material/Checkbox";
-import { useTranslation } from "react-i18next";
+
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../../../services";
+import { translate } from "../../../../language";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -23,7 +24,6 @@ const StaffTable = ({
 }) => {
   const [activitiesShowData, setActivitiesShowData] = useState([]);
   const navigate = useNavigate();
-  const { t } = useTranslation();
 
   useEffect(() => {
     setActivitiesShowData(activitesData);
@@ -58,11 +58,27 @@ const StaffTable = ({
         <tr>
           {[
             { key: "checkbox", label: " " },
-            { key: "from", label: `${t("FROM")}`, isSortable: true },
-            { key: "message", label: `${t("MESSAGE")}`, isSortable: false },
-            { key: "watchId", label: `${t("WATCHID")}`, isSortable: true },
-            { key: "status", label: `${t("STATUS")}`, isSortable: true },
-            { key: "received", label: `${t("RECEIVED")}`, isSortable: true },
+            { key: "from", label: `${translate("FROM")}`, isSortable: true },
+            {
+              key: "message",
+              label: `${translate("MESSAGE")}`,
+              isSortable: false,
+            },
+            {
+              key: "watchId",
+              label: `${translate("WATCHID")}`,
+              isSortable: true,
+            },
+            {
+              key: "status",
+              label: `${translate("STATUS")}`,
+              isSortable: true,
+            },
+            {
+              key: "received",
+              label: `${translate("RECEIVED")}`,
+              isSortable: true,
+            },
           ].map((column) => (
             <th
               key={column.key}

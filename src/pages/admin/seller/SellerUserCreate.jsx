@@ -112,7 +112,7 @@ const SellerUserCreate = () => {
 
   const uploadImage = async () => {
     const formDataToSend = new FormData();
-    formDataToSend.append("file", formData?.companyLogo);
+    formDataToSend.append("file", formData?.seller_logo);
     formDataToSend.append("type", 1);
     setLoading(true);
     try {
@@ -120,7 +120,6 @@ const SellerUserCreate = () => {
         `${process.env.REACT_APP_API_PUBLIC_BASE_URL}/file`,
         formDataToSend
       );
-      console.log("response:Image", response);
       if (response?.status === 200) {
         setLoading(false);
         return response?.data?.payload?.imageUrl;
@@ -239,16 +238,13 @@ const SellerUserCreate = () => {
       }
     });
 
-    if (formData?.companyLogo?.name) {
+    if (formData?.seller_logo?.name) {
       const ImageUrl = await uploadImage();
       ImageUrl && formDataToSend.append("seller_logo", ImageUrl);
     }
 
     formDataToSend.append("active", active);
     formDataToSend.append("ip", ip);
-    if (formData.seller_logo) {
-      formDataToSend.append("seller_logo", formData.seller_logo);
-    }
 
     if (commissionObject) {
       formDataToSend.append("commission", JSON.stringify(commissionObject));
@@ -403,18 +399,10 @@ const SellerUserCreate = () => {
                   />
 
                   <div>
-                    {localCompanyLogoPreview ? (
+                    {localCompanyLogoPreview && (
                       <div className="mt-2">
                         <img
                           src={localCompanyLogoPreview}
-                          alt="Uploaded Logo"
-                          className="w-[100px] object-cover rounded"
-                        />
-                      </div>
-                    ) : (
-                      <div className="mt-2">
-                        <img
-                          src={`${process.env.REACT_APP_IMAGE_BASE_URL}/${formData?.companyLogoPreview}`}
                           alt="Uploaded Logo"
                           className="w-[100px] object-cover rounded"
                         />

@@ -162,7 +162,7 @@ const StaffUser = () => {
                     {item?.username}
                   </td>
                   <td className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap cursor-pointer">
-                    {moment.unix(item?.created_on).format("MMM DD,YYYY")}
+                    {moment.unix(item?.created_on).format(" DD MMM YYYY")}
                   </td>
                   <td className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap cursor-pointer">
                     {item?.staff}

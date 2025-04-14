@@ -5,6 +5,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
+import { LoadingButton } from "@mui/lab";
 
 const ConfirmDialog = ({
   open,
@@ -12,6 +13,8 @@ const ConfirmDialog = ({
   handleConfirm,
   title,
   content,
+  type,
+  loading,
 }) => {
   return (
     <Dialog
@@ -19,22 +22,38 @@ const ConfirmDialog = ({
       onClose={handleClose}
       sx={{
         "& .MuiDialog-paper": {
-          backgroundColor: "#283641",
+          backgroundColor: type === "staff" ? "white " : "#283641",
           color: "#fff",
+          minWidth: "250px",
         },
       }}
     >
-      <DialogTitle>{title}</DialogTitle>
+      <DialogTitle sx={{ color: type === "staff" ? "black" : "white" }}>
+        {title}
+      </DialogTitle>
       <DialogContent>
         <DialogContentText sx={{ color: "#fff" }}>{content}</DialogContentText>
       </DialogContent>
-      <DialogActions>
+      <DialogActions
+        sx={{
+          justifyContent: type === "staff" ? "space-between" : "",
+        }}
+      >
         <Button onClick={handleClose} variant="outlined">
           Cancel
         </Button>
-        <Button onClick={handleConfirm} variant="contained">
+        {/* <Button onClick={handleConfirm} variant="contained">
           Confirm
-        </Button>
+        </Button> */}
+
+        <LoadingButton
+          variant="contained"
+          loading={loading}
+          // className="!bg-[#00a65a] !normal-case !py-[5px] sm:!py-[10px] sm:!px-[40px] !px-[15px] !rounded-[50px]"
+          onClick={handleConfirm}
+        >
+          Confirm
+        </LoadingButton>
       </DialogActions>
     </Dialog>
   );

@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "@mui/material";
-import { useTranslation } from "react-i18next";
+
+import { translate } from "../../../../language";
 
 const FilterComponent = ({
   fromDate,
@@ -10,8 +11,6 @@ const FilterComponent = ({
   applyFilter,
   clearFilter,
 }) => {
-
-  const { t } = useTranslation();
   return (
     <div className="flex items-start sm:items-center sm:flex-row flex-col gap-4 space-x-4 mb-1 px-4">
       <div className="flex items-center space-x-2">
@@ -19,7 +18,7 @@ const FilterComponent = ({
           htmlFor="fromDate"
           className="text-md dark:text-white text-black"
         >
-          {t("FROM")}
+          {translate("FROM")}
         </label>
         <input
           type="date"
@@ -32,7 +31,7 @@ const FilterComponent = ({
       </div>
       <div className="flex items-center space-x-2">
         <label htmlFor="toDate" className="text-md dark:text-white text-black">
-          {t("TO")}
+          {translate("TO")}
         </label>
         <input
           type="date"
@@ -47,7 +46,7 @@ const FilterComponent = ({
         className="b_btn font-bold py-2 px-4 rounded"
         onClick={applyFilter}
       >
-        {t("APPLYFILTER")}
+        {translate("APPLYFILTER")}
       </Button>
       <Button
         className="b_btn font-bold py-2 px-4 rounded"
@@ -57,7 +56,7 @@ const FilterComponent = ({
         }}
         onClick={clearFilter}
       >
-        {t("CLEARFILTER")}
+        {translate("CLEARFILTER")}
       </Button>
     </div>
   );
