@@ -58,8 +58,12 @@ const AccountProfile = () => {
     payment_tier: 0,
     created_on: "",
     seller_logo: null,
+    new_password:"",
+    retype_password:"",
     companyLogoPreview: "",
   });
+  console.log('formData: ', formData);
+
   const [staffData, setStaffData] = useState();
   const [states, setStates] = useState([]);
   const [countries, setCountries] = useState([]);
@@ -110,6 +114,8 @@ const AccountProfile = () => {
         unique_id: `SCA${staff?.id}`,
         address: staff?.address,
         created_on: moment.unix(staff?.created_on).format("MMM DD,YYYY"),
+        new_password:"",
+        retype_password:""
       }));
 
       setPhone(`+${staff?.cnt_code} ${staff?.cnt_no}`);
@@ -147,6 +153,17 @@ const AccountProfile = () => {
 
     const sendData = { ...formData };
 
+    // Validate new_password fields
+    if (formData?.new_password && !formData?.retype_password) {
+      toast.error("Please add confirm your new new_password.");
+      return;
+    }
+
+    if (formData?.new_password !== formData?.retype_password) {
+      toast.error("New new_password and confirm new_password is not matched.");
+      return;
+    }
+
     Object.keys(sendData).forEach((key) => {
       if (key !== "companyLogoPreview" && formData[key]) {
         formDataToSend.append(key, formData[key]);
@@ -171,6 +188,12 @@ const AccountProfile = () => {
       );
 
       if (response?.status === 200) {
+        // Clear new_password fields
+        setFormData((prev) => ({
+          ...prev,
+          new_password: "",
+          retype_password: "",
+        }));
         const message = "Profile updated successfully!";
         toast.success(message);
         getDetailById();
@@ -713,8 +736,8 @@ const AccountProfile = () => {
             }}
           >
             {/* Change Password Field */}
-            <div className="w-[35%]">
-              <TextInputField label={`${t("CHANGEPASSWORD")}`} />
+            <div className="w-[35%] p-[18px]">
+              <p className="text-sm dark:text-white text-black font-medium m-0 whitespace-nowrap min-w-[100px]">{`${t("CHANGEPASSWORD")}`}</p> 
             </div>
 
             <div className="">
@@ -722,14 +745,20 @@ const AccountProfile = () => {
                 placeholder={`${t("NEWPASSWORD")}`}
                 type="password"
                 readOnly={!isEditable}
+                name="new_password"
+                value={formData?.new_password}
                 className=""
+                onChange={handleChange}
               />
 
               {/* Confirm Password Field */}
               <TextInputField
                 placeholder={`${t("CONFIRMPASSWORD")}`}
                 type="password"
+                value={formData?.retype_password}
                 readOnly={!isEditable}
+                name="retype_password"
+                onChange={handleChange}
                 className="mb-[15px]"
               />
             </div>
