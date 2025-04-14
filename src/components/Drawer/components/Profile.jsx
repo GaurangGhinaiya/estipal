@@ -18,7 +18,7 @@ import EngFlag from "../../../assets/images/icons/en_flag.png";
 import SpanishFlag from "../../../assets/images/icons/esp_flag.png";
 import ItlyFlag from "../../../assets/images/icons/ita_flag.png";
 import { languageToCountry } from "../../../utils";
-import { setLanguage, translate } from "../../../language";
+import { translate } from "../../../language";
 
 export default function Profile() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -52,7 +52,7 @@ export default function Profile() {
     // i18n.changeLanguage(lang);
     setSelectedLang(lang);
     toast.success("Language change successfully");
-    setLanguage(lang);
+    // setLanguage(lang);
     window.location.reload();
   };
 

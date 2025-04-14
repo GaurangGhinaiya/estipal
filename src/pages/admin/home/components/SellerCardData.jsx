@@ -355,41 +355,69 @@ const SellerCardData = (props) => {
   };
 
   return (
-    <div
-      key={index}
-      className="mt-5 dark:bg-[#1E252B] bg-[#F8F8F8] dark:text-white text-black p-6 rounded-lg dark:shadow-lg shadow-none border border-gray-300 dark:border-none"
-      style={{ border: "1px solid #ccc" }}
-    >
-      <div className="border_bottom pb-4">
-        {sellerGetSubject(
-          item,
-          accepted_price,
-          getWatchDetails,
-          confirmed_price,
-          commission_price,
-          accepted_price_with_commission,
-          ""
-        )}
-        <div className="flex justify-between items-center flex-wrap">
-          {renderFrom()}
-          <h3 className="mb-3">
-            <strong className="font-bold">{translate("RECEIVED")}: </strong>
-            <span className="created_at">
-              {moment.unix(item?.created_on).format("MMMM DD , YYYY h:mm A")}
-            </span>
-          </h3>
+    <>
+      {item?.type !== "confirm_sold" && (
+        <div
+          key={index}
+          className="mt-5 dark:bg-[#1E252B] bg-[#F8F8F8] dark:text-white text-black p-6 rounded-lg dark:shadow-lg shadow-none border border-gray-300 dark:border-none"
+          style={{ border: "1px solid #ccc" }}
+        >
+          <div className="border_bottom pb-4">
+            {sellerGetSubject(
+              item,
+              accepted_price,
+              getWatchDetails,
+              confirmed_price,
+              commission_price,
+              accepted_price_with_commission,
+              ""
+            )}
+            <div className="flex justify-between items-center flex-wrap">
+              {renderFrom()}
+              <h3 className="mb-3">
+                <strong className="font-bold">{translate("RECEIVED")}: </strong>
+                <span className="created_at">
+                  {moment
+                    .unix(item?.created_on)
+                    .format("MMMM DD , YYYY h:mm A")}
+                </span>
+              </h3>
+            </div>
+          </div>
+          <hr
+            className="my-5"
+            style={{
+              borderTopColor: userRole === "staff" ? "#DFDFDF" : "#ffffff1a",
+              borderTopWidth: "2px",
+            }}
+          />
+          <div className="message_box_inner">{renderMessageBox()}</div>
         </div>
-      </div>
-      <hr
-        className="my-5"
-        style={{
-          borderTopColor: userRole === "staff" ? "#DFDFDF" : "#ffffff1a",
-          borderTopWidth: "2px",
-        }}
-      />
-      <div className="message_box_inner">{renderMessageBox()}</div>
-    </div>
+      )}
+    </>
   );
 };
 
 export default SellerCardData;
+
+// (item?.type == "accept_estimation" ||
+//   item?.type == "est_counter_offer_accept" ||
+//   item?.type == "estimator_quotation" ||
+//   item?.type == "counter_offer_1" ||
+//   item?.type == "est_re-estimate" ||
+//   item?.type == "counter_offer_2" ||
+//   item?.type == "Be-Partner" ||
+//   item?.type == "confirm_selling_price" ||
+//   item?.type == "confirm_the_sale" ||
+//   item?.type == "confirm_the_issuing_of_invoice" ||
+//   item?.type == "no_sale_has_been_made" ||
+//   item?.type == "seller_invoice_new" ||
+//   item?.type == "seller_invoice" ||
+//   item?.type == "confirm_payment_seller" ||
+//   item?.type == "confirm_shipment_estipal" ||
+//   item?.type == "confirm_the_acceptance" ||
+//   item?.type == "return_to_seller" ||
+//   item?.type == "confirm_sold" ||
+//   item?.type == "Quotation for Watch" ||
+//   item?.type == "rejected" ||
+//   item?.type == "estimation_rejected") &&

@@ -1753,42 +1753,8 @@ const translations = {
   },
 };
 
-/**
- * i18n is initialized with the resources object and the language to use.
- * The keySeparator option is set to false because we do not use keys in form messages.welcome.
- * The interpolation option is set to false because we do not use interpolation in form messages.welcome.
- */
 let savedLanguage = localStorage.getItem("Language") || "en";
 
-// i18n
-//   .use(initReactI18next) // passes i18n down to react-i18next
-//   .init({
-//     resources,
-//     lng: savedLanguage,
-//     keySeparator: false, // we do not use keys in form messages.welcome
-
-//     interpolation: {
-//       escapeValue: false, // react already safes from xss
-//     },
-//   });
-
-// export default i18n;
-
-// Function to get a translation
 export const translate = (key) => {
   return translations[savedLanguage]?.translation?.[key];
 };
-
-// Function to change the language
-export const setLanguage = (language) => {
-  if (translations[language]) {
-    // localStorage.setItem("Language", language);
-    savedLanguage = language; // Update the savedLanguage variable
-    document.dispatchEvent(new Event("languageChanged")); // Dispatch a custom event
-  }
-};
-
-// Listen for language changes and update the UI dynamically
-document.addEventListener("languageChanged", () => {
-  // Add logic to re-render components or update the UI as needed
-});
