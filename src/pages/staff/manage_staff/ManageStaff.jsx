@@ -4,7 +4,7 @@ import { Box, Button, Modal } from "@mui/material";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { useTranslation } from "react-i18next";
+
 import { FaEdit } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import StaffLock from "../../../assets/images/icons/Stafflock.png";
@@ -15,9 +15,9 @@ import SearchBar from "../../../components/common/SearchBar";
 import useDebounce from "../../../components/common/UseDebounce";
 import axiosInstance from "../../../services";
 import SaveIcon from "@mui/icons-material/Save";
+import { translate } from "../../../language";
 
 const ManageStaff = () => {
-  const { t } = useTranslation();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [editingId, setEditingId] = useState(null); // Track the ID of the row being edited
@@ -312,7 +312,7 @@ const ManageStaff = () => {
         <div className="flex sm:flex-row flex-col w-full justify-between">
           <div className="flex flex-col">
             <h1 className="text-[30px] font-medium mb-4 px-0 sm:px-[15px] font-sans dark:text-[#ffff] text-black">
-              {t("MANAGESTAFF")}
+              {translate("MANAGESTAFF")}
             </h1>
             <div className="flex sm:flex-row flex-col space-x-0 sm:gap-0 gap-4 sm:space-x-4 mb-4">
               {isAddMode || isEditMode || isArchiveMode ? (
@@ -326,14 +326,14 @@ const ManageStaff = () => {
                       handleSaveStaff();
                     }}
                   >
-                    {t("SAVE")}
+                    {translate("SAVE")}
                   </LoadingButton>
                   <Button
                     variant="contained"
                     className="!bg-[#F0F0F0] !px-[35px] sm:!px-[40px] !py-[10px] sm:!py-[10px] !text-black !capitalize !rounded-[50px]"
                     onClick={handleCancel}
                   >
-                    {t("CANCEL")}
+                    {translate("CANCEL")}
                   </Button>
                 </div>
               ) : (
@@ -344,7 +344,7 @@ const ManageStaff = () => {
                     className="!bg-[#3C8DBC] text-white text-nowrap !px-[5px] sm:!px-[40px] !py-[10px] sm:!py-[10px] !capitalize !rounded-[50px]"
                     onClick={handleAddStaff}
                   >
-                    {t("ADDSTAFF")}
+                    {translate("ADDSTAFF")}
                   </Button>
                   <Button
                     variant="contained"
@@ -352,7 +352,7 @@ const ManageStaff = () => {
                     className="!bg-[#3C8DBC] text-white text-nowrap !px-[5px] sm:!px-[40px] !py-[10px] sm:!py-[10px] !capitalize !rounded-[50px]"
                     onClick={handleArchiveStaff}
                   >
-                    {t("ARCHIVESTAFF")}
+                    {translate("ARCHIVESTAFF")}
                   </Button>
                 </div>
               )}
@@ -363,7 +363,7 @@ const ManageStaff = () => {
               searchQuery={searchQuery}
               setSearchQuery={setSearchQuery}
               setCurrentPage={setCurrentPage}
-              placeholder={`${t("SEARCH")}`}
+              placeholder={`${translate("SEARCH")}`}
             />
           </div>
         </div>
@@ -380,16 +380,22 @@ const ManageStaff = () => {
                 </th>
               )}
               {[
-                { key: "online", label: `${t("ONLINE")}` },
-                { key: "active", label: `${t("ACTIVE")}` },
-                { key: "name", label: `${t("NAME")}` },
-                { key: "email", label: `${t("EMAIL")}` },
-                { key: "mobile_no", label: `${t("MOBILENUMBER")}` },
-                { key: "added_on", label: `${t("ADDEDON")}` },
-                { key: "sent/accepted", label: `${t("SENTACCEPTED")}` },
-                { key: "watches_history", label: `${t("WATCHESHISTORY")}` },
-                { key: "reset_password", label: `${t("RESETPASSWORD")}` },
-                { key: "action", label: `${t("ACTION")}` },
+                { key: "online", label: `${translate("ONLINE")}` },
+                { key: "active", label: `${translate("ACTIVE")}` },
+                { key: "name", label: `${translate("NAME")}` },
+                { key: "email", label: `${translate("EMAIL")}` },
+                { key: "mobile_no", label: `${translate("MOBILENUMBER")}` },
+                { key: "added_on", label: `${translate("ADDEDON")}` },
+                { key: "sent/accepted", label: `${translate("SENTACCEPTED")}` },
+                {
+                  key: "watches_history",
+                  label: `${translate("WATCHESHISTORY")}`,
+                },
+                {
+                  key: "reset_password",
+                  label: `${translate("RESETPASSWORD")}`,
+                },
+                { key: "action", label: `${translate("ACTION")}` },
               ].map((column) => (
                 <th
                   key={column.key}
@@ -558,7 +564,7 @@ const ManageStaff = () => {
                       setNewStaff({ ...newStaff, username: e.target.value })
                     }
                     required
-                    placeholder={`${t("NAME")}`}
+                    placeholder={`${translate("NAME")}`}
                     className="p-2 border border-gray-300 rounded"
                   />
                 </td>
@@ -570,7 +576,7 @@ const ManageStaff = () => {
                     onChange={(e) =>
                       setNewStaff({ ...newStaff, email: e.target.value })
                     }
-                    placeholder={`${t("EMAIL")}`}
+                    placeholder={`${translate("EMAIL")}`}
                     className="p-2 border border-gray-300 rounded"
                   />
                 </td>
@@ -585,7 +591,7 @@ const ManageStaff = () => {
                         cnt_no: e.target.value,
                       })
                     }
-                    placeholder={`${t("MOBILENUMBER")}`}
+                    placeholder={`${translate("MOBILENUMBER")}`}
                     className="p-2 border border-gray-300 rounded"
                   />
                 </td>

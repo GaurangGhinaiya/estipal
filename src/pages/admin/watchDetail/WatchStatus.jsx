@@ -5,11 +5,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import axiosInstance from "../../../services";
 import { extractImageUrls, formattedNumber } from "../../../utils";
 import moment from "moment";
-import { useTranslation } from "react-i18next";
+
+import { translate } from "../../../language";
 
 const WatchStatus = () => {
   const { id } = useParams();
-  const { t } = useTranslation();
+
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -343,7 +344,7 @@ const WatchStatus = () => {
       )}
 
       <h2 className="dark:text-white text-black font-bold text-[30px] mb-2">
-        {t("WATCHHISTORY")}
+        {translate("WATCHHISTORY")}
       </h2>
 
       <div

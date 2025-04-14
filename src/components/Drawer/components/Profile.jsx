@@ -8,7 +8,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Tooltip from "@mui/material/Tooltip";
 import * as React from "react";
 import toast from "react-hot-toast";
-import { useTranslation } from "react-i18next";
+
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../../services/index";
 import AdminProfile from "../../../assets/images/icons/AdminProfile.png";
@@ -18,12 +18,12 @@ import EngFlag from "../../../assets/images/icons/en_flag.png";
 import SpanishFlag from "../../../assets/images/icons/esp_flag.png";
 import ItlyFlag from "../../../assets/images/icons/ita_flag.png";
 import { languageToCountry } from "../../../utils";
+import { setLanguage, translate } from "../../../language";
 
 export default function Profile() {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const { t, i18n } = useTranslation();
   const [anchorElLang, setAnchorElLang] = React.useState(null);
-  const [languageSettings, setLanguageSettings] = React.useState([])
+  const [languageSettings, setLanguageSettings] = React.useState([]);
   const [selectedLang, setSelectedLang] = React.useState(
     localStorage.getItem("Language")
   );
@@ -49,18 +49,24 @@ export default function Profile() {
 
   const handleLangSelect = (lang) => {
     localStorage.setItem("Language", lang);
-    i18n.changeLanguage(lang);
-    setSelectedLang(lang); // Set selected language
+    // i18n.changeLanguage(lang);
+    setSelectedLang(lang);
     toast.success("Language change successfully");
+    setLanguage(lang);
+    window.location.reload();
   };
 
   const fetchLanguageList = async () => {
     try {
-      const languagesSettingsResponse = await axiosInstance.get("/languagesSetting");
-      const updatedLanguages = languagesSettingsResponse?.payload?.data?.filter((item) => item?.enable === 1)?.map(item => ({
-        ...item,
-        countryCode: languageToCountry[item?.name] || null
-      }));
+      const languagesSettingsResponse = await axiosInstance.get(
+        "/languagesSetting"
+      );
+      const updatedLanguages = languagesSettingsResponse?.payload?.data
+        ?.filter((item) => item?.enable === 1)
+        ?.map((item) => ({
+          ...item,
+          countryCode: languageToCountry[item?.name] || null,
+        }));
       setLanguageSettings(updatedLanguages || []);
     } catch (error) {
       console.error("Error fetching data", error);
@@ -69,8 +75,7 @@ export default function Profile() {
 
   React.useEffect(() => {
     fetchLanguageList();
-  }, [])
-
+  }, []);
 
   return (
     <React.Fragment>
@@ -107,24 +112,25 @@ export default function Profile() {
               aria-haspopup="true"
               aria-expanded={openLang ? "true" : undefined}
             >
-              {languageSettings?.filter((item) => item?.name === selectedLang)?.map((lang) => {
-                return (
-                  <img
-                    src={`https://flagcdn.com/w40/${lang?.countryCode?.toLowerCase()}.png`}
-                    alt="icon-profile"
-                    className="w-[30px] mt-[5px] mr-[4px]"
-                  />
-                )
-              })}
+              {languageSettings
+                ?.filter((item) => item?.name === selectedLang)
+                ?.map((lang) => {
+                  return (
+                    <img
+                      src={`https://flagcdn.com/w40/${lang?.countryCode?.toLowerCase()}.png`}
+                      alt="icon-profile"
+                      className="w-[30px] mt-[5px] mr-[4px]"
+                    />
+                  );
+                })}
             </IconButton>
-            {languageSettings?.filter((item) => item?.name === selectedLang)?.map((lang) => {
-              return (
-                <p className="p-[7px] flex lg:hidden">
-                  {lang?.full_name}
-                </p>
-              )
-            })}
-
+            {languageSettings
+              ?.filter((item) => item?.name === selectedLang)
+              ?.map((lang) => {
+                return (
+                  <p className="p-[7px] flex lg:hidden">{lang?.full_name}</p>
+                );
+              })}
           </Tooltip>
         )}
       </Box>
@@ -169,7 +175,10 @@ export default function Profile() {
           <ListItemIcon>
             <PersonIcon fontSize="medium" />
           </ListItemIcon>
-          <p className="font-bold"> {t("SIGNINASTEXT")} {userData?.username}</p>
+          <p className="font-bold">
+            {" "}
+            {translate("SIGNINASTEXT")} {userData?.username}
+          </p>
         </MenuItem>
         <MenuItem
           onClick={() => {
@@ -180,7 +189,7 @@ export default function Profile() {
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
-          {t("LOGOUT")}
+          {translate("LOGOUT")}
         </MenuItem>
       </Menu>
       <Menu
@@ -239,7 +248,8 @@ export default function Profile() {
               }}
               className="gap-2 !text-[15px]"
               style={{
-                backgroundColor: selectedLang === lang?.name ? "#e1e3e9" : "transparent", // Change color for selected language
+                backgroundColor:
+                  selectedLang === lang?.name ? "#e1e3e9" : "transparent", // Change color for selected language
               }}
             >
               <ListItemIcon>
@@ -251,7 +261,7 @@ export default function Profile() {
               </ListItemIcon>
               {lang?.full_name}
             </MenuItem>
-          )
+          );
         })}
 
         {/* <MenuItem

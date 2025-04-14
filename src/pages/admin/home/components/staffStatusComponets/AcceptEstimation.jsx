@@ -4,16 +4,16 @@ import {
   getClassPartnerSeller,
   getClassSelfSeller,
 } from "../../../../../utils";
-import { useTranslation } from "react-i18next";
+
 import ConfirmDialog from "../../../../../components/common/ConfirmDialog";
 import axiosInstance from "../../../../../services";
 import toast from "react-hot-toast";
+import { translate } from "../../../../../language";
 
 const AcceptEstimation = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [sellDialogOpen, setSellDialogOpen] = useState(false);
   const [partnerDialogOpen, setPartnerDialogOpen] = useState(false);
-  const { t } = useTranslation();
 
   const handleConfirmSellToEstipal = async () => {
     setIsLoading(true);
@@ -69,10 +69,10 @@ const AcceptEstimation = (props) => {
     <div className="message_box_inner">
       <h3 className="up-arrow">
         {/* 137 */}
-        {t("ACCEPTESTIMATION")} ({props?.accepted_price})
+        {translate("ACCEPTESTIMATION")} ({props?.accepted_price})
       </h3>
       <h3>
-        {t("STATUS")}: {t("ACCEPTEDDEALINPROGRESS")}
+        {translate("STATUS")}: {translate("ACCEPTEDDEALINPROGRESS")}
       </h3>{" "}
       {/* 138 */}
       <div className="select_box text-center mt-20">
@@ -86,9 +86,11 @@ const AcceptEstimation = (props) => {
               />
             </span>
             {/* 139 */}
-            <span className="pending_status">{t("PENDINGACTION")}:</span>
+            <span className="pending_status">
+              {translate("PENDINGACTION")}:
+            </span>
             {/* 140 */}
-            <span>{t("SELECTOPTIONBELOW")}</span>
+            <span>{translate("SELECTOPTIONBELOW")}</span>
           </p>
           <ul className="flex gap-3 flex-wrap justify-center items-center">
             <li
@@ -107,7 +109,7 @@ const AcceptEstimation = (props) => {
                 )}
                 onClick={handleOpenSellDialog}
               >
-                {t("SELLESTIPAL")} {/* 141 */}
+                {translate("SELLESTIPAL")} {/* 141 */}
               </button>
             </li>
             <li
@@ -128,7 +130,7 @@ const AcceptEstimation = (props) => {
                 )}
                 onClick={handleOpenPartnerDialog}
               >
-                {t("BEPARTNERWITHESTIPAL")} {/* 142 */}
+                {translate("BEPARTNERWITHESTIPAL")} {/* 142 */}
               </button>
             </li>
           </ul>

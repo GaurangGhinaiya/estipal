@@ -5,12 +5,13 @@ import axiosInstance from "../../../services";
 import { extractImageUrls, formattedNumber } from "../../../utils";
 import CardData from "./components/CardData";
 import SellerCardData from "./components/SellerCardData";
-import { useTranslation } from "react-i18next";
+
+import { translate } from "../../../language";
 
 const ReadActivity = () => {
   const navigate = useNavigate();
   const params = useParams();
-  const { t } = useTranslation();
+
   const { id } = params;
   const [readActivityData, setReadActivityData] = useState();
   const [isLoading, setIsLoading] = useState(true);
@@ -165,7 +166,7 @@ const ReadActivity = () => {
               )
             }
           >
-            {t("VIEWWATCHDETAILS")}
+            {translate("VIEWWATCHDETAILS")}
           </Button>
         )}
       </div>
@@ -197,27 +198,33 @@ const ReadActivity = () => {
             ) : (
               <>
                 <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
-                  <p className="dark:text-white text-black">{t("ID")}</p>
+                  <p className="dark:text-white text-black">
+                    {translate("ID")}
+                  </p>
                   <p className="dark:text-white text-black">
                     W{readActivityData?.watch_id}
                   </p>
                 </div>
                 <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
-                  <p className="dark:text-white text-black">{t("BRAND")}</p>
+                  <p className="dark:text-white text-black">
+                    {translate("BRAND")}
+                  </p>
                   <p className="dark:text-white text-black">
                     {readActivityData?.watch_details?.brand}
                   </p>
                 </div>
                 <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
                   <p className="dark:text-white text-black">
-                    {t("COLLECTION")}
+                    {translate("COLLECTION")}
                   </p>
                   <p className="dark:text-white text-black">
                     {readActivityData?.watch_details?.collection}
                   </p>
                 </div>
                 <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between gap-[20px] border border-gray-300 dark:border-none">
-                  <p className="dark:text-white text-black">{t("MODEL")}</p>
+                  <p className="dark:text-white text-black">
+                    {translate("MODEL")}
+                  </p>
                   <p className="dark:text-white text-black whitespace-nowrap overflow-x-auto hide-scrollbar">
                     {readActivityData?.watch_details?.model_no}{" "}
                     {readActivityData?.watch_details?.model_desc &&
@@ -226,14 +233,16 @@ const ReadActivity = () => {
                 </div>
                 <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
                   <p className="dark:text-white text-black">
-                    {t("SERIALNUMBER")}
+                    {translate("SERIALNUMBER")}
                   </p>
                   <p className="dark:text-white text-black">
                     {readActivityData?.watch_details?.serial_no}
                   </p>
                 </div>
                 <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
-                  <p className="dark:text-white text-black">{t("ESTIMATE")}</p>
+                  <p className="dark:text-white text-black">
+                    {translate("ESTIMATE")}
+                  </p>
                   <p className="text-[#11c71e] font-bold">
                     {userRole !== "staff"
                       ? getPrice(

@@ -1,9 +1,9 @@
-import { t } from "i18next";
 import React, { useState } from "react";
 import UrgentImage from "../../../../../assets/images/icons/Urgent 1.png";
 import axiosInstance from "../../../../../services";
 import toast from "react-hot-toast";
 import ConfirmDialog from "../../../../../components/common/ConfirmDialog";
+import { translate } from "../../../../../language";
 
 const ConfirmPaymentSeller = (props) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -41,14 +41,14 @@ const ConfirmPaymentSeller = (props) => {
     <div className="message_box_inner">
       {/* 157 */}
       <h3>
-        {t("CONFIRMPAYMENTSELLERONE").replace(
+        {translate("CONFIRMPAYMENTSELLERONE").replace(
           "{props?.accepted_price_with_commission}",
           props?.accepted_price_with_commission
         )}
       </h3>
       {/* 131 */} {/* 158 */}
       <h3>
-        {t("STATUS")}: {t("PAIDPENDINGSHIPPING")}
+        {translate("STATUS")}: {translate("PAIDPENDINGSHIPPING")}
       </h3>
       <div className="select_box text-center mt-20">
         <div className="select_box_inner !max-sm:p-[10px] white_select_box_inner">
@@ -61,9 +61,11 @@ const ConfirmPaymentSeller = (props) => {
               />
             </span>
             {/* 139 */}
-            <span className="pending_status">{t("PENDINGACTION")}:</span>
+            <span className="pending_status">
+              {translate("PENDINGACTION")}:
+            </span>
             {/* 159 */}
-            <span>{t("CONFIRMATIONREQUIREDTEXT")}</span>
+            <span>{translate("CONFIRMATIONREQUIREDTEXT")}</span>
           </p>
           <ul className="flex gap-3 flex-wrap justify-center items-center">
             <li
@@ -86,7 +88,9 @@ const ConfirmPaymentSeller = (props) => {
                 disabled={isLoading}
               >
                 {/* 160 */}
-                {isLoading ? "Processing..." : t("CONFIRMSHIPMENTESTIPALTEXT")}
+                {isLoading
+                  ? "Processing..."
+                  : translate("CONFIRMSHIPMENTESTIPALTEXT")}
               </button>
             </li>
           </ul>

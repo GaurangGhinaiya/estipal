@@ -8,11 +8,12 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Profile from "./components/Profile";
 import LightLogo from "../../assets/images/img-logo-bar-admin.png";
 import DarkLogo from "../../assets/images/img-logo-login.png";
-import { useTranslation } from "react-i18next";
+
+import { translate } from "../../language";
 
 const Header = () => {
   const navigate = useNavigate();
-  const { t } = useTranslation();
+
   const [openMenu, setOpenMenu] = React.useState(false);
   const [openRevenueMenu, setOpenRevenueMenu] = React.useState(false);
   const [openPerformanceMenu, setOpenPerformanceMenu] = React.useState(false);
@@ -107,7 +108,7 @@ const Header = () => {
             }}
             onClick={() => navigate("/admin")}
           >
-            {t("ACTIVITIES")}
+            {translate("ACTIVITIES")}
           </Button>
           <Button
             className="text-white !normal-case !text-[14px] !p-[0] !m-[0]"
@@ -121,7 +122,7 @@ const Header = () => {
             }}
             onClick={() => navigate("/admin/watch_details/watch_history")}
           >
-            {t("WATCHESHISTORY")}
+            {translate("WATCHESHISTORY")}
           </Button>
           {userRole === "admin" && (
             <Button
@@ -167,7 +168,7 @@ const Header = () => {
                   navigate("/admin/analysis/revenue_analysis/seller")
                 }
               >
-                {t("REVANUEANALYSIS")}
+                {translate("REVANUEANALYSIS")}
               </Button>
             </div>
           )}
@@ -180,9 +181,9 @@ const Header = () => {
                     pathname.includes(
                       "/admin/analysis/revenue_analysis/admin"
                     ) ||
-                      pathname.includes(
-                        "/admin/analysis/revenue_analysis/estimator"
-                      )
+                    pathname.includes(
+                      "/admin/analysis/revenue_analysis/estimator"
+                    )
                       ? "bold"
                       : "normal",
                 }}
@@ -231,7 +232,7 @@ const Header = () => {
                   navigate("/admin/analysis/performance_analysis/seller")
                 }
               >
-                {t("PERFORMANCEANALYSIS")}
+                {translate("PERFORMANCEANALYSIS")}
               </Button>
             </div>
           )}
@@ -244,9 +245,9 @@ const Header = () => {
                     pathname.includes(
                       "/admin/analysis/performance_analysis/admin"
                     ) ||
-                      pathname.includes(
-                        "/admin/analysis/performance_analysis/estimator"
-                      )
+                    pathname.includes(
+                      "/admin/analysis/performance_analysis/estimator"
+                    )
                       ? "bold"
                       : "normal",
                 }}
@@ -334,7 +335,7 @@ const Header = () => {
               }}
               onClick={() => navigate("/admin/staff/staff_user")}
             >
-              {t("MANAGESTAFF")}
+              {translate("MANAGESTAFF")}
             </Button>
           )}
           {userRole === "staff" && (
@@ -348,7 +349,7 @@ const Header = () => {
               }}
               onClick={() => navigate("/admin/panel/account")}
             >
-              {t("ACCOUNTPROFILE")}
+              {translate("ACCOUNTPROFILE")}
             </Button>
           )}
         </div>
@@ -359,14 +360,14 @@ const Header = () => {
       <Box
         className="bg-[#1d272e] text-white py-[11px] fixed z-[1] w-full"
         sx={{ display: { xs: openMenu ? "block" : "none", md: "none" } }}
-      // ref={mobileNav}
+        // ref={mobileNav}
       >
         <hr className="mb-3" />
         {/* Navigation Links */}
         <div className="flex flex-col gap-[12px] max-h-[340px] overflow-auto">
           <Button className="!text-white !normal-case !text-left !justify-start !px-[15px] !py-[10px] !font-bold">
             <PersonIcon fontSize="medium" sx={{ color: "#ffff", mr: "10px" }} />
-            {t("SIGNINASTEXT")} {userName?.username}
+            {translate("SIGNINASTEXT")} {userName?.username}
           </Button>
           <div>
             <Profile />
@@ -383,7 +384,7 @@ const Header = () => {
               setOpenMenu(false);
             }}
           >
-            {t("ACTIVITIES")}
+            {translate("ACTIVITIES")}
           </Button>
           <Button
             className="text-white !normal-case !text-left !justify-start !text-[14px] !py-[5px] !px-[15px] !m-[0] !font-bold"
@@ -400,7 +401,7 @@ const Header = () => {
               setOpenMenu(false);
             }}
           >
-            {t("WATCHESHISTORY")}
+            {translate("WATCHESHISTORY")}
           </Button>
           {userRole === "admin" && (
             <Button
@@ -452,7 +453,7 @@ const Header = () => {
                 setOpenMenu(false);
               }}
             >
-              {t("REVANUEANALYSIS")}
+              {translate("REVANUEANALYSIS")}
             </Button>
           )}
           {userRole === "admin" && (
@@ -464,9 +465,9 @@ const Header = () => {
                     pathname.includes(
                       "/admin/analysis/revenue_analysis/admin"
                     ) ||
-                      pathname.includes(
-                        "/admin/analysis/revenue_analysis/estimator"
-                      )
+                    pathname.includes(
+                      "/admin/analysis/revenue_analysis/estimator"
+                    )
                       ? "bold"
                       : "normal",
                 }}
@@ -517,7 +518,7 @@ const Header = () => {
                 setOpenMenu(false);
               }}
             >
-              {t("PERFORMANCEANALYSIS")}
+              {translate("PERFORMANCEANALYSIS")}
             </Button>
           )}
           {userRole === "admin" && (
@@ -529,9 +530,9 @@ const Header = () => {
                     pathname.includes(
                       "/admin/analysis/performance_analysis/admin"
                     ) ||
-                      pathname.includes(
-                        "/admin/analysis/performance_analysis/estimator"
-                      )
+                    pathname.includes(
+                      "/admin/analysis/performance_analysis/estimator"
+                    )
                       ? "bold"
                       : "normal",
                 }}
@@ -633,7 +634,7 @@ const Header = () => {
                 setOpenMenu(false);
               }}
             >
-              {t("MANAGESTAFF")}
+              {translate("MANAGESTAFF")}
             </Button>
           )}
           {userRole === "staff" && (
@@ -650,7 +651,7 @@ const Header = () => {
                 setOpenMenu(false);
               }}
             >
-              {t("ACCOUNTPROFILE")}
+              {translate("ACCOUNTPROFILE")}
             </Button>
           )}
 
@@ -664,7 +665,7 @@ const Header = () => {
             className="!text-white !normal-case !text-left !justify-start !px-[15px] !py-[10px] !font-bold"
           >
             <Logout fontSize="medium" sx={{ color: "#ffff", mr: "10px" }} />
-            {t("LOGOUT")}
+            {translate("LOGOUT")}
           </Button>
         </div>
       </Box>

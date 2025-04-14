@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { useTranslation } from "react-i18next";
+
 import UrgentImage from "../../../../../assets/images/icons/Urgent 1.png";
 import ConfirmDialog from "../../../../../components/common/ConfirmDialog";
 import axiosInstance from "../../../../../services";
 import toast from "react-hot-toast";
+import { translate } from "../../../../../language";
 
 const StaffSellerInvoice = (props) => {
-  const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
 
@@ -44,14 +44,14 @@ const StaffSellerInvoice = (props) => {
         <>
           {/* 154 */}
           <h3>
-            {t("CONFIRMSELECTIONTIER1TEXT").replace(
+            {translate("CONFIRMSELECTIONTIER1TEXT").replace(
               "{props?.accepted_price_with_commission}",
               props?.accepted_price_with_commission
             )}
           </h3>
           {/* 131 */} {/* 156 */}
           <h3>
-            {t("STATUS")}: {t("PENDINGESTIPALPAYMENT")}
+            {translate("STATUS")}: {translate("PENDINGESTIPALPAYMENT")}
           </h3>
         </>
       )}
@@ -60,14 +60,14 @@ const StaffSellerInvoice = (props) => {
         <>
           {/* 155 */}
           <h3>
-            {t("CONFIRMSELECTIONTIER2TEXT").replace(
+            {translate("CONFIRMSELECTIONTIER2TEXT").replace(
               "{props?.accepted_price_with_commission}",
               props?.accepted_price_with_commission
             )}
           </h3>
           {/* 131 */} {/* 182 */}
           <h3>
-            {t("STATUS")}: {t("PENDINGSHIPPING")}
+            {translate("STATUS")}: {translate("PENDINGSHIPPING")}
           </h3>
           <div className="select_box text-center mt-20">
             <div className="select_box_inner !max-sm:p-[10px] white_select_box_inner">
@@ -80,9 +80,11 @@ const StaffSellerInvoice = (props) => {
                   />
                 </span>
                 {/* 139 */}
-                <span className="pending_status">{t("PENDINGACTION")}:</span>
+                <span className="pending_status">
+                  {translate("PENDINGACTION")}:
+                </span>
                 {/* 159 */}
-                <span>{t("CONFIRMATIONREQUIREDTEXT")}</span>
+                <span>{translate("CONFIRMATIONREQUIREDTEXT")}</span>
               </p>
               <ul className="flex gap-3 flex-wrap justify-center items-center">
                 <li
@@ -108,7 +110,7 @@ const StaffSellerInvoice = (props) => {
                   >
                     {isLoading
                       ? "Processing..."
-                      : t("CONFIRMSHIPMENTESTIPALTEXT")}
+                      : translate("CONFIRMSHIPMENTESTIPALTEXT")}
                   </button>
                 </li>
               </ul>

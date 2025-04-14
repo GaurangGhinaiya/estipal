@@ -1,9 +1,9 @@
-import { t } from "i18next";
 import React, { useState } from "react";
 import UrgentImage from "../../../../../assets/images/icons/Urgent 1.png";
 import axiosInstance from "../../../../../services";
 import toast from "react-hot-toast";
 import ConfirmDialog from "../../../../../components/common/ConfirmDialog";
+import { translate } from "../../../../../language";
 
 const ConfirmSellingPrice = (props) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -46,14 +46,14 @@ const ConfirmSellingPrice = (props) => {
     <div>
       {/* 167 */}
       <h3>
-        {t("CONFIRMSELLINGPRICETEXT").replace(
+        {translate("CONFIRMSELLINGPRICETEXT").replace(
           "{props?.confirmed_price}",
           props?.confirmed_price
         )}
       </h3>
       {/* 131 */} {/* 168 */}
       <h3>
-        {t("STATUS")}: {t("PENDINGSALE")}
+        {translate("STATUS")}: {translate("PENDINGSALE")}
       </h3>
       <div className="select_box text-center mt-20">
         <div className="select_box_inner !max-sm:p-[10px] white_select_box_inner">
@@ -66,9 +66,11 @@ const ConfirmSellingPrice = (props) => {
               />
             </span>
             {/* 139 */}
-            <span className="pending_status">{t("PENDINGACTION")}:</span>
+            <span className="pending_status">
+              {translate("PENDINGACTION")}:
+            </span>
             {/* 140 */}
-            <span>{t("SELECTOPTIONBELOW")}</span>
+            <span>{translate("SELECTOPTIONBELOW")}</span>
           </p>
           <ul className="flex gap-3 flex-wrap justify-center items-center">
             <li
@@ -85,7 +87,7 @@ const ConfirmSellingPrice = (props) => {
                 }
                 onClick={handleOpenDialog}
               >
-                {t("CONFIRMTHESALE")} {/* 169 */}
+                {translate("CONFIRMTHESALE")} {/* 169 */}
               </button>
             </li>
             <li
@@ -108,7 +110,7 @@ const ConfirmSellingPrice = (props) => {
                     : "text-[#3c8dbc]"
                 }
               >
-                {t("NOSALEFOUND")} {/* 170 */}
+                {translate("NOSALEFOUND")} {/* 170 */}
               </button>
             </li>
           </ul>

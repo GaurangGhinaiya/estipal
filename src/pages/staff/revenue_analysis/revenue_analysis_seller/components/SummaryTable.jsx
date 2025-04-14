@@ -1,24 +1,24 @@
 import React from "react";
-import { useTranslation } from "react-i18next";
+
 import { formattedNumber } from "../../../../../utils";
+import { translate } from "../../../../../language";
 
 const SummaryTable = ({ data }) => {
-  const { t } = useTranslation();
   return (
     <table className="table-auto w-full text-left">
       <thead style={{ borderBottom: "2px solid #111111" }}>
         <tr>
           <th className="p-2 dark:text-[#ffff] text-black text-center cursor-pointer">
-            {t("STAFF")}
+            {translate("STAFF")}
           </th>
           <th className="p-2 dark:text-[#ffff] text-black text-center cursor-pointer">
-            {t("EMAIL")}
+            {translate("EMAIL")}
           </th>
           <th className="p-2 dark:text-[#ffff] text-black text-center cursor-pointer">
-            {t("TOTALSOLDESTIPAL")}
+            {translate("TOTALSOLDESTIPAL")}
           </th>
           <th className="p-2 dark:text-[#ffff] text-black text-center cursor-pointer">
-            {t("TOTALPARTNERWITHESTIPAL")}
+            {translate("TOTALPARTNERWITHESTIPAL")}
           </th>
         </tr>
       </thead>

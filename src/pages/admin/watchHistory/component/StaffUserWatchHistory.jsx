@@ -5,12 +5,13 @@ import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import { CircularProgress, Tooltip } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import moment from "moment/moment";
-import { useTranslation } from "react-i18next";
+
 import { useNavigate } from "react-router-dom";
 import gmailIcon from "../../../../assets/images/icons/icn-mai-light.svg";
 import gmailYellowIcon from "../../../../assets/images/icons/icn-mail-yellow.svg";
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../../services";
+import { translate } from "../../../../language";
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 const StaffUserWatchHistory = ({
@@ -21,10 +22,9 @@ const StaffUserWatchHistory = ({
   sortOrder,
 }) => {
   const navigate = useNavigate();
-  const { t } = useTranslation();
 
   const [watchActivityDataUpdate, setWatchActivityDataUpdate] = useState([]);
-  console.log('watchActivityDataUpdate: ', watchActivityDataUpdate);
+  console.log("watchActivityDataUpdate: ", watchActivityDataUpdate);
 
   useEffect(() => {
     setWatchActivityDataUpdate(watchActivityData);
@@ -73,18 +73,34 @@ const StaffUserWatchHistory = ({
                 />
               ),
             },
-            { key: "id", label: `${t("ID")}`, isSortable: true },
-            { key: "brand", label: `${t("BRAND")}`, isSortable: true },
+            { key: "id", label: `${translate("ID")}`, isSortable: true },
+            { key: "brand", label: `${translate("BRAND")}`, isSortable: true },
             {
               key: "collection",
-              label: `${t("COLLECTION")}`,
+              label: `${translate("COLLECTION")}`,
               isSortable: true,
             },
-            { key: "model", label: `${t("MODEL")}`, isSortable: false },
-            { key: "serial_no", label: `${t("SERIAL")}`, isSortable: true },
-            { key: "compnay_name", label: `${t("ADDEDBY")}`, isSortable: true },
-            { key: "addedOn", label: `${t("ADDEDON")}`, isSortable: true },
-            { key: "watch_status", label: `${t("STATUS")}`, isSortable: true },
+            { key: "model", label: `${translate("MODEL")}`, isSortable: false },
+            {
+              key: "serial_no",
+              label: `${translate("SERIAL")}`,
+              isSortable: true,
+            },
+            {
+              key: "compnay_name",
+              label: `${translate("ADDEDBY")}`,
+              isSortable: true,
+            },
+            {
+              key: "addedOn",
+              label: `${translate("ADDEDON")}`,
+              isSortable: true,
+            },
+            {
+              key: "watch_status",
+              label: `${translate("STATUS")}`,
+              isSortable: true,
+            },
           ]?.map((column) => (
             <th
               key={column.key}
