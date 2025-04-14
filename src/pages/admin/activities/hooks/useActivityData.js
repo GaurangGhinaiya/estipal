@@ -14,13 +14,18 @@ const useActivityData = ({
   const [totalRecords, setTotalRecords] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [currency, setCurrency] = useState("");
+  const userRole = localStorage.getItem("userRole");
 
   const getActivityData = async () => {
     try {
       setIsLoading(true);
       const searchObject = { search: debouncedSearchTerm || "" };
       if (status && status !== "All") {
-        searchObject.watch_status = status;
+        if (userRole === "staff") {
+          searchObject.staff_watch_status = status;
+        } else {
+          searchObject.watch_status = status;
+        }
       }
       const searchValue = JSON.stringify(searchObject);
       const response = await axiosInstance.get(
@@ -40,7 +45,14 @@ const useActivityData = ({
     if (currentPage) {
       getActivityData();
     }
-  }, [currentPage, sortOrder, debouncedSearchTerm, status , sortOrder ,sortField ]);
+  }, [
+    currentPage,
+    sortOrder,
+    debouncedSearchTerm,
+    status,
+    sortOrder,
+    sortField,
+  ]);
 
   return { activitesData, totalRecords, isLoading, getActivityData, currency };
 };
