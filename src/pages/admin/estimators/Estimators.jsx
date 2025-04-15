@@ -142,7 +142,7 @@ const Estimators = () => {
                 <tr key={index} className="border-b border-[#202b34]">
                   <td className="px-[18px] py-[0px] text-[#ffff] text-center">
                     <div className="require_vaild_list text-center">
-                      {item?.available ? (
+                      {item?.is_user_login ? (
                         <span className="dot-green"></span>
                       ) : (
                         <span className="dot-red"></span>
