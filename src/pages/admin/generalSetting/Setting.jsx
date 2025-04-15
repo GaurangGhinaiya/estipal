@@ -144,8 +144,19 @@ const Settings = () => {
   }, [commissionData]);
 
   const handleSubmit = async () => {
+    // Validate new_password fields
+    if (data?.new_password && !data?.retype_password) {
+      toast.error("Please add retype_password.");
+      return;
+    }
+
+    if (data?.new_password !== data?.retype_password) {
+      toast.error("new_password and retype_password is not matched.");
+      return;
+    }
     try {
       setLoading(true);
+      
       const response = await axiosInstance.put(`/adminUserSetting`, {
         ...data,
         commission_plan: commissionObject,
@@ -218,7 +229,7 @@ const Settings = () => {
               type="password"
               placeholder="New password"
               label="Password"
-              name="password"
+              name="new_password"
               autoComplete={false}
               value={data?.new_password}
               readOnly={!isEditable}
@@ -232,7 +243,7 @@ const Settings = () => {
               type="password"
               placeholder="Re-type password"
               label=""
-              name="reTypePassword"
+              name="retype_password"
               autoComplete={false}
               value={data?.retype_password}
               readOnly={!isEditable}
