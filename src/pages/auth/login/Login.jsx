@@ -44,7 +44,6 @@ const Login = () => {
         localStorage.setItem("userRole", type);
         localStorage.setItem("Language", "en");
         navigate("/admin");
-        window.location.reload();
         setLoading(false);
       }
     } catch (error) {

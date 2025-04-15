@@ -46,8 +46,8 @@ const SelectDropdown = ({
         onChange={handleChange}
       >
         {options?.map((option, index) => (
-          <option key={index} value={option}>
-            {option}
+          <option key={index} value={option?.value}>
+            {option?.label}
           </option>
         ))}
       </select>
