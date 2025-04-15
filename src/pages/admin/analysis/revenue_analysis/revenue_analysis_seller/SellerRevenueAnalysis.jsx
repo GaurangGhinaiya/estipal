@@ -74,7 +74,7 @@ const SellerRevenueAnalysis = () => {
     }
 
     if (selectedStatus !== "All") {
-      searchObject.watch_status = selectedStatus;
+      searchObject.watch_status_revenue = selectedStatus;
     }
 
     const searchValue = JSON.stringify(searchObject);
@@ -161,6 +161,7 @@ const SellerRevenueAnalysis = () => {
       <SelectStatusComponent
         selectedStatus={selectedStatus}
         setSelectedStatus={setSelectedStatus}
+        setCurrentPage={setCurrentPage}
       />
       <div className="w-[95.5%] overflow-auto mx-auto pt-[10px] mt-8">
         {transactionLoading ? (

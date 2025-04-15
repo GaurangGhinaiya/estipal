@@ -534,7 +534,7 @@ const SellerEdit = () => {
                   <input
                     type="file"
                     onChange={handleFileUpload}
-                    className="w-full bg-transparent border-none outline-none ml-2  text-white placeholder-gray-400 text-right"
+                    className="w-full bg-transparent border-none outline-none ml-2  text-white placeholder-gray-400 text-right whitespace-pre-wrap px-[20px]"
                   />
 
                   <div>
@@ -796,9 +796,9 @@ const SellerEdit = () => {
             label="Username"
             readOnly
             bgColor={"#1e252b"}
-            className="mb-[15px] "
+            className="mb-[15px] !cursor-not-allowed"
             onChange={handleChange}
-            inputClassName="cursor-not-allowed"
+            inputClassName=""
           />
           <TextInputField
             rightTextValue=""

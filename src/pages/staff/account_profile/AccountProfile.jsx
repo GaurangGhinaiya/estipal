@@ -156,12 +156,12 @@ const AccountProfile = () => {
 
     // Validate new_password fields
     if (formData?.new_password && !formData?.retype_password) {
-      toast.error("Please add confirm your new new_password.");
+      toast.error("Please add retype_password.");
       return;
     }
 
     if (formData?.new_password !== formData?.retype_password) {
-      toast.error("New new_password and confirm new_password is not matched.");
+      toast.error("new_password and retype_password is not matched.");
       return;
     }
 

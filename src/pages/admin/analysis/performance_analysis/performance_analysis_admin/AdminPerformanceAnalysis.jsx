@@ -67,6 +67,16 @@ const AdminPerformanceAnalysis = () => {
     }
   };
 
+  // useEffect(() => {
+  //   fetchData();
+  // }, [currentPage ,selectedStatus]);
+
+  // useEffect(() => {
+  //   if (fromDate && toDate) {
+  //     fetchData(fromDate, toDate);
+  //   }
+  // }, [fromDate, toDate]);
+
   useEffect(() => {
     fetchData();
   }, [currentPage]);
@@ -125,24 +135,21 @@ const AdminPerformanceAnalysis = () => {
       <SelectStatusComponent
         selectedStatus={selectedStatus}
         setSelectedStatus={setSelectedStatus}
+        setCurrentPage={setCurrentPage}
       />
       <div className="w-[95.5%] overflow-auto mx-auto pt-[10px] mt-8">
         {loading ? (
           <div className="py-[200px] px-4 text-center">
             <CircularProgress />
           </div>
-        ) : transactionData?.length > 0 ? (
+        ) :
           <TransactionTable
             data={transactionData}
             sortField={sortField}
             sortOrder={sortOrder}
             handleSort={handleSort}
           />
-        ) : (
-          <div className="py-[200px] px-4 text-center text-nowrap dark:text-[#ffff] text-black font-bold">
-            No Data Found
-          </div>
-        )}
+        }
       </div>
       <PaginationComponent
         userRole={userRole}

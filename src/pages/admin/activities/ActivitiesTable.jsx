@@ -12,21 +12,21 @@ import alarmWatchImage from "../../../assets/images/icons/Alarm_watch_light.png"
 import { translate } from "../../../language";
 
 export const statusOptions = [
-  "All",
-  "Active Only",
-  "Not Active Only",
-  "Waiting for Quotation",
-  "Quotation Received",
-  "Accepted",
-  "Rejected by Staff",
-  "Pass by Estimator",
-  "Cancel",
-  "Expired",
-  "Pending Estipal Payment",
-  "Paid / Pending Shipping",
-  "Shipped",
-  "Sold",
-  "Completed",
+  { label: "All", value: "All" },
+  { label: "Active Only", value: "Active Only" },
+  { label: "Not Active Only", value: "Not Active Only" },
+  { label: "Waiting for Quotation", value: "Waiting for Quotation" },
+  { label: "Quotation Received", value: "Quotation Received" },
+  { label: "Accepted", value: "Accepted" },
+  { label: "Rejected by Staff", value: "Rejected" },
+  { label: "Pass by Estimator", value: "Pass" },
+  { label: "Cancel", value: "Cancel" },
+  { label: "Expired", value: "Expired" },
+  { label: "Pending Estipal Payment", value: "Pending Estipal Payment" },
+  { label: "Paid / Pending Shipping", value: "Paid / Pending Shipping" },
+  { label: "Shipped", value: "Shipped" },
+  { label: "Sold", value: "Sold" },
+  { label: "Completed", value: "Completed" },
 ];
 
 const ActivitiesTable = () => {

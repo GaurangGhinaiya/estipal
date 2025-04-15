@@ -68,6 +68,16 @@ export default function Profile() {
           countryCode: languageToCountry[item?.name] || null,
         }));
       setLanguageSettings(updatedLanguages || []);
+
+      const findDefaultSelected = updatedLanguages?.some((item) => {
+        return item?.name === selectedLang;
+      });
+
+      if (!findDefaultSelected) {
+        setSelectedLang(updatedLanguages[0]?.name);
+        localStorage.setItem("Language", updatedLanguages[0]?.name);
+        window.location.reload();
+      }
     } catch (error) {
       console.error("Error fetching data", error);
     }
