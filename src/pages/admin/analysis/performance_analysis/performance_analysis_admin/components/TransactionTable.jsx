@@ -25,9 +25,8 @@ const TransactionTable = ({ data, sortField, sortOrder, handleSort }) => {
             <th
               key={column.key}
               onClick={() => handleSort(column.key)}
-              className={`p-2 dark:text-[#ffff] text-black text-center cursor-pointer ${
-                sortField === column.key ? "active-sorting" : "sorting"
-              }`}
+              className={`p-2 dark:text-[#ffff] text-black text-center cursor-pointer ${sortField === column.key ? "active-sorting" : "sorting"
+                }`}
             >
               {column.label}{" "}
               {sortField === column.key &&
@@ -41,7 +40,7 @@ const TransactionTable = ({ data, sortField, sortOrder, handleSort }) => {
         </tr>
       </thead>
       <tbody>
-        {data?.map((item, index) => (
+        {data?.length > 0 ? data?.map((item, index) => (
           <tr key={index} className="border-b border-[#202b34]">
             <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center">
               {moment.unix(item?.date).format("MMM DD,YYYY")}
@@ -67,21 +66,27 @@ const TransactionTable = ({ data, sortField, sortOrder, handleSort }) => {
             <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap">
               {item?.estimated_watch_price
                 ? `${item?.currency} ${Number(
-                    item?.estimated_watch_price
-                  ).toLocaleString()}`
+                  item?.estimated_watch_price
+                ).toLocaleString()}`
                 : "-"}{" "}
               /{" "}
               {item?.accepted_price
                 ? `${item?.currency} ${Number(
-                    item?.accepted_price
-                  ).toLocaleString()}`
+                  item?.accepted_price
+                ).toLocaleString()}`
                 : "-"}
             </td>
             <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap">
               {item?.watch_status}
             </td>
           </tr>
-        ))}
+        ))
+          :
+          <tr>
+            <td colSpan={12} className="px-[18px] py-[100px] text-center text-nowrap dark:text-[#ffff] text-black">
+              No Data Found
+            </td>
+          </tr>}
       </tbody>
     </table>
   );
