@@ -39,7 +39,7 @@ const AccountProfile = () => {
     active: false,
     cmp_name: "",
     bank_name: "",
-    bank_address: "",
+    logistics_address: "",
     bank_account: "",
     account_number: "",
     bank_swift: "",
@@ -323,8 +323,8 @@ const AccountProfile = () => {
             onChange={handleChange}
           />
           <TextInputField
-            value={formData?.bank_address}
-            name="bank_address"
+            value={formData?.logistics_address}
+            name="logistics_address"
             type="text"
             label={`${translate("BANKADDRESS")}`}
             readOnly={!isEditable}
@@ -400,6 +400,10 @@ const AccountProfile = () => {
                           src={
                             localCompanyLogoPreview
                               ? localCompanyLogoPreview
+                              : formData?.companyLogoPreview?.startsWith(
+                                  "https://cdn.estipal.com/production"
+                                )
+                              ? formData?.companyLogoPreview
                               : `${process.env.REACT_APP_IMAGE_BASE_URL}/${formData?.companyLogoPreview}`
                           }
                           alt="Uploaded Logo"
@@ -417,7 +421,13 @@ const AccountProfile = () => {
                 {formData?.companyLogoPreview ? (
                   <div className="mt-2">
                     <img
-                      src={`${process.env.REACT_APP_IMAGE_BASE_URL}/${formData?.companyLogoPreview}`}
+                      src={
+                        formData?.companyLogoPreview?.startsWith(
+                          "https://cdn.estipal.com/production"
+                        )
+                          ? formData?.companyLogoPreview
+                          : `${process.env.REACT_APP_IMAGE_BASE_URL}/${formData?.companyLogoPreview}`
+                      }
                       alt="Uploaded Logo"
                       className="w-[100px] object-cover rounded"
                     />

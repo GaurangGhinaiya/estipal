@@ -147,7 +147,7 @@ const StaffUserWatchHistory = ({
                       navigate(`/admin/home/readActivity/${item?.id}`)
                     }
                   >
-                    {item?.emailIcon ? (
+                    {!item?.emailIcon ? (
                       <img src={gmailYellowIcon} width="25px" alt="img" />
                     ) : (
                       <img src={gmailIcon} width="25px" alt="img" />

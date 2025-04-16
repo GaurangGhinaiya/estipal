@@ -68,9 +68,17 @@ const SummaryTable = ({ data, groupBy }) => {
       </thead>
       <tbody>
         {(groupBy !== "all" ? processedData : data)?.map((item, index) => (
-          <tr key={index} className="border-b border-[#202b34]">
+          <tr
+            key={index}
+            style={{
+              borderTop:
+                groupBy !== "all" && item?.showYear
+                  ? "2px solid #202b34"
+                  : "1px solid #202b34",
+            }}
+          >
             {groupBy !== "all" && (
-              <td className="px-[18px] py-[12px] dark:text-[#ffff] text-black text-center">
+              <td className="px-[18px] py-[12px] dark:text-[#ffff] text-black text-center font-bold">
                 {item?.showYear
                   ? groupBy !== "year"
                     ? item?.formattedGroupedBy
