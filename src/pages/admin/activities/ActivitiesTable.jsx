@@ -17,7 +17,7 @@ export const statusOptions = [
   { label: "Not Active Only", value: "Not Active Only" },
   { label: "Waiting for Quotation", value: "Waiting for Quotation" },
   { label: "Quotation Received", value: "Quotation Received" },
-  { label: "Accepted", value: "Accepted" },
+  { label: "Accepted", value: "Accepted - Deal in progress" },
   { label: "Rejected by Staff", value: "Rejected" },
   { label: "Pass by Estimator", value: "Pass" },
   { label: "Cancel", value: "Cancel" },

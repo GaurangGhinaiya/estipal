@@ -162,7 +162,7 @@ const SellerPerformanceAnalysis = () => {
         )}
       </div>
       <h1 className=" text-[20px] font-medium mb-4 mt-5 px-0 sm:px-[48px] font-sans dark:text-white text-black">
-        Transactions
+        {translate("TRANSACTIONS")}
       </h1>
       <SelectStatusComponent
         selectedStatus={selectedStatus}
@@ -174,17 +174,13 @@ const SellerPerformanceAnalysis = () => {
           <div className="py-[200px] px-4 text-center">
             <CircularProgress />
           </div>
-        ) : transactionData?.length > 0 ? (
+        ) : (
           <StaffTransactionTable
             data={transactionData}
             sortField={sortField}
             sortOrder={sortOrder}
             handleSort={handleSort}
           />
-        ) : (
-          <div className="py-[200px] px-4 text-center text-nowrap dark:text-[#ffff] text-black font-bold">
-            No Data Found
-          </div>
         )}
       </div>
       <PaginationComponent

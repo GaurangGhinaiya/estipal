@@ -287,9 +287,9 @@ const Settings = () => {
           <TextInputField
             rightTextValue=""
             type="text"
-            placeholder={`Enter Email 1`}
+            placeholder={`Enter Email 2`}
             value={data?.support_email_2}
-            label="Email 1"
+            label="Email 2"
             name="email1"
             readOnly={!isEditable}
             bgColor="#1e252b"
@@ -310,9 +310,9 @@ const Settings = () => {
           <TextInputField
             rightTextValue=""
             type="text"
-            placeholder={`Enter Email 1`}
+            placeholder={`Enter Email 3`}
             value={data?.support_email_3}
-            label="Email 1"
+            label="Email 3"
             name="email1"
             readOnly={!isEditable}
             bgColor="#1e252b"
@@ -333,9 +333,9 @@ const Settings = () => {
           <TextInputField
             rightTextValue=""
             type="text"
-            placeholder={`Enter Email 1`}
+            placeholder={`Enter Email 4`}
             value={data?.support_email_4}
-            label="Email 1"
+            label="Email 4"
             name="email1"
             readOnly={!isEditable}
             bgColor="#1e252b"
