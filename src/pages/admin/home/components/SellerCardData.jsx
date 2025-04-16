@@ -250,7 +250,7 @@ const SellerCardData = (props) => {
             {/* 145 */}
             <h3>{`${translate("QUOTATIONFORWATCH")}`}</h3>
             {/* 146 */}
-            <h3>{`${translate("COMPLETED")}: ${translate(
+            <h3>{`${translate("STATUS")}: ${translate(
               "WAITINGFORQUOTATION"
             )}`}</h3>
           </div>

@@ -30,6 +30,7 @@ import SellerVerification from "../pages/seller/SellerVerification";
 import UpdatePassword from "../pages/adminForgotPassword/UpdatePassword";
 import ForgotPassword from "../pages/auth/login/ForgotPassword";
 import Privacy from "../pages/Privacy";
+import EstimatorEstimateStaff from "../pages/admin/estimator_assignment/EstimatorEstimateStaff";
 // import AddFormulaMaster from "../pages/AddFormulaMaster";
 
 const AppRoute = () => {
@@ -77,6 +78,10 @@ const AppRoute = () => {
           <Route path="/privacy" element={<Privacy />} />
           {/* <Route path="/test" element={<AddFormulaMaster />} /> */}
           {/* Admin Routes */}
+          <Route
+            path="/estimator_assignment/estimator_estimate_staff/:est_id/:watch_unique_id/:estimated_price_admin/:est_pass_flag"
+            element={<EstimatorEstimateStaff />}
+          />
           <Route path="/admin" element={<AdminRoot />}>
             <Route
               path="watch_details/watch_history"
@@ -86,7 +91,15 @@ const AppRoute = () => {
               path="staff/staff_user"
               element={userRole === "staff" ? <ManageStaff /> : <StaffUser />}
             />
-            <Route path="home/readActivity/:id" element={<ReadActivity />} />
+            <Route
+              path="home/readActivity/:id/:watch_id"
+              element={<ReadActivity />}
+            />
+            <Route
+              path="home/readActivity/:watch_id"
+              element={<ReadActivity />}
+            />
+
             <Route
               path="watch_details/watch_status/:id"
               element={<WatchStatus />}
@@ -162,7 +175,6 @@ const AppRoute = () => {
               element={<ManageStaff />}
             />} */}
             <Route path="language" element={<Language />} />
-
             {/* <Route path="edit" element={<EditUser />} />  */}
           </Route>
 
