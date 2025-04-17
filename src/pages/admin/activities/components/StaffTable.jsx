@@ -151,7 +151,9 @@ const StaffTable = ({
                 key={index}
                 className="border-b border-[#202b34]"
                 onClick={() =>
-                  navigate(`/admin/home/readActivity/${activity?.watch_id}`)
+                  navigate(
+                    `/admin/home/readActivity/${activity?.id}/${activity?.watch_id}`
+                  )
                 }
               >
                 <td

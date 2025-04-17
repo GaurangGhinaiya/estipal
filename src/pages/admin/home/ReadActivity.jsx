@@ -11,8 +11,9 @@ import { translate } from "../../../language";
 const ReadActivity = () => {
   const navigate = useNavigate();
   const params = useParams();
+  console.log("params: ", params);
 
-  const { id } = params;
+  const { id, watch_id } = params;
   const [readActivityData, setReadActivityData] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const userRole = localStorage.getItem("userRole");
@@ -20,7 +21,7 @@ const ReadActivity = () => {
   const getDetailById = async () => {
     try {
       const response = await axiosInstance.get(
-        `/adminActivity/detail?watch_id=${id}`
+        `/adminActivity/detail?watch_id=${watch_id}&id=${id}`
       );
       setReadActivityData(response?.payload?.data);
     } catch (error) {

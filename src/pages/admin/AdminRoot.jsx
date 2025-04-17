@@ -36,7 +36,14 @@ const AdminRoot = () => {
           path="/staff/staff_user"
           element={userRole === "staff" ? <ManageStaff /> : <StaffUser />}
         />
+
+        <Route
+          path="/home/readActivity/:id/:watch_id"
+          element={<ReadActivity />}
+        />
+
         <Route path="/home/readActivity/:id" element={<ReadActivity />} />
+
         <Route
           path="/watch_details/watch_status/:id"
           element={<WatchStatus />}

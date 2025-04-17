@@ -301,9 +301,7 @@ const WatchStatus = () => {
                       </td>
                       <td
                         className={`px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap ${
-                          watchDetailData?.is_selected
-                            ? "font-bold"
-                            : "font-normal"
+                          item?.is_selected ? "font-bold" : "font-normal"
                         }`}
                       >
                         {" "}
@@ -315,9 +313,7 @@ const WatchStatus = () => {
                       </td>
                       <td
                         className={`px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap ${
-                          watchDetailData?.is_selected
-                            ? "font-bold"
-                            : "font-normal"
+                          item?.is_selected ? "font-bold" : "font-normal"
                         }`}
                       >
                         {item?.estimator_watch_status == "Pass"
@@ -327,7 +323,7 @@ const WatchStatus = () => {
                             formattedNumber.format(
                               item?.estimated_watch_price
                             )}{" "}
-                        {watchDetailData?.is_selected && "(Selected)"}
+                        {item?.is_selected && "(Selected)"}
                       </td>
                       <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                         {moment

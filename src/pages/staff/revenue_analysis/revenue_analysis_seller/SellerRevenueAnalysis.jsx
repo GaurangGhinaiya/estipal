@@ -163,17 +163,13 @@ const SellerRevenueAnalysis = () => {
           <div className="py-[200px] px-4 text-center">
             <CircularProgress />
           </div>
-        ) : transactionData?.length > 0 ? (
+        ) : (
           <StaffTransactionTable
             data={transactionData}
             sortField={sortField}
             sortOrder={sortOrder}
             handleSort={handleSort}
           />
-        ) : (
-          <div className="py-[200px] px-4 text-center text-nowrap dark:text-[#ffff] text-black font-bold">
-            No Data Found
-          </div>
         )}
       </div>
       <PaginationComponent

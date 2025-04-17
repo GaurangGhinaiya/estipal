@@ -39,41 +39,52 @@ const StaffTransactionTable = ({ data, sortField, sortOrder, handleSort }) => {
         </tr>
       </thead>
       <tbody>
-        {data?.map((item, index) => (
-          <tr key={index} className="border-b border-[#202b34]">
-            <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center">
-              {moment.unix(item?.created_on).format("MMM DD,YYYY")}
-            </td>
-            <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap text-center">
-              {item?.username}
-            </td>
-            <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center">
-              {item?.email}
-            </td>
-            <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap">
-              W{item?.id}
-            </td>
-            <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap">
-              {`${item?.brand} / ${item?.model} / ${item?.collection} ${item?.reference}`}
-            </td>
-            <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap">
-              {item?.estimated_watch_price
-                ? `${item?.currency} ${Number(
-                    item?.estimated_watch_price
-                  ).toLocaleString()}`
-                : "-"}{" "}
-              /{" "}
-              {item?.accepted_price
-                ? `${item?.currency} ${Number(
-                    item?.accepted_price
-                  ).toLocaleString()}`
-                : "-"}
-            </td>
-            <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap">
-              {item?.watch_status}
+        {data?.length > 0 ? (
+          data?.map((item, index) => (
+            <tr key={index} className="border-b border-[#202b34]">
+              <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center">
+                {moment.unix(item?.created_on).format("MMM DD,YYYY")}
+              </td>
+              <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap text-center">
+                {item?.username}
+              </td>
+              <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center">
+                {item?.email}
+              </td>
+              <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap">
+                W{item?.id}
+              </td>
+              <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap">
+                {`${item?.brand} / ${item?.model} / ${item?.collection} ${item?.reference}`}
+              </td>
+              <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap">
+                {item?.estimated_watch_price
+                  ? `${item?.currency} ${Number(
+                      item?.estimated_watch_price
+                    ).toLocaleString()}`
+                  : "-"}{" "}
+                /{" "}
+                {item?.accepted_price
+                  ? `${item?.currency} ${Number(
+                      item?.accepted_price
+                    ).toLocaleString()}`
+                  : "-"}
+              </td>
+              <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap">
+                {item?.watch_status}
+              </td>
+            </tr>
+          ))
+        ) : (
+          <tr>
+            <td
+              colSpan={12}
+              className="px-[18px] py-[100px] text-center text-nowrap dark:text-[#ffff] text-black"
+            >
+              No Data Found
             </td>
           </tr>
-        ))}
+        )}
       </tbody>
     </table>
   );
