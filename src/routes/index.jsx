@@ -1,37 +1,41 @@
 import React from "react";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import AdminRoot from "../pages/admin/AdminRoot";
-import Login from "../pages/auth/login/Login";
+import {
+  Navigate,
+  Route,
+  BrowserRouter as Router,
+  Routes,
+} from "react-router-dom";
 import MainLayout from "../components/layout/MainLayout";
-import WatchHistory from "../pages/admin/watchHistory/WatchHistory";
-import StaffUser from "../pages/admin/staff/StaffUser";
-import ReadActivity from "../pages/admin/home/ReadActivity";
-import WatchStatus from "../pages/admin/watchDetail/WatchStatus";
-import Settings from "../pages/admin/generalSetting/Setting";
-import Estimators from "../pages/admin/estimators/Estimators";
-import AdminRevanueAnalysis from "../pages/admin/analysis/revenue_analysis/revenue_analysis_admin/AdminRevanueAnalysis";
-import EstimatorRevanueAnalysis from "../pages/admin/analysis/revenue_analysis/revenue_analysis_estimator/EstimatorRevanueAnalysis";
+import AdminRoot from "./AdminRoot";
 import AdminPerformanceAnalysis from "../pages/admin/analysis/performance_analysis/performance_analysis_admin/AdminPerformanceAnalysis";
 import EstimatorPerformanceAnalysis from "../pages/admin/analysis/performance_analysis/performance_analysis_estimator/EstimatorPerformanceAnalysis";
-import SellerEdit from "../pages/admin/seller/SellerEdit";
-import BrandList from "../pages/admin/brandList/BrandList";
-import Language from "../pages/admin/language/Language";
-import ProtectedRoute from "./protectedRoute";
-import PublicRoute from "./PublicRoute";
-import SellerUserCreate from "../pages/admin/seller/SellerUserCreate";
-import SellerRevenueAnalysisStaff from "../pages/staff/revenue_analysis/revenue_analysis_seller/SellerRevenueAnalysis";
-import SellerPerformanceAnalysisStaff from "../pages/staff/performance_analysis/performance_analysis_seller/SellerPerformanceAnalysis";
-import AccountProfile from "../pages/staff/account_profile/AccountProfile";
-import ManageStaff from "../pages/staff/manage_staff/ManageStaff";
-import EstimatorEdit from "../pages/admin/estimators/EstimatorEdit";
 import SellerPerformanceAnalysis from "../pages/admin/analysis/performance_analysis/performance_analysis_seller/SellerPerformanceAnalysis";
+import AdminRevanueAnalysis from "../pages/admin/analysis/revenue_analysis/revenue_analysis_admin/AdminRevanueAnalysis";
+import EstimatorRevanueAnalysis from "../pages/admin/analysis/revenue_analysis/revenue_analysis_estimator/EstimatorRevanueAnalysis";
 import SellerRevenueAnalysis from "../pages/admin/analysis/revenue_analysis/revenue_analysis_seller/SellerRevenueAnalysis";
-import SellerVerification from "../pages/seller/SellerVerification";
+import BrandList from "../pages/admin/brandList/BrandList";
+import EstimatorEstimateStaff from "../pages/admin/estimator_assignment/EstimatorEstimateStaff";
+import EstimatorEdit from "../pages/admin/estimators/EstimatorEdit";
+import Estimators from "../pages/admin/estimators/Estimators";
+import Settings from "../pages/admin/generalSetting/Setting";
+import ReadActivity from "../pages/admin/home/ReadActivity";
+import Language from "../pages/admin/language/Language";
+import SellerEdit from "../pages/admin/seller/SellerEdit";
+import SellerUserCreate from "../pages/admin/seller/SellerUserCreate";
+import StaffUser from "../pages/admin/staff/StaffUser";
+import WatchStatus from "../pages/admin/watchDetail/WatchStatus";
+import WatchHistory from "../pages/admin/watchHistory/WatchHistory";
 import UpdatePassword from "../pages/adminForgotPassword/UpdatePassword";
 import ForgotPassword from "../pages/auth/login/ForgotPassword";
+import Login from "../pages/auth/login/Login";
 import Privacy from "../pages/Privacy";
-import EstimatorEstimateStaff from "../pages/admin/estimator_assignment/EstimatorEstimateStaff";
-// import AddFormulaMaster from "../pages/AddFormulaMaster";
+import SellerVerification from "../pages/seller/SellerVerification";
+import AccountProfile from "../pages/staff/account_profile/AccountProfile";
+import ManageStaff from "../pages/staff/manage_staff/ManageStaff";
+import SellerPerformanceAnalysisStaff from "../pages/staff/performance_analysis/performance_analysis_seller/SellerPerformanceAnalysis";
+import SellerRevenueAnalysisStaff from "../pages/staff/revenue_analysis/revenue_analysis_seller/SellerRevenueAnalysis";
+import ProtectedRoute from "./protectedRoute";
+import PublicRoute from "./PublicRoute";
 
 const AppRoute = () => {
   const userRole = localStorage.getItem("userRole");
@@ -75,8 +79,10 @@ const AppRoute = () => {
             </ProtectedRoute>
           }
         >
+          <Route index element={<Navigate to="/admin" replace />} />
+
           <Route path="/privacy" element={<Privacy />} />
-          {/* <Route path="/test" element={<AddFormulaMaster />} /> */}
+
           {/* Admin Routes */}
           <Route
             path="/estimator_assignment/estimator_estimate_staff/:est_id/:watch_unique_id/:estimated_price_admin/:est_pass_flag"
@@ -170,16 +176,22 @@ const AppRoute = () => {
             />
             <Route path="watch_details/brand_list" element={<BrandList />} />
             <Route path="panel/account" element={<AccountProfile />} />
-            {/* {userRole === true && <Route
-              path="staff/staff_user"
-              element={<ManageStaff />}
-            />} */}
             <Route path="language" element={<Language />} />
-            {/* <Route path="edit" element={<EditUser />} />  */}
           </Route>
-
-          {/* <Route path="/admin" element={<AdminRoot />}></Route> */}
         </Route>
+
+        {/* <Route
+          path="*"
+          element={
+            token ? (
+              <Navigate to="/admin" replace />
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        /> */}
+
+        <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </Router>
   );

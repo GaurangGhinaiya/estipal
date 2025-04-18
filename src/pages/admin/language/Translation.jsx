@@ -41,7 +41,7 @@ const Translation = ({ item, updateItem }) => {
             <div className="text-center font-bold text-[16px] sm:pl-[35px]">
               {translation.code}
             </div>
-            <div className="w-[90%] flex items-center bg-[#283641] text-white px-4 rounded-md h-[55px]">
+            <div className="w-[90%] flex items-center bg-[#283641] text-white px-4 rounded-md h-[55px] whitespace-nowrap overflow-x-auto">
               {translation.value || ""}
             </div>
             <button
@@ -66,12 +66,13 @@ const Translation = ({ item, updateItem }) => {
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            width: 400,
             bgcolor: "#1E252B",
             boxShadow: 24,
             py: 2,
             borderRadius: 2,
           }}
+
+          className="w-[300px] sm:w-[400px]"
         >
           <div
             onClick={toggleModal}
