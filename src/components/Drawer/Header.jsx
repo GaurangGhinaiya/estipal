@@ -469,6 +469,7 @@ const Header = () => {
             )}
             {userRole === "admin" && (
               <div
+                ref={close_Revenue_Analysis_ref}
                 className="relative mb-1"
                 style={{
                   backgroundColor:
@@ -493,7 +494,7 @@ const Header = () => {
                   <div className="z-20 absolute bg-[#0060aa] border border-white mt-3 rounded-lg">
                     <button
                       className="block rounded-lg px-4 py-2 hover:bg-[#b3c1c5]"
-                      onClick={() => {
+                      onClick={(e) => {
                         navigate("/admin/analysis/revenue_analysis/admin");
                         setOpenRevenueMenu(false);
                         setOpenMenu(false);
@@ -537,6 +538,7 @@ const Header = () => {
             )}
             {userRole === "admin" && (
               <div
+                ref={close_Performance_Analysis_ref}
                 className={`relative`}
                 style={{
                   backgroundColor:
