@@ -263,7 +263,40 @@ const EstimatorEdit = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const validateForm = () => {
+    const fieldNames = {
+      company_name: "Company Name",
+      first_name: "First Name",
+      last_name: "Last Name",
+      address: "Address",
+      city: "City",
+      country: "Country",
+      zip: "Zip",
+      state: "State",
+      email: "Email",
+      cnt_no: "Contact Number",
+      bank_account_name: "Bank Account Name",
+      bank_swift: "Swift code/IBAN",
+      account_number : "Account Number",
+      bank_address: "Bank Address",
+      bank_name: "Bank Name",
+    };
+    for (const field in fieldNames) {
+      if (!formData[field]) {
+        toast.error(`${fieldNames[field]} field is required.`);
+        return false;
+      }
+    }
+    if (!phone) {
+      toast.error("Please enter a valid Mobile Number.");
+      return false;
+    }
+    return true;
+  };
+
   const save = async () => {
+    if (!validateForm()) return;
+
     setLoading(true);
     try {
       const endpoint =
@@ -594,10 +627,10 @@ const EstimatorEdit = () => {
             type="text"
             label="Email"
             placeholder="Email"
-            readOnly={!isEditable}
+            readOnly={true}
             bgColor={"#1e252b"}
             className="mb-[15px]"
-            inputClass=""
+            inputClass="cursor-not-allowed"
             onChange={handleChange}
           />
 
