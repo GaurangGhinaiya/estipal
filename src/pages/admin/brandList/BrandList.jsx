@@ -595,7 +595,6 @@ const BrandList = () => {
       />
       <SubModalCollection
         isVisible={isModalVisible}
-        content={modalContent}
         onClose={closeModal}
         modelDetails={modelDetails}
         handleModelSubmit={handleModelSave}

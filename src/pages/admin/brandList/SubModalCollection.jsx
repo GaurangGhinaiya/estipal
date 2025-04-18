@@ -5,7 +5,6 @@ import toast from "react-hot-toast";
 
 export const SubModalCollection = ({
   isVisible,
-  content,
   onClose,
   handleModelSubmit,
   modelDetails,

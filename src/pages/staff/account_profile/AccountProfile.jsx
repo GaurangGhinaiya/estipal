@@ -63,7 +63,6 @@ const AccountProfile = () => {
     retype_password: "",
     companyLogoPreview: "",
   });
-  console.log("formData: ", formData);
 
   const [staffData, setStaffData] = useState();
   const [states, setStates] = useState([]);

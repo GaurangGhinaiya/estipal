@@ -11,7 +11,6 @@ import { translate } from "../../../language";
 const ReadActivity = () => {
   const navigate = useNavigate();
   const params = useParams();
-  console.log("params: ", params);
 
   const { id, watch_id } = params;
   const [readActivityData, setReadActivityData] = useState();

@@ -24,7 +24,6 @@ const StaffUserWatchHistory = ({
   const navigate = useNavigate();
 
   const [watchActivityDataUpdate, setWatchActivityDataUpdate] = useState([]);
-  console.log("watchActivityDataUpdate: ", watchActivityDataUpdate);
 
   useEffect(() => {
     setWatchActivityDataUpdate(watchActivityData);
