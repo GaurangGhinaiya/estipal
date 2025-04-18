@@ -115,7 +115,7 @@ const Language = () => {
   };
 
   return (
-    <div className="mx-auto px-[10px] sm:px-[45px] py-[20px] min-h-[100vh]">
+    <div className="mx-auto px-[15px] sm:px-[45px] py-[20px] min-h-[100vh]">
       {isLoading && (
         <div className="flex fixed top-0 bottom-0 right-0 left-0 justify-center items-center ">
           <ClipLoader color="#fba020" size={50} />

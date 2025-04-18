@@ -5,12 +5,12 @@ import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import { CircularProgress, Tooltip } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import moment from "moment/moment";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import gmailIcon from "../../../../assets/images/icons/icn-mai-light.svg";
 import gmailYellowIcon from "../../../../assets/images/icons/icn-mail-yellow.svg";
-import { formattedNumber } from "../../../../utils";
 import axiosInstance from "../../../../services";
+import { formatNumberOrDefault } from "../../../../utils";
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 const AdminUserWatchHistory = ({
@@ -221,9 +221,9 @@ const AdminUserWatchHistory = ({
                   navigate(`/admin/watch_details/watch_status/${item?.id}`)
                 }
               >
-                {item?.currency} {formattedNumber.format(item?.watch_price)} /
+                {item?.currency} {formatNumberOrDefault(item?.watch_price)} /
                 {item?.currency}{" "}
-                {formattedNumber.format(item?.estimated_watch_price)}
+                {formatNumberOrDefault(item?.estimated_watch_price)}
               </td>
               <td
                 className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap cursor-pointer"

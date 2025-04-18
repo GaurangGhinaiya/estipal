@@ -110,7 +110,7 @@ const WatchHistory = () => {
   return (
     <div className="pb-[15px] min-h-[100vh]">
       <div
-        className={`px-0 sm:px-[20px] ${
+        className={`px-[20px] ${
           userRole === "staff" ? "pt-8" : "pt-6"
         } flex justify-between flex-wrap dark:bg-none bg-gradient-to-b from-[rgba(0,96,169,0.36)] to-[rgba(255,255,255,0)]`}
       >

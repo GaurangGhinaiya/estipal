@@ -63,7 +63,6 @@ const AccountProfile = () => {
     retype_password: "",
     companyLogoPreview: "",
   });
-  console.log("formData: ", formData);
 
   const [staffData, setStaffData] = useState();
   const [states, setStates] = useState([]);
@@ -256,7 +255,7 @@ const AccountProfile = () => {
 
   return (
     <div className="mx-auto pb-[15px]">
-      <div className="px-0 sm:px-[20px] pt-8 flex justify-between flex-wrap gap-2 bg-gradient-to-b from-[rgba(0,96,169,0.36)] to-[rgba(255,255,255,0)]">
+      <div className="px-[20px] pt-8 flex justify-between flex-wrap gap-2 bg-gradient-to-b from-[rgba(0,96,169,0.36)] to-[rgba(255,255,255,0)]">
         <div className="flex items-center">
           <h3 className="text-[30px] font-medium px-0 sm:px-[15px] font-sans dark:text-white text-black">
             {translate("ACCOUNTPROFILE")}
@@ -295,7 +294,7 @@ const AccountProfile = () => {
         )}
       </div>
 
-      <div className="px-0 sm:px-[20px] grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 w-full gap-4 my-[35px]">
+      <div className="px-[20px] grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 w-full my-[35px]">
         <div className="">
           <TextInputField
             value={formData?.cmp_name}
@@ -402,12 +401,15 @@ const AccountProfile = () => {
                               ? localCompanyLogoPreview
                               : formData?.companyLogoPreview?.startsWith(
                                   "https://cdn.estipal.com/production"
+                                ) ||
+                                formData?.companyLogoPreview?.startsWith(
+                                  "https://cdn.estipal.com/dev"
                                 )
                               ? formData?.companyLogoPreview
                               : `${process.env.REACT_APP_IMAGE_BASE_URL}/${formData?.companyLogoPreview}`
                           }
                           alt="Uploaded Logo"
-                          className="w-[100px] object-cover rounded"
+                          className="w-[100px] object-cover rounded-[20px]"
                         />
                       </div>
                     ) : (
@@ -424,12 +426,15 @@ const AccountProfile = () => {
                       src={
                         formData?.companyLogoPreview?.startsWith(
                           "https://cdn.estipal.com/production"
+                        ) ||
+                        formData?.companyLogoPreview?.startsWith(
+                          "https://cdn.estipal.com/dev"
                         )
                           ? formData?.companyLogoPreview
                           : `${process.env.REACT_APP_IMAGE_BASE_URL}/${formData?.companyLogoPreview}`
                       }
                       alt="Uploaded Logo"
-                      className="w-[100px] object-cover rounded"
+                      className="w-[100px] object-cover rounded-[20px]"
                     />
                   </div>
                 ) : (

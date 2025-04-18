@@ -51,7 +51,7 @@ const AdminRevanueAnalysis = () => {
         <h1 className="text-[26px] font-medium mb-4 mt-5 px-0 sm:px-[15px] font-sans text-white">
           Revenue Analysis (Merchant)
         </h1>
-        <div className="flex items-center sm:flex-row flex-col gap-4 space-x-4 mb-1 px-4">
+        <div className="flex items-start sm:items-center sm:flex-row flex-col gap-4 space-x-4 mb-1 px-4">
           <div className="flex items-center space-x-2">
             <label htmlFor="fromDate" className="text-md text-white">
               From

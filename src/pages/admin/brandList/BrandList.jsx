@@ -1,27 +1,29 @@
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { FaArrowCircleRight, FaEdit } from "react-icons/fa";
 import { IoCloseCircleOutline } from "react-icons/io5";
+import { ClipLoader } from "react-spinners";
 import CustomSwitch from "../../../components/common/CustomSwitch";
 import axiosInstance from "../../../services";
 import { ModalBrand } from "./ModalBrand";
 import { ModalCollection } from "./ModalCollection";
 import { SubModalCollection } from "./SubModalCollection";
-import toast from "react-hot-toast";
-import { ClipLoader } from "react-spinners";
 
 const BrandList = () => {
   const [brandData, setBrandData] = useState([]);
   const [brandDetails, setBrandDetails] = useState({});
+  const [iSEditBrandDetailsData, setISEditBrandDetailsData] = useState({});
   const [brandName, setBrandName] = useState("");
   const [selectedBrand, setSelectedBrand] = useState(null);
   const [selectedCollection, setSelectedCollection] = useState(null);
   const [collectionName, setCollectionName] = useState("");
   const [collectionData, setCollectionData] = useState([]);
   const [collectionDetails, setCollectionDetails] = useState({});
+  const [iSEditCollectionData, setISEditCollectionData] = useState({});
   const [selectedModel, setSelectedModel] = useState(null);
   const [modelName, setModelName] = useState("");
   const [modelDesc, setModelDesc] = useState("");
-  const [modelDetails, setModelDetails] = useState("");
+  const [modelDetails, setModelDetails] = useState({});
   const [modalContent, setModalContent] = useState("");
   const [modelData, setModelData] = useState([]);
   const [isModalVisibleBrand, setModalVisibleBrand] = useState(false);
@@ -30,12 +32,93 @@ const BrandList = () => {
   const [switchState, setSwitchState] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSwitchChange = (name, index) => (e) => {
-    const dynamicKey = `${name}${index}`;
+  const handleSwitchChange = (name, id) => async (e) => {
+    const dynamicKey = `${name}${id}`;
     setSwitchState((prev) => ({
       ...prev,
       [dynamicKey]: e.target.checked,
     }));
+
+    if (name === "brandActive") {
+      try {
+        setIsLoading(true);
+
+        const brandData = {
+          active: e.target.checked,
+        };
+
+        await axiosInstance.put(`watchBrands?id=${id}`, brandData);
+
+        toast.success(`Brand updated successfully!`);
+
+        setBrandName("");
+        getBrandList();
+        setISEditBrandDetailsData({});
+      } catch (error) {
+        const message = error?.response?.data?.message;
+        if (message === "brand is required.") {
+          toast.error(message);
+        } else {
+          toast.error(message || `Failed to update brand.`);
+        }
+        console.log("error", error);
+      } finally {
+        setIsLoading(false);
+      }
+    } else if (name === "collectionActive") {
+      try {
+        setIsLoading(true);
+
+        const payload = {
+          active: e.target.checked,
+        };
+        await axiosInstance.put(`watchModel?id=${id}`, payload);
+        toast.success(`Collection updated successfully!`);
+        getCollectionList();
+        setISEditCollectionData({});
+        setCollectionName("");
+      } catch (error) {
+        const message = error?.response?.data?.message;
+
+        if (message === "model_no is required.") {
+          toast.error("Collection is required!");
+        } else {
+          toast.error(message || `Failed to update collection.`);
+        }
+
+        console.log("error", error);
+      } finally {
+        setIsLoading(false);
+      }
+    } else if (name === "modelActive") {
+      try {
+        setIsLoading(true);
+
+        const payload = {
+          active: e.target.checked,
+        };
+        await axiosInstance.put(`watchSerialNo?id=${id}`, payload);
+
+        toast.success(`Model updated successfully!`);
+
+        getModelList();
+        setModelName("");
+        setModelDesc("");
+      } catch (error) {
+        const message = error?.response?.data?.message;
+        if (message === "serial_no is required.") {
+          toast.error("Model type is required!");
+        } else if (message === "serial_desc is required.") {
+          toast.error("Reference is required!");
+        } else {
+          toast.error(message || `Failed to update model.`);
+        }
+      } finally {
+        setIsLoading(false);
+      }
+    } else {
+      return;
+    }
   };
 
   const handleBrandClick = (brand) => {
@@ -59,6 +142,7 @@ const BrandList = () => {
   const closeModalBrand = () => {
     setModalVisibleBrand(false);
     setModalContent("");
+    setISEditBrandDetailsData({});
   };
 
   const openModalCollection = (content) => {
@@ -69,6 +153,7 @@ const BrandList = () => {
   const closeModalCollection = () => {
     setModalVisibleCollection(false);
     setModalContent("");
+    setISEditCollectionData({});
   };
 
   const openModal = (content) => {
@@ -79,28 +164,7 @@ const BrandList = () => {
   const closeModal = () => {
     setModalVisible(false);
     setModalContent("");
-  };
-
-  const handleBrandModalSubmit = async (value) => {
-    try {
-      setIsLoading(true);
-      const updatedBrand = {
-        brand: value,
-        active: brandDetails?.active,
-      };
-      const response = await axiosInstance.put(
-        `watchBrands?id=${brandDetails?.id}`,
-        updatedBrand
-      );
-      toast.success("Brand updated successfully!");
-      getBrandList();
-      closeModalBrand();
-    } catch (error) {
-      toast.error("Failed to update brand.");
-      console.log("error", error);
-    } finally {
-      setIsLoading(false);
-    }
+    setModelDetails({});
   };
 
   const getBrandList = async () => {
@@ -123,18 +187,46 @@ const BrandList = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleBrandAdd = async () => {
+  const handleBrandSubmit = async (value) => {
+    if (value == "") {
+      toast.error("Brand is required!");
+      return;
+    }
+
+    const isEdit = !!iSEditBrandDetailsData?.id;
     try {
       setIsLoading(true);
-      const newBrandValue = {
-        brand: brandName,
+
+      const brandData = {
+        brand: value,
       };
-      const response = await axiosInstance.post(`watchBrands`, newBrandValue);
-      toast.success("Brand added successfully!");
-      setBrandName("");
+
+      const response = isEdit
+        ? await axiosInstance.put(
+            `watchBrands?id=${iSEditBrandDetailsData.id}`,
+            brandData
+          )
+        : await axiosInstance.post(`watchBrands`, brandData);
+
+      toast.success(`Brand ${isEdit ? "updated" : "added"} successfully!`);
+
+      if (!isEdit) {
+        setBrandName("");
+      }
+
       getBrandList();
+      setISEditBrandDetailsData({});
+
+      if (isEdit) {
+        closeModalBrand();
+      }
     } catch (error) {
-      toast.error("Failed to add brand.");
+      const message = error?.response?.data?.message;
+      if (message === "brand is required.") {
+        toast.error(message);
+      } else {
+        toast.error(message || `Failed to ${isEdit ? "update" : "add"} brand.`);
+      }
       console.log("error", error);
     } finally {
       setIsLoading(false);
@@ -163,47 +255,53 @@ const BrandList = () => {
     }
   }, [selectedBrand]);
 
-  const newCollectionValue = {
-    brand_id: brandDetails?.id,
-    model_no: collectionName,
-    active: true,
-  };
-  const handleCollectionAdd = async () => {
-    try {
-      setIsLoading(true);
-      const response = await axiosInstance.post(
-        `watchModel`,
-        newCollectionValue
-      );
-      toast.success("Collection added successfully!");
-      getCollectionList();
-      setCollectionName("");
-    } catch (error) {
-      toast.error("Failed to add collection.");
-      console.log("error", error);
-    } finally {
-      setIsLoading(false);
+  const handleCollectionSave = async (value) => {
+    if (value == "") {
+      toast.error("Collection is required!");
+      return;
     }
-  };
+    const isEdit = !!iSEditCollectionData?.id;
 
-  const handleCollectionSubmit = async (value) => {
     try {
       setIsLoading(true);
-      const updatedCollection = {
-        brand_id: collectionDetails?.brand_id,
-        model_no: value,
-        serial_no: value,
-        active: true,
-      };
-      const response = await axiosInstance.put(
-        `watchModel?id=${collectionDetails?.id}`,
-        updatedCollection
-      );
-      toast.success("Collection updated successfully!");
+
+      const payload = isEdit
+        ? {
+            model_no: value,
+          }
+        : {
+            brand_id: brandDetails?.id,
+            model_no: collectionName,
+          };
+
+      const response = isEdit
+        ? await axiosInstance.put(
+            `watchModel?id=${iSEditCollectionData?.id}`,
+            payload
+          )
+        : await axiosInstance.post(`watchModel`, payload);
+
+      toast.success(`Collection ${isEdit ? "updated" : "added"} successfully!`);
+
       getCollectionList();
-      closeModalCollection();
+      setISEditCollectionData({});
+
+      if (isEdit) {
+        closeModalCollection();
+      } else {
+        setCollectionName("");
+      }
     } catch (error) {
-      toast.error("Failed to update collection.");
+      const message = error?.response?.data?.message;
+
+      if (message === "model_no is required.") {
+        toast.error("Collection is required!");
+      } else {
+        toast.error(
+          message || `Failed to ${isEdit ? "update" : "add"} collection.`
+        );
+      }
+
       console.log("error", error);
     } finally {
       setIsLoading(false);
@@ -232,83 +330,95 @@ const BrandList = () => {
     }
   }, [selectedCollection]);
 
-  const handleAddModel = async () => {
-    try {
-      setIsLoading(true);
-      const newModelValue = {
-        model_id: collectionDetails?.id,
-        serial_no: modelName,
-        serial_desc: modelDesc,
-        active: true,
-      };
-      const response = await axiosInstance.post(`watchSerialNo`, newModelValue);
-      toast.success("Model added successfully!");
-      getModelList();
-      setModelName("");
-      setModelDesc("");
-    } catch (error) {
-      toast.error("Failed to add model.");
-      console.log("error", error);
-    } finally {
-      setIsLoading(false);
+  const handleModelSave = async (serialDesc, serialNo) => {
+    if (serialNo == "") {
+      toast.error("Model type is required!");
+      return;
     }
-  };
+    if (serialDesc == "") {
+      toast.error("Reference is required!");
+      return;
+    }
 
-  const handleModelSubmit = async (serialDesc, serialNo) => {
+    const isEdit = !!modelDetails?.id;
+
     try {
       setIsLoading(true);
-      const newModelValue = {
-        serial_desc: serialDesc,
-        serial_no: serialNo,
-        active: true,
-      };
-      const response = await axiosInstance.put(
-        `watchSerialNo?id=${modelDetails?.id}`,
-        newModelValue
-      );
-      toast.success("Model updated successfully!");
+
+      const payload = isEdit
+        ? {
+            serial_no: serialNo,
+            serial_desc: serialDesc,
+          }
+        : {
+            model_id: collectionDetails?.id,
+            serial_no: serialNo,
+            serial_desc: serialDesc,
+          };
+
+      const response = isEdit
+        ? await axiosInstance.put(
+            `watchSerialNo?id=${modelDetails.id}`,
+            payload
+          )
+        : await axiosInstance.post(`watchSerialNo`, payload);
+
+      toast.success(`Model ${isEdit ? "updated" : "added"} successfully!`);
+
       getModelList();
-      closeModal();
+
+      if (isEdit) {
+        closeModal();
+      } else {
+        setModelName("");
+        setModelDesc("");
+      }
     } catch (error) {
-      toast.error("Failed to update model.");
-      console.log("error", error);
+      const message = error?.response?.data?.message;
+      if (message === "serial_no is required.") {
+        toast.error("Model type is required!");
+      } else if (message === "serial_desc is required.") {
+        toast.error("Reference is required!");
+      } else {
+        toast.error(message || `Failed to ${isEdit ? "update" : "add"} model.`);
+      }
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="sm:p-6 min-h-[83vh]">
+    <div className="min-h-[100vh]">
       {isLoading && (
         <div className="flex fixed top-0 bottom-0 right-0 left-0 justify-center items-center">
           <ClipLoader color="#ffffff" size={50} />
         </div>
       )}
-      <h1 className="text-2xl font-bold mb-4 text-white">
+      <h1 className="text-2xl font-bold mt-[20px] sm:mt-[20px] px-[18px] sm:mb-4 py-[20px] sm:py-[5px] text-white">
         Brands, Collections, and Models
       </h1>
-      <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 w-full">
+      <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 w-full px-[20px] py-[10px]">
         {/* Box 1: Brands */}
-        <div className="bg-[#1E252B] p-4 rounded-lg h-[700px] overflow-hidden">
-          <div className="flex justify-between flex-col md:flex-row">
-            <h2 className="text-xl font-semibold text-white mb-4">Brands</h2>
+        <div className="bg-[#1E252B] p-4 rounded-lg overflow-hidden">
+          <div className="flex justify-between flex-col md:flex-row py-[2px]">
+            <h2 className="text-xl font-semibold text-white mb-4 px-[8px]">Brands</h2>
             <div className="flex mb-4">
               <input
                 type="text"
                 placeholder="Type brand"
-                className="flex-grow p-2 rounded-l-lg"
+                className="flex-grow p-[15px] rounded-l-lg"
                 value={brandName}
                 onChange={(e) => setBrandName(e.target.value)}
               />
               <button
-                onClick={handleBrandAdd}
-                className="bg-blue-500 text-white px-4 py-2 rounded-r-lg"
+                onClick={() => handleBrandSubmit(brandName)}
+                className="bg-blue-500 text-white px-4 py-[15px] rounded-r-lg"
               >
                 Add
               </button>
             </div>
           </div>
-          <ul className="h-[630px] overflow-y-scroll">
+          <ul className="h-[580px] sm:h-[630px] overflow-y-scroll">
             {brandData?.map((brand, index) => (
               <li
                 key={index}
@@ -331,7 +441,7 @@ const BrandList = () => {
                       size={25}
                       onClick={() => {
                         openModalBrand(`${brand?.brand}`);
-                        setBrandDetails(brand);
+                        setISEditBrandDetailsData(brand);
                       }}
                     />
                   </button>
@@ -360,7 +470,7 @@ const BrandList = () => {
 
         {/* Box 2: Collections */}
         {selectedBrand && (
-          <div className="bg-[#1E252B] p-4 rounded-lg h-[700px] overflow-hidden">
+          <div className="bg-[#1E252B] p-4 rounded-lg overflow-hidden">
             <div className="flex justify-between flex-col md:flex-row">
               <div>
                 <IoCloseCircleOutline
@@ -370,6 +480,7 @@ const BrandList = () => {
                     setSelectedCollection(null);
                     setSelectedBrand(null);
                   }}
+                  className="cursor-pointer"
                 />
                 <h2 className="text-xl font-semibold text-white mb-4">
                   Collections
@@ -384,14 +495,14 @@ const BrandList = () => {
                   onChange={(e) => setCollectionName(e.target.value)}
                 />
                 <button
-                  onClick={handleCollectionAdd}
+                  onClick={() => handleCollectionSave(collectionName)}
                   className="bg-blue-500 text-white px-4 py-2 rounded-r-lg"
                 >
                   Add
                 </button>
               </div>
             </div>
-            <ul className="h-[620px] overflow-y-scroll">
+            <ul className="h-[560px] sm:h-[620px] overflow-y-scroll">
               {collectionData?.map((collection, index) => (
                 <li
                   key={index}
@@ -412,7 +523,7 @@ const BrandList = () => {
                         size={25}
                         onClick={() => {
                           openModalCollection(`${collection?.model_no}`);
-                          setCollectionDetails(collection);
+                          setISEditCollectionData(collection);
                         }}
                       />
                     </button>
@@ -421,7 +532,7 @@ const BrandList = () => {
                         name={`collectionActive${collection?.id}`}
                         checked={
                           switchState[`collectionActive${collection?.id}`] ??
-                          collection?.model_no
+                          collection?.active
                         }
                         onChange={handleSwitchChange(
                           "collectionActive",
@@ -453,13 +564,14 @@ const BrandList = () => {
 
         {/* Box 3: Models */}
         {selectedCollection && (
-          <div className="bg-[#1E252B] p-4 rounded-lg h-[700px] overflow-hidden">
-            <div className="flex justify-between  flex-wrap">
+          <div className="bg-[#1E252B] p-4 rounded-lg overflow-hidden">
+            <div className="flex justify-between flex-wrap">
               <div>
                 <IoCloseCircleOutline
                   color="white"
                   size={20}
                   onClick={() => setSelectedCollection(null)}
+                  className="cursor-pointer"
                 />
                 <h2 className="text-xl font-semibold text-white mb-4">
                   Models
@@ -482,7 +594,7 @@ const BrandList = () => {
                 />
                 <button
                   onClick={() => {
-                    handleAddModel();
+                    handleModelSave(modelDesc, modelName);
                     // setModelDetails(model)
                   }}
                   className="bg-blue-500 text-white px-4 py-2 rounded-r-lg"
@@ -491,7 +603,7 @@ const BrandList = () => {
                 </button>
               </div>
             </div>
-            <ul className="h-[620px] overflow-y-scroll">
+            <ul className="h-[520px] sm:h-[620px] overflow-y-scroll">
               {modelData?.map((model, index) => (
                 <li
                   key={index}
@@ -544,25 +656,21 @@ const BrandList = () => {
       </div>
       <ModalBrand
         isModalVisibleBrand={isModalVisibleBrand}
-        content={modalContent}
         onClose={closeModalBrand}
-        handleBrandModalSubmit={handleBrandModalSubmit}
-        brandDetails={brandDetails}
-        setModalVisibleBrand={setModalVisibleBrand}
+        handleBrandModalSubmit={handleBrandSubmit}
+        iSEditBrandDetailsData={iSEditBrandDetailsData}
       />
       <ModalCollection
         isModalVisibleCollection={isModalVisibleCollection}
-        content={modalContent}
         onClose={closeModalCollection}
-        handleCollectionSubmit={handleCollectionSubmit}
-        collectionDetails={collectionDetails}
+        handleCollectionSubmit={handleCollectionSave}
+        iSEditCollectionData={iSEditCollectionData}
       />
       <SubModalCollection
         isVisible={isModalVisible}
-        content={modalContent}
         onClose={closeModal}
         modelDetails={modelDetails}
-        handleModelSubmit={handleModelSubmit}
+        handleModelSubmit={handleModelSave}
       />
     </div>
   );

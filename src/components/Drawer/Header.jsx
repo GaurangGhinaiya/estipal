@@ -13,7 +13,7 @@ import { translate } from "../../language";
 
 const Header = () => {
   const navigate = useNavigate();
-
+  const [scrolled, setScrolled] = React.useState(false);
   const [openMenu, setOpenMenu] = React.useState(false);
   const [openRevenueMenu, setOpenRevenueMenu] = React.useState(false);
   const [openPerformanceMenu, setOpenPerformanceMenu] = React.useState(false);
@@ -21,27 +21,35 @@ const Header = () => {
   const { pathname } = pathName;
   const userRole = localStorage.getItem("userRole");
   const userName = JSON.parse(localStorage.getItem("userData"));
+  const close_Revenue_Analysis_ref = useRef(null);
+  const close_Performance_Analysis_ref = useRef(null);
 
-  const revenueMenuRef = useRef(null);
-  const performanceMenuRef = useRef(null);
-  const mobileNav = useRef(null);
+  const handleRevenueMenuClick = (event) => {
+    setOpenRevenueMenu(!openRevenueMenu);
+  };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 0);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
-        revenueMenuRef.current &&
-        !revenueMenuRef.current.contains(event.target)
+        close_Revenue_Analysis_ref.current &&
+        !close_Revenue_Analysis_ref.current.contains(event.target)
       ) {
         setOpenRevenueMenu(false);
       }
+
       if (
-        performanceMenuRef.current &&
-        !performanceMenuRef.current.contains(event.target)
+        close_Performance_Analysis_ref.current &&
+        !close_Performance_Analysis_ref.current.contains(event.target)
       ) {
         setOpenPerformanceMenu(false);
-      }
-      if (mobileNav.current && !mobileNav.current.contains(event.target)) {
-        setOpenMenu(false);
       }
     };
 
@@ -51,9 +59,6 @@ const Header = () => {
     };
   }, []);
 
-  const handleRevenueMenuClick = (event) => {
-    setOpenRevenueMenu(!openRevenueMenu);
-  };
   const handlePerformanceMenuClick = (event) => {
     setOpenPerformanceMenu(!openPerformanceMenu);
   };
@@ -61,7 +66,7 @@ const Header = () => {
   return (
     <div>
       <header
-        className={`px-[15px] flex justify-between bg-white dark:bg-[#1d272e] h-[66px] items-center sticky top-0 left-0 bottom-0 z-[1]`}
+        className={`fixed top-0 left-0 w-full z-[1000] bg-white dark:bg-[#1d272e] h-[66px] flex items-center px-[15px] justify-between shadow-md`}
       >
         <div className="flex items-center">
           <Button
@@ -74,7 +79,7 @@ const Header = () => {
             <img
               alt="Logo"
               src={userRole === "admin" ? LightLogo : DarkLogo}
-              className="h-[50px]"
+              className="max-h-[50px]"
             />
           </a>
           <div className=" text-black dark:text-[#ffff] font-bold text-[15px]">
@@ -95,7 +100,7 @@ const Header = () => {
 
       {/* Navigation Bar Desktop*/}
       <Box
-        className="bg-[#0060aa] shadow-xl dark:shadow-transparent text-white flex items-center px-[38px] py-[11px]"
+        className="bg-[#0060aa] shadow-xl dark:shadow-transparent text-white flex items-center px-[38px] py-[11px] mt-[66px]"
         sx={{ display: { xs: "none", md: "block" } }}
       >
         {/* Navigation Links */}
@@ -173,7 +178,7 @@ const Header = () => {
             </div>
           )}
           {userRole === "admin" && (
-            <div className="relative">
+            <div ref={close_Revenue_Analysis_ref} className="relative">
               <button
                 style={{
                   fontSize: "14px",
@@ -237,7 +242,7 @@ const Header = () => {
             </div>
           )}
           {userRole === "admin" && (
-            <div className="relative">
+            <div ref={close_Performance_Analysis_ref} className="relative">
               <button
                 style={{
                   fontSize: "14px",
@@ -358,13 +363,11 @@ const Header = () => {
       {/* Navigation Bar Mobile*/}
 
       <Box
-        className="bg-[#1d272e] text-white py-[11px] fixed z-[1] w-full"
+        className="bg-[#1d272e] text-white py-[11px] fixed z-[1] w-full mt-[66px]"
         sx={{ display: { xs: openMenu ? "block" : "none", md: "none" } }}
-        ref={mobileNav}
       >
-        <hr className="mb-3" />
         {/* Navigation Links */}
-        <div className="flex flex-col gap-[12px] max-h-[340px] overflow-auto">
+        <div className="flex flex-col gap-[2px] max-h-[340px] overflow-auto">
           <Button className="!text-white !normal-case !text-left !justify-start !px-[15px] !py-[10px] !font-bold">
             <PersonIcon fontSize="medium" sx={{ color: "#ffff", mr: "10px" }} />
             {translate("SIGNINASTEXT")} {userName?.username}
@@ -373,288 +376,311 @@ const Header = () => {
             <Profile />
           </div>
           <hr style={{ borderTopColor: "#ffffff1a", borderTopWidth: "2px" }} />
-          <Button
-            className="text-white !normal-case !text-left !justify-start !text-[14px] !py-[5px] !px-[15px] !m-[0] !font-bold "
-            sx={{
-              color: "white",
-              fontWeight: pathname === "/admin" ? "bold" : "normal",
-            }}
-            onClick={() => {
-              navigate("/admin");
-              setOpenMenu(false);
-            }}
-          >
-            {translate("ACTIVITIES")}
-          </Button>
-          <Button
-            className="text-white !normal-case !text-left !justify-start !text-[14px] !py-[5px] !px-[15px] !m-[0] !font-bold"
-            sx={{
-              color: "white",
-              fontWeight: pathname.includes(
-                "/admin/watch_details/watch_history"
-              )
-                ? "bold"
-                : "normal",
-            }}
-            onClick={() => {
-              navigate("/admin/watch_details/watch_history");
-              setOpenMenu(false);
-            }}
-          >
-            {translate("WATCHESHISTORY")}
-          </Button>
-          {userRole === "admin" && (
+          <div className={`flex flex-col py-[8px] `}>
             <Button
-              className="text-white !normal-case !text-left !justify-start !text-[14px] !py-[5px] !px-[15px] !m-[0] !font-bold"
+              className={`text-white !normal-case !text-left !justify-start !text-[14px] !px-[15px] !m-[0] !font-bold`}
               sx={{
                 color: "white",
-                fontWeight: pathname.includes("/admin/staff/staff_user")
-                  ? "bold"
-                  : "normal",
+                fontWeight: "bold",
+                backgroundColor:
+                  pathname === "/admin" ? "#131a1f" : "transparent",
               }}
               onClick={() => {
-                navigate("/admin/staff/staff_user");
+                navigate("/admin");
                 setOpenMenu(false);
               }}
             >
-              Merchants & Staff
+              {translate("ACTIVITIES")}
             </Button>
-          )}
-          {userRole === "admin" && (
             <Button
-              className="text-white !normal-case !text-left !justify-start !text-[14px] !py-[5px] !px-[15px] !m-[0] !font-bold"
+              className="text-white !normal-case !text-left !justify-start !text-[14px] !px-[15px] !m-[0] !font-bold"
               sx={{
                 color: "white",
-                fontWeight: pathname.includes("/admin/estimator/estimator_user")
-                  ? "bold"
-                  : "normal",
-              }}
-              onClick={() => {
-                navigate("/admin/estimator/estimator_user");
-                setOpenMenu(false);
-              }}
-            >
-              Estimators
-            </Button>
-          )}
-          {userRole === "staff" && (
-            <Button
-              className="text-white !normal-case !text-left !justify-start !text-[14px] !py-[5px] !px-[15px] !m-[0] !font-bold"
-              sx={{
-                color: "white",
-                fontWeight: pathname.includes(
-                  "/admin/analysis/revenue_analysis/seller"
+                backgroundColor: pathname.includes(
+                  "/admin/watch_details/watch_history"
                 )
-                  ? "bold"
-                  : "normal",
+                  ? "#131a1f"
+                  : "transparent",
+                fontWeight: "bold",
               }}
               onClick={() => {
-                navigate("/admin/analysis/revenue_analysis/seller");
+                navigate("/admin/watch_details/watch_history");
                 setOpenMenu(false);
               }}
             >
-              {translate("REVANUEANALYSIS")}
+              {translate("WATCHESHISTORY")}
             </Button>
-          )}
-          {userRole === "admin" && (
-            <div className="relative mb-1">
-              <button
+            {userRole === "admin" && (
+              <Button
+                className="text-white !normal-case !text-left !justify-start !text-[14px] !px-[15px] !m-[0] !font-bold"
+                sx={{
+                  color: "white",
+                  backgroundColor: pathname.includes("/admin/staff/staff_user")
+                    ? "#131a1f"
+                    : "transparent",
+                  fontWeight:"bold"
+                }}
+                onClick={() => {
+                  navigate("/admin/staff/staff_user");
+                  setOpenMenu(false);
+                }}
+              >
+                Merchants & Staff
+              </Button>
+            )}
+            {userRole === "admin" && (
+              <Button
+                className="text-white !normal-case !text-left !justify-start !text-[14px] !px-[15px] !m-[0] !font-bold"
+                sx={{
+                  color: "white",
+                  backgroundColor: pathname.includes(
+                    "/admin/estimator/estimator_user"
+                  )
+                    ? "#131a1f"
+                    : "transparent",
+                  fontWeight: "bold",
+                }}
+                onClick={() => {
+                  navigate("/admin/estimator/estimator_user");
+                  setOpenMenu(false);
+                }}
+              >
+                Estimators
+              </Button>
+            )}
+            {userRole === "staff" && (
+              <Button
+                className="text-white !normal-case !text-left !justify-start !text-[14px] !px-[15px] !m-[0] !font-bold"
+                sx={{
+                  color: "white",
+                  backgroundColor: pathname.includes(
+                    "/admin/analysis/revenue_analysis/seller"
+                  )
+                    ? "#131a1f"
+                    : "transparent",
+                  fontWeight: "bold",
+                }}
+                onClick={() => {
+                  navigate("/admin/analysis/revenue_analysis/seller");
+                  setOpenMenu(false);
+                }}
+              >
+                {translate("REVANUEANALYSIS")}
+              </Button>
+            )}
+            {userRole === "admin" && (
+              <div
+                ref={close_Revenue_Analysis_ref}
+                className="relative mb-1"
                 style={{
-                  fontSize: "14px",
-                  fontWeight:
+                  backgroundColor:
                     pathname.includes(
                       "/admin/analysis/revenue_analysis/admin"
                     ) ||
                     pathname.includes(
                       "/admin/analysis/revenue_analysis/estimator"
                     )
-                      ? "bold"
-                      : "normal",
+                      ? "#131a1f"
+                      : "transparent",
+                  fontWeight: "bold",
                 }}
-                onClick={() => handleRevenueMenuClick()}
-                className="px-4 text-[14px]"
               >
-                Revenue Analysis <ArrowDropDownIcon />
-              </button>
-              {openRevenueMenu && (
-                <div className="z-20 absolute bg-[#0060aa] border border-white mt-3 rounded-lg">
-                  <button
-                    className="block rounded-lg px-4 py-2 hover:bg-[#b3c1c5]"
-                    onClick={() => {
-                      navigate("/admin/analysis/revenue_analysis/admin");
-                      setOpenRevenueMenu(false);
-                      setOpenMenu(false);
-                    }}
-                  >
-                    Merchant
-                  </button>
-                  <button
-                    className="block rounded-lg  px-4 py-2 hover:bg-[#b3c1c5]"
-                    onClick={() => {
-                      navigate("/admin/analysis/revenue_analysis/estimator");
-                      setOpenRevenueMenu(false);
-                      setOpenMenu(false);
-                    }}
-                  >
-                    Estimator
-                  </button>
-                </div>
-              )}
-            </div>
-          )}
-          {userRole === "staff" && (
-            <Button
-              className="text-white !normal-case !text-left !justify-start !text-[14px] !py-[5px] !px-[15px] !m-[0] !font-bold"
-              sx={{
-                color: "white",
-                fontWeight: pathname.includes(
-                  "/admin/analysis/performance_analysis/seller"
-                )
-                  ? "bold"
-                  : "normal",
-              }}
-              onClick={() => {
-                navigate("/admin/analysis/performance_analysis/seller");
-                setOpenMenu(false);
-              }}
-            >
-              {translate("PERFORMANCEANALYSIS")}
-            </Button>
-          )}
-          {userRole === "admin" && (
-            <div className="relative">
-              <button
+                <button
+                  onClick={() => handleRevenueMenuClick()}
+                  className="px-4 py-[5px] !text-[14px]"
+                >
+                  Revenue Analysis <ArrowDropDownIcon />
+                </button>
+                {openRevenueMenu && (
+                  <div className="z-20 absolute bg-[#0060aa] border border-white mt-3 rounded-lg">
+                    <button
+                      className="block rounded-lg px-4 py-2 hover:bg-[#b3c1c5]"
+                      onClick={(e) => {
+                        navigate("/admin/analysis/revenue_analysis/admin");
+                        setOpenRevenueMenu(false);
+                        setOpenMenu(false);
+                      }}
+                    >
+                      Merchant
+                    </button>
+                    <button
+                      className="block rounded-lg  px-4 py-2 hover:bg-[#b3c1c5]"
+                      onClick={() => {
+                        navigate("/admin/analysis/revenue_analysis/estimator");
+                        setOpenRevenueMenu(false);
+                        setOpenMenu(false);
+                      }}
+                    >
+                      Estimator
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+            {userRole === "staff" && (
+              <Button
+                className="text-white !normal-case !text-left !justify-start !text-[14px] !px-[15px] !m-[0] !font-bold"
+                sx={{
+                  color: "white",
+                  backgroundColor: pathname.includes(
+                    "/admin/analysis/performance_analysis/seller"
+                  )
+                    ? "#131a1f"
+                    : "transparent",
+                  fontWeight: "bold",
+                }}
+                onClick={() => {
+                  navigate("/admin/analysis/performance_analysis/seller");
+                  setOpenMenu(false);
+                }}
+              >
+                {translate("PERFORMANCEANALYSIS")}
+              </Button>
+            )}
+            {userRole === "admin" && (
+              <div
+                ref={close_Performance_Analysis_ref}
+                className={`relative`}
                 style={{
-                  fontSize: "14px",
-                  fontWeight:
+                  backgroundColor:
                     pathname.includes(
                       "/admin/analysis/performance_analysis/admin"
                     ) ||
                     pathname.includes(
                       "/admin/analysis/performance_analysis/estimator"
                     )
-                      ? "bold"
-                      : "normal",
+                      ? "#131a1f"
+                      : "transparent",
+                  fontWeight: "bold",
                 }}
-                onClick={() => handlePerformanceMenuClick()}
-                className="px-4 text-[14px]"
               >
-                Performance Analysis <ArrowDropDownIcon />
-              </button>
-              {openPerformanceMenu && (
-                <div className="absolute bg-[#0060aa] border border-white mt-3 rounded-lg z-20">
-                  <button
-                    className="block rounded-lg px-4 py-2 hover:bg-[#b3c1c5]"
-                    onClick={() => {
-                      navigate("/admin/analysis/performance_analysis/admin");
-                      setOpenPerformanceMenu(false);
-                      setOpenMenu(false);
-                    }}
-                  >
-                    Merchant
-                  </button>
-                  <button
-                    className="block rounded-lg  px-4 py-2 hover:bg-[#b3c1c5]"
-                    onClick={() => {
-                      navigate(
-                        "/admin/analysis/performance_analysis/estimator"
-                      );
-                      setOpenPerformanceMenu(false);
-                      setOpenMenu(false);
-                    }}
-                  >
-                    Estimator
-                  </button>
-                </div>
-              )}
-            </div>
-          )}
-          {userRole === "admin" && (
-            <Button
-              className="text-white !normal-case !text-left !justify-start !text-[14px] !py-[5px] !px-[15px] !m-[0] !font-bold"
-              sx={{
-                color: "white",
-                fontWeight: pathname.includes("/admin/watch_details/brand_list")
-                  ? "bold"
-                  : "normal",
-              }}
-              onClick={() => {
-                navigate("/admin/watch_details/brand_list");
-                setOpenMenu(false);
-              }}
-            >
-              Brands, Collection and Models
-            </Button>
-          )}
-          {userRole === "admin" && (
-            <Button
-              className="text-white !normal-case !text-left !justify-start !text-[14px] !py-[5px] !px-[15px] !m-[0] !font-bold"
-              sx={{
-                color: "white",
-                fontWeight: pathname.includes("/admin/panel/settings")
-                  ? "bold"
-                  : "normal",
-              }}
-              onClick={() => {
-                navigate("/admin/panel/settings");
-                setOpenMenu(false);
-              }}
-            >
-              General Settings
-            </Button>
-          )}
-          {userRole === "admin" && (
-            <Button
-              className="text-white !normal-case !text-left !justify-start !text-[14px] !py-[5px] !px-[15px] !m-[0] !font-bold"
-              sx={{
-                color: "white",
-                fontWeight: pathname.includes("/admin/language")
-                  ? "bold"
-                  : "normal",
-              }}
-              onClick={() => {
-                navigate("/admin/language");
-                setOpenMenu(false);
-              }}
-            >
-              Languages
-            </Button>
-          )}
-          {userRole === "staff" && (
-            <Button
-              className="text-white !normal-case !text-left !justify-start !text-[14px] !py-[5px] !px-[15px] !m-[0] !font-bold"
-              sx={{
-                color: "white",
-                fontWeight: pathname.includes("/admin/staff/staff_user")
-                  ? "bold"
-                  : "normal",
-              }}
-              onClick={() => {
-                navigate("/admin/staff/staff_user");
-                setOpenMenu(false);
-              }}
-            >
-              {translate("MANAGESTAFF")}
-            </Button>
-          )}
-          {userRole === "staff" && (
-            <Button
-              className="text-white !normal-case !text-left !justify-start !text-[14px] !py-[5px] !px-[15px] !m-[0] !font-bold"
-              sx={{
-                color: "white",
-                fontWeight: pathname.includes("/admin/panel/account")
-                  ? "bold"
-                  : "normal",
-              }}
-              onClick={() => {
-                navigate("/admin/panel/account");
-                setOpenMenu(false);
-              }}
-            >
-              {translate("ACCOUNTPROFILE")}
-            </Button>
-          )}
-
+                <button
+                  onClick={() => handlePerformanceMenuClick()}
+                  className="px-4 py-[5px] text-[14px]"
+                >
+                  Performance Analysis <ArrowDropDownIcon />
+                </button>
+                {openPerformanceMenu && (
+                  <div className="absolute bg-[#0060aa] border border-white mt-3 rounded-lg z-20">
+                    <button
+                      className="block rounded-lg px-4 py-2 hover:bg-[#b3c1c5]"
+                      onClick={() => {
+                        navigate("/admin/analysis/performance_analysis/admin");
+                        setOpenPerformanceMenu(false);
+                        setOpenMenu(false);
+                      }}
+                    >
+                      Merchant
+                    </button>
+                    <button
+                      className="block rounded-lg  px-4 py-2 hover:bg-[#b3c1c5]"
+                      onClick={() => {
+                        navigate(
+                          "/admin/analysis/performance_analysis/estimator"
+                        );
+                        setOpenPerformanceMenu(false);
+                        setOpenMenu(false);
+                      }}
+                    >
+                      Estimator
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+            {userRole === "admin" && (
+              <Button
+                className="text-white !normal-case !text-left !justify-start !text-[14px] !px-[15px] !m-[0] !font-bold"
+                sx={{
+                  color: "white",
+                  backgroundColor: pathname.includes(
+                    "/admin/watch_details/brand_list"
+                  )
+                    ? "#131a1f"
+                    : "transparent",
+                  fontWeight: "bold",
+                }}
+                onClick={() => {
+                  navigate("/admin/watch_details/brand_list");
+                  setOpenMenu(false);
+                }}
+              >
+                Brands, Collection and Models
+              </Button>
+            )}
+            {userRole === "admin" && (
+              <Button
+                className="text-white !normal-case !text-left !justify-start !text-[14px] !px-[15px] !m-[0] !font-bold"
+                sx={{
+                  color: "white",
+                  backgroundColor: pathname.includes("/admin/panel/settings")
+                    ? "#131a1f"
+                    : "transparent",
+                  fontWeight: "bold",
+                }}
+                onClick={() => {
+                  navigate("/admin/panel/settings");
+                  setOpenMenu(false);
+                }}
+              >
+                General Settings
+              </Button>
+            )}
+            {userRole === "admin" && (
+              <Button
+                className="text-white !normal-case !text-left !justify-start !text-[14px] !px-[15px] !m-[0] !font-bold"
+                sx={{
+                  color: "white",
+                  backgroundColor: pathname.includes("/admin/language")
+                    ? "#131a1f"
+                    : "transparent",
+                  fontWeight: "bold",
+                }}
+                onClick={() => {
+                  navigate("/admin/language");
+                  setOpenMenu(false);
+                }}
+              >
+                Languages
+              </Button>
+            )}
+            {userRole === "staff" && (
+              <Button
+                className="text-white !normal-case !text-left !justify-start !text-[14px] !px-[15px] !m-[0] !font-bold"
+                sx={{
+                  color: "white",
+                  backgroundColor: pathname.includes("/admin/staff/staff_user")
+                    ? "#131a1f"
+                    : "transparent",
+                  fontWeight: "bold",
+                }}
+                onClick={() => {
+                  navigate("/admin/staff/staff_user");
+                  setOpenMenu(false);
+                }}
+              >
+                {translate("MANAGESTAFF")}
+              </Button>
+            )}
+            {userRole === "staff" && (
+              <Button
+                className="text-white !normal-case !text-left !justify-start !text-[14px] !px-[15px] !m-[0] !font-bold"
+                sx={{
+                  color: "white",
+                  backgroundColor: pathname.includes("/admin/panel/account")
+                    ? "#131a1f"
+                    : "transparent",
+                  fontWeight: "bold",
+                }}
+                onClick={() => {
+                  navigate("/admin/panel/account");
+                  setOpenMenu(false);
+                }}
+              >
+                {translate("ACCOUNTPROFILE")}
+              </Button>
+            )}
+          </div>
           <hr style={{ borderTopColor: "#ffffff1a", borderTopWidth: "2px" }} />
 
           <Button

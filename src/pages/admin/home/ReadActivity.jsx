@@ -2,7 +2,7 @@ import { Button, Skeleton } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axiosInstance from "../../../services";
-import { extractImageUrls, formattedNumber } from "../../../utils";
+import { extractImageUrls, formatNumberOrDefault } from "../../../utils";
 import CardData from "./components/CardData";
 import SellerCardData from "./components/SellerCardData";
 
@@ -11,7 +11,6 @@ import { translate } from "../../../language";
 const ReadActivity = () => {
   const navigate = useNavigate();
   const params = useParams();
-  console.log("params: ", params);
 
   const { id, watch_id } = params;
   const [readActivityData, setReadActivityData] = useState();
@@ -68,35 +67,35 @@ const ReadActivity = () => {
 
   const getPrice = (watchDetails, currencyUnit) => {
     if (watchDetails?.accepted_price) {
-      return `${currencyUnit} ${formattedNumber.format(
+      return `${currencyUnit} ${formatNumberOrDefault(
         watchDetails?.accepted_price
       )}`;
     } else if (watchDetails?.estimated_price_admin) {
-      return `${currencyUnit} ${formattedNumber.format(
+      return `${currencyUnit} ${formatNumberOrDefault(
         watchDetails?.estimated_price_admin
       )}`;
     } else if (watchDetails?.admin_counter_offer_price) {
-      return `${currencyUnit} ${formattedNumber.format(
+      return `${currencyUnit} ${formatNumberOrDefault(
         watchDetails?.admin_counter_offer_price
       )}`;
     } else if (watchDetails?.seller_view_request_price) {
-      return `${currencyUnit} ${formattedNumber.format(
+      return `${currencyUnit} ${formatNumberOrDefault(
         watchDetails?.seller_view_request_price
       )}`;
     } else if (watchDetails?.request_price) {
-      return `${currencyUnit} ${formattedNumber.format(
+      return `${currencyUnit} ${formatNumberOrDefault(
         watchDetails?.request_price
       )}`;
     } else if (watchDetails?.seller_display_price) {
-      return `${currencyUnit} ${formattedNumber.format(
+      return `${currencyUnit} ${formatNumberOrDefault(
         watchDetails?.seller_display_price
       )}`;
     } else if (watchDetails?.seller_request_price) {
-      return `${currencyUnit} ${formattedNumber.format(
+      return `${currencyUnit} ${formatNumberOrDefault(
         watchDetails?.seller_request_price
       )}`;
     } else if (watchDetails?.admin_converted_price) {
-      return `${currencyUnit} ${formattedNumber.format(
+      return `${currencyUnit} ${formatNumberOrDefault(
         watchDetails?.admin_converted_price
       )}`;
     } else {
@@ -106,31 +105,31 @@ const ReadActivity = () => {
 
   const getSellerPrice = (watchDetails, currencyUnit) => {
     if (watchDetails?.seller_display_accept) {
-      return `${currencyUnit} ${formattedNumber.format(
+      return `${currencyUnit} ${formatNumberOrDefault(
         watchDetails.seller_display_accept
       )}`;
     } else if (watchDetails?.estimated_price_seller) {
-      return `${currencyUnit} ${formattedNumber.format(
+      return `${currencyUnit} ${formatNumberOrDefault(
         watchDetails.estimated_price_seller
       )}`;
     } else if (watchDetails?.seller_display_counter) {
-      return `${currencyUnit} ${formattedNumber.format(
+      return `${currencyUnit} ${formatNumberOrDefault(
         watchDetails.seller_display_counter
       )}`;
     } else if (watchDetails?.seller_view_request_price) {
-      return `${currencyUnit} ${formattedNumber.format(
+      return `${currencyUnit} ${formatNumberOrDefault(
         watchDetails.seller_view_request_price
       )}`;
     } else if (watchDetails?.seller_display_price) {
-      return `${currencyUnit} ${formattedNumber.format(
+      return `${currencyUnit} ${formatNumberOrDefault(
         watchDetails.seller_display_price
       )}`;
     } else if (watchDetails?.seller_request_price) {
-      return `${currencyUnit} ${formattedNumber.format(
+      return `${currencyUnit} ${formatNumberOrDefault(
         watchDetails.seller_request_price
       )}`;
     } else if (watchDetails?.price) {
-      return `${currencyUnit} ${formattedNumber.format(watchDetails.price)}`;
+      return `${currencyUnit} ${formatNumberOrDefault(watchDetails.price)}`;
     } else {
       return [];
     }
@@ -141,8 +140,12 @@ const ReadActivity = () => {
   }, []);
 
   return (
-    <div className="mx-auto px-[10px] sm:px-[45px] py-[20px]">
-      <div className="flex justify-between items-center mb-[30px] flex-wrap gap-5">
+    <div className="pb-[15px] min-h-[100vh]">
+      <div
+        className={`${
+          userRole === "staff" ? "pt-8" : "pt-6"
+        } flex justify-between items-center mb-[30px] px-[20px] flex-wrap gap-5 dark:bg-none bg-gradient-to-b from-[rgba(0,96,169,0.36)] to-[rgba(255,255,255,0)]`}
+      >
         {isLoading ? (
           <Skeleton variant="text" width={300} height={40} />
         ) : (
@@ -171,7 +174,7 @@ const ReadActivity = () => {
           </Button>
         )}
       </div>
-      <div className="flex flex-col md:flex-row items-center md:items-start">
+      <div className="flex flex-col md:flex-row items-center md:items-start px-[20px]">
         <div className="flex-[1] mb-4 md:mb-0">
           {isLoading ? (
             <Skeleton variant="rectangular" width={350} height={350} />
@@ -287,10 +290,9 @@ const ReadActivity = () => {
           sx={{ marginTop: "50px" }}
         />
       ) : (
-        readActivityData?.adminActivities
-          ?.reverse()
-          ?.map((item, index) =>
-            userRole !== "staff" ? (
+        readActivityData?.adminActivities?.reverse()?.map((item, index) =>
+          userRole !== "staff" ? (
+            <div className="px-[20px]">
               <CardData
                 key={index}
                 item={item}
@@ -299,7 +301,9 @@ const ReadActivity = () => {
                 adminActivitiesData={readActivityData?.adminActivities}
                 currency={readActivityData?.currency}
               />
-            ) : (
+            </div>
+          ) : (
+            <div className="px-[20px]">
               <SellerCardData
                 key={index}
                 item={item}
@@ -308,8 +312,9 @@ const ReadActivity = () => {
                 adminActivitiesData={readActivityData?.adminActivities}
                 currency={readActivityData?.currency}
               />
-            )
+            </div>
           )
+        )
       )}
     </div>
   );

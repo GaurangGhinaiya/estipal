@@ -1,10 +1,10 @@
+import { Button } from "@mui/material";
+import moment from "moment";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import NImage from "../../../../../assets/images/icons/n.png";
 import YImage from "../../../../../assets/images/icons/y.png";
-import moment from "moment";
-import { Button } from "@mui/material";
-import { formattedNumber } from "../../../../../utils";
-import { useNavigate } from "react-router-dom";
+import { formatNumberOrDefault } from "../../../../../utils";
 
 const EstimatorMultiQuotation = (props) => {
   const navigate = useNavigate();
@@ -105,7 +105,7 @@ const EstimatorMultiQuotation = (props) => {
                     {value1?.estimator_watch_status === "Pass"
                       ? value1?.estimator_watch_status
                       : value1?.estimated_watch_price
-                      ? `${currency_unit} ${formattedNumber.format(
+                      ? `${currency_unit} ${formatNumberOrDefault(
                           value1?.estimated_watch_price
                         )}`
                       : "N/A"}

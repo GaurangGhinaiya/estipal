@@ -587,6 +587,9 @@ const SellerEdit = () => {
                           src={
                             formData?.companyLogoPreview?.startsWith(
                               "https://cdn.estipal.com/production"
+                            ) ||
+                            formData?.companyLogoPreview?.startsWith(
+                              "https://cdn.estipal.com/dev"
                             )
                               ? formData?.companyLogoPreview
                               : `${process.env.REACT_APP_IMAGE_BASE_URL}/${formData?.companyLogoPreview}`
@@ -607,6 +610,9 @@ const SellerEdit = () => {
                       src={
                         formData?.companyLogoPreview?.startsWith(
                           "https://cdn.estipal.com/production"
+                        ) ||
+                        formData?.companyLogoPreview?.startsWith(
+                          "https://cdn.estipal.com/dev"
                         )
                           ? formData?.companyLogoPreview
                           : `${process.env.REACT_APP_IMAGE_BASE_URL}/${formData?.companyLogoPreview}`
