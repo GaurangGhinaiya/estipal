@@ -5,12 +5,12 @@ import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import { CircularProgress, Tooltip } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import moment from "moment/moment";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import gmailIcon from "../../../../assets/images/icons/icn-mai-light.svg";
 import gmailYellowIcon from "../../../../assets/images/icons/icn-mail-yellow.svg";
-import { formattedNumber } from "../../../../utils";
 import axiosInstance from "../../../../services";
+import { formatNumberOrDefault } from "../../../../utils";
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 const AdminUserWatchHistory = ({
@@ -90,14 +90,17 @@ const AdminUserWatchHistory = ({
               onClick={
                 column.isSortable ? () => handleSort(column.key) : undefined
               }
-              className={`p-2 dark:text-[#ffff] text-nowrap text-black text-center ${column.isSortable ? "cursor-pointer" : ""
-                } ${column.isSortable && sortField === column.key
+              className={`p-2 dark:text-[#ffff] text-nowrap text-black text-center ${
+                column.isSortable ? "cursor-pointer" : ""
+              } ${
+                column.isSortable && sortField === column.key
                   ? "active-sorting"
                   : ""
-                } ${column.isSortable && sortField !== column.key
+              } ${
+                column.isSortable && sortField !== column.key
                   ? "pr-4 sorting"
                   : ""
-                }`}
+              }`}
             >
               {column.label}{" "}
               {column.isSortable &&
@@ -205,11 +208,12 @@ const AdminUserWatchHistory = ({
                   navigate(`/admin/watch_details/watch_status/${item?.id}`)
                 }
               >
-                {`${item?.addedByDetail?.company_name || ""}${item?.addedByDetail?.company_name &&
-                    item?.addedByDetail?.username
+                {`${item?.addedByDetail?.company_name || ""}${
+                  item?.addedByDetail?.company_name &&
+                  item?.addedByDetail?.username
                     ? " - "
                     : "-"
-                  }${item?.addedByDetail?.username || ""}`}
+                }${item?.addedByDetail?.username || ""}`}
               </td>
               <td
                 className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap cursor-pointer"
@@ -217,9 +221,9 @@ const AdminUserWatchHistory = ({
                   navigate(`/admin/watch_details/watch_status/${item?.id}`)
                 }
               >
-                {item?.currency} {formattedNumber.format(item?.watch_price)} /
+                {item?.currency} {formatNumberOrDefault(item?.watch_price)} /
                 {item?.currency}{" "}
-                {formattedNumber.format(item?.estimated_watch_price)}
+                {formatNumberOrDefault(item?.estimated_watch_price)}
               </td>
               <td
                 className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap cursor-pointer"

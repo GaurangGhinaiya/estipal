@@ -15,6 +15,14 @@ export const formattedNumber = new Intl.NumberFormat("en-US", {
   maximumFractionDigits: 2,
 });
 
+export const formatNumberOrDefault = (value) => {
+  if (value && value !== undefined && value !== null) {
+    return formattedNumber.format(value);
+  }
+  return formattedNumber.format(0);
+};
+
+
 export const formatCurrency = (price, currency) => {
   if (price) {
     return `${currency} ${parseFloat(price).toLocaleString("en", {

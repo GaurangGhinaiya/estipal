@@ -1,10 +1,10 @@
 import { Button, Skeleton } from "@mui/material";
+import moment from "moment";
 import React, { useEffect, useState } from "react";
-import ImageDialog from "./components/ImageDialog";
 import { useNavigate, useParams } from "react-router-dom";
 import axiosInstance from "../../../services";
-import { extractImageUrls, formattedNumber } from "../../../utils";
-import moment from "moment";
+import { formatNumberOrDefault } from "../../../utils";
+import ImageDialog from "./components/ImageDialog";
 
 import { translate } from "../../../language";
 
@@ -168,7 +168,7 @@ const WatchStatus = () => {
                 <p className="dark:text-white text-black">Requested price</p>
                 <p className="dark:text-white text-black">
                   {watchDetailData?.adminDetail?.currency}{" "}
-                  {formattedNumber.format(
+                  {formatNumberOrDefault(
                     getSafeValue(watchDetailData?.watch_price, "number")
                   )}
                 </p>
@@ -177,7 +177,7 @@ const WatchStatus = () => {
                 <p className="dark:text-white text-black">Estimated price</p>
                 <p className="dark:text-white text-black">
                   {watchDetailData?.adminDetail?.currency}{" "}
-                  {formattedNumber.format(
+                  {formatNumberOrDefault(
                     getSafeValue(
                       watchDetailData?.estimated_watch_price,
                       "number"
@@ -320,7 +320,7 @@ const WatchStatus = () => {
                           ? item?.estimator_watch_status
                           : item?.estimatorDetail?.currency +
                             " " +
-                            formattedNumber.format(
+                            formatNumberOrDefault(
                               item?.estimated_watch_price
                             )}{" "}
                         {item?.is_selected && "(Selected)"}
@@ -386,7 +386,7 @@ const WatchStatus = () => {
                           <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                             {currency +
                               " " +
-                              formattedNumber.format(
+                              formatNumberOrDefault(
                                 item?.watch_details?.price
                               )}
                           </td>
@@ -417,7 +417,7 @@ const WatchStatus = () => {
                           <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                             {currency +
                               " " +
-                              formattedNumber.format(
+                              formatNumberOrDefault(
                                 item?.watch_details?.estimated_price_seller
                               )}
                           </td>
@@ -448,7 +448,7 @@ const WatchStatus = () => {
                           <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                             {currency +
                               " " +
-                              formattedNumber.format(
+                              formatNumberOrDefault(
                                 item?.watch_details?.seller_display_counter
                               )}
                           </td>
@@ -479,7 +479,7 @@ const WatchStatus = () => {
                           <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                             {currency +
                               " " +
-                              formattedNumber.format(
+                              formatNumberOrDefault(
                                 item?.watch_details?.seller_display_counter
                               )}
                           </td>
@@ -510,7 +510,7 @@ const WatchStatus = () => {
                           <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                             {currency +
                               " " +
-                              formattedNumber.format(
+                              formatNumberOrDefault(
                                 item?.watch_details?.estimated_price_seller
                               )}
                           </td>
@@ -541,7 +541,7 @@ const WatchStatus = () => {
                           <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                             {currency +
                               " " +
-                              formattedNumber.format(
+                              formatNumberOrDefault(
                                 item?.watch_details?.accepted_price
                               )}
                           </td>
@@ -572,7 +572,7 @@ const WatchStatus = () => {
                           <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                             {currency +
                               " " +
-                              formattedNumber.format(
+                              formatNumberOrDefault(
                                 item?.watch_details?.seller_display_price
                               )}
                           </td>
@@ -603,7 +603,7 @@ const WatchStatus = () => {
                           <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                             {currency +
                               " " +
-                              formattedNumber.format(
+                              formatNumberOrDefault(
                                 item?.watch_details?.seller_request_price
                               )}
                           </td>
@@ -626,7 +626,7 @@ const WatchStatus = () => {
                           <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                             {currency +
                               " " +
-                              formattedNumber.format(
+                              formatNumberOrDefault(
                                 item?.watch_details?.seller_display_counter
                               )}
                           </td>
@@ -649,7 +649,7 @@ const WatchStatus = () => {
                           <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                             {currency +
                               " " +
-                              formattedNumber.format(
+                              formatNumberOrDefault(
                                 item?.watch_details?.estimated_price_seller
                               )}
                           </td>
@@ -680,7 +680,7 @@ const WatchStatus = () => {
                           <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                             {currency +
                               " " +
-                              formattedNumber.format(
+                              formatNumberOrDefault(
                                 item?.watch_details?.estimated_price_seller
                               )}
                           </td>
@@ -719,7 +719,7 @@ const WatchStatus = () => {
                           <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                             {currency +
                               " " +
-                              formattedNumber.format(
+                              formatNumberOrDefault(
                                 item?.type === "Be-Partner"
                                   ? item?.watch_details?.accepted_price
                                   : item?.type === "confirm_selling_price"
@@ -755,7 +755,7 @@ const WatchStatus = () => {
                           <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                             {currency +
                               " " +
-                              formattedNumber.format(
+                              formatNumberOrDefault(
                                 item?.watch_details
                                   ?.accepted_price_with_commission
                               )}

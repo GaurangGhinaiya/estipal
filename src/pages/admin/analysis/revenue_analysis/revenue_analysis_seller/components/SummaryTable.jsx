@@ -1,5 +1,5 @@
 import React from "react";
-import { formattedNumber } from "../../../../../../utils";
+import { formatNumberOrDefault } from "../../../../../../utils";
 
 const SummaryTable = ({ data }) => {
   return (
@@ -37,11 +37,11 @@ const SummaryTable = ({ data }) => {
             </td>
             <td className="px-[18px] py-[12px] dark:text-[#ffff] text-black text-center whitespace-nowrap">
               {item?.total_sold_to_estipal} / USD{" "}
-              {formattedNumber.format(item?.total_sold_amount)}
+              {formatNumberOrDefault(item?.total_sold_amount)}
             </td>
             <td className="px-[18px] py-[12px] dark:text-[#ffff] text-black text-center whitespace-nowrap">
               {item?.total_partner_with_estipal} / USD{" "}
-              {formattedNumber.format(item?.total_partner_amount)}
+              {formatNumberOrDefault(item?.total_partner_amount)}
             </td>
           </tr>
         ))}

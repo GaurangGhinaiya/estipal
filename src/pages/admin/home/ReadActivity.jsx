@@ -2,7 +2,7 @@ import { Button, Skeleton } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axiosInstance from "../../../services";
-import { extractImageUrls, formattedNumber } from "../../../utils";
+import { extractImageUrls, formatNumberOrDefault } from "../../../utils";
 import CardData from "./components/CardData";
 import SellerCardData from "./components/SellerCardData";
 
@@ -68,35 +68,35 @@ const ReadActivity = () => {
 
   const getPrice = (watchDetails, currencyUnit) => {
     if (watchDetails?.accepted_price) {
-      return `${currencyUnit} ${formattedNumber.format(
+      return `${currencyUnit} ${formatNumberOrDefault(
         watchDetails?.accepted_price
       )}`;
     } else if (watchDetails?.estimated_price_admin) {
-      return `${currencyUnit} ${formattedNumber.format(
+      return `${currencyUnit} ${formatNumberOrDefault(
         watchDetails?.estimated_price_admin
       )}`;
     } else if (watchDetails?.admin_counter_offer_price) {
-      return `${currencyUnit} ${formattedNumber.format(
+      return `${currencyUnit} ${formatNumberOrDefault(
         watchDetails?.admin_counter_offer_price
       )}`;
     } else if (watchDetails?.seller_view_request_price) {
-      return `${currencyUnit} ${formattedNumber.format(
+      return `${currencyUnit} ${formatNumberOrDefault(
         watchDetails?.seller_view_request_price
       )}`;
     } else if (watchDetails?.request_price) {
-      return `${currencyUnit} ${formattedNumber.format(
+      return `${currencyUnit} ${formatNumberOrDefault(
         watchDetails?.request_price
       )}`;
     } else if (watchDetails?.seller_display_price) {
-      return `${currencyUnit} ${formattedNumber.format(
+      return `${currencyUnit} ${formatNumberOrDefault(
         watchDetails?.seller_display_price
       )}`;
     } else if (watchDetails?.seller_request_price) {
-      return `${currencyUnit} ${formattedNumber.format(
+      return `${currencyUnit} ${formatNumberOrDefault(
         watchDetails?.seller_request_price
       )}`;
     } else if (watchDetails?.admin_converted_price) {
-      return `${currencyUnit} ${formattedNumber.format(
+      return `${currencyUnit} ${formatNumberOrDefault(
         watchDetails?.admin_converted_price
       )}`;
     } else {
@@ -106,31 +106,31 @@ const ReadActivity = () => {
 
   const getSellerPrice = (watchDetails, currencyUnit) => {
     if (watchDetails?.seller_display_accept) {
-      return `${currencyUnit} ${formattedNumber.format(
+      return `${currencyUnit} ${formatNumberOrDefault(
         watchDetails.seller_display_accept
       )}`;
     } else if (watchDetails?.estimated_price_seller) {
-      return `${currencyUnit} ${formattedNumber.format(
+      return `${currencyUnit} ${formatNumberOrDefault(
         watchDetails.estimated_price_seller
       )}`;
     } else if (watchDetails?.seller_display_counter) {
-      return `${currencyUnit} ${formattedNumber.format(
+      return `${currencyUnit} ${formatNumberOrDefault(
         watchDetails.seller_display_counter
       )}`;
     } else if (watchDetails?.seller_view_request_price) {
-      return `${currencyUnit} ${formattedNumber.format(
+      return `${currencyUnit} ${formatNumberOrDefault(
         watchDetails.seller_view_request_price
       )}`;
     } else if (watchDetails?.seller_display_price) {
-      return `${currencyUnit} ${formattedNumber.format(
+      return `${currencyUnit} ${formatNumberOrDefault(
         watchDetails.seller_display_price
       )}`;
     } else if (watchDetails?.seller_request_price) {
-      return `${currencyUnit} ${formattedNumber.format(
+      return `${currencyUnit} ${formatNumberOrDefault(
         watchDetails.seller_request_price
       )}`;
     } else if (watchDetails?.price) {
-      return `${currencyUnit} ${formattedNumber.format(watchDetails.price)}`;
+      return `${currencyUnit} ${formatNumberOrDefault(watchDetails.price)}`;
     } else {
       return [];
     }
