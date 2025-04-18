@@ -140,8 +140,12 @@ const ReadActivity = () => {
   }, []);
 
   return (
-    <div className="mx-auto px-[10px] sm:px-[45px] py-[20px]">
-      <div className="flex justify-between items-center mb-[30px] flex-wrap gap-5">
+    <div className="pb-[15px] min-h-[100vh]">
+      <div
+        className={`${
+          userRole === "staff" ? "pt-8" : "pt-6"
+        } flex justify-between items-center mb-[30px] px-[20px] flex-wrap gap-5 dark:bg-none bg-gradient-to-b from-[rgba(0,96,169,0.36)] to-[rgba(255,255,255,0)]`}
+      >
         {isLoading ? (
           <Skeleton variant="text" width={300} height={40} />
         ) : (
@@ -170,7 +174,7 @@ const ReadActivity = () => {
           </Button>
         )}
       </div>
-      <div className="flex flex-col md:flex-row items-center md:items-start">
+      <div className="flex flex-col md:flex-row items-center md:items-start px-[20px]">
         <div className="flex-[1] mb-4 md:mb-0">
           {isLoading ? (
             <Skeleton variant="rectangular" width={350} height={350} />
@@ -286,10 +290,9 @@ const ReadActivity = () => {
           sx={{ marginTop: "50px" }}
         />
       ) : (
-        readActivityData?.adminActivities
-          ?.reverse()
-          ?.map((item, index) =>
-            userRole !== "staff" ? (
+        readActivityData?.adminActivities?.reverse()?.map((item, index) =>
+          userRole !== "staff" ? (
+            <div className="px-[20px]">
               <CardData
                 key={index}
                 item={item}
@@ -298,7 +301,9 @@ const ReadActivity = () => {
                 adminActivitiesData={readActivityData?.adminActivities}
                 currency={readActivityData?.currency}
               />
-            ) : (
+            </div>
+          ) : (
+            <div className="px-[20px]">
               <SellerCardData
                 key={index}
                 item={item}
@@ -307,8 +312,9 @@ const ReadActivity = () => {
                 adminActivitiesData={readActivityData?.adminActivities}
                 currency={readActivityData?.currency}
               />
-            )
+            </div>
           )
+        )
       )}
     </div>
   );

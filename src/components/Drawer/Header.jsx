@@ -415,9 +415,10 @@ const Header = () => {
                 className="text-white !normal-case !text-left !justify-start !text-[14px] !px-[15px] !m-[0] !font-bold"
                 sx={{
                   color: "white",
-                  fontWeight: pathname.includes("/admin/staff/staff_user")
-                    ? "bold"
-                    : "normal",
+                  backgroundColor: pathname.includes("/admin/staff/staff_user")
+                    ? "#131a1f"
+                    : "transparent",
+                  fontWeight:"bold"
                 }}
                 onClick={() => {
                   navigate("/admin/staff/staff_user");

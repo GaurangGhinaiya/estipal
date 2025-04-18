@@ -61,8 +61,12 @@ const WatchStatus = () => {
   };
 
   return (
-    <div className="mx-auto px-[10px] sm:px-[45px] py-[20px]">
-      <div className="flex justify-between items-center mb-[30px] flex-wrap gap-5">
+    <div className="pb-[15px] min-h-[100vh]">
+      <div
+        className={`${
+          userRole === "staff" ? "pt-8" : "pt-6"
+        } px-[20px] flex justify-between items-center mb-[30px] flex-wrap gap-5 dark:bg-none bg-gradient-to-b from-[rgba(0,96,169,0.36)] to-[rgba(255,255,255,0)]`}
+      >
         {loading ? (
           <Skeleton variant="text" width={300} height={40} />
         ) : (
@@ -88,7 +92,7 @@ const WatchStatus = () => {
         )}
       </div>
 
-      <div className="w-full flex-[2]">
+      <div className="w-full flex-[2] px-[20px]">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
           {loading ? (
             <>
@@ -241,7 +245,7 @@ const WatchStatus = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-4 lg:grid-cols-6 gap-4 my-[25px] ">
+      <div className="grid grid-cols-1 sm:grid-cols-4 lg:grid-cols-6 gap-4 my-[25px] px-[20px]">
         {loading ? (
           <>
             <Skeleton variant="rectangular" width={200} height={200} />
@@ -266,508 +270,512 @@ const WatchStatus = () => {
       </div>
 
       {userRole !== "staff" && (
+        <div className="px-[20px]">
+          <div
+            className="w-[100%] overflow-auto mx-auto p-[25px] rounded-[8px] dark:bg-[#1e252b] bg-white mb-[25px]"
+            style={{ border: "1px solid #ccc" }}
+          >
+            {loading ? (
+              <Skeleton variant="rectangular" width="100%" height={200} />
+            ) : (
+              <table className="table-auto w-full text-left">
+                <thead style={{ borderBottom: "1px solid #ccc" }}>
+                  <tr>
+                    <th className="p-2 dark:text-[#ffff] text-black cursor-pointer whitespace-nowrap">
+                      Added by
+                    </th>
+                    <th className="p-2 dark:text-[#ffff] text-black cursor-pointer whitespace-nowrap">
+                      Estimated by
+                    </th>
+                    <th className="p-2 dark:text-[#ffff] text-black cursor-pointer whitespace-nowrap">
+                      Estimate
+                    </th>
+                    <th className="p-2 dark:text-[#ffff] text-black cursor-pointer whitespace-nowrap">
+                      Added on
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {watchDetailData?.allEstimatorsAssignDetails?.map(
+                    (item, index) => (
+                      <tr key={index}>
+                        <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                          {item?.allEstimatorAddedByDetail?.company_name +
+                            " - " +
+                            item?.allEstimatorAddedByDetail?.username}
+                        </td>
+                        <td
+                          className={`px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap ${
+                            item?.is_selected ? "font-bold" : "font-normal"
+                          }`}
+                        >
+                          {" "}
+                          {item?.estimatorDetail.company_name +
+                            " - " +
+                            item?.estimatorDetail.first_name +
+                            " " +
+                            item?.estimatorDetail.last_name}
+                        </td>
+                        <td
+                          className={`px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap ${
+                            item?.is_selected ? "font-bold" : "font-normal"
+                          }`}
+                        >
+                          {item?.estimator_watch_status == "Pass"
+                            ? item?.estimator_watch_status
+                            : item?.estimatorDetail?.currency +
+                              " " +
+                              formatNumberOrDefault(
+                                item?.estimated_watch_price
+                              )}{" "}
+                          {item?.is_selected && "(Selected)"}
+                        </td>
+                        <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                          {moment
+                            .unix(item?.estimation_assign_date)
+                            .format("MMMM DD ,YYYY h:mm A")}
+                        </td>
+                      </tr>
+                    )
+                  )}
+                </tbody>
+              </table>
+            )}
+          </div>
+        </div>
+      )}
+
+      <h2 className="dark:text-white text-black font-bold text-[30px] mb-2 px-[20px]">
+        {translate("WATCHHISTORY")}
+      </h2>
+
+      <div className="px-[20px]">
         <div
-          className="w-[100%] overflow-auto mx-auto p-[25px] rounded-[8px] dark:bg-[#1e252b] bg-white mb-[25px]"
+          className="w-[100%] overflow-auto mx-auto p-[25px] dark:bg-[#1e252b] bg-[#F8F8F8] rounded-[8px]"
           style={{ border: "1px solid #ccc" }}
         >
           {loading ? (
             <Skeleton variant="rectangular" width="100%" height={200} />
           ) : (
             <table className="table-auto w-full text-left">
-              <thead style={{ borderBottom: "1px solid #ccc" }}>
-                <tr>
-                  <th className="p-2 dark:text-[#ffff] text-black cursor-pointer whitespace-nowrap">
-                    Added by
-                  </th>
-                  <th className="p-2 dark:text-[#ffff] text-black cursor-pointer whitespace-nowrap">
-                    Estimated by
-                  </th>
-                  <th className="p-2 dark:text-[#ffff] text-black cursor-pointer whitespace-nowrap">
-                    Estimate
-                  </th>
-                  <th className="p-2 dark:text-[#ffff] text-black cursor-pointer whitespace-nowrap">
-                    Added on
-                  </th>
-                </tr>
-              </thead>
               <tbody>
-                {watchDetailData?.allEstimatorsAssignDetails?.map(
-                  (item, index) => (
-                    <tr key={index}>
-                      <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                        {item?.allEstimatorAddedByDetail?.company_name +
-                          " - " +
-                          item?.allEstimatorAddedByDetail?.username}
-                      </td>
-                      <td
-                        className={`px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap ${
-                          item?.is_selected ? "font-bold" : "font-normal"
-                        }`}
-                      >
-                        {" "}
-                        {item?.estimatorDetail.company_name +
-                          " - " +
-                          item?.estimatorDetail.first_name +
-                          " " +
-                          item?.estimatorDetail.last_name}
-                      </td>
-                      <td
-                        className={`px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap ${
-                          item?.is_selected ? "font-bold" : "font-normal"
-                        }`}
-                      >
-                        {item?.estimator_watch_status == "Pass"
-                          ? item?.estimator_watch_status
-                          : item?.estimatorDetail?.currency +
-                            " " +
-                            formatNumberOrDefault(
-                              item?.estimated_watch_price
-                            )}{" "}
-                        {item?.is_selected && "(Selected)"}
-                      </td>
-                      <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                        {moment
-                          .unix(item?.estimation_assign_date)
-                          .format("MMMM DD ,YYYY h:mm A")}
-                      </td>
-                    </tr>
-                  )
-                )}
+                {watchDetailData?.adminActivities
+                  ?.slice()
+                  .reverse()
+                  .map((item, index) => {
+                    const currency =
+                      userRole === "staff"
+                        ? watchDetailData?.sellerDetail?.currency
+                        : watchDetailData?.adminDetail?.currency;
+                    if (userRole) {
+                      if (item?.type === "Quotation for Watch") {
+                        return (
+                          <tr key={index}>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] t</tr>ext-black whitespace-nowrap">
+                              {moment
+                                .unix(item?.created_on)
+                                .format("MMMM DD ,YYYY h:mm A")}
+                            </td>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                              {item?.company_name || item?.from_name
+                                ? (item?.company_name ?? "") +
+                                  (item?.company_name == "" ||
+                                  !item?.company_name ||
+                                  item?.from_name == ""
+                                    ? ""
+                                    : " - ") +
+                                  (item?.from_name ?? "")
+                                : "-"}
+                            </td>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                              Waiting for Quotation
+                            </td>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                              {currency +
+                                " " +
+                                formatNumberOrDefault(
+                                  item?.watch_details?.price
+                                )}
+                            </td>
+                          </tr>
+                        );
+                      } else if (item?.type === "estimator_quotation") {
+                        return (
+                          <tr key={index}>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                              {moment
+                                .unix(item?.created_on)
+                                .format("MMMM DD ,YYYY h:mm A")}
+                            </td>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                              {item?.company_name || item?.from_name
+                                ? (item?.company_name ?? "") +
+                                  (item?.company_name == "" ||
+                                  !item?.company_name ||
+                                  item?.from_name == ""
+                                    ? ""
+                                    : " - ") +
+                                  (item?.from_name ?? "")
+                                : "-"}
+                            </td>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                              Estimated
+                            </td>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                              {currency +
+                                " " +
+                                formatNumberOrDefault(
+                                  item?.watch_details?.estimated_price_seller
+                                )}
+                            </td>
+                          </tr>
+                        );
+                      } else if (item?.type === "counter_offer_1") {
+                        return (
+                          <tr key={index}>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                              {moment
+                                .unix(item?.created_on)
+                                .format("MMMM DD ,YYYY h:mm A")}
+                            </td>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                              {item?.company_name || item?.from_name
+                                ? (item?.company_name ?? "") +
+                                  (item?.company_name == "" ||
+                                  !item?.company_name ||
+                                  item?.from_name == ""
+                                    ? ""
+                                    : " - ") +
+                                  (item?.from_name ?? "")
+                                : "-"}
+                            </td>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                              Pending first counter offer
+                            </td>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                              {currency +
+                                " " +
+                                formatNumberOrDefault(
+                                  item?.watch_details?.seller_display_counter
+                                )}
+                            </td>
+                          </tr>
+                        );
+                      } else if (item?.type === "counter_offer_2") {
+                        return (
+                          <tr key={index}>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                              {moment
+                                .unix(item?.created_on)
+                                .format("MMMM DD ,YYYY h:mm A")}
+                            </td>
+                            <td className="px-[14px] py-[10px</tr>] dark:text-[#ffff] text-black whitespace-nowrap">
+                              {item?.company_name || item?.from_name
+                                ? (item?.company_name ?? "") +
+                                  (item?.company_name == "" ||
+                                  !item?.company_name ||
+                                  item?.from_name == ""
+                                    ? ""
+                                    : " - ") +
+                                  (item?.from_name ?? "")
+                                : "-"}
+                            </td>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                              Pending second counter offer
+                            </td>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                              {currency +
+                                " " +
+                                formatNumberOrDefault(
+                                  item?.watch_details?.seller_display_counter
+                                )}
+                            </td>
+                          </tr>
+                        );
+                      } else if (item?.type === "est_re-estimate") {
+                        return (
+                          <tr key={index}>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                              {moment
+                                .unix(item?.created_on)
+                                .format("MMMM DD ,YYYY h:mm A")}
+                            </td>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                              {item?.company_name || item?.from_name
+                                ? (item?.company_name ?? "") +
+                                  (item?.company_name == "" ||
+                                  !item?.company_name ||
+                                  item?.from_name == ""
+                                    ? ""
+                                    : " - ") +
+                                  (item?.from_name ?? "")
+                                : "-"}
+                            </td>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                              Re-estimate
+                            </td>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                              {currency +
+                                " " +
+                                formatNumberOrDefault(
+                                  item?.watch_details?.estimated_price_seller
+                                )}
+                            </td>
+                          </tr>
+                        );
+                      } else if (item?.type === "accept_estimation") {
+                        return (
+                          <tr key={index}>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                              {moment
+                                .unix(item?.created_on)
+                                .format("MMMM DD ,YYYY h:mm A")}
+                            </td>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                              {item?.company_name || item?.from_name
+                                ? (item?.company_name ?? "") +
+                                  (item?.company_name == "" ||
+                                  !item?.company_name ||
+                                  item?.from_name == ""
+                                    ? ""
+                                    : " - ") +
+                                  (item?.from_name ?? "")
+                                : "-"}
+                            </td>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                              Accepted - Deal in progress
+                            </td>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                              {currency +
+                                " " +
+                                formatNumberOrDefault(
+                                  item?.watch_details?.accepted_price
+                                )}
+                            </td>
+                          </tr>
+                        );
+                      } else if (item?.type === "rejected") {
+                        return (
+                          <tr key={index}>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                              {moment
+                                .unix(item?.created_on)
+                                .format("MMMM DD ,YYYY h:mm A")}
+                            </td>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                              {item?.company_name || item?.from_name
+                                ? (item?.company_name ?? "") +
+                                  (item?.company_name == "" ||
+                                  !item?.company_name ||
+                                  item?.from_name == ""
+                                    ? ""
+                                    : " - ") +
+                                  (item?.from_name ?? "")
+                                : "-"}
+                            </td>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                              Rejected
+                            </td>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                              {currency +
+                                " " +
+                                formatNumberOrDefault(
+                                  item?.watch_details?.seller_display_price
+                                )}
+                            </td>
+                          </tr>
+                        );
+                      } else if (item?.type === "estimation_rejected") {
+                        return (
+                          <tr key={index}>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                              {moment
+                                .unix(item?.created_on)
+                                .format("MMMM DD ,YYYY h:mm A")}
+                            </td>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                              {item?.company_name || item?.from_name
+                                ? (item?.company_name ?? "") +
+                                  (item?.company_name == "" ||
+                                  !item?.company_name ||
+                                  item?.from_name == ""
+                                    ? ""
+                                    : " - ") +
+                                  (item?.from_name ?? "")
+                                : "-"}
+                            </td>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                              Pass
+                            </td>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                              {currency +
+                                " " +
+                                formatNumberOrDefault(
+                                  item?.watch_details?.seller_request_price
+                                )}
+                            </td>
+                          </tr>
+                        );
+                      } else if (item?.type === "estimation_expired") {
+                        return (
+                          <tr key={index}>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                              {moment
+                                .unix(item?.created_on)
+                                .format("MMMM DD ,YYYY h:mm A")}
+                            </td>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                              Estipal response time limit rule
+                            </td>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                              Cancel
+                            </td>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                              {currency +
+                                " " +
+                                formatNumberOrDefault(
+                                  item?.watch_details?.seller_display_counter
+                                )}
+                            </td>
+                          </tr>
+                        );
+                      } else if (item?.type === "staff_response_time_expired") {
+                        return (
+                          <tr key={index}>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                              {moment
+                                .unix(item?.created_on)
+                                .format("MMMM DD ,YYYY h:mm A")}
+                            </td>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                              Estipal response time limit rule
+                            </td>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                              Expired
+                            </td>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                              {currency +
+                                " " +
+                                formatNumberOrDefault(
+                                  item?.watch_details?.estimated_price_seller
+                                )}
+                            </td>
+                          </tr>
+                        );
+                      } else if (item?.type === "est_counter_offer_accept") {
+                        return (
+                          <tr key={index}>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                              {moment
+                                .unix(item?.created_on)
+                                .format("MMMM DD ,YYYY h:mm A")}
+                            </td>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                              {item?.company_name || item?.from_name
+                                ? (item?.company_name ?? "") +
+                                  (item?.company_name == "" ||
+                                  !item?.company_name ||
+                                  item?.from_name == ""
+                                    ? ""
+                                    : " - ") +
+                                  (item?.from_name ?? "")
+                                : "-"}
+                            </td>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                              Accepted - Deal in progress
+                            </td>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                              {currency +
+                                " " +
+                                formatNumberOrDefault(
+                                  item?.watch_details?.estimated_price_seller
+                                )}
+                            </td>
+                          </tr>
+                        );
+                      } else if (
+                        [
+                          "Be-Partner",
+                          "confirm_selling_price",
+                          "confirm_the_sale",
+                          "confirm_the_issuing_of_invoice",
+                          "no_sale_has_been_made",
+                        ].includes(item?.type)
+                      ) {
+                        return (
+                          <tr key={index}>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                              {moment
+                                .unix(item?.created_on)
+                                .format("MMMM DD ,YYYY h:mm A")}
+                            </td>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                              {item?.company_name || item?.from_name
+                                ? (item?.company_name ?? "") +
+                                  (item?.company_name == "" ||
+                                  !item?.company_name ||
+                                  item?.from_name == ""
+                                    ? ""
+                                    : " - ") +
+                                  (item?.from_name ?? "")
+                                : "-"}
+                            </td>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                              {item?.watch_status}
+                            </td>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                              {currency +
+                                " " +
+                                formatNumberOrDefault(
+                                  item?.type === "Be-Partner"
+                                    ? item?.watch_details?.accepted_price
+                                    : item?.type === "confirm_selling_price"
+                                    ? item?.watch_details?.confirmed_price
+                                    : item?.watch_details?.commission_price
+                                )}
+                            </td>
+                          </tr>
+                        );
+                      } else if (
+                        [
+                          "seller_invoice",
+                          "confirm_payment_seller",
+                          "confirm_shipment_estipal",
+                          "confirm_the_acceptance",
+                          "seller_invoice_new",
+                          "return_to_seller",
+                        ].includes(item?.type)
+                      ) {
+                        return (
+                          <tr key={index}>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                              {moment
+                                .unix(item?.created_on)
+                                .format("MMMM DD ,YYYY h:mm A")}
+                            </td>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                              {item?.from_name ?? "-"}
+                            </td>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                              {item?.watch_status}
+                            </td>
+                            <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
+                              {currency +
+                                " " +
+                                formatNumberOrDefault(
+                                  item?.watch_details
+                                    ?.accepted_price_with_commission
+                                )}
+                            </td>
+                          </tr>
+                        );
+                      }
+                    }
+                  })}
               </tbody>
             </table>
           )}
         </div>
-      )}
-
-      <h2 className="dark:text-white text-black font-bold text-[30px] mb-2">
-        {translate("WATCHHISTORY")}
-      </h2>
-
-      <div
-        className="w-[100%] overflow-auto mx-auto p-[25px] dark:bg-[#1e252b] bg-[#F8F8F8] rounded-[8px]"
-        style={{ border: "1px solid #ccc" }}
-      >
-        {loading ? (
-          <Skeleton variant="rectangular" width="100%" height={200} />
-        ) : (
-          <table className="table-auto w-full text-left">
-            <tbody>
-              {watchDetailData?.adminActivities
-                ?.slice()
-                .reverse()
-                .map((item, index) => {
-                  const currency =
-                    userRole === "staff"
-                      ? watchDetailData?.sellerDetail?.currency
-                      : watchDetailData?.adminDetail?.currency;
-                  if (userRole) {
-                    if (item?.type === "Quotation for Watch") {
-                      return (
-                        <tr key={index}>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] t</tr>ext-black whitespace-nowrap">
-                            {moment
-                              .unix(item?.created_on)
-                              .format("MMMM DD ,YYYY h:mm A")}
-                          </td>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                            {item?.company_name || item?.from_name
-                              ? (item?.company_name ?? "") +
-                                (item?.company_name == "" ||
-                                !item?.company_name ||
-                                item?.from_name == ""
-                                  ? ""
-                                  : " - ") +
-                                (item?.from_name ?? "")
-                              : "-"}
-                          </td>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                            Waiting for Quotation
-                          </td>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                            {currency +
-                              " " +
-                              formatNumberOrDefault(
-                                item?.watch_details?.price
-                              )}
-                          </td>
-                        </tr>
-                      );
-                    } else if (item?.type === "estimator_quotation") {
-                      return (
-                        <tr key={index}>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                            {moment
-                              .unix(item?.created_on)
-                              .format("MMMM DD ,YYYY h:mm A")}
-                          </td>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                            {item?.company_name || item?.from_name
-                              ? (item?.company_name ?? "") +
-                                (item?.company_name == "" ||
-                                !item?.company_name ||
-                                item?.from_name == ""
-                                  ? ""
-                                  : " - ") +
-                                (item?.from_name ?? "")
-                              : "-"}
-                          </td>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                            Estimated
-                          </td>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                            {currency +
-                              " " +
-                              formatNumberOrDefault(
-                                item?.watch_details?.estimated_price_seller
-                              )}
-                          </td>
-                        </tr>
-                      );
-                    } else if (item?.type === "counter_offer_1") {
-                      return (
-                        <tr key={index}>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                            {moment
-                              .unix(item?.created_on)
-                              .format("MMMM DD ,YYYY h:mm A")}
-                          </td>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                            {item?.company_name || item?.from_name
-                              ? (item?.company_name ?? "") +
-                                (item?.company_name == "" ||
-                                !item?.company_name ||
-                                item?.from_name == ""
-                                  ? ""
-                                  : " - ") +
-                                (item?.from_name ?? "")
-                              : "-"}
-                          </td>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                            Pending first counter offer
-                          </td>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                            {currency +
-                              " " +
-                              formatNumberOrDefault(
-                                item?.watch_details?.seller_display_counter
-                              )}
-                          </td>
-                        </tr>
-                      );
-                    } else if (item?.type === "counter_offer_2") {
-                      return (
-                        <tr key={index}>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                            {moment
-                              .unix(item?.created_on)
-                              .format("MMMM DD ,YYYY h:mm A")}
-                          </td>
-                          <td className="px-[14px] py-[10px</tr>] dark:text-[#ffff] text-black whitespace-nowrap">
-                            {item?.company_name || item?.from_name
-                              ? (item?.company_name ?? "") +
-                                (item?.company_name == "" ||
-                                !item?.company_name ||
-                                item?.from_name == ""
-                                  ? ""
-                                  : " - ") +
-                                (item?.from_name ?? "")
-                              : "-"}
-                          </td>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                            Pending second counter offer
-                          </td>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                            {currency +
-                              " " +
-                              formatNumberOrDefault(
-                                item?.watch_details?.seller_display_counter
-                              )}
-                          </td>
-                        </tr>
-                      );
-                    } else if (item?.type === "est_re-estimate") {
-                      return (
-                        <tr key={index}>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                            {moment
-                              .unix(item?.created_on)
-                              .format("MMMM DD ,YYYY h:mm A")}
-                          </td>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                            {item?.company_name || item?.from_name
-                              ? (item?.company_name ?? "") +
-                                (item?.company_name == "" ||
-                                !item?.company_name ||
-                                item?.from_name == ""
-                                  ? ""
-                                  : " - ") +
-                                (item?.from_name ?? "")
-                              : "-"}
-                          </td>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                            Re-estimate
-                          </td>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                            {currency +
-                              " " +
-                              formatNumberOrDefault(
-                                item?.watch_details?.estimated_price_seller
-                              )}
-                          </td>
-                        </tr>
-                      );
-                    } else if (item?.type === "accept_estimation") {
-                      return (
-                        <tr key={index}>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                            {moment
-                              .unix(item?.created_on)
-                              .format("MMMM DD ,YYYY h:mm A")}
-                          </td>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                            {item?.company_name || item?.from_name
-                              ? (item?.company_name ?? "") +
-                                (item?.company_name == "" ||
-                                !item?.company_name ||
-                                item?.from_name == ""
-                                  ? ""
-                                  : " - ") +
-                                (item?.from_name ?? "")
-                              : "-"}
-                          </td>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                            Accepted - Deal in progress
-                          </td>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                            {currency +
-                              " " +
-                              formatNumberOrDefault(
-                                item?.watch_details?.accepted_price
-                              )}
-                          </td>
-                        </tr>
-                      );
-                    } else if (item?.type === "rejected") {
-                      return (
-                        <tr key={index}>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                            {moment
-                              .unix(item?.created_on)
-                              .format("MMMM DD ,YYYY h:mm A")}
-                          </td>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                            {item?.company_name || item?.from_name
-                              ? (item?.company_name ?? "") +
-                                (item?.company_name == "" ||
-                                !item?.company_name ||
-                                item?.from_name == ""
-                                  ? ""
-                                  : " - ") +
-                                (item?.from_name ?? "")
-                              : "-"}
-                          </td>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                            Rejected
-                          </td>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                            {currency +
-                              " " +
-                              formatNumberOrDefault(
-                                item?.watch_details?.seller_display_price
-                              )}
-                          </td>
-                        </tr>
-                      );
-                    } else if (item?.type === "estimation_rejected") {
-                      return (
-                        <tr key={index}>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                            {moment
-                              .unix(item?.created_on)
-                              .format("MMMM DD ,YYYY h:mm A")}
-                          </td>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                            {item?.company_name || item?.from_name
-                              ? (item?.company_name ?? "") +
-                                (item?.company_name == "" ||
-                                !item?.company_name ||
-                                item?.from_name == ""
-                                  ? ""
-                                  : " - ") +
-                                (item?.from_name ?? "")
-                              : "-"}
-                          </td>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                            Pass
-                          </td>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                            {currency +
-                              " " +
-                              formatNumberOrDefault(
-                                item?.watch_details?.seller_request_price
-                              )}
-                          </td>
-                        </tr>
-                      );
-                    } else if (item?.type === "estimation_expired") {
-                      return (
-                        <tr key={index}>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                            {moment
-                              .unix(item?.created_on)
-                              .format("MMMM DD ,YYYY h:mm A")}
-                          </td>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                            Estipal response time limit rule
-                          </td>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                            Cancel
-                          </td>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                            {currency +
-                              " " +
-                              formatNumberOrDefault(
-                                item?.watch_details?.seller_display_counter
-                              )}
-                          </td>
-                        </tr>
-                      );
-                    } else if (item?.type === "staff_response_time_expired") {
-                      return (
-                        <tr key={index}>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                            {moment
-                              .unix(item?.created_on)
-                              .format("MMMM DD ,YYYY h:mm A")}
-                          </td>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                            Estipal response time limit rule
-                          </td>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                            Expired
-                          </td>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                            {currency +
-                              " " +
-                              formatNumberOrDefault(
-                                item?.watch_details?.estimated_price_seller
-                              )}
-                          </td>
-                        </tr>
-                      );
-                    } else if (item?.type === "est_counter_offer_accept") {
-                      return (
-                        <tr key={index}>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                            {moment
-                              .unix(item?.created_on)
-                              .format("MMMM DD ,YYYY h:mm A")}
-                          </td>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                            {item?.company_name || item?.from_name
-                              ? (item?.company_name ?? "") +
-                                (item?.company_name == "" ||
-                                !item?.company_name ||
-                                item?.from_name == ""
-                                  ? ""
-                                  : " - ") +
-                                (item?.from_name ?? "")
-                              : "-"}
-                          </td>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                            Accepted - Deal in progress
-                          </td>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                            {currency +
-                              " " +
-                              formatNumberOrDefault(
-                                item?.watch_details?.estimated_price_seller
-                              )}
-                          </td>
-                        </tr>
-                      );
-                    } else if (
-                      [
-                        "Be-Partner",
-                        "confirm_selling_price",
-                        "confirm_the_sale",
-                        "confirm_the_issuing_of_invoice",
-                        "no_sale_has_been_made",
-                      ].includes(item?.type)
-                    ) {
-                      return (
-                        <tr key={index}>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                            {moment
-                              .unix(item?.created_on)
-                              .format("MMMM DD ,YYYY h:mm A")}
-                          </td>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                            {item?.company_name || item?.from_name
-                              ? (item?.company_name ?? "") +
-                                (item?.company_name == "" ||
-                                !item?.company_name ||
-                                item?.from_name == ""
-                                  ? ""
-                                  : " - ") +
-                                (item?.from_name ?? "")
-                              : "-"}
-                          </td>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                            {item?.watch_status}
-                          </td>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                            {currency +
-                              " " +
-                              formatNumberOrDefault(
-                                item?.type === "Be-Partner"
-                                  ? item?.watch_details?.accepted_price
-                                  : item?.type === "confirm_selling_price"
-                                  ? item?.watch_details?.confirmed_price
-                                  : item?.watch_details?.commission_price
-                              )}
-                          </td>
-                        </tr>
-                      );
-                    } else if (
-                      [
-                        "seller_invoice",
-                        "confirm_payment_seller",
-                        "confirm_shipment_estipal",
-                        "confirm_the_acceptance",
-                        "seller_invoice_new",
-                        "return_to_seller",
-                      ].includes(item?.type)
-                    ) {
-                      return (
-                        <tr key={index}>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                            {moment
-                              .unix(item?.created_on)
-                              .format("MMMM DD ,YYYY h:mm A")}
-                          </td>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                            {item?.from_name ?? "-"}
-                          </td>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                            {item?.watch_status}
-                          </td>
-                          <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                            {currency +
-                              " " +
-                              formatNumberOrDefault(
-                                item?.watch_details
-                                  ?.accepted_price_with_commission
-                              )}
-                          </td>
-                        </tr>
-                      );
-                    }
-                  }
-                })}
-            </tbody>
-          </table>
-        )}
       </div>
 
       <ImageDialog

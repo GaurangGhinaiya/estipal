@@ -394,25 +394,25 @@ const BrandList = () => {
           <ClipLoader color="#ffffff" size={50} />
         </div>
       )}
-      <h1 className="text-2xl font-bold mt-[20px] sm:mt-[20px] px-[18px] sm:mb-4 py-[15px] sm:py-[00px] text-white">
+      <h1 className="text-2xl font-bold mt-[20px] sm:mt-[20px] px-[18px] sm:mb-4 py-[20px] sm:py-[5px] text-white">
         Brands, Collections, and Models
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 w-full px-[20px] py-[10px]">
         {/* Box 1: Brands */}
         <div className="bg-[#1E252B] p-4 rounded-lg overflow-hidden">
-          <div className="flex justify-between flex-col md:flex-row py-[5px]">
-            <h2 className="text-xl font-semibold text-white mb-4">Brands</h2>
+          <div className="flex justify-between flex-col md:flex-row py-[2px]">
+            <h2 className="text-xl font-semibold text-white mb-4 px-[8px]">Brands</h2>
             <div className="flex mb-4">
               <input
                 type="text"
                 placeholder="Type brand"
-                className="flex-grow p-2 rounded-l-lg"
+                className="flex-grow p-[15px] rounded-l-lg"
                 value={brandName}
                 onChange={(e) => setBrandName(e.target.value)}
               />
               <button
                 onClick={() => handleBrandSubmit(brandName)}
-                className="bg-blue-500 text-white px-4 py-2 rounded-r-lg"
+                className="bg-blue-500 text-white px-4 py-[15px] rounded-r-lg"
               >
                 Add
               </button>
