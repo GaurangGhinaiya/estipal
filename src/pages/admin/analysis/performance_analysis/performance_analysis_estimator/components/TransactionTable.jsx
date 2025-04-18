@@ -9,19 +9,22 @@ const TransactionTable = ({ data, sortField, sortOrder, handleSort }) => {
       <thead style={{ borderBottom: "2px solid #111111" }}>
         <tr>
           {[
-            { key: "date", label: "Date" },
-            { key: "company", label: "Company" },
-            { key: "firstName", label: "First Name" },
-            { key: "lastName", label: "Last Name" },
-            { key: "watchId", label: "Watch ID" },
-            { key: "model", label: "Brand / Collection / Model" },
-            { key: "estimate", label: "Current Estimate / Accepted" },
-            { key: "status", label: "Watch Status" },
+            { key: "estimation_assign_date", label: "Date" },
+            { key: "company_name", label: "Company" },
+            { key: "first_name", label: "First Name" },
+            { key: "last_name", label: "Last Name" },
+            { key: "id", label: "Watch ID" },
+            { key: "brand", label: "Brand / Collection / Model" },
+            {
+              key: "estimated_watch_price",
+              label: "Current Estimate / Accepted",
+            },
+            { key: "estimator_watch_status", label: "Watch Status" },
           ].map((column) => (
             <th
               key={column.key}
               onClick={() => handleSort(column.key)}
-              className={`p-2 whitespace-nowrap dark:text-[#ffff] text-black text-center cursor-pointer ${
+              className={`py-2 px-[20px] whitespace-nowrap dark:text-[#ffff] text-black text-center cursor-pointer ${
                 sortField === column.key ? "active-sorting" : "sorting"
               }`}
             >

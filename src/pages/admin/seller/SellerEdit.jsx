@@ -215,7 +215,42 @@ const SellerEdit = () => {
     setFormData((prev) => ({ ...prev, state: e.target.value }));
   };
 
+  const validateForm = () => {
+    const fieldNames = {
+      cmp_name: "Company Name",
+      bank_name: "Bank Name",
+      logistics_address: "Bank Address",
+      bank_account: "Bank Account Name",
+      account_number: "Account Number",
+      bank_swift: "Swift Code/IBAN",
+      first_name: "First Name",
+      last_name: "Last Name",
+      address: "Street Address",
+      city: "City",
+      country: "Country",
+      zip: "Zip/Postal Code",
+      state: "State/Province",
+      email: "Email",
+      currency: "Currency of Trading",
+    };
+
+    for (const field in fieldNames) {
+      if (!formData[field]) {
+        toast.error(`${fieldNames[field]} field is required.`);
+        return false;
+      }
+    }
+
+    if (!phone) {
+      toast.error("Please enter a valid Mobile Number.");
+      return false;
+    }
+
+    return true;
+  };
+
   const save = async () => {
+    if (!validateForm()) return;
     setLoading(true);
 
     const formDataToSend = new FormData();
@@ -789,10 +824,11 @@ const SellerEdit = () => {
             name="email"
             type="text"
             label="Email"
-            readOnly={!isEditable}
+            readOnly={true}
             bgColor={"#1e252b"}
             className="mb-[15px]"
             onChange={handleChange}
+            inputClass="!cursor-not-allowed"
           />
           <TextInputField
             rightTextValue=""
@@ -802,9 +838,9 @@ const SellerEdit = () => {
             label="Username"
             readOnly
             bgColor={"#1e252b"}
-            className="mb-[15px] !cursor-not-allowed"
+            className="mb-[15px] "
             onChange={handleChange}
-            inputClassName=""
+            inputClass="!cursor-not-allowed"
           />
           <TextInputField
             rightTextValue=""

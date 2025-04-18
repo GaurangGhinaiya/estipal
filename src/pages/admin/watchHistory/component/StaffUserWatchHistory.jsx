@@ -75,11 +75,15 @@ const StaffUserWatchHistory = ({
             { key: "id", label: `${translate("ID")}`, isSortable: true },
             { key: "brand", label: `${translate("BRAND")}`, isSortable: true },
             {
-              key: "collection",
+              key: "model",
               label: `${translate("COLLECTION")}`,
               isSortable: true,
             },
-            { key: "model", label: `${translate("MODEL")}`, isSortable: false },
+            {
+              key: "collection",
+              label: `${translate("MODEL")}`,
+              isSortable: true,
+            },
             {
               key: "serial_no",
               label: `${translate("SERIAL")}`,
@@ -106,7 +110,7 @@ const StaffUserWatchHistory = ({
               onClick={
                 column.isSortable ? () => handleSort(column.key) : undefined
               }
-              className={`p-2 dark:text-[#ffff] text-nowrap  text-black text-center ${
+              className={`py-2 px-[20px] dark:text-[#ffff] text-nowrap whitespace-nowrap text-black text-center ${
                 column.isSortable ? "cursor-pointer" : ""
               } ${
                 column.isSortable && sortField === column.key
@@ -131,7 +135,7 @@ const StaffUserWatchHistory = ({
       <tbody>
         {loading && watchActivityDataUpdate?.length === 0 ? (
           <tr>
-            <td colSpan={12} className="py-[200px] px-4  text-center">
+            <td colSpan={12} className="py-[200px] px-4 text-center">
               <CircularProgress />
             </td>
           </tr>

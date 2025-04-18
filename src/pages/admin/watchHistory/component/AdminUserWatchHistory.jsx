@@ -73,16 +73,16 @@ const AdminUserWatchHistory = ({
             },
             { key: "id", label: "ID", isSortable: true },
             { key: "brand", label: "Brand", isSortable: true },
-            { key: "collection", label: "Collection", isSortable: true },
-            { key: "model", label: "Model", isSortable: false },
+            { key: "model", label: "Collection", isSortable: true },
+            { key: "collection", label: "Model", isSortable: true },
             { key: "serial_no", label: "Serial", isSortable: true },
-            { key: "compnay_name", label: "Added By", isSortable: true },
+            { key: "company_name", label: "Added By", isSortable: true },
             {
-              key: "asking",
+              key: "watch_price",
               label: "Asking / Estimate",
               isSortable: true,
             },
-            { key: "addedOn", label: "Added On", isSortable: true },
+            { key: "created_on", label: "Added On", isSortable: true },
             { key: "watch_status", label: "Status", isSortable: true },
           ]?.map((column) => (
             <th
@@ -209,7 +209,7 @@ const AdminUserWatchHistory = ({
                 }
               >
                 {`${item?.addedByDetail?.company_name || ""}${
-                  item?.addedByDetail?.company_name &&
+                  item?.addedByDetail?.company_name && 
                   item?.addedByDetail?.username
                     ? " - "
                     : "-"

@@ -29,7 +29,7 @@ const useActivityData = ({
       }
       const searchValue = JSON.stringify(searchObject);
       const response = await axiosInstance.get(
-        `/adminActivity?page=${currentPage}&records_per_page=${recordsPerPage}&search=${searchValue}&sort_order=${sortOrder}&sort_field=${sortField}&status=${status}`
+        `/adminActivity?page=${currentPage}&records_per_page=${recordsPerPage}&search=${searchValue}&sort_order=${sortOrder}&sort_by=${sortField}&status=${status}`
       );
       setActivitiesData(response.payload.data);
       setTotalRecords(response?.pager?.total_records);

@@ -57,13 +57,13 @@ const AdminTable = ({
           {[
             { key: "", label: "" },
             { key: "checkbox", label: "" },
-            { key: "who", label: "Who", isSortable: true },
+            { key: "admin_group", label: "Who", isSortable: true },
             { key: "from", label: "From", isSortable: true },
-            { key: "user1_id", label: "ID", isSortable: true },
-            { key: "message", label: "Message", isSortable: false },
-            { key: "watchId", label: "Watch Id", isSortable: true },
-            { key: "status", label: "Status", isSortable: true },
-            { key: "received", label: "Received", isSortable: true },
+            { key: "user2_id", label: "ID", isSortable: true },
+            { key: "message", label: "Message", isSortable: true },
+            { key: "watch_id", label: "Watch Id", isSortable: true },
+            { key: "watch_status", label: "Status", isSortable: true },
+            { key: "created_on", label: "Received", isSortable: true },
           ].map((column) => (
             <th
               key={column.key}
