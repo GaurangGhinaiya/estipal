@@ -21,9 +21,12 @@ const Header = () => {
   const { pathname } = pathName;
   const userRole = localStorage.getItem("userRole");
   const userName = JSON.parse(localStorage.getItem("userData"));
-  const revenueMenuRef = useRef(null);
-  const performanceMenuRef = useRef(null);
-  const mobileNav = useRef(null);
+  const close_Revenue_Analysis_ref = useRef(null);
+  const close_Performance_Analysis_ref = useRef(null);
+
+  const handleRevenueMenuClick = (event) => {
+    setOpenRevenueMenu(!openRevenueMenu);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -36,19 +39,17 @@ const Header = () => {
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
-        revenueMenuRef.current &&
-        !revenueMenuRef.current.contains(event.target)
+        close_Revenue_Analysis_ref.current &&
+        !close_Revenue_Analysis_ref.current.contains(event.target)
       ) {
         setOpenRevenueMenu(false);
       }
+
       if (
-        performanceMenuRef.current &&
-        !performanceMenuRef.current.contains(event.target)
+        close_Performance_Analysis_ref.current &&
+        !close_Performance_Analysis_ref.current.contains(event.target)
       ) {
         setOpenPerformanceMenu(false);
-      }
-      if (mobileNav.current && !mobileNav.current.contains(event.target)) {
-        setOpenMenu(false);
       }
     };
 
@@ -58,9 +59,6 @@ const Header = () => {
     };
   }, []);
 
-  const handleRevenueMenuClick = (event) => {
-    setOpenRevenueMenu(!openRevenueMenu);
-  };
   const handlePerformanceMenuClick = (event) => {
     setOpenPerformanceMenu(!openPerformanceMenu);
   };
@@ -180,7 +178,7 @@ const Header = () => {
             </div>
           )}
           {userRole === "admin" && (
-            <div className="relative">
+            <div ref={close_Revenue_Analysis_ref} className="relative">
               <button
                 style={{
                   fontSize: "14px",
@@ -244,7 +242,7 @@ const Header = () => {
             </div>
           )}
           {userRole === "admin" && (
-            <div className="relative">
+            <div ref={close_Performance_Analysis_ref} className="relative">
               <button
                 style={{
                   fontSize: "14px",
@@ -367,7 +365,6 @@ const Header = () => {
       <Box
         className="bg-[#1d272e] text-white py-[11px] fixed z-[1] w-full mt-[66px]"
         sx={{ display: { xs: openMenu ? "block" : "none", md: "none" } }}
-        ref={mobileNav}
       >
         {/* Navigation Links */}
         <div className="flex flex-col gap-[2px] max-h-[340px] overflow-auto">
