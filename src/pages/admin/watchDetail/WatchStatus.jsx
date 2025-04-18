@@ -258,7 +258,12 @@ const WatchStatus = () => {
           </>
         ) : (
           watchDetailData?.watch_pic
-            ?.concat(watchDetailData?.imageUploadDetails?.[0]?.box_image || [])
+            ?.concat(
+              [
+                watchDetailData?.imageUploadDetails?.[0]?.box_image,
+                watchDetailData?.imageUploadDetails?.[0]?.paper_image,
+              ] || []
+            )
             ?.map((item, index) => (
               <div key={index} onClick={() => handleOpenDialog(index)}>
                 <img
