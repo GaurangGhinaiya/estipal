@@ -22,7 +22,9 @@ const Header = () => {
   const userRole = localStorage.getItem("userRole");
   const userName = JSON.parse(localStorage.getItem("userData"));
   const close_Revenue_Analysis_ref = useRef(null);
+  const close_Revenue_Analysis_ref_mobile = useRef(null);
   const close_Performance_Analysis_ref = useRef(null);
+  const close_Performance_Analysis_ref_mobile = useRef(null);
 
   const handleRevenueMenuClick = (event) => {
     setOpenRevenueMenu(!openRevenueMenu);
@@ -38,17 +40,27 @@ const Header = () => {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (
+      const desktopClickedOutside =
         close_Revenue_Analysis_ref.current &&
-        !close_Revenue_Analysis_ref.current.contains(event.target)
-      ) {
+        !close_Revenue_Analysis_ref.current.contains(event.target);
+
+      const mobileClickedOutside =
+        close_Revenue_Analysis_ref_mobile.current &&
+        !close_Revenue_Analysis_ref_mobile.current.contains(event.target);
+
+      if (desktopClickedOutside && mobileClickedOutside) {
         setOpenRevenueMenu(false);
       }
 
-      if (
+      const desktopClickedOutside_perfomance =
         close_Performance_Analysis_ref.current &&
-        !close_Performance_Analysis_ref.current.contains(event.target)
-      ) {
+        !close_Performance_Analysis_ref.current.contains(event.target);
+
+      const mobileClickedOutside_perfomance =
+        close_Performance_Analysis_ref_mobile.current &&
+        !close_Performance_Analysis_ref_mobile.current.contains(event.target);
+
+      if (desktopClickedOutside_perfomance && mobileClickedOutside_perfomance) {
         setOpenPerformanceMenu(false);
       }
     };
@@ -418,7 +430,7 @@ const Header = () => {
                   backgroundColor: pathname.includes("/admin/staff/staff_user")
                     ? "#131a1f"
                     : "transparent",
-                  fontWeight:"bold"
+                  fontWeight: "bold",
                 }}
                 onClick={() => {
                   navigate("/admin/staff/staff_user");
@@ -470,7 +482,7 @@ const Header = () => {
             )}
             {userRole === "admin" && (
               <div
-                ref={close_Revenue_Analysis_ref}
+                ref={close_Revenue_Analysis_ref_mobile}
                 className="relative mb-1"
                 style={{
                   backgroundColor:
@@ -486,13 +498,16 @@ const Header = () => {
                 }}
               >
                 <button
-                  onClick={() => handleRevenueMenuClick()}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleRevenueMenuClick();
+                  }}
                   className="px-4 py-[5px] !text-[14px]"
                 >
                   Revenue Analysis <ArrowDropDownIcon />
                 </button>
                 {openRevenueMenu && (
-                  <div className="z-20 absolute bg-[#0060aa] border border-white mt-3 rounded-lg">
+                  <div className="z-20 absolute top-[19px] left-[55px] bg-[#0060aa] border border-white mt-3 rounded-lg">
                     <button
                       className="block rounded-lg px-4 py-2 hover:bg-[#b3c1c5]"
                       onClick={(e) => {
@@ -539,7 +554,7 @@ const Header = () => {
             )}
             {userRole === "admin" && (
               <div
-                ref={close_Performance_Analysis_ref}
+                ref={close_Performance_Analysis_ref_mobile}
                 className={`relative`}
                 style={{
                   backgroundColor:
@@ -555,13 +570,16 @@ const Header = () => {
                 }}
               >
                 <button
-                  onClick={() => handlePerformanceMenuClick()}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handlePerformanceMenuClick();
+                  }}
                   className="px-4 py-[5px] text-[14px]"
                 >
                   Performance Analysis <ArrowDropDownIcon />
                 </button>
                 {openPerformanceMenu && (
-                  <div className="absolute bg-[#0060aa] border border-white mt-3 rounded-lg z-20">
+                  <div className="absolute top-[19px] left-[84px] bg-[#0060aa] border border-white mt-3 rounded-lg z-20">
                     <button
                       className="block rounded-lg px-4 py-2 hover:bg-[#b3c1c5]"
                       onClick={() => {
