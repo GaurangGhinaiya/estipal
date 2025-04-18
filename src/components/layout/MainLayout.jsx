@@ -17,7 +17,7 @@ const MainLayout = () => {
   return (
     <>
       <Header />
-      <div className="max-sm:px-[10px] min-h-[calc(100vh-162.5px)]">
+      <div className="pt-[52px] lg:pt-[0px] max-xs:px-[10px] min-h-[calc(100vh-162.5px)]">
         <Outlet />
       </div>
       <Footer />

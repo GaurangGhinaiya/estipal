@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { FaArrowCircleRight, FaEdit } from "react-icons/fa";
 import { IoCloseCircleOutline } from "react-icons/io5";
+import { ClipLoader } from "react-spinners";
 import CustomSwitch from "../../../components/common/CustomSwitch";
 import axiosInstance from "../../../services";
 import { ModalBrand } from "./ModalBrand";
 import { ModalCollection } from "./ModalCollection";
 import { SubModalCollection } from "./SubModalCollection";
-import toast from "react-hot-toast";
-import { ClipLoader } from "react-spinners";
 
 const BrandList = () => {
   const [brandData, setBrandData] = useState([]);
@@ -32,12 +32,93 @@ const BrandList = () => {
   const [switchState, setSwitchState] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSwitchChange = (name, index) => (e) => {
-    const dynamicKey = `${name}${index}`;
+  const handleSwitchChange = (name, id) => async (e) => {
+    const dynamicKey = `${name}${id}`;
     setSwitchState((prev) => ({
       ...prev,
       [dynamicKey]: e.target.checked,
     }));
+
+    if (name === "brandActive") {
+      try {
+        setIsLoading(true);
+
+        const brandData = {
+          active: e.target.checked,
+        };
+
+        await axiosInstance.put(`watchBrands?id=${id}`, brandData);
+
+        toast.success(`Brand updated successfully!`);
+
+        setBrandName("");
+        getBrandList();
+        setISEditBrandDetailsData({});
+      } catch (error) {
+        const message = error?.response?.data?.message;
+        if (message === "brand is required.") {
+          toast.error(message);
+        } else {
+          toast.error(message || `Failed to update brand.`);
+        }
+        console.log("error", error);
+      } finally {
+        setIsLoading(false);
+      }
+    } else if (name === "collectionActive") {
+      try {
+        setIsLoading(true);
+
+        const payload = {
+          active: e.target.checked,
+        };
+        await axiosInstance.put(`watchModel?id=${id}`, payload);
+        toast.success(`Collection updated successfully!`);
+        getCollectionList();
+        setISEditCollectionData({});
+        setCollectionName("");
+      } catch (error) {
+        const message = error?.response?.data?.message;
+
+        if (message === "model_no is required.") {
+          toast.error("Collection is required!");
+        } else {
+          toast.error(message || `Failed to update collection.`);
+        }
+
+        console.log("error", error);
+      } finally {
+        setIsLoading(false);
+      }
+    } else if (name === "modelActive") {
+      try {
+        setIsLoading(true);
+
+        const payload = {
+          active: e.target.checked,
+        };
+        await axiosInstance.put(`watchSerialNo?id=${id}`, payload);
+
+        toast.success(`Model updated successfully!`);
+
+        getModelList();
+        setModelName("");
+        setModelDesc("");
+      } catch (error) {
+        const message = error?.response?.data?.message;
+        if (message === "serial_no is required.") {
+          toast.error("Model type is required!");
+        } else if (message === "serial_desc is required.") {
+          toast.error("Reference is required!");
+        } else {
+          toast.error(message || `Failed to update model.`);
+        }
+      } finally {
+        setIsLoading(false);
+      }
+    } else {
+      return;
+    }
   };
 
   const handleBrandClick = (brand) => {
@@ -113,13 +194,11 @@ const BrandList = () => {
     }
 
     const isEdit = !!iSEditBrandDetailsData?.id;
-
     try {
       setIsLoading(true);
 
       const brandData = {
         brand: value,
-        ...(isEdit && { active: iSEditBrandDetailsData.active }),
       };
 
       const response = isEdit
@@ -176,12 +255,6 @@ const BrandList = () => {
     }
   }, [selectedBrand]);
 
-  const newCollectionValue = {
-    brand_id: brandDetails?.id,
-    model_no: collectionName,
-    active: true,
-  };
-
   const handleCollectionSave = async (value) => {
     if (value == "") {
       toast.error("Collection is required!");
@@ -194,12 +267,12 @@ const BrandList = () => {
 
       const payload = isEdit
         ? {
-            brand_id: iSEditCollectionData.brand_id,
             model_no: value,
-            serial_no: value,
-            active: true,
           }
-        : newCollectionValue;
+        : {
+            brand_id: brandDetails?.id,
+            model_no: collectionName,
+          };
 
       const response = isEdit
         ? await axiosInstance.put(
@@ -276,13 +349,11 @@ const BrandList = () => {
         ? {
             serial_no: serialNo,
             serial_desc: serialDesc,
-            active: true,
           }
         : {
             model_id: collectionDetails?.id,
             serial_no: serialNo,
             serial_desc: serialDesc,
-            active: true,
           };
 
       const response = isEdit
@@ -304,9 +375,9 @@ const BrandList = () => {
       }
     } catch (error) {
       const message = error?.response?.data?.message;
-      if (!isEdit && message === "serial_no is required.") {
+      if (message === "serial_no is required.") {
         toast.error("Model type is required!");
-      } else if (!isEdit && message === "serial_desc is required.") {
+      } else if (message === "serial_desc is required.") {
         toast.error("Reference is required!");
       } else {
         toast.error(message || `Failed to ${isEdit ? "update" : "add"} model.`);
@@ -317,19 +388,19 @@ const BrandList = () => {
   };
 
   return (
-    <div className="sm:p-6 min-h-[83vh]">
+    <div className="min-h-[100vh]">
       {isLoading && (
         <div className="flex fixed top-0 bottom-0 right-0 left-0 justify-center items-center">
           <ClipLoader color="#ffffff" size={50} />
         </div>
       )}
-      <h1 className="text-2xl font-bold mb-4 text-white">
+      <h1 className="text-2xl font-bold mt-[20px] sm:mt-[20px] px-[18px] sm:mb-4 py-[15px] sm:py-[00px] text-white">
         Brands, Collections, and Models
       </h1>
-      <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 w-full">
+      <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 w-full px-[20px] py-[10px]">
         {/* Box 1: Brands */}
-        <div className="bg-[#1E252B] p-4 rounded-lg h-[700px] overflow-hidden">
-          <div className="flex justify-between flex-col md:flex-row">
+        <div className="bg-[#1E252B] p-4 rounded-lg overflow-hidden">
+          <div className="flex justify-between flex-col md:flex-row py-[5px]">
             <h2 className="text-xl font-semibold text-white mb-4">Brands</h2>
             <div className="flex mb-4">
               <input
@@ -347,7 +418,7 @@ const BrandList = () => {
               </button>
             </div>
           </div>
-          <ul className="h-[630px] overflow-y-scroll">
+          <ul className="h-[580px] sm:h-[630px] overflow-y-scroll">
             {brandData?.map((brand, index) => (
               <li
                 key={index}
@@ -399,7 +470,7 @@ const BrandList = () => {
 
         {/* Box 2: Collections */}
         {selectedBrand && (
-          <div className="bg-[#1E252B] p-4 rounded-lg h-[700px] overflow-hidden">
+          <div className="bg-[#1E252B] p-4 rounded-lg overflow-hidden">
             <div className="flex justify-between flex-col md:flex-row">
               <div>
                 <IoCloseCircleOutline
@@ -409,6 +480,7 @@ const BrandList = () => {
                     setSelectedCollection(null);
                     setSelectedBrand(null);
                   }}
+                  className="cursor-pointer"
                 />
                 <h2 className="text-xl font-semibold text-white mb-4">
                   Collections
@@ -430,7 +502,7 @@ const BrandList = () => {
                 </button>
               </div>
             </div>
-            <ul className="h-[620px] overflow-y-scroll">
+            <ul className="h-[560px] sm:h-[620px] overflow-y-scroll">
               {collectionData?.map((collection, index) => (
                 <li
                   key={index}
@@ -460,7 +532,7 @@ const BrandList = () => {
                         name={`collectionActive${collection?.id}`}
                         checked={
                           switchState[`collectionActive${collection?.id}`] ??
-                          collection?.model_no
+                          collection?.active
                         }
                         onChange={handleSwitchChange(
                           "collectionActive",
@@ -492,13 +564,14 @@ const BrandList = () => {
 
         {/* Box 3: Models */}
         {selectedCollection && (
-          <div className="bg-[#1E252B] p-4 rounded-lg h-[700px] overflow-hidden">
-            <div className="flex justify-between  flex-wrap">
+          <div className="bg-[#1E252B] p-4 rounded-lg overflow-hidden">
+            <div className="flex justify-between flex-wrap">
               <div>
                 <IoCloseCircleOutline
                   color="white"
                   size={20}
                   onClick={() => setSelectedCollection(null)}
+                  className="cursor-pointer"
                 />
                 <h2 className="text-xl font-semibold text-white mb-4">
                   Models
@@ -530,7 +603,7 @@ const BrandList = () => {
                 </button>
               </div>
             </div>
-            <ul className="h-[620px] overflow-y-scroll">
+            <ul className="h-[520px] sm:h-[620px] overflow-y-scroll">
               {modelData?.map((model, index) => (
                 <li
                   key={index}

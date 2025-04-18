@@ -36,7 +36,7 @@ const StaffCommission = (props) => {
   }, [staffData, isEditable]);
 
   return (
-    <div className="px-0 sm:px-[20px] ">
+    <div className="px-[20px] ">
       <h3 className="text-[24px] dark:text-[#ffff] text-black mb-2">
         {translate("COMMISSIONPLAN")}:
       </h3>

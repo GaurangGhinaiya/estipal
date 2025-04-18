@@ -113,7 +113,7 @@ export default function Profile() {
           </IconButton>
         </Tooltip>
         {userRole === "staff" && (
-          <Tooltip className="flex">
+          <Tooltip className="flex pb-[8px]">
             <IconButton
               onClick={handleLangOpen}
               size="small"
