@@ -88,7 +88,7 @@ const WatchHistory = () => {
 
     try {
       const response = await axiosInstance.get(
-        `/staffWatchActivities?page=${currentPage}&records_per_page=${10}&search=${searchValue}&sort_order=${sortOrder}&sort_field=${sortField}`
+        `/staffWatchActivities?page=${currentPage}&records_per_page=${10}&search=${searchValue}&sort_order=${sortOrder}&sort_by=${sortField}`
       );
       if (response?.status === 200) {
         setTotalRecords(response?.pager?.total_records);

@@ -77,7 +77,7 @@ const SellerPerformanceAnalysis = () => {
     try {
       setTransactionLoading(true);
       const response = await axiosInstance.get(
-        `/performanceAnalysis/seller?page=${currentPage}&records_per_page=${recordsPerPage}&search=${searchValue}&sort_order=${sortOrder}&sort_field=${sortField}`
+        `/performanceAnalysis/seller?page=${currentPage}&records_per_page=${recordsPerPage}&search=${searchValue}&sort_order=${sortOrder}&sort_by=${sortField}`
       );
       const transactions = response?.payload?.data?.transactions.map(
         (item) => ({
@@ -169,19 +169,18 @@ const SellerPerformanceAnalysis = () => {
         setSelectedStatus={setSelectedStatus}
         setCurrentPage={setCurrentPage}
       />
-      <div className="w-[95.5%] overflow-auto mx-auto pt-[10px] mt-8">
-        {transactionLoading ? (
-          <div className="py-[200px] px-4 text-center">
+      <div className="w-[95.5%] overflow-auto mx-auto relative pt-[10px] mt-8">
+        {transactionLoading && (
+          <div className="absolute bg-[#ffffff00] top-[40%] left-0 right-0 bottom-0 px-4 text-center">
             <CircularProgress />
           </div>
-        ) : (
-          <StaffTransactionTable
-            data={transactionData}
-            sortField={sortField}
-            sortOrder={sortOrder}
-            handleSort={handleSort}
-          />
         )}
+        <StaffTransactionTable
+          data={transactionData}
+          sortField={sortField}
+          sortOrder={sortOrder}
+          handleSort={handleSort}
+        />
       </div>
       <PaginationComponent
         userRole={userRole}

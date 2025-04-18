@@ -16,7 +16,8 @@ const EstimatorPerformanceAnalysis = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [recordsPerPage, setRecordsPerPage] = useState(20);
   const [totalRecords, setTotalRecords] = useState(0);
-  const [loading, setLoading] = useState(false);
+  const [loadingSummary, setLoadingSummary] = useState(false);
+  const [loadingTransactions, setLoadingTransactions] = useState(false);
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("All");
@@ -27,10 +28,6 @@ const EstimatorPerformanceAnalysis = () => {
     const newOrder = sortField === key && sortOrder === "asc" ? "desc" : "asc";
     setSortField(key);
     setSortOrder(newOrder);
-
-    // Sort data and update state
-    const sortedData = sortData(transactionData, key, newOrder);
-    setTransactionData(sortedData);
   };
 
   const handlePageChange = (page) => {
@@ -56,9 +53,8 @@ const EstimatorPerformanceAnalysis = () => {
     const searchValue = JSON.stringify(searchObject);
 
     try {
-      setLoading(true);
       const response = await axiosInstance.get(
-        `/performanceAnalysis/estimator?page=${currentPage}&records_per_page=${recordsPerPage}&search=${searchValue}`
+        `/performanceAnalysis/estimator?page=${currentPage}&records_per_page=${recordsPerPage}&search=${searchValue}&sort_order=${sortOrder}&sort_by=${sortField}`
       );
 
       setSummaryData(response?.payload?.data?.summary);
@@ -67,25 +63,31 @@ const EstimatorPerformanceAnalysis = () => {
     } catch (error) {
       console.error("Error fetching transaction data:", error);
     } finally {
-      setLoading(false);
+      setLoadingSummary(false);
+      setLoadingTransactions(false);
     }
   };
 
   useEffect(() => {
+    setLoadingSummary(true);
+    setLoadingTransactions(true);
     fetchData();
   }, [currentPage]);
 
   useEffect(() => {
+    setLoadingTransactions(true);
     if (fromDate && toDate) {
       fetchData(fromDate, toDate);
     } else fetchData();
-  }, [selectedStatus]);
+  }, [selectedStatus, sortOrder, sortField]);
 
   useEffect(() => {
     fetchData(fromDate, toDate);
   }, [groupBy]);
 
   const applyFilter = () => {
+    setLoadingSummary(true);
+    setLoadingTransactions(true);
     fetchData(fromDate, toDate);
   };
 
@@ -93,6 +95,8 @@ const EstimatorPerformanceAnalysis = () => {
     setFromDate("");
     setToDate("");
     fetchData();
+    setLoadingSummary(true);
+    setLoadingTransactions(true);
   };
 
   return (
@@ -117,7 +121,7 @@ const EstimatorPerformanceAnalysis = () => {
       </div>
 
       <div className="w-[95.5%] overflow-auto mx-auto pt-[10px]">
-        {loading ? (
+        {loadingSummary ? (
           <div className="py-[200px] px-4 text-center">
             <CircularProgress />
           </div>
@@ -138,19 +142,18 @@ const EstimatorPerformanceAnalysis = () => {
         setSelectedStatus={setSelectedStatus}
         setCurrentPage={setCurrentPage}
       />
-      <div className="w-[95.5%] overflow-auto mx-auto pt-[10px] mt-8">
-        {loading ? (
-          <div className="py-[200px] px-4 text-center">
+      <div className="w-[95.5%] overflow-auto mx-auto pt-[10px] mt-8 relative">
+        {loadingTransactions && (
+          <div className="py-[200px] absolute bg-[#ffffff00]  top-0 left-0 right-0 bottom-0 px-4 text-center">
             <CircularProgress />
           </div>
-        ) : (
-          <TransactionTable
-            data={transactionData}
-            sortField={sortField}
-            sortOrder={sortOrder}
-            handleSort={handleSort}
-          />
         )}
+        <TransactionTable
+          data={transactionData}
+          sortField={sortField}
+          sortOrder={sortOrder}
+          handleSort={handleSort}
+        />
       </div>
       <PaginationComponent
         userRole={userRole}

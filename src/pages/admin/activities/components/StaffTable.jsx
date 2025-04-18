@@ -58,24 +58,28 @@ const StaffTable = ({
         <tr>
           {[
             { key: "checkbox", label: " " },
-            { key: "from", label: `${translate("FROM")}`, isSortable: true },
+            {
+              key: "from",
+              label: `${translate("FROM")}`,
+              isSortable: true,
+            },
             {
               key: "message",
               label: `${translate("MESSAGE")}`,
-              isSortable: false,
+              isSortable: true,
             },
             {
-              key: "watchId",
+              key: "watch_id",
               label: `${translate("WATCHID")}`,
               isSortable: true,
             },
             {
-              key: "status",
+              key: "staff_watch_status",
               label: `${translate("STATUS")}`,
               isSortable: true,
             },
             {
-              key: "received",
+              key: "created_on",
               label: `${translate("RECEIVED")}`,
               isSortable: true,
             },
@@ -85,10 +89,12 @@ const StaffTable = ({
               onClick={
                 column.isSortable ? () => handleSort(column.key) : undefined
               }
-              className={`p-2 dark:text-[#ffff] text-black text-center cursor-pointer ${
+              className={`py-2 px-[20px] dark:text-[#ffff] text-black text-center whitespace-nowrap cursor-pointer ${
                 column.isSortable && sortField === column.key
                   ? "active-sorting"
                   : ""
+              }  ${
+                column.isSortable && sortField !== column.key ? "sorting" : ""
               }`}
             >
               {column.label}{" "}

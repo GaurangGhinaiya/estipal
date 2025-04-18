@@ -69,7 +69,8 @@ const WatchStatus = () => {
           <h3 className="dark:text-white text-black text-[21px]">
             Watch History - ID : W{watchDetailData?.id},{" "}
             {watchDetailData?.brand}, {watchDetailData?.model},{" "}
-            {watchDetailData?.collection} ({watchDetailData?.reference})
+            {watchDetailData?.collection}{" "}
+            {watchDetailData?.reference && `(${watchDetailData?.reference})`}
           </h3>
         )}
 
@@ -128,10 +129,10 @@ const WatchStatus = () => {
               <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center gap-[20px] flex justify-between border border-gray-300 dark:border-none">
                 <p className="dark:text-white text-black">Model</p>
                 <p className="dark:text-white text-black whitespace-nowrap overflow-auto hide-scrollbar">
-                  {`${getSafeValue(
-                    watchDetailData?.collection,
-                    "string"
-                  )} (${getSafeValue(watchDetailData?.reference, "string")})`}
+                  {`${getSafeValue(watchDetailData?.collection, "string")} ${
+                    watchDetailData?.reference &&
+                    `(${getSafeValue(watchDetailData?.reference, "string")})`
+                  }`}
                 </p>
               </div>
               <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
@@ -252,16 +253,18 @@ const WatchStatus = () => {
             <Skeleton variant="rectangular" width={200} height={200} />
           </>
         ) : (
-          watchDetailData?.watch_pic?.map((item, index) => (
-            <div key={index} onClick={() => handleOpenDialog(index)}>
-              <img
-                style={{ border: "5px solid #1e252b" }}
-                src={item}
-                alt="img"
-                className="img-border rounded-[8px] w-[200px] h-[200px] mx-auto cursor-pointer"
-              />
-            </div>
-          ))
+          watchDetailData?.watch_pic
+            ?.concat(watchDetailData?.imageUploadDetails?.[0]?.box_image || [])
+            ?.map((item, index) => (
+              <div key={index} onClick={() => handleOpenDialog(index)}>
+                <img
+                  style={{ border: "5px solid #1e252b" }}
+                  src={item}
+                  alt="img"
+                  className="img-border rounded-[8px] w-[200px] h-[200px] mx-auto cursor-pointer"
+                />
+              </div>
+            ))
         )}
       </div>
 

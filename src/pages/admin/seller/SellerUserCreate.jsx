@@ -62,7 +62,7 @@ const SellerUserCreate = () => {
     cnt_code: "",
     cnt_no: "",
     currency: "USD",
-    payment_tier: 0,
+    payment_tier: 1,
     created_on: "",
     seller_logo: "",
     companyLogoPreview: "",
@@ -223,7 +223,43 @@ const SellerUserCreate = () => {
     setFormData((prev) => ({ ...prev, state: e.target.value }));
   };
 
+  const validateForm = () => {
+    const fieldNames = {
+      cmp_name: "Company Name",
+      bank_name: "Bank Name",
+      logistics_address: "Bank Address",
+      bank_account: "Bank Account Name",
+      account_number: "Account Number",
+      bank_swift: "Swift Code/IBAN",
+      first_name: "First Name",
+      last_name: "Last Name",
+      address: "Street Address",
+      city: "City",
+      country: "Country",
+      zip: "Zip/Postal Code",
+      state: "State/Province",
+      email: "Email",
+      currency: "Currency of Trading",
+    };
+
+    for (const field in fieldNames) {
+      if (!formData[field]) {
+        toast.error(`${fieldNames[field]} field is required.`);
+        return false;
+      }
+    }
+
+    if (!phone) {
+      toast.error("Please enter a valid Mobile Number.");
+      return false;
+    }
+
+    return true;
+  };
+
   const save = async () => {
+    if (!validateForm()) return;
+
     setLoading(true);
 
     const formDataToSend = new FormData();
