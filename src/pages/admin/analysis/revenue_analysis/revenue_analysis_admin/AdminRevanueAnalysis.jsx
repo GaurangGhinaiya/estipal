@@ -48,7 +48,7 @@ const AdminRevanueAnalysis = () => {
   return (
     <div className="p-[15px] h-[100vh]">
       <div className="px-0 sm:px-[15px] flex flex-col justify-between flex-wrap">
-        <h1 className="text-[26px] font-medium mb-4 mt-5 px-0 sm:px-[15px] font-sans text-white">
+        <h1 className="text-[26px] font-medium mb-4 mt-5 px-[15px] font-sans text-white">
           Revenue Analysis (Merchant)
         </h1>
         <div className="flex items-start sm:items-center sm:flex-row flex-col gap-4 space-x-4 mb-1 px-4">

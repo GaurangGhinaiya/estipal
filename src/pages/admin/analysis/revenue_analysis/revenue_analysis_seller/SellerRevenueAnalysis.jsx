@@ -125,7 +125,7 @@ const SellerRevenueAnalysis = () => {
   return (
     <div className="pb-[15px] min-h-[100vh]">
       <div className="px-0 sm:px-[20px] pt-4 flex flex-col justify-between flex-wrap">
-        <h1 className="text-[26px] font-medium mb-4 mt-5 px-0 sm:px-[15px] font-sans dark:text-white  text-black">
+        <h1 className="text-[26px] font-medium mb-4 mt-5 px-[15px] font-sans dark:text-white  text-black">
           Revenue Analysis (Merchant)
         </h1>
         <FilterComponent
@@ -136,7 +136,7 @@ const SellerRevenueAnalysis = () => {
           applyFilter={applyFilter}
           clearFilter={clearFilter}
         />
-        <h1 className="text-[20px] font-medium mb-4 mt-5 px-0 sm:px-[15px] font-sans dark:text-white  text-black">
+        <h1 className="text-[20px] font-medium mb-4 mt-5 px-[15px] font-sans dark:text-white  text-black">
           Summary
         </h1>
       </div>
@@ -155,7 +155,7 @@ const SellerRevenueAnalysis = () => {
         )}
       </div>
 
-      <h1 className=" text-[20px] font-medium mb-4 mt-5 px-0 sm:px-[48px] font-sans dark:text-white text-black">
+      <h1 className=" text-[20px] font-medium mb-4 mt-5 px-[20px] sm:px-[48px] font-sans dark:text-white text-black">
         Transactions
       </h1>
       <SelectStatusComponent

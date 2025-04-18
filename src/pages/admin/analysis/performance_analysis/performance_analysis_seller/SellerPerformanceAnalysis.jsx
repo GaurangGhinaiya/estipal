@@ -134,7 +134,7 @@ const SellerPerformanceAnalysis = () => {
   return (
     <div className="pb-[15px] min-h-[100vh]">
       <div className="px-0 sm:px-[20px] pt-4 flex flex-col justify-between flex-wrap">
-        <h1 className="text-[26px] font-medium mb-4 mt-5 px-0 sm:px-[15px] font-sans dark:text-white  text-black">
+        <h1 className="text-[26px] font-medium mb-4 mt-5 px-[15px] font-sans dark:text-white  text-black">
           Performance Analysis (Merchant)
         </h1>
         <FilterComponent
@@ -147,7 +147,7 @@ const SellerPerformanceAnalysis = () => {
           groupBy={groupBy}
           setGroupBy={setGroupBy}
         />
-        <h1 className="text-[20px] font-medium mb-4 mt-5 px-0 sm:px-[15px] font-sans dark:text-white  text-black">
+        <h1 className="text-[20px] font-medium mb-4 mt-5 px-[15px] font-sans dark:text-white  text-black">
           Summary
         </h1>
       </div>
@@ -166,7 +166,7 @@ const SellerPerformanceAnalysis = () => {
         )}
       </div>
 
-      <h1 className=" text-[20px] font-medium mb-4 mt-5 px-0 sm:px-[48px] font-sans dark:text-white text-black">
+      <h1 className=" text-[20px] font-medium mb-4 mt-5 px-[20px] sm:px-[48px] font-sans dark:text-white text-black">
         Transactions
       </h1>
       <SelectStatusComponent
@@ -179,14 +179,14 @@ const SellerPerformanceAnalysis = () => {
           <div className="py-[200px] px-4 text-center">
             <CircularProgress />
           </div>
-        ) :  (
+        ) : (
           <TransactionTable
             data={transactionData}
             sortField={sortField}
             sortOrder={sortOrder}
             handleSort={handleSort}
           />
-        ) }
+        )}
       </div>
       <PaginationComponent
         userRole={userRole}
