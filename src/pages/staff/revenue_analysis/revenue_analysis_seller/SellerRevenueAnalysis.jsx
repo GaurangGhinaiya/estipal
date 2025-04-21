@@ -150,7 +150,7 @@ const SellerRevenueAnalysis = () => {
         )}
       </div>
 
-      <h1 className=" text-[20px] font-medium mb-4 mt-5 px-0 sm:px-[48px] font-sans dark:text-white text-black">
+      <h1 className=" text-[20px] font-medium mb-4 mt-5 px-[20px] sm:px-[48px] font-sans dark:text-white text-black">
         {translate("TRANSACTIONS")}
       </h1>
       <SelectStatusComponent

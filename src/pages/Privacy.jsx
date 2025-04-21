@@ -3,9 +3,9 @@ import React from "react";
 const Privacy = () => {
   return (
     <div className="bg-[#f9fafc]">
-      <div class="Privacy_Policy max-w-[60%] mx-auto max-sm:max-w-[90%]">
-        <h1>
-          <strong>Website Privacy Policy</strong>
+      <div class="Privacy_Policy max-w-[100%] xl:max-w-[60%] mx-[20px] xl:mx-auto max-sm:max-w-[90%]">
+        <h1 className="!text-3xl sm:!text-4xl font-semibold">
+          Website Privacy Policy
         </h1>
 
         <p>Last modified: 01 June 2022</p>

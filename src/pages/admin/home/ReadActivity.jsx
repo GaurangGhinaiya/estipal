@@ -153,8 +153,10 @@ const ReadActivity = () => {
             Message History - ID W{readActivityData?.watch_id} :{" "}
             {readActivityData?.watch_details?.brand},{" "}
             {readActivityData?.watch_details?.collection},{" "}
-            {readActivityData?.watch_details?.model_no} (
-            {readActivityData?.watch_details?.model_desc})
+            {readActivityData?.watch_details?.model_no}{" "}
+            {readActivityData?.watch_details?.model_desc && "(" }
+            {readActivityData?.watch_details?.model_desc}
+            {readActivityData?.watch_details?.model_desc && ")"}
           </h3>
         )}
 
