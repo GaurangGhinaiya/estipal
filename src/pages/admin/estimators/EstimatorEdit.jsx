@@ -277,7 +277,7 @@ const EstimatorEdit = () => {
       cnt_no: "Contact Number",
       bank_account_name: "Bank Account Name",
       bank_swift: "Swift code/IBAN",
-      account_number : "Account Number",
+      account_number: "Account Number",
       bank_address: "Bank Address",
       bank_name: "Bank Name",
     };
@@ -389,7 +389,11 @@ const EstimatorEdit = () => {
           <Button
             variant="contained"
             className="!bg-[#3c8dbc] !normal-case !py-[10px] !px-[40px] !rounded-[50px]"
-            onClick={() => navigate("/admin/watch_details/watch_history")}
+            onClick={() =>
+              navigate(
+                `/admin/watch_details/watch_history?estimator_id=${estimatorData?.id}`
+              )
+            }
           >
             View estimated watches
           </Button>
@@ -398,7 +402,9 @@ const EstimatorEdit = () => {
           <Button
             variant="contained"
             className="!bg-[#3c8dbc] !normal-case !py-[10px] !px-[40px] !rounded-[50px]"
-            onClick={() => navigate("/admin/analysis/revenue_analysis/admin")}
+            onClick={() =>
+              navigate("/admin/analysis/revenue_analysis/estimator")
+            }
           >
             View revenue analysis
           </Button>
@@ -453,6 +459,7 @@ const EstimatorEdit = () => {
             bgColor={"#1e252b"}
             className="mb-[15px]"
             onChange={handleChange}
+            inputClass="!cursor-not-allowed"
           />
           <TextInputField
             value={formData.company_name}
@@ -627,10 +634,10 @@ const EstimatorEdit = () => {
             type="text"
             label="Email"
             placeholder="Email"
-            readOnly={true}
+            readOnly={!isEditable}
             bgColor={"#1e252b"}
             className="mb-[15px]"
-            inputClass="cursor-not-allowed"
+            inputClass={!isEditable ? "cursor-not-allowed" : ""}
             onChange={handleChange}
           />
 

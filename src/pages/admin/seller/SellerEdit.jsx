@@ -637,9 +637,10 @@ const SellerEdit = () => {
             name="admin_seller_id"
             type="text"
             label="ID"
-            readOnly={!isEditable}
+            readOnly={true}
             bgColor={"#1e252b"}
             className="mb-[15px]"
+            inputClass="!cursor-not-allowed"
             onChange={handleChange}
           />
           <TextInputField
@@ -925,6 +926,7 @@ const SellerEdit = () => {
             readOnly={true}
             bgColor={"#1e252b"}
             className="mb-[15px]"
+            inputClass="!cursor-not-allowed"
             onChange={handleChange}
           />
         </div>

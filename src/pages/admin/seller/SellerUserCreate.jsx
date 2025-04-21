@@ -458,6 +458,7 @@ const SellerUserCreate = () => {
             bgColor={"#1e252b"}
             className="mb-[15px]"
             onChange={handleChange}
+            inputClass="!cursor-not-allowed"
           />
           <TextInputField
             value={formData.first_name}
