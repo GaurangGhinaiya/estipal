@@ -8,7 +8,7 @@ const Footer = () => {
   return (
     <>
       {userRole === "staff" ? (
-        <footer className="bg-[#1d272e] flex justify-between text-white text-center py-[15px] w-full px-[40px]">
+        <footer className="bg-[#1d272e] flex justify-between flex-col sm:flex-row gap-1 text-white text-center py-[15px] w-full px-[40px]">
           <div className="flex justify-between gap-4">
             <div>
               <span>Terms & Conditions</span>

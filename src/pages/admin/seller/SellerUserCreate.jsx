@@ -265,11 +265,7 @@ const SellerUserCreate = () => {
     const formDataToSend = new FormData();
 
     Object.keys(formData).forEach((key) => {
-      if (
-        key !== "seller_logo" &&
-        key !== "companyLogoPreview" &&
-        formData[key]
-      ) {
+      if (key !== "seller_logo" && key !== "companyLogoPreview") {
         formDataToSend.append(key, formData[key]);
       }
     });

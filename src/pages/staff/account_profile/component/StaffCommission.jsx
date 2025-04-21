@@ -1,17 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { convertCommissionData } from "../../../admin/seller/function/convertCommissionData";
+import React, { useEffect } from "react";
 import TextInputField from "../../../../components/common/TextInputField";
+import { convertCommissionData } from "../../../admin/seller/function/convertCommissionData";
 
 import { translate } from "../../../../language";
 
 const StaffCommission = (props) => {
   const { isEditable, commissionData, setCommissionData, staffData } = props;
-
-  const handleChange = (index, field, value) => {
-    const newData = [...commissionData];
-    newData[index][field] = value;
-    setCommissionData(newData);
-  };
 
   useEffect(() => {
     if (staffData?.commission) {
@@ -38,7 +32,7 @@ const StaffCommission = (props) => {
   return (
     <div className="px-[20px] ">
       <h3 className="text-[24px] dark:text-[#ffff] text-black mb-2">
-        {translate("COMMISSIONPLAN")}:
+        {translate("COMMISSIONPLAN")}
       </h3>
       <div
         className="dark:bg-[#1E252B] bg-[#F8F8F8] p-6 rounded-lg w-full mb-[15px]"
