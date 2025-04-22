@@ -31,15 +31,25 @@ const YearDropdown = ({ selectedYears, setSelectedYears, disabled }) => {
 
   return (
     <FormControl
-      style={{ minWidth: "auto", backgroundColor: "#1e252b", color: "white" }}
+      style={{
+        minWidth: "auto",
+        backgroundColor: "#1e252b",
+        color: "white",
+        display: "flex",
+        flexDirection: "row",
+        gap: "10px",
+      }}
     >
+      <div className="flex items-center">
+        {selectedYears?.length === 0 && <div>None Selected</div>}
+      </div>
       <Select
         multiple
         disabled={disabled}
         value={selectedYears}
         onChange={handleChange}
         renderValue={(selected) =>
-          selected.length > 0 ? `${selected.length} Selected` : "Select Years"
+          selected?.length > 0 ? `${selected?.length} Selected` : "Select Years"
         }
         sx={{
           backgroundColor: "#1e252b",
@@ -59,9 +69,9 @@ const YearDropdown = ({ selectedYears, setSelectedYears, disabled }) => {
         <MenuItem value="all">
           <Checkbox
             checked={selectedYears.length === years.length}
-            indeterminate={
-              selectedYears.length > 0 && selectedYears.length < years.length
-            }
+            // indeterminate={
+            //   selectedYears.length > 0 && selectedYears.length < years.length
+            // }
             style={{ color: "black" }}
           />
           <ListItemText primary="Select All" />
