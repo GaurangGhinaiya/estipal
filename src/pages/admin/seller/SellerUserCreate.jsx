@@ -668,7 +668,13 @@ const SellerUserCreate = () => {
                     onChange={(value) => {
                       setPhone(value);
                     }}
-                    onCountryChange={(v) => setSelectPhoneCountry(v)}
+                    onCountryChange={(v) => {
+                      if (v) {
+                        setSelectPhoneCountry(v);
+                      } else {
+                        setSelectPhoneCountry("IN");
+                      }
+                    }}
                   />
                 ) : (
                   <p>{phone}</p>

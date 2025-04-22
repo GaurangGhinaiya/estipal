@@ -455,7 +455,7 @@ const EstimatorEdit = () => {
             type="text"
             label="ID"
             placeholder="ID"
-            readOnly={!isEditable}
+            readOnly={true}
             bgColor={"#1e252b"}
             className="mb-[15px]"
             onChange={handleChange}
@@ -537,14 +537,14 @@ const EstimatorEdit = () => {
                     id="country"
                     className="bg-[#1e252b] max-sm:w-[100px] "
                     style={{ textAlignLast: "right" }}
-                    value={formData.country}
+                    value={formData?.country}
                     readOnly={!isEditable}
                     onChange={handleCountryChange}
                   >
                     <option disabled selected value={""}>
                       Open to select country
                     </option>
-                    {countries.map((item, index) => (
+                    {countries?.map((item, index) => (
                       <option value={item?.iso} key={index}>
                         {item?.name}
                       </option>
@@ -634,10 +634,10 @@ const EstimatorEdit = () => {
             type="text"
             label="Email"
             placeholder="Email"
-            readOnly={!isEditable}
+            readOnly={actionType === "add" ? false : true}
             bgColor={"#1e252b"}
             className="mb-[15px]"
-            inputClass={!isEditable ? "cursor-not-allowed" : ""}
+            inputClass={actionType === "add" ? "" : "cursor-not-allowed"}
             onChange={handleChange}
           />
 
@@ -665,7 +665,13 @@ const EstimatorEdit = () => {
                     onChange={(value) => {
                       setPhone(value);
                     }}
-                    onCountryChange={(v) => setSelectPhoneCountry(v)}
+                    onCountryChange={(v) => {
+                      if (v) {
+                        setSelectPhoneCountry(v);
+                      } else {
+                        setSelectPhoneCountry("IN");
+                      }
+                    }}
                   />
                 ) : (
                   <p className="text-white">{phone}</p>
