@@ -73,7 +73,8 @@ const WatchStatus = () => {
             Watch History - ID : W{watchDetailData?.id},{" "}
             {watchDetailData?.brand}, {watchDetailData?.model},{" "}
             {watchDetailData?.collection}{" "}
-            {watchDetailData?.reference?.trim(" ") && `(${watchDetailData?.reference})`}
+            {watchDetailData?.reference?.trim(" ") &&
+              `(${watchDetailData?.reference})`}
           </h3>
         )}
 
@@ -401,7 +402,7 @@ const WatchStatus = () => {
                                 : "-"}
                             </td>
                             <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                              Waiting for Quotation
+                              {translate("WAITINGFORQUOTATION")}
                             </td>
                             <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                               {currency +
@@ -432,7 +433,7 @@ const WatchStatus = () => {
                                 : "-"}
                             </td>
                             <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                              Estimated
+                              {translate("ESTIMATEDTEXT")}
                             </td>
                             <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                               {currency +
@@ -463,7 +464,7 @@ const WatchStatus = () => {
                                 : "-"}
                             </td>
                             <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                              Pending first counter offer
+                              {translate("PENDINGFIRSTCOUNTEROFFER")}
                             </td>
                             <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                               {currency +
@@ -494,7 +495,7 @@ const WatchStatus = () => {
                                 : "-"}
                             </td>
                             <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                              Pending second counter offer
+                              {translate("PENDINGSECONDCOUNTEROFFER")}
                             </td>
                             <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                               {currency +
@@ -525,7 +526,7 @@ const WatchStatus = () => {
                                 : "-"}
                             </td>
                             <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                              Re-estimate
+                              {translate("REESTIMATE")}
                             </td>
                             <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                               {currency +
@@ -556,7 +557,7 @@ const WatchStatus = () => {
                                 : "-"}
                             </td>
                             <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                              Accepted - Deal in progress
+                              {translate("ACCEPTEDDEALINPROGRESS")}
                             </td>
                             <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                               {currency +
@@ -587,7 +588,7 @@ const WatchStatus = () => {
                                 : "-"}
                             </td>
                             <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                              Rejected
+                              {translate("REJECTEDTEXT")}
                             </td>
                             <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                               {currency +
@@ -618,7 +619,7 @@ const WatchStatus = () => {
                                 : "-"}
                             </td>
                             <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                              Pass
+                              {translate("PASSTEXT")}
                             </td>
                             <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                               {currency +
@@ -641,7 +642,7 @@ const WatchStatus = () => {
                               Estipal response time limit rule
                             </td>
                             <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                              Cancel
+                              {translate("CANCEL")}
                             </td>
                             <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                               {currency +
@@ -695,7 +696,7 @@ const WatchStatus = () => {
                                 : "-"}
                             </td>
                             <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
-                              Accepted - Deal in progress
+                              {translate("ACCEPTEDDEALINPROGRESS")}
                             </td>
                             <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                               {currency +

@@ -8,15 +8,12 @@ import MenuItem from "@mui/material/MenuItem";
 import Tooltip from "@mui/material/Tooltip";
 import * as React from "react";
 import toast from "react-hot-toast";
-
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../../services/index";
 import AdminProfile from "../../../assets/images/icons/AdminProfile.png";
 import ProfileImg from "../../../assets/images/icons/Profile.png";
-import ChinaFlag from "../../../assets/images/icons/cn_flag.png";
-import EngFlag from "../../../assets/images/icons/en_flag.png";
-import SpanishFlag from "../../../assets/images/icons/esp_flag.png";
-import ItlyFlag from "../../../assets/images/icons/ita_flag.png";
+import HbFlag from "../../../assets/images/icons/hb_flag.png";
+import AlFlag from "../../../assets/images/icons/al_flag.png";
 import { languageToCountry } from "../../../utils";
 import { translate } from "../../../language";
 
@@ -127,7 +124,7 @@ export default function Profile() {
                 ?.map((lang) => {
                   return (
                     <img
-                      src={`https://flagcdn.com/w40/${lang?.countryCode?.toLowerCase()}.png`}
+                      src={lang?.countryCode === "hb" ? HbFlag  : lang?.countryCode === "al" ? AlFlag : `https://flagcdn.com/w40/${lang?.countryCode?.toLowerCase()}.png`}
                       alt="icon-profile"
                       className="w-[30px] mt-[5px] mr-[4px]"
                     />
@@ -264,7 +261,7 @@ export default function Profile() {
             >
               <ListItemIcon>
                 <img
-                  src={`https://flagcdn.com/w40/${lang?.countryCode?.toLowerCase()}.png`}
+                  src={lang?.countryCode === "hb" ? HbFlag  : lang?.countryCode === "al" ? AlFlag : `https://flagcdn.com/w40/${lang?.countryCode?.toLowerCase()}.png`}
                   alt="icon-profile"
                   className="w-[30px] mr-[4px]"
                 />

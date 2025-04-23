@@ -217,9 +217,13 @@ const EstimatorEdit = () => {
 
           setEstimatorData(estimator);
           setSelectedYears(
-            estimator?.year_of_production?.split(",").map(Number) || []
+            estimator?.year_of_production === ""
+              ? []
+              : estimator?.year_of_production?.split(",").map(Number) || []
           );
-          setSelectedBrands(estimator?.brands?.split(",") || []);
+          setSelectedBrands(
+            estimator?.brands === "" ? [] : estimator?.brands?.split(",") || []
+          );
           setPhone(`+${estimator?.cnt_code} ${estimator?.cnt_no}`);
           setAvailabilitySchedule(estimator?.estimatorDayTimeDurations || []);
           setSelectCountry(estimator?.country);
@@ -306,13 +310,16 @@ const EstimatorEdit = () => {
       if (response?.status === 200) {
         const message =
           actionType === "edit"
-            ? "Estimator updated successfully!"
-            : "Estimator added successfully!";
+            ? "The estimator details have been updated successfully."
+            : "The estimator added successfully!";
         toast.success(message);
         navigate("/admin/estimator/estimator_user");
       }
     } catch (error) {
-      toast.error("Failed to save the estimator. Please try again.");
+      toast.error(
+        error?.response?.data?.message ||
+          "Failed to save the estimator. Please try again."
+      );
     } finally {
       setLoading(false);
     }
@@ -321,7 +328,7 @@ const EstimatorEdit = () => {
   return (
     <div className="mx-auto px-[10px] sm:px-[45px] py-[20px]">
       <div className="flex justify-between flex-wrap gap-2">
-        <div className="flex items-center">
+        <div className="flex items-center p-[10px] sm:p-0">
           <h3 className="w-[100px] text-black dark:text-white text-[24px] text-nowrap">
             {actionType !== "add" ? "Profile" : "Add Estimators"}
           </h3>
@@ -339,7 +346,7 @@ const EstimatorEdit = () => {
           )}
         </div>
 
-        <div className="flex gap-4">
+        <div className="flex gap-4 p-[10px] sm:p-0">
           {isEditable ? (
             <>
               <LoadingButton
@@ -384,11 +391,11 @@ const EstimatorEdit = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 my-[35px]">
-        <div className="flex justify-center">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 my-[35px]">
+        <div className="flex justify-start sm:justify-center">
           <Button
             variant="contained"
-            className="!bg-[#3c8dbc] !normal-case !py-[10px] !px-[40px] !rounded-[50px]"
+            className="!bg-[#3c8dbc] !normal-case !py-[10px] !px-[40px] !rounded-[50px] whitespace-nowrap"
             onClick={() =>
               navigate(
                 `/admin/watch_details/watch_history?estimator_id=${estimatorData?.id}`
@@ -398,10 +405,10 @@ const EstimatorEdit = () => {
             View estimated watches
           </Button>
         </div>
-        <div className="flex justify-center">
+        <div className="flex justify-start sm:justify-center">
           <Button
             variant="contained"
-            className="!bg-[#3c8dbc] !normal-case !py-[10px] !px-[40px] !rounded-[50px]"
+            className="!bg-[#3c8dbc] !normal-case !py-[10px] !px-[40px] !rounded-[50px] whitespace-nowrap"
             onClick={() =>
               navigate("/admin/analysis/revenue_analysis/estimator")
             }
@@ -409,10 +416,10 @@ const EstimatorEdit = () => {
             View revenue analysis
           </Button>
         </div>
-        <div className="flex justify-center">
+        <div className="flex justify-start sm:justify-center">
           <Button
             variant="contained"
-            className="!bg-[#3c8dbc] !normal-case !py-[10px] !px-[40px] !rounded-[50px]"
+            className="!bg-[#3c8dbc] !normal-case !py-[10px] !px-[40px] !rounded-[50px] whitespace-nowrap"
             onClick={() =>
               navigate("/admin/analysis/performance_analysis/estimator")
             }
@@ -650,7 +657,7 @@ const EstimatorEdit = () => {
             className="mb-[15px] text-black dark:text-white"
             onChange={handleChange}
             component={
-              <div className="flex justify-end w-full ">
+              <div className="flex justify-end w-full">
                 {isEditable ? (
                   <PhoneInput
                     international
@@ -851,7 +858,7 @@ const EstimatorEdit = () => {
                 <select
                   name="timezone"
                   id="timezone"
-                  className="bg-[#1e252b] max-sm:max-w-[100px] max-w-[250px]"
+                  className="bg-[#1e252b] max-xl:max-w-[100px] max-w-[250px]"
                   style={{ textAlignLast: "right" }}
                   value={formData.timezone}
                   onChange={handleChange}

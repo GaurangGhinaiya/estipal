@@ -48,18 +48,28 @@ const SupportedBrandsDropdown = ({
 
   return (
     <FormControl
-      style={{ minWidth: "auto", backgroundColor: "#1e252b", color: "white" }}
+      style={{
+        minWidth: "auto",
+        backgroundColor: "#1e252b",
+        color: "white",
+        display: "flex",
+        flexDirection: "row",
+        gap: "10px",
+      }}
     >
+      <div className="flex items-center">
+        {selectedBrands?.length === 0 && <div>None Selected</div>}
+      </div>
       <Select
         multiple
         disabled={disabled}
         value={selectedBrands}
         onChange={handleChange}
-        renderValue={(selected) =>
-          selected?.length > 0
+        renderValue={(selected) => {
+          return selected?.length > 0
             ? `${selected?.length} Selected`
-            : "Select Brands"
-        } // Display "X Selected"
+            : "Select Brands";
+        }} // Display "X Selected"
         sx={{
           backgroundColor: "#1e252b",
           color: "white",
@@ -78,10 +88,10 @@ const SupportedBrandsDropdown = ({
         <MenuItem value="all">
           <Checkbox
             checked={selectedBrands?.length === supportedBrands?.length}
-            indeterminate={
-              selectedBrands?.length > 0 &&
-              selectedBrands?.length < supportedBrands?.length
-            }
+            // indeterminate={
+            //   selectedBrands?.length > 0 &&
+            //   selectedBrands?.length < supportedBrands?.length
+            // }
             style={{ color: "black" }}
           />
           <ListItemText primary="Select All" />
