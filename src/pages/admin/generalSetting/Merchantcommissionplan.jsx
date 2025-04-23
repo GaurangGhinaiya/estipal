@@ -20,33 +20,26 @@ const Merchantcommissionplan = ({
   useEffect(() => {
     if (data?.commission_plan) {
       const ConvertCommission = convertCommissionData(data?.commission_plan);
-      if (
-        ConvertCommission?.length > 0 &&
-        JSON.stringify(commissionData) !==
-          JSON.stringify(
-            ConvertCommission.map((item) => ({
-              from: isEditable
-                ? item?.from
-                : item?.from
-                ? `${currency} ${item?.from}`
-                : null,
-              to: isEditable
-                ? item?.to
-                : item?.to
-                ? `${currency} ${item?.to}`
-                : null,
-              commission: item.commission ? Number(item.commission) : null,
-            }))
-          )
-      ) {
-        const transformedData = ConvertCommission.map((item) => ({
+      if (ConvertCommission?.length > 0) {
+        const transformedData = ConvertCommission?.map((item) => ({
           from: isEditable
-            ? item?.from
-            : item?.from
+            ? item?.from || item?.from === 0
+              ? Number(item?.from)
+              : null
+            : item?.from || item?.from === 0
             ? `${currency} ${item?.from}`
-            : 0,
-          to: isEditable ? item?.to : item?.to ? `${currency} ${item?.to}` : 0,
-          commission: item.commission ? Number(item.commission) : 0,
+            : null,
+          to: isEditable
+            ? item?.to || item?.to === 0
+              ? Number(item?.to)
+              : null
+            : item?.to || item?.to === 0
+            ? `${currency} ${item?.to}`
+            : null,
+          commission:
+            item.commission || item?.commission === 0
+              ? Number(item.commission)
+              : null,
         }));
         setCommissionData(transformedData);
       }
@@ -65,60 +58,72 @@ const Merchantcommissionplan = ({
               className="grid grid-cols-1 lg:grid-cols-3 lg:gap-[25px]"
               key={index}
             >
-              <TextInputField
-                rightTextValue={
-                  isEditable ? `(${data?.userDetail?.currency ?? "USD"})` : ""
-                }
-                type={isEditable ? "number" : "text"}
-                placeholder=""
-                label="From"
-                name="from"
-                value={row?.from}
-                readOnly={!isEditable}
-                bgColor={staffUser ? "#ffffff" : "#283641"}
-                border={staffUser ? "1px solid white" : "none"}
-                visibility={row?.from !== null ? "visible" : "hidden"}
-                onChange={(e) =>
-                  handleChange(index, "from", parseInt(e.target.value))
-                }
-                className="mb-[15px] text-black dark:text-white"
-              />
+              <div>
+                {row?.from !== null && (
+                  <TextInputField
+                    rightTextValue={
+                      isEditable
+                        ? `(${data?.userDetail?.currency ?? "USD"})`
+                        : ""
+                    }
+                    type={isEditable ? "number" : "text"}
+                    placeholder=""
+                    label={
+                      index === commissionData.length - 1 ? "Over" : "From"
+                    }
+                    name="from"
+                    value={row?.from}
+                    readOnly={!isEditable}
+                    bgColor={staffUser ? "#ffffff" : "#283641"}
+                    border={staffUser ? "1px solid white" : "none"}
+                    onChange={(e) =>
+                      handleChange(index, "from", parseInt(e.target.value))
+                    }
+                    className={"mb-[15px] text-black dark:text-white "}
+                  />
+                )}
+              </div>
 
-              <TextInputField
-                rightTextValue={
-                  isEditable ? `(${data?.userDetail?.currency ?? "USD"})` : ""
-                }
-                type={isEditable ? "number" : "text"}
-                placeholder=""
-                label="To"
-                name="to"
-                value={row?.to}
-                readOnly={!isEditable}
-                bgColor={staffUser ? "#ffffff" : "#283641"}
-                border={staffUser ? "1px solid black" : "none"}
-                visibility={row?.to !== null ? "visible" : "hidden"}
-                onChange={(e) =>
-                  handleChange(index, "to", parseInt(e.target.value))
-                }
-                className="mb-[15px] text-black dark:text-white"
-              />
-
-              <TextInputField
-                rightTextValue="%"
-                type="number"
-                placeholder=""
-                label="Commission"
-                name="to"
-                value={row?.commission}
-                readOnly={!isEditable}
-                bgColor={staffUser ? "#ffffff" : "#283641"}
-                border={staffUser ? "1px solid black" : "none"}
-                visibility={row?.commission !== null ? "visible" : "hidden"}
-                onChange={(e) =>
-                  handleChange(index, "commission", parseInt(e.target.value))
-                }
-                className="mb-[15px] text-black dark:text-white"
-              />
+              <div>
+                {row?.to !== null && (
+                  <TextInputField
+                    rightTextValue={
+                      isEditable
+                        ? `(${data?.userDetail?.currency ?? "USD"})`
+                        : ""
+                    }
+                    type={isEditable ? "number" : "text"}
+                    placeholder=""
+                    label="To"
+                    name="to"
+                    value={row?.to}
+                    readOnly={!isEditable}
+                    bgColor={staffUser ? "#ffffff" : "#283641"}
+                    border={staffUser ? "1px solid black" : "none"}
+                    onChange={(e) =>
+                      handleChange(index, "to", parseInt(e.target.value))
+                    }
+                    className="mb-[15px] text-black dark:text-white"
+                  />
+                )}
+              </div>
+              <div>
+                <TextInputField
+                  rightTextValue="%"
+                  type="number"
+                  placeholder=""
+                  label="Commission"
+                  name="to"
+                  value={row?.commission}
+                  readOnly={!isEditable}
+                  bgColor={staffUser ? "#ffffff" : "#283641"}
+                  border={staffUser ? "1px solid black" : "none"}
+                  onChange={(e) =>
+                    handleChange(index, "commission", parseInt(e.target.value))
+                  }
+                  className="mb-[15px] text-black dark:text-white"
+                />
+              </div>
             </div>
           ))}
         </div>

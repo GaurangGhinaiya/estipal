@@ -9,6 +9,7 @@ import StaffTable from "./components/StaffTable";
 import useActivityData from "./hooks/useActivityData";
 
 import alarmWatchImage from "../../../assets/images/icons/Alarm_watch_light.png";
+import alarmWatchImageBlack from "../../../assets/images/icons/Alarm_watch.png";
 import { translate } from "../../../language";
 
 export const statusOptions = [
@@ -88,14 +89,24 @@ const ActivitiesTable = () => {
   }, [currentPage, sortOrder, debouncedSearchTerm, status]);
 
   const getImageSrc = (activity) => {
-    if (
-      activity?.staffWatchActivityDetails?.progress === 2 ||
-      activity?.staffWatchActivityDetails?.progress === 4 ||
-      activity?.staffWatchActivityDetails?.progress === 5
-    ) {
-      return alarmWatchImage;
+    if (userRole === "staff") {
+      if (
+        activity?.staffWatchActivityDetails?.progress === 1 ||
+        activity?.staffWatchActivityDetails?.progress === 3
+      ) {
+        return alarmWatchImageBlack;
+      }
+      return "";
+    } else {
+      if (
+        activity?.staffWatchActivityDetails?.progress === 2 ||
+        activity?.staffWatchActivityDetails?.progress === 4 ||
+        activity?.staffWatchActivityDetails?.progress === 5
+      ) {
+        return alarmWatchImage;
+      }
+      return "";
     }
-    return "";
   };
 
   return (

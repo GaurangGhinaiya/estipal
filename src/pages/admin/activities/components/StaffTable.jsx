@@ -57,6 +57,7 @@ const StaffTable = ({
       <thead style={{ borderBottom: "2px solid #111111" }}>
         <tr>
           {[
+            { key: "", label: "" },
             { key: "checkbox", label: " " },
             {
               key: "from",
@@ -162,6 +163,13 @@ const StaffTable = ({
                   )
                 }
               >
+                <td className="px-[18px] py-[0px] text-[#ffff] text-center">
+                  <div className="w-[35px]">
+                    {getImageSrc(activity) && (
+                      <img alt="img" src={getImageSrc(activity)} width="35px" />
+                    )}
+                  </div>
+                </td>
                 <td
                   className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center"
                   onClick={(e) => {

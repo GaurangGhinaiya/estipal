@@ -27,8 +27,8 @@ const WatchHistory = () => {
   const [staffId, setStaff] = useState(null);
   const debouncedSearchTerm = useDebounce(searchQuery, 500);
   const userRole = localStorage.getItem("userRole");
-  const [sortField, setSortField] = useState(null);
-  const [sortOrder, setSortOrder] = useState("asc");
+  const [sortField, setSortField] = useState("id");
+  const [sortOrder, setSortOrder] = useState("desc");
 
   const handleSort = (key) => {
     const newOrder = sortField === key && sortOrder === "asc" ? "desc" : "asc";

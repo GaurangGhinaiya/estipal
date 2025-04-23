@@ -18,7 +18,7 @@ const TransactionTable = ({ data, sortField, sortOrder, handleSort }) => {
             <th
               key={column.key}
               onClick={() => handleSort(column.key)}
-              className={`p-2 dark:text-[#ffff] text-black text-center cursor-pointer ${
+              className={`py-2 px-[20px] dark:text-[#ffff] text-black text-center cursor-pointer whitespace-nowrap ${
                 sortField === column.key ? "active-sorting" : "sorting"
               }`}
             >
@@ -34,32 +34,36 @@ const TransactionTable = ({ data, sortField, sortOrder, handleSort }) => {
         </tr>
       </thead>
       <tbody>
-        {data?.length > 0 ? data?.map((item, index) => (
-          <tr key={index} className="border-b border-[#202b34]">
-            <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center">
-              {moment.unix(item?.created_on).format("MMM DD,YYYY")}
-            </td>
-            <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap text-center">
-              {item?.username}
-            </td>
+        {data?.length > 0 ? (
+          data?.map((item, index) => (
+            <tr key={index} className="border-b border-[#202b34]">
+              <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap">
+                {moment.unix(item?.created_on).format("MMM DD,YYYY")}
+              </td>
+              <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap text-center">
+                {item?.username}
+              </td>
 
-            <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap">
-              W{item?.id}
-            </td>
-            <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap">
-              {`${item?.brand} / ${item?.collection} / ${item?.model} ${item?.reference}`}
-            </td>
+              <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap">
+                W{item?.id}
+              </td>
+              <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap">
+                {`${item?.brand} / ${item?.collection} / ${item?.model} ${item?.reference}`}
+              </td>
 
-            <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap">
-              {item?.watch_status}
-            </td>
-          </tr>
-        )):
-        (
+              <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap">
+                {item?.watch_status}
+              </td>
+            </tr>
+          ))
+        ) : (
           <tr>
-           <td className="py-[200px] px-4 text-center text-nowrap dark:text-[#ffff] text-black font-bold" colSpan={7} >
-           No Data Found
-           </td>
+            <td
+              className="py-[200px] px-4 text-center text-nowrap dark:text-[#ffff] text-black font-bold"
+              colSpan={7}
+            >
+              No Data Found
+            </td>
           </tr>
         )}
       </tbody>

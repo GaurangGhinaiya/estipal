@@ -18,16 +18,8 @@ const StaffCommission = (props) => {
       const ConvertCommission = convertCommissionData(staffData?.commission);
       if (ConvertCommission?.length > 0) {
         const transformedData = ConvertCommission?.map((item) => ({
-          from: isEditable
-            ? item?.from
-            : item?.from
-            ? `${staffData?.currency} ${item?.from}`
-            : null,
-          to: isEditable
-            ? item?.to
-            : item?.to
-            ? `${staffData?.currency} ${item?.to}`
-            : null,
+          from: item?.from ? `${staffData?.currency} ${item?.from}` : null,
+          to: item?.to ? `${staffData?.currency} ${item?.to}` : null,
           commission: item?.commission ? Number(item?.commission) : null,
         }));
         setCommissionData(transformedData);
@@ -51,9 +43,12 @@ const StaffCommission = (props) => {
               key={index}
             >
               <TextInputField
-                rightTextValue={`(${staffData?.currency ?? "USD"})`}
-                type={isEditable ? "number" : "text"}
-                label={translate("FROM")}
+                type={"text"}
+                label={
+                  index === commissionData.length - 1
+                    ? "Over"
+                    : translate("FROM")
+                }
                 name="from"
                 value={row?.from}
                 readOnly={!isEditable}
@@ -65,8 +60,7 @@ const StaffCommission = (props) => {
               />
 
               <TextInputField
-                rightTextValue={`(${staffData?.currency ?? "USD"})`}
-                type={isEditable ? "number" : "text"}
+                type={"text"}
                 label={translate("TO")}
                 name="to"
                 value={row?.to}

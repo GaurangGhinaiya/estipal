@@ -154,11 +154,13 @@ const AdminTable = ({
                   arrow
                 >
                   <div className="w-[77px] text-center  min-w-[200px]">
-                    {activity?.from_name
+                    {activity?.from_name == activity?.company_name
+                      ? activity?.from_name
+                      : activity?.from_name
                       ? (activity?.company_name
                           ? activity?.company_name + " - "
                           : "") +
-                          activity?.from_name.length >
+                          activity?.from_name?.length >
                         16
                         ? (
                             (activity?.company_name

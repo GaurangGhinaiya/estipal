@@ -13,8 +13,8 @@ const SellerRevenueAnalysis = () => {
   const { seller_id } = useParams();
   const [summaryData, setSummaryData] = useState([]);
   const [transactionData, setTransactionData] = useState([]);
-  const [sortField, setSortField] = useState(null);
-  const [sortOrder, setSortOrder] = useState("asc");
+  const [sortField, setSortField] = useState("created_on");
+  const [sortOrder, setSortOrder] = useState("desc");
   const [currentPage, setCurrentPage] = useState(1);
   const [recordsPerPage, setRecordsPerPage] = useState(20);
   const [totalRecords, setTotalRecords] = useState(0);
@@ -29,10 +29,6 @@ const SellerRevenueAnalysis = () => {
     const newOrder = sortField === key && sortOrder === "asc" ? "desc" : "asc";
     setSortField(key);
     setSortOrder(newOrder);
-
-    // Sort data and update state
-    const sortedData = sortData(transactionData, key, newOrder);
-    setTransactionData(sortedData);
   };
 
   const handlePageChange = (page) => {
@@ -82,7 +78,7 @@ const SellerRevenueAnalysis = () => {
     try {
       setTransactionLoading(true);
       const response = await axiosInstance.get(
-        `/staffWatchActivities?page=${currentPage}&records_per_page=${recordsPerPage}&search=${searchValue}`
+        `/staffWatchActivities?page=${currentPage}&records_per_page=${recordsPerPage}&search=${searchValue}&sort_order=${sortOrder}&sort_by=${sortField}`
       );
       const transactions = response?.payload?.data?.map((item) => ({
         ...item,
@@ -108,7 +104,7 @@ const SellerRevenueAnalysis = () => {
       fetchTransactionData(fromDate, toDate);
       fetchSummaryData(fromDate, toDate);
     } else fetchTransactionData();
-  }, [selectedStatus]);
+  }, [selectedStatus, sortOrder]);
 
   const applyFilter = () => {
     fetchTransactionData(fromDate, toDate);
@@ -163,19 +159,18 @@ const SellerRevenueAnalysis = () => {
         setSelectedStatus={setSelectedStatus}
         setCurrentPage={setCurrentPage}
       />
-      <div className="w-[95.5%] overflow-auto mx-auto pt-[10px] mt-8">
-        {transactionLoading ? (
-          <div className="py-[200px] px-4 text-center">
+      <div className="w-[95.5%] overflow-auto mx-auto pt-[10px] mt-8 relative">
+        {transactionLoading && (
+          <div className="py-[200px] absolute bg-[#ffffff00]  top-0 left-0 right-0 bottom-0 px-4 text-center">
             <CircularProgress />
           </div>
-        ) :  (
-          <TransactionTable
-            data={transactionData}
-            sortField={sortField}
-            sortOrder={sortOrder}
-            handleSort={handleSort}
-          />
-        ) }
+        )}
+        <TransactionTable
+          data={transactionData}
+          sortField={sortField}
+          sortOrder={sortOrder}
+          handleSort={handleSort}
+        />
       </div>
       <PaginationComponent
         userRole={userRole}

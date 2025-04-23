@@ -16,7 +16,6 @@ const ImageDialog = ({
   return (
     <Dialog open={open} onClose={handleCloseDialog} maxWidth="lg" fullWidth>
       <div className="relative bg-[#ffffff] p-5">
-        {/* Close Button */}
         <IconButton
           onClick={handleCloseDialog}
           style={{ position: "absolute", right: 10, top: 10, color: "white" }}
@@ -24,7 +23,6 @@ const ImageDialog = ({
           <CloseIcon />
         </IconButton>
 
-        {/* Image Carousel */}
         <Swiper
           modules={[Navigation]}
           navigation
@@ -33,18 +31,24 @@ const ImageDialog = ({
           initialSlide={selectedIndex}
           onSlideChange={(swiper) => setSelectedIndex(swiper.activeIndex)}
         >
-          {imageData?.map((item, index) => (
-            <SwiperSlide
-              key={index}
-              style={{ display: "flex", alignItems: "center" }}
-            >
-              <img
-                src={item}
-                alt={`Slide ${index + 1}`}
-                className="h-[250px] sm:h-[600px] mx-auto align-middle !select-none"
-              />
-            </SwiperSlide>
-          ))}
+          {imageData?.map(
+            (item, index) =>
+              item && (
+                <SwiperSlide
+                  key={index}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <img
+                    src={item}
+                    alt={`Slide ${index + 1}`}
+                    className="h-[250px] sm:h-[600px] mx-auto align-middle !select-none"
+                  />
+                </SwiperSlide>
+              )
+          )}
 
           <div className="flex justify-end mt-[20px]">
             <Button

@@ -64,6 +64,7 @@ const AccountProfile = () => {
     companyLogoPreview: "",
   });
 
+  console.log("formData: ", formData);
   const [staffData, setStaffData] = useState();
   const [states, setStates] = useState([]);
   const [countries, setCountries] = useState([]);
@@ -149,11 +150,14 @@ const AccountProfile = () => {
   };
 
   const save = async () => {
-    const formDataToSend = new FormData();
-
     const sendData = { ...formData };
 
-    // Validate new_password fields
+    Object.keys(sendData).forEach((key) => {
+      if (sendData[key] === "") {
+        sendData[key] = null;
+      }
+    });
+
     if (formData?.new_password && !formData?.retype_password) {
       toast.error("Please add retype_password.");
       return;
@@ -164,25 +168,21 @@ const AccountProfile = () => {
       return;
     }
 
-    Object.keys(sendData).forEach((key) => {
-      if (key !== "companyLogoPreview" && formData[key]) {
-        formDataToSend.append(key, formData[key]);
-      }
-    });
-
     if (formData?.seller_logo?.name) {
       const ImageUrl = await uploadImage();
-      ImageUrl && formDataToSend.append("seller_logo", ImageUrl);
+      if (ImageUrl) {
+        sendData.seller_logo = ImageUrl;
+      }
     }
 
     setLoading(true);
     try {
       const response = await axiosInstance.post(
         `/sellers/editProfile`,
-        formDataToSend,
+        sendData,
         {
           headers: {
-            "Content-Type": "multipart/form-data",
+            "Content-Type": "application/json",
           },
         }
       );

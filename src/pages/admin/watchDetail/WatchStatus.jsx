@@ -5,7 +5,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import axiosInstance from "../../../services";
 import { formatNumberOrDefault } from "../../../utils";
 import ImageDialog from "./components/ImageDialog";
-
 import { translate } from "../../../language";
 
 const WatchStatus = () => {
@@ -264,16 +263,22 @@ const WatchStatus = () => {
                 watchDetailData?.imageUploadDetails?.[0]?.paper_image,
               ] || []
             )
-            ?.map((item, index) => (
-              <div key={index} onClick={() => handleOpenDialog(index)}>
-                <img
-                  style={{ border: "5px solid #1e252b" }}
-                  src={item}
-                  alt="img"
-                  className="img-border rounded-[8px] w-[200px] h-[200px] mx-auto cursor-pointer"
-                />
-              </div>
-            ))
+            ?.map(
+              (item, index) =>
+                item && (
+                  <div key={index} onClick={() => handleOpenDialog(index)}>
+                    <img
+                      style={{
+                        border: "5px solid #1e252b",
+                        display: item ? "block" : "none",
+                      }}
+                      src={item}
+                      alt="img"
+                      className="img-border rounded-[8px] w-[200px] h-[200px] mx-auto cursor-pointer"
+                    />
+                  </div>
+                )
+            )
         )}
       </div>
 
@@ -791,7 +796,12 @@ const WatchStatus = () => {
         handleCloseDialog={handleCloseDialog}
         selectedIndex={selectedIndex}
         setSelectedIndex={setSelectedIndex}
-        imageData={watchDetailData?.watch_pic}
+        imageData={watchDetailData?.watch_pic?.concat(
+          [
+            watchDetailData?.imageUploadDetails?.[0]?.box_image,
+            watchDetailData?.imageUploadDetails?.[0]?.paper_image,
+          ] || []
+        )}
       />
     </div>
   );
