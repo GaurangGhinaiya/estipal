@@ -328,7 +328,7 @@ const EstimatorEdit = () => {
   return (
     <div className="mx-auto px-[10px] sm:px-[45px] py-[20px]">
       <div className="flex justify-between flex-wrap gap-2">
-        <div className="flex items-center">
+        <div className="flex items-center p-[10px] sm:p-0">
           <h3 className="w-[100px] text-black dark:text-white text-[24px] text-nowrap">
             {actionType !== "add" ? "Profile" : "Add Estimators"}
           </h3>
@@ -346,7 +346,7 @@ const EstimatorEdit = () => {
           )}
         </div>
 
-        <div className="flex gap-4">
+        <div className="flex gap-4 p-[10px] sm:p-0">
           {isEditable ? (
             <>
               <LoadingButton

@@ -304,7 +304,7 @@ const SellerUserCreate = () => {
 
   return (
     <div className="mx-auto px-[10px] sm:px-[45px] py-[20px]">
-      <div className="flex justify-between flex-wrap gap-2">
+      <div className="flex justify-between flex-wrap gap-2 p-[10px] sm:p-0">
         <div className="flex items-center">
           <h3 className="text-[24px] font-medium px-0 sm:px-[15px] font-sans text-white">
             Add Merchant
