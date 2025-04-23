@@ -2,35 +2,33 @@
 import { Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 
+import { LoadingButton } from "@mui/lab";
+import axios from "axios";
+import moment from "moment";
+import toast from "react-hot-toast";
 import PhoneInput, {
   formatPhoneNumber,
   getCountryCallingCode,
 } from "react-phone-number-input";
 import "react-phone-number-input/style.css";
-import { useNavigate } from "react-router-dom";
 import TextInputField from "../../../components/common/TextInputField";
+import { translate } from "../../../language";
+import axiosInstance from "../../../services";
 import { fetchCountryList, fetchStateList } from "../../../utils/apiUtils";
 import StaffCommission from "./component/StaffCommission";
-import axiosInstance from "../../../services";
-import moment from "moment";
-import toast from "react-hot-toast";
-import axios from "axios";
-import { LoadingButton } from "@mui/lab";
-import { translate } from "../../../language";
 
 const AccountProfile = () => {
   const userRole = localStorage.getItem("userRole");
-  const styles = {
-    input: {
-      backgroundColor: userRole === "staff" ? "#FFFFFF" : "#1e252b",
-    },
-    countrySelect: {
-      backgroundColor: userRole === "staff" ? "#ffffff" : "#1e252b",
-      color: userRole === "staff" ? "black" : "white",
-    },
-  };
+  // const styles = {
+  //   input: {
+  //     backgroundColor: userRole === "staff" ? "#FFFFFF" : "#1e252b",
+  //   },
+  //   countrySelect: {
+  //     backgroundColor: userRole === "staff" ? "#ffffff" : "#1e252b",
+  //     color: userRole === "staff" ? "black" : "white",
+  //   },
+  // };
 
-  const navigate = useNavigate();
   const [isEditable, setIsEditable] = useState(false);
   const [commissionData, setCommissionData] = useState([]);
   const [selectPhoneCountry, setSelectPhoneCountry] = useState("IN");
@@ -50,7 +48,6 @@ const AccountProfile = () => {
     city: "",
     state: "",
     zip: "",
-    state: "",
     email: "",
     username: "",
     dial: "",
@@ -163,8 +160,8 @@ const AccountProfile = () => {
       return;
     }
 
-    if (formData?.new_password !== formData?.retype_password) {
-      toast.error("new_password and retype_password is not matched.");
+    if (sendData?.new_password !== sendData?.retype_password) {
+      toast.error("New password and confirm password is not matched.");
       return;
     }
 
@@ -257,7 +254,7 @@ const AccountProfile = () => {
     <div className="mx-auto pb-[15px]">
       <div className="px-[20px] pt-8 flex justify-between flex-wrap gap-2 bg-gradient-to-b from-[rgba(0,96,169,0.36)] to-[rgba(255,255,255,0)]">
         <div className="flex items-center">
-          <h3 className="text-[30px] font-medium px-0 sm:px-[15px] font-sans dark:text-white text-black">
+          <h3 className="text-[24px] sm:text-[30px] font-medium px-0 sm:px-[15px] font-sans dark:text-white text-black">
             {translate("ACCOUNTPROFILE")}
           </h3>
         </div>
@@ -409,7 +406,7 @@ const AccountProfile = () => {
                               : `${process.env.REACT_APP_IMAGE_BASE_URL}/${formData?.companyLogoPreview}`
                           }
                           alt="Uploaded Logo"
-                          className="w-[100px] object-cover rounded-[20px]"
+                          className="max-w-[100px] max-h-[100px]"
                         />
                       </div>
                     ) : (
@@ -434,7 +431,7 @@ const AccountProfile = () => {
                           : `${process.env.REACT_APP_IMAGE_BASE_URL}/${formData?.companyLogoPreview}`
                       }
                       alt="Uploaded Logo"
-                      className="w-[100px] object-cover rounded-[20px]"
+                      className="max-w-[100px] max-h-[100px]"
                     />
                   </div>
                 ) : (

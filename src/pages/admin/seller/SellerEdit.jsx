@@ -23,7 +23,7 @@ const SellerEdit = () => {
   const navigate = useNavigate();
   const params = useParams();
   const { id } = params;
-  const [sellerData, setSellerData] = useState();
+  const [sellerData, setSellerData] = useState({});
   const [isEditable, setIsEditable] = useState(false);
   const [phone, setPhone] = useState("");
   const [selectPhoneCountry, setSelectPhoneCountry] = useState("IN");
@@ -43,7 +43,7 @@ const SellerEdit = () => {
     bank_account: "",
     account_number: "",
     bank_swift: "",
-    unique_id: "",
+    admin_seller_id: "",
     first_name: "",
     last_name: "",
     address: "",
@@ -65,7 +65,6 @@ const SellerEdit = () => {
 
   const [commissionObject, setCommissionObject] = useState({});
 
-  console.log("formData: ", formData);
   useEffect(() => {
     const transformCommissionData = () => {
       const transformedData = {
@@ -195,7 +194,7 @@ const SellerEdit = () => {
         ...prevFormData,
         ...seller,
         companyLogoPreview: seller?.seller_logo,
-        unique_id: `SCA${seller?.admin_seller_id}`,
+        admin_seller_id: `SCA${seller?.admin_seller_id}`,
         address: seller?.address,
         created_on: moment.unix(seller?.created_on).format("MMM DD,YYYY"),
       }));
@@ -261,15 +260,12 @@ const SellerEdit = () => {
     //   commission: String(item?.commission),
     // }));
 
-    const sendData = { ...formData };
-
-    Object.keys(sendData).forEach((key) => {
+    Object.keys(formData)?.forEach((key) => {
       if (
         key !== "seller_logo" &&
         key !== "companyLogoPreview" &&
         key !== "commission" &&
-        key !== "commission_plan" &&
-        formData[key]
+        key !== "commission_plan"
       ) {
         formDataToSend.append(key, formData[key]);
       }
@@ -400,7 +396,9 @@ const SellerEdit = () => {
             variant="contained"
             className="!bg-[#3c8dbc] !normal-case !py-[10px] !px-[40px] !rounded-[50px]"
             onClick={() =>
-              navigate(`/admin/watch_details/watch_history/?seller_id=${id}`)
+              navigate(
+                `/admin/watch_details/watch_history/?seller_id=${sellerData?.admin_seller_id}`
+              )
             }
           >
             View watches history
@@ -411,7 +409,9 @@ const SellerEdit = () => {
             variant="contained"
             className="!bg-[#3c8dbc] !normal-case !py-[10px] !px-[40px] !rounded-[50px]"
             onClick={() =>
-              navigate(`/admin/analysis/revenue_analysis/seller/${id}`)
+              navigate(
+                `/admin/analysis/revenue_analysis/seller/${sellerData?.admin_seller_id}`
+              )
             }
           >
             View revenue analysis
@@ -422,7 +422,9 @@ const SellerEdit = () => {
             variant="contained"
             className="!bg-[#3c8dbc] !normal-case !py-[10px] !px-[40px] !rounded-[50px]"
             onClick={() =>
-              navigate(`/admin/analysis/performance_analysis/seller/${id}`)
+              navigate(
+                `/admin/analysis/performance_analysis/seller/${sellerData?.admin_seller_id}`
+              )
             }
           >
             View performance analysis
@@ -631,13 +633,14 @@ const SellerEdit = () => {
         <div className="">
           <TextInputField
             rightTextValue=""
-            value={formData.unique_id}
-            name="unique_id"
+            value={formData.admin_seller_id}
+            name="admin_seller_id"
             type="text"
             label="ID"
-            readOnly={!isEditable}
+            readOnly={true}
             bgColor={"#1e252b"}
             className="mb-[15px]"
+            inputClass="!cursor-not-allowed"
             onChange={handleChange}
           />
           <TextInputField
@@ -740,14 +743,15 @@ const SellerEdit = () => {
                     id="state"
                     className="bg-[#1e252b] max-sm:w-[100px]"
                     style={{ textAlignLast: "right" }}
-                    value={formData.state}
+                    // value={states?.includes(formData?.state) ? formData?.state : ""}
+                    value={formData?.state}
                     onChange={handleStateChange}
                     disabled={!isEditable}
                   >
-                    <option disabled value="">
+                    <option disabled value={""}>
                       Open to select state
                     </option>
-                    {states.map((item) => (
+                    {states?.map((item) => (
                       <option key={item?.id} value={item?.state}>
                         {item?.state}
                       </option>
@@ -922,6 +926,7 @@ const SellerEdit = () => {
             readOnly={true}
             bgColor={"#1e252b"}
             className="mb-[15px]"
+            inputClass="!cursor-not-allowed"
             onChange={handleChange}
           />
         </div>

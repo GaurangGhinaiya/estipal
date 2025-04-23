@@ -43,6 +43,7 @@ const Login = () => {
 
         localStorage.setItem("userRole", type);
         localStorage.setItem("Language", "en");
+        window.location.reload();
         navigate("/admin");
         setLoading(false);
       }

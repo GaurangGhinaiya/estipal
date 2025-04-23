@@ -265,11 +265,7 @@ const SellerUserCreate = () => {
     const formDataToSend = new FormData();
 
     Object.keys(formData).forEach((key) => {
-      if (
-        key !== "seller_logo" &&
-        key !== "companyLogoPreview" &&
-        formData[key]
-      ) {
+      if (key !== "seller_logo" && key !== "companyLogoPreview") {
         formDataToSend.append(key, formData[key]);
       }
     });
@@ -462,6 +458,7 @@ const SellerUserCreate = () => {
             bgColor={"#1e252b"}
             className="mb-[15px]"
             onChange={handleChange}
+            inputClass="!cursor-not-allowed"
           />
           <TextInputField
             value={formData.first_name}
@@ -671,7 +668,13 @@ const SellerUserCreate = () => {
                     onChange={(value) => {
                       setPhone(value);
                     }}
-                    onCountryChange={(v) => setSelectPhoneCountry(v)}
+                    onCountryChange={(v) => {
+                      if (v) {
+                        setSelectPhoneCountry(v);
+                      } else {
+                        setSelectPhoneCountry("IN");
+                      }
+                    }}
                   />
                 ) : (
                   <p>{phone}</p>

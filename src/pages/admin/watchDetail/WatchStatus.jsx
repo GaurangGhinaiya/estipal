@@ -73,7 +73,7 @@ const WatchStatus = () => {
             Watch History - ID : W{watchDetailData?.id},{" "}
             {watchDetailData?.brand}, {watchDetailData?.model},{" "}
             {watchDetailData?.collection}{" "}
-            {watchDetailData?.reference && `(${watchDetailData?.reference})`}
+            {watchDetailData?.reference?.trim(" ") && `(${watchDetailData?.reference})`}
           </h3>
         )}
 
@@ -133,7 +133,7 @@ const WatchStatus = () => {
                 <p className="dark:text-white text-black">Model</p>
                 <p className="dark:text-white text-black whitespace-nowrap overflow-auto hide-scrollbar">
                   {`${getSafeValue(watchDetailData?.collection, "string")} ${
-                    watchDetailData?.reference &&
+                    watchDetailData?.reference?.trim(" ") &&
                     `(${getSafeValue(watchDetailData?.reference, "string")})`
                   }`}
                 </p>

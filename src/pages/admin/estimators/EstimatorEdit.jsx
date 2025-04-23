@@ -277,7 +277,7 @@ const EstimatorEdit = () => {
       cnt_no: "Contact Number",
       bank_account_name: "Bank Account Name",
       bank_swift: "Swift code/IBAN",
-      account_number : "Account Number",
+      account_number: "Account Number",
       bank_address: "Bank Address",
       bank_name: "Bank Name",
     };
@@ -389,7 +389,11 @@ const EstimatorEdit = () => {
           <Button
             variant="contained"
             className="!bg-[#3c8dbc] !normal-case !py-[10px] !px-[40px] !rounded-[50px]"
-            onClick={() => navigate("/admin/watch_details/watch_history")}
+            onClick={() =>
+              navigate(
+                `/admin/watch_details/watch_history?estimator_id=${estimatorData?.id}`
+              )
+            }
           >
             View estimated watches
           </Button>
@@ -398,7 +402,9 @@ const EstimatorEdit = () => {
           <Button
             variant="contained"
             className="!bg-[#3c8dbc] !normal-case !py-[10px] !px-[40px] !rounded-[50px]"
-            onClick={() => navigate("/admin/analysis/revenue_analysis/admin")}
+            onClick={() =>
+              navigate("/admin/analysis/revenue_analysis/estimator")
+            }
           >
             View revenue analysis
           </Button>
@@ -449,10 +455,11 @@ const EstimatorEdit = () => {
             type="text"
             label="ID"
             placeholder="ID"
-            readOnly={!isEditable}
+            readOnly={true}
             bgColor={"#1e252b"}
             className="mb-[15px]"
             onChange={handleChange}
+            inputClass="!cursor-not-allowed"
           />
           <TextInputField
             value={formData.company_name}
@@ -530,14 +537,14 @@ const EstimatorEdit = () => {
                     id="country"
                     className="bg-[#1e252b] max-sm:w-[100px] "
                     style={{ textAlignLast: "right" }}
-                    value={formData.country}
+                    value={formData?.country}
                     readOnly={!isEditable}
                     onChange={handleCountryChange}
                   >
                     <option disabled selected value={""}>
                       Open to select country
                     </option>
-                    {countries.map((item, index) => (
+                    {countries?.map((item, index) => (
                       <option value={item?.iso} key={index}>
                         {item?.name}
                       </option>
@@ -627,10 +634,10 @@ const EstimatorEdit = () => {
             type="text"
             label="Email"
             placeholder="Email"
-            readOnly={true}
+            readOnly={actionType === "add" ? false : true}
             bgColor={"#1e252b"}
             className="mb-[15px]"
-            inputClass="cursor-not-allowed"
+            inputClass={actionType === "add" ? "" : "cursor-not-allowed"}
             onChange={handleChange}
           />
 
@@ -658,7 +665,13 @@ const EstimatorEdit = () => {
                     onChange={(value) => {
                       setPhone(value);
                     }}
-                    onCountryChange={(v) => setSelectPhoneCountry(v)}
+                    onCountryChange={(v) => {
+                      if (v) {
+                        setSelectPhoneCountry(v);
+                      } else {
+                        setSelectPhoneCountry("IN");
+                      }
+                    }}
                   />
                 ) : (
                   <p className="text-white">{phone}</p>
