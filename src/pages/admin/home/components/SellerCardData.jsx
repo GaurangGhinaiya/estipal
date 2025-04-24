@@ -293,14 +293,14 @@ const SellerCardData = (props) => {
     if (item?.admin_group === "staff") {
       if (item?.type === "staff_response_time_expired") {
         return (
-          <h3 className="mb-3 capitalize">
+          <h3 className="mb-0 sm:mb-3 capitalize">
             <span className="font-bold">{translate("FROM")}: </span>
             Estipal response time limit rule
           </h3>
         );
       } else {
         return (
-          <h3 className="mb-3 capitalize">
+          <h3 className="mb-0 sm:mb-3 capitalize">
             <span className="font-bold">{translate("FROM")}: </span>
             {item?.from_name
               ? item?.from_name.charAt(0).toUpperCase() +
@@ -311,7 +311,7 @@ const SellerCardData = (props) => {
       }
     } else if (item?.admin_group === "Estipal-Administrator") {
       return (
-        <h3 className="mb-3 capitalize">
+        <h3 className="mb-0 sm:mb-3 capitalize">
           <span className="font-bold">{translate("FROM")}: </span>
           {translate("ESTIPALADMINISTRATOR")} {/* 211 */}
         </h3>
@@ -319,14 +319,14 @@ const SellerCardData = (props) => {
     } else if (item?.admin_group === "estimator") {
       if (item?.type === "estimation_expired") {
         return (
-          <h3 className="mb-3 capitalize">
+          <h3 className="mb-0 sm:mb-3 capitalize">
             <span className="font-bold">{translate("FROM")}: </span>
             Estipal response time limit rule
           </h3>
         );
       } else {
         return (
-          <h3 className="mb-3 capitalize">
+          <h3 className="mb-0 sm:mb-3 capitalize">
             <span className="font-bold">{translate("FROM")}: </span>
             {translate("ESTIMATOR")} {/* 212 */}
           </h3>
@@ -334,7 +334,7 @@ const SellerCardData = (props) => {
       }
     } else if (item?.admin_group === "seller") {
       return (
-        <h3 className="mb-3 capitalize">
+        <h3 className="mb-0 sm:mb-3 capitalize">
           <span className="font-bold">{translate("FROM")}: </span>
           {item?.from_name
             ? item?.from_name.charAt(0).toUpperCase() + item?.from_name.slice(1)
@@ -343,7 +343,7 @@ const SellerCardData = (props) => {
       );
     } else {
       return (
-        <h3 className="mb-3 capitalize">
+        <h3 className="mb-0 sm:mb-3 capitalize">
           <span className="font-bold">{translate("FROM")}: </span>
           {item?.admin_group
             ? item?.admin_group.charAt(0).toUpperCase() +
@@ -372,7 +372,7 @@ const SellerCardData = (props) => {
               accepted_price_with_commission,
               ""
             )}
-            <div className="flex justify-between items-center flex-wrap">
+            <div className="flex justify-between items-start sm:items-center flex-col sm:flex-row">
               {renderFrom()}
               <h3 className="mb-3">
                 <strong className="font-bold">{translate("RECEIVED")}: </strong>
