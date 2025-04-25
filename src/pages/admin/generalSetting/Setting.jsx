@@ -194,7 +194,7 @@ const Settings = () => {
                 <LoadingButton
                   loading={loading}
                   variant="contained"
-                  className="!bg-[#00a65a] !normal-case !py-[5px] sm:!py-[10px] sm:!px-[40px] !px-[15px] !rounded-[50px]"
+                  className="!bg-[#00a65a] !normal-case !py-[8px] sm:!py-[10px] sm:!px-[40px] !px-[28px] !rounded-[50px]"
                   onClick={handleSubmit}
                 >
                   Save

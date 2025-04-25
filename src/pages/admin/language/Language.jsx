@@ -123,7 +123,7 @@ const Language = () => {
       )}
 
       <>
-        <h1 className="text-[22px] sm:text-[32px] text-white font-medium mb-4">
+        <h1 className="text-[22px] sm:text-[32px] text-white font-medium mb-4 pt-[10px] lg:pt-0">
           Languages
         </h1>
 

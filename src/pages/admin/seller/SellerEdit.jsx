@@ -335,7 +335,7 @@ const SellerEdit = () => {
 
   return (
     <div className="mx-auto px-[10px] sm:px-[45px] py-[20px]">
-      <div className="flex justify-between flex-wrap gap-2">
+      <div className="flex justify-between flex-wrap gap-2 pt-[10px] lg:pt-0">
         <div className="flex items-center">
           <h3 className="w-[100px] text-white text-[24px]">Profile</h3>
           <div className="flex items-center gap-2">
@@ -390,11 +390,11 @@ const SellerEdit = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 my-[35px]">
-        <div className="flex justify-center">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 my-[35px]">
+        <div className="flex justify-start sm:justify-center">
           <Button
             variant="contained"
-            className="!bg-[#3c8dbc] !normal-case !py-[10px] !px-[40px] !rounded-[50px]"
+            className="!bg-[#3c8dbc] !normal-case !py-[10px] !px-[40px] !rounded-[50px] whitespace-nowrap"
             onClick={() =>
               navigate(
                 `/admin/watch_details/watch_history/?seller_id=${sellerData?.admin_seller_id}`
@@ -404,10 +404,10 @@ const SellerEdit = () => {
             View watches history
           </Button>
         </div>
-        <div className="flex justify-center">
+        <div className="flex justify-start sm:justify-center">
           <Button
             variant="contained"
-            className="!bg-[#3c8dbc] !normal-case !py-[10px] !px-[40px] !rounded-[50px]"
+            className="!bg-[#3c8dbc] !normal-case !py-[10px] !px-[40px] !rounded-[50px] whitespace-nowrap"
             onClick={() =>
               navigate(
                 `/admin/analysis/revenue_analysis/seller/${sellerData?.admin_seller_id}`
@@ -417,10 +417,10 @@ const SellerEdit = () => {
             View revenue analysis
           </Button>
         </div>
-        <div className="flex justify-center">
+        <div className="flex justify-start sm:justify-center">
           <Button
             variant="contained"
-            className="!bg-[#3c8dbc] !normal-case !py-[10px] !px-[40px] !rounded-[50px]"
+            className="!bg-[#3c8dbc] !normal-case !py-[10px] !px-[40px] !rounded-[50px] whitespace-nowrap"
             onClick={() =>
               navigate(
                 `/admin/analysis/performance_analysis/seller/${sellerData?.admin_seller_id}`
