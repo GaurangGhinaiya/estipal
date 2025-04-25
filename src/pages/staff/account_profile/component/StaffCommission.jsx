@@ -63,7 +63,7 @@ const StaffCommission = (props) => {
                 bgColor={isEditable ? "#CCCCCC" : "#ffffff"}
                 border={"1px solid black"}
                 visibility={row?.to !== null ? "visible" : "hidden"}
-                className="mb-[15px] text-black dark:text-white"
+                className="mb-[15px] text-black dark:text-white capitalize"
               />
 
               <TextInputField

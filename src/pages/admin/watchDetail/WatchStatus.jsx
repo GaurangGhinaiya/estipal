@@ -127,13 +127,13 @@ const WatchStatus = () => {
               <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between gap-[25px] border border-gray-300 dark:border-none">
                 <p className="dark:text-white text-black">Collection</p>
                 <p className="dark:text-white text-black line-clamp-1">
-                  {getSafeValue(watchDetailData?.model, "string")}
+                  {`${getSafeValue(watchDetailData?.collection, "string")} `}
                 </p>
               </div>
               <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center gap-[20px] flex justify-between border border-gray-300 dark:border-none">
                 <p className="dark:text-white text-black">Model</p>
                 <p className="dark:text-white text-black whitespace-nowrap overflow-auto hide-scrollbar">
-                  {`${getSafeValue(watchDetailData?.collection, "string")} ${
+                  {`${getSafeValue(watchDetailData?.model, "string")} ${
                     watchDetailData?.reference?.trim(" ") &&
                     `(${getSafeValue(watchDetailData?.reference, "string")})`
                   }`}

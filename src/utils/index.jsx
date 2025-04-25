@@ -16,7 +16,7 @@ export const formattedNumber = new Intl.NumberFormat("en-US", {
 });
 
 export const formatNumberOrDefault = (value) => {
-  if (value && value !== undefined && value !== null) {
+  if (value && value !== undefined && value !== null && value !== "NaN") {
     return formattedNumber.format(value);
   }
   return formattedNumber.format(0);

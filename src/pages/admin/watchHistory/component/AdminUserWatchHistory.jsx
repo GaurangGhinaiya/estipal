@@ -221,7 +221,7 @@ const AdminUserWatchHistory = ({
                   navigate(`/admin/watch_details/watch_status/${item?.id}`)
                 }
               >
-                {item?.currency} {formatNumberOrDefault(item?.watch_price)} /
+                {item?.currency} {formatNumberOrDefault(item?.watch_price)} / {" "}
                 {item?.currency}{" "}
                 {formatNumberOrDefault(item?.estimated_watch_price)}
               </td>
