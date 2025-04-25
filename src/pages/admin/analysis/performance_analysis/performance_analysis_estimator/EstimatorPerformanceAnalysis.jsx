@@ -11,8 +11,8 @@ import FilterComponent from "./components/FilterComponent";
 const EstimatorPerformanceAnalysis = () => {
   const [summaryData, setSummaryData] = useState([]);
   const [transactionData, setTransactionData] = useState([]);
-  const [sortField, setSortField] = useState(null);
-  const [sortOrder, setSortOrder] = useState("asc");
+  const [sortField, setSortField] = useState("estimation_assign_date");
+  const [sortOrder, setSortOrder] = useState("desc");
   const [currentPage, setCurrentPage] = useState(1);
   const [recordsPerPage, setRecordsPerPage] = useState(20);
   const [totalRecords, setTotalRecords] = useState(0);

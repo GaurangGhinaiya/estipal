@@ -13,8 +13,8 @@ import { translate } from "../../../../language";
 const SellerRevenueAnalysis = () => {
   const [summaryData, setSummaryData] = useState([]);
   const [transactionData, setTransactionData] = useState([]);
-  const [sortField, setSortField] = useState(null);
-  const [sortOrder, setSortOrder] = useState("asc");
+  const [sortField, setSortField] = useState("created_on");
+  const [sortOrder, setSortOrder] = useState("desc");
   const [currentPage, setCurrentPage] = useState(1);
   const [recordsPerPage, setRecordsPerPage] = useState(20);
   const [totalRecords, setTotalRecords] = useState(0);

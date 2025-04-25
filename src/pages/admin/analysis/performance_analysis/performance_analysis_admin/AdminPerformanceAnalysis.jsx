@@ -12,10 +12,10 @@ import TransactionTable from "./components/TransactionTable";
 const AdminPerformanceAnalysis = () => {
   const [summaryData, setSummaryData] = useState([]);
   const [transactionData, setTransactionData] = useState([]);
-  const [sortField, setSortField] = useState(null);
-  const [sortOrder, setSortOrder] = useState("asc");
+  const [sortField, setSortField] = useState("created_on");
+  const [sortOrder, setSortOrder] = useState("desc");
   const [currentPage, setCurrentPage] = useState(1);
-  const [recordsPerPage, setRecordsPerPage] = useState(20);
+  const [recordsPerPage, setRecordsPerPage] = useState(10);
   const [totalRecords, setTotalRecords] = useState(0);
   const [loadingSummary, setLoadingSummary] = useState(false);
   const [loadingTransactions, setLoadingTransactions] = useState(false);
@@ -65,7 +65,6 @@ const AdminPerformanceAnalysis = () => {
   };
 
   useEffect(() => {
-    setLoadingSummary(true);
     setLoadingTransactions(true);
     fetchData();
   }, [currentPage]);
@@ -133,17 +132,18 @@ const AdminPerformanceAnalysis = () => {
         setCurrentPage={setCurrentPage}
       />
       <div className="w-[95.5%] overflow-auto mx-auto pt-[10px] mt-8 relative">
-        {loadingTransactions && (
-          <div className="py-[200px] absolute bg-[#ffffff00]  top-0 left-0 right-0 bottom-0 px-4 text-center">
+        {loadingTransactions ? (
+          <div className="py-[200px] px-4 text-center">
             <CircularProgress />
           </div>
+        ) : (
+          <TransactionTable
+            data={transactionData}
+            sortField={sortField}
+            sortOrder={sortOrder}
+            handleSort={handleSort}
+          />
         )}
-        <TransactionTable
-          data={transactionData}
-          sortField={sortField}
-          sortOrder={sortOrder}
-          handleSort={handleSort}
-        />
       </div>
       <PaginationComponent
         userRole={userRole}

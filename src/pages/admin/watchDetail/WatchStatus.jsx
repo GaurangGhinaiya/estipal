@@ -263,7 +263,7 @@ const WatchStatus = () => {
                 watchDetailData?.imageUploadDetails?.[0]?.box_image,
                 watchDetailData?.imageUploadDetails?.[0]?.paper_image,
               ] || []
-            )
+            ) 
             ?.map(
               (item, index) =>
                 item && (

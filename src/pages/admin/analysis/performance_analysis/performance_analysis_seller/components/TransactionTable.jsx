@@ -23,7 +23,7 @@ const TransactionTable = ({ data, sortField, sortOrder, handleSort }) => {
             <th
               key={column.key}
               onClick={() => handleSort(column.key)}
-              className={`p-2 dark:text-[#ffff] text-black text-center cursor-pointer ${
+              className={`py-2 px-[20px] whitespace-nowrap dark:text-[#ffff] text-black text-center cursor-pointer ${
                 sortField === column.key ? "active-sorting" : "sorting"
               }`}
             >

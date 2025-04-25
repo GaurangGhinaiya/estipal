@@ -88,21 +88,35 @@ const ActivitiesTable = () => {
     }
   }, [currentPage, sortOrder, debouncedSearchTerm, status]);
 
+  // const getImageSrc = (activity) => {
+  //   if (userRole === "staff") {
+  //     if (
+  //       activity?.staffWatchActivityDetails?.progress === 1 ||
+  //       activity?.staffWatchActivityDetails?.progress === 3
+  //     ) {
+  //       return alarmWatchImageBlack;
+  //     }
+  //     return "";
+  //   } else {
+  //     if (
+  //       activity?.staffWatchActivityDetails?.progress === 2 ||
+  //       activity?.staffWatchActivityDetails?.progress === 4 ||
+  //       activity?.staffWatchActivityDetails?.progress === 5
+  //     ) {
+  //       return alarmWatchImage;
+  //     }
+  //     return "";
+  //   }
+  // };
+
   const getImageSrc = (activity) => {
     if (userRole === "staff") {
-      if (
-        activity?.staffWatchActivityDetails?.progress === 1 ||
-        activity?.staffWatchActivityDetails?.progress === 3
-      ) {
+      if (activity?.is_alarm) {
         return alarmWatchImageBlack;
       }
       return "";
     } else {
-      if (
-        activity?.staffWatchActivityDetails?.progress === 2 ||
-        activity?.staffWatchActivityDetails?.progress === 4 ||
-        activity?.staffWatchActivityDetails?.progress === 5
-      ) {
+      if (activity?.is_alarm) {
         return alarmWatchImage;
       }
       return "";

@@ -61,7 +61,6 @@ const AccountProfile = () => {
     companyLogoPreview: "",
   });
 
-  console.log("formData: ", formData);
   const [staffData, setStaffData] = useState();
   const [states, setStates] = useState([]);
   const [countries, setCountries] = useState([]);
@@ -185,7 +184,6 @@ const AccountProfile = () => {
       );
 
       if (response?.status === 200) {
-        // Clear new_password fields
         setFormData((prev) => ({
           ...prev,
           new_password: "",

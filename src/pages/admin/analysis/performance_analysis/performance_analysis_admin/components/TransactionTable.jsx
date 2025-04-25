@@ -9,7 +9,7 @@ const TransactionTable = ({ data, sortField, sortOrder, handleSort }) => {
       <thead style={{ borderBottom: "2px solid #111111" }}>
         <tr>
           {[
-            { key: "date", label: "Date" },
+            { key: "created_on", label: "Date" },
             { key: "cmp_name", label: "Company" },
             { key: "first_name", label: "First Name" },
             { key: "last_name", label: "Last Name" },
