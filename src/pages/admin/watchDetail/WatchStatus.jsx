@@ -263,7 +263,7 @@ const WatchStatus = () => {
                 watchDetailData?.imageUploadDetails?.[0]?.box_image,
                 watchDetailData?.imageUploadDetails?.[0]?.paper_image,
               ] || []
-            ) 
+            )
             ?.map(
               (item, index) =>
                 item && (
@@ -312,7 +312,11 @@ const WatchStatus = () => {
                 <tbody>
                   {watchDetailData?.allEstimatorsAssignDetails?.map(
                     (item, index) => (
-                      <tr key={index}>
+                      <tr
+                        key={index}
+                        onClick={() => navigate(`/admin`)}
+                        className="cursor-pointer"
+                      >
                         <td className="px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap">
                           {item?.allEstimatorAddedByDetail?.company_name +
                             " - " +
@@ -372,7 +376,10 @@ const WatchStatus = () => {
             <Skeleton variant="rectangular" width="100%" height={200} />
           ) : (
             <table className="table-auto w-full text-left">
-              <tbody>
+              <tbody
+                onClick={() => navigate(`/admin/home/readActivity/${id}`)}
+                className="cursor-pointer"
+              >
                 {watchDetailData?.adminActivities
                   ?.slice()
                   .reverse()

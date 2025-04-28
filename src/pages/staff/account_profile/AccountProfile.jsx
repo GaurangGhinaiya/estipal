@@ -384,7 +384,7 @@ const AccountProfile = () => {
                     type="file"
                     onChange={handleFileUpload}
                     accept=".png, .jpg, .jpeg, .svg"
-                    className="w-full bg-transparent border-none outline-none ml-2 dark:text-white text-black placeholder-gray-400 text-right whitespace-pre-wrap"
+                    className="w-full bg-transparent border-none outline-none ml-2 dark:text-white text-black placeholder-gray-400 text-right whitespace-pre-wrap px-2"
                   />
 
                   <div>
