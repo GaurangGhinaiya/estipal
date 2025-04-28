@@ -45,7 +45,7 @@ const BePartner = (props) => {
         <input
           type="text"
           style={{ width: "130px", textAlign: "center" }}
-          className={`text-center watch-desc-input ${
+          className={`text-center watch-desc-input bg-[transparent] ${
             props?.input_confirmed_price ? "not_changed" : ""
           }`}
           name="confirmed_price"

@@ -69,32 +69,50 @@ const SellerEdit = () => {
     const transformCommissionData = () => {
       const transformedData = {
         br1: {
-          price_range: [commissionData[0]?.from, commissionData[0]?.to],
-          value: commissionData[0]?.commission,
+          price_range: [
+            commissionData[0]?.from || 0,
+            commissionData[0]?.to || 0,
+          ],
+          value: commissionData[0]?.commission || 0,
         },
         br2: {
-          price_range: [commissionData[1]?.from, commissionData[1]?.to],
-          value: commissionData[1]?.commission,
+          price_range: [
+            commissionData[1]?.from || 0,
+            commissionData[1]?.to || 0,
+          ],
+          value: commissionData[1]?.commission || 0,
         },
         br3: {
-          price_range: [commissionData[2]?.from, commissionData[2]?.to],
-          value: commissionData[2]?.commission,
+          price_range: [
+            commissionData[2]?.from || 0,
+            commissionData[2]?.to || 0,
+          ],
+          value: commissionData[2]?.commission || 0,
         },
         br4: {
-          price_range: [commissionData[3]?.from, commissionData[3]?.to],
-          value: commissionData[3]?.commission,
+          price_range: [
+            commissionData[3]?.from || 0,
+            commissionData[3]?.to || 0,
+          ],
+          value: commissionData[3]?.commission || 0,
         },
         br5: {
-          price_range: [commissionData[4]?.from, commissionData[4]?.to],
-          value: commissionData[4]?.commission,
+          price_range: [
+            commissionData[4]?.from || 0,
+            commissionData[4]?.to || 0,
+          ],
+          value: commissionData[4]?.commission || 0,
         },
         br6: {
-          price_range: [commissionData[5]?.from, commissionData[5]?.to],
-          value: commissionData[5]?.commission,
+          price_range: [
+            commissionData[5]?.from || 0,
+            commissionData[5]?.to || 0,
+          ],
+          value: commissionData[5]?.commission || 0,
         },
         br7: {
-          price_range: [commissionData[6]?.from],
-          value: commissionData[6]?.commission,
+          price_range: [commissionData[6]?.from || 0],
+          value: commissionData[6]?.commission || 0,
         },
       };
       setCommissionObject(transformedData);

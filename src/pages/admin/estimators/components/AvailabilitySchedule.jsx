@@ -5,14 +5,18 @@ const AvailabilitySchedule = ({
   setAvailabilitySchedule,
   isEditable,
 }) => {
-  // Initialize local state
   const [schedule, setSchedule] = useState([]);
 
-  // Transform incoming `availabilitySchedule` to local `schedule` format
   useEffect(() => {
     if (availabilitySchedule && availabilitySchedule.length > 0) {
-      const transformedSchedule = availabilitySchedule.map((entry) => ({
-        day: getDayName(entry.week_id), // Convert week_id to day name
+      const weekOrder = [0, 1, 2, 3, 4, 5, 6];
+
+      const sortedSchedule = [...availabilitySchedule].sort((a, b) => {
+        return weekOrder.indexOf(a.week_id) - weekOrder.indexOf(b.week_id);
+      });
+
+      const transformedSchedule = sortedSchedule.map((entry) => ({
+        day: getDayName(entry.week_id),
         ranges: [
           { from: entry.from_time_1 || "", to: entry.to_time_1 || "" },
           { from: entry.from_time_2 || "", to: entry.to_time_2 || "" },
@@ -23,32 +27,27 @@ const AvailabilitySchedule = ({
     }
   }, [availabilitySchedule]);
 
-  // List of time options
   const times = Array.from({ length: 48 }, (_, i) => {
     const hours = Math.floor(i / 2);
     const minutes = i % 2 === 0 ? "00" : "30";
     return `${String(hours).padStart(2, "0")}:${minutes}`;
   });
 
-  // Convert week_id to day name
   const getDayName = (weekId) => {
     const days = ["Sun", "Mon", "Tue", "Wed", "Thurs", "Fri", "Sat"];
     return days[weekId];
   };
 
-  // Convert day name to week_id
   const getWeekId = (dayName) => {
     const days = ["Sun", "Mon", "Tue", "Wed", "Thurs", "Fri", "Sat"];
     return days.indexOf(dayName);
   };
 
-  // Handle time dropdown change
   const handleTimeChange = (dayIndex, rangeIndex, key, value) => {
     const updatedSchedule = [...schedule];
     updatedSchedule[dayIndex].ranges[rangeIndex][key] = value;
     setSchedule(updatedSchedule);
 
-    // Sync with parent component
     const updatedAvailability = updatedSchedule.map((entry) => {
       const weekId = getWeekId(entry.day);
       return {

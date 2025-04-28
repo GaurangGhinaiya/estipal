@@ -22,6 +22,8 @@ import {
 } from "../../../utils/apiUtils";
 import AvailabilitySchedule from "./components/AvailabilitySchedule";
 import toast from "react-hot-toast";
+import axios from "axios";
+import ConfirmDialog from "../../../components/common/ConfirmDialog";
 
 const EstimatorEdit = () => {
   const navigate = useNavigate();
@@ -42,6 +44,8 @@ const EstimatorEdit = () => {
   const [phone, setPhone] = useState("");
   const [selectedYears, setSelectedYears] = useState([]);
   const [selectedBrands, setSelectedBrands] = useState([]);
+  const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
+  const [confirmDialogLoading, setConfirmDialogLoading] = useState(false);
   const [availabilitySchedule, setAvailabilitySchedule] = useState([
     {
       week_id: 0,
@@ -325,6 +329,31 @@ const EstimatorEdit = () => {
     }
   };
 
+  const handleResetPasswordClick = () => {
+    setConfirmDialogOpen(true);
+  };
+
+  const handleConfirmResetPassword = async () => {
+    setConfirmDialogOpen(false);
+    setConfirmDialogLoading(true);
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_BASE_URL}/sellers/forgetPassword`,
+        {
+          email: estimatorData?.email,
+          type: "estimator",
+        }
+      );
+      if (response?.status === 200) {
+        toast.success(response?.data?.message);
+        setConfirmDialogLoading(false);
+      }
+    } catch (error) {
+      toast.error(error?.response?.data?.message);
+      setConfirmDialogLoading(false);
+    }
+  };
+
   return (
     <div className="mx-auto px-[10px] sm:px-[45px] py-[20px]">
       <div className="flex justify-between flex-wrap gap-2 pt-[10px] lg:pt-0">
@@ -381,12 +410,14 @@ const EstimatorEdit = () => {
           )}
 
           {actionType !== "add" && (
-            <Button
+            <LoadingButton
+              loading={confirmDialogLoading}
               variant="contained"
               className="!bg-[#fea31e] !normal-case !py-[5px] sm:!py-[10px] sm:!px-[40px] !px-[15px] !rounded-[50px]"
+              onClick={handleResetPasswordClick}
             >
               Reset Password
-            </Button>
+            </LoadingButton>
           )}
         </div>
       </div>
@@ -906,6 +937,14 @@ const EstimatorEdit = () => {
         availabilitySchedule={availabilitySchedule}
         setAvailabilitySchedule={setAvailabilitySchedule}
         isEditable={isEditable}
+      />
+
+      <ConfirmDialog
+        open={confirmDialogOpen}
+        handleClose={() => setConfirmDialogOpen(false)}
+        handleConfirm={handleConfirmResetPassword}
+        title="Confirm Reset Password"
+        content="Are you sure you want to reset the password?"
       />
     </div>
   );

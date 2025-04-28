@@ -78,7 +78,7 @@ const CommissionPlan = (props) => {
                     bgColor={userRole === "staff" ? "#ffffff" : "#283641"}
                     border={userRole === "staff" ? "1px solid white" : "none"}
                     onChange={(e) =>
-                      handleChange(index, "from", parseInt(e.target.value) || 0)
+                      handleChange(index, "from", parseInt(e.target.value))
                     }
                     className="mb-[15px] text-black dark:text-white"
                   />
@@ -100,7 +100,7 @@ const CommissionPlan = (props) => {
                     bgColor={userRole === "staff" ? "#ffffff" : "#283641"}
                     border={userRole === "staff" ? "1px solid black" : "none"}
                     onChange={(e) =>
-                      handleChange(index, "to", parseInt(e.target.value) || 0)
+                      handleChange(index, "to", parseInt(e.target.value))
                     }
                     className="mb-[15px] text-black dark:text-white"
                   />
@@ -123,7 +123,7 @@ const CommissionPlan = (props) => {
                       handleChange(
                         index,
                         "commission",
-                        parseInt(e.target.value) || 0
+                        parseInt(e.target.value)
                       )
                     }
                     className="mb-[15px] text-black dark:text-white"
