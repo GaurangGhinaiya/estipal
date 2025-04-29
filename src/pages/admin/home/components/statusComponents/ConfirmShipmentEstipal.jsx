@@ -1,3 +1,5 @@
+//checked
+
 import React, { useState } from "react";
 import UrgentImage from "../../../../../assets/images/icons/Urgent 1.png";
 import axiosInstance from "../../../../../services";
@@ -25,17 +27,12 @@ const ConfirmShipmentEstipal = (props) => {
         ? { seller_id: props?.item?.user1_id }
         : { isRequestSellingPrice, seller_id: props?.item?.user1_id };
 
-      await axiosInstance.post(url, requestData);
+      const response = await axiosInstance.post(url, requestData);
 
-      toast.success(
-        isReturn
-          ? "Shipment returned to seller successfully!"
-          : "Shipment confirmed successfully!"
-      );
-
+      toast.success(response?.message);
       window.location.reload();
     } catch (error) {
-      toast.error("Something went wrong. Please try again.");
+      toast.error(error?.response?.data?.message);
     } finally {
       setIsLoading(false);
       setDialogOpen(false);
@@ -277,6 +274,7 @@ const ConfirmShipmentEstipal = (props) => {
         handleConfirm={handleConfirmDialog}
         title={dialogTitle}
         content={dialogContent}
+        loading={isLoading}
       />
     </div>
   );

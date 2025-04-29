@@ -1,3 +1,5 @@
+// checked
+
 import React, { useState } from "react";
 import UrgentImage from "../../../../../assets/images/icons/Urgent 1.png";
 import axiosInstance from "../../../../../services";
@@ -22,10 +24,10 @@ const ConfirmTheSale = (props) => {
           confirmed_price: confirmedPrice,
         }
       );
-      toast.success("Invoice issued successfully!");
+      toast.success(response?.message);
       window.location.reload();
     } catch (error) {
-      toast.error("Failed to issue the invoice. Please try again.");
+      toast.error(error?.response?.data?.message);
     } finally {
       setIsLoading(false);
       setDialogOpen(false);
@@ -93,6 +95,7 @@ const ConfirmTheSale = (props) => {
         handleConfirm={handleConfirmIssuingOfInvoice}
         title="Confirm Issuing of Invoice"
         content="Are you sure you want to confirm the issuing of the invoice?"
+        loading={isLoading}
       />
     </>
   );

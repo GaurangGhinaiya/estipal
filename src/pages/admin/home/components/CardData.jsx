@@ -151,7 +151,7 @@ const CardData = (props) => {
       case "seller_invoice_new":
         return <SellerInvoiceNew {...commonProps} />;
       case "seller_invoice":
-        return <SellerInvoice {...commonProps} />;
+        return <SellerInvoiceNew {...commonProps} />;
 
       case "confirm_payment_seller":
         return (

@@ -1,3 +1,5 @@
+//checked
+
 import React, { useState } from "react";
 import UrgentImage from "../../../../../assets/images/icons/Urgent 1.png";
 import { toast } from "react-hot-toast";
@@ -21,12 +23,12 @@ const ConfirmTheAcceptance = (props) => {
       const url = `/adminActivity/confirmSold?watch_id=${props?.item?.watch_details?.watch_id}`;
       const payload = { confirmed_price: confirmedPrice };
 
-      await axiosInstance.post(url, payload);
+      const response = await axiosInstance.post(url, payload);
 
-      toast.success("Watch sale confirmed successfully!");
+      toast.success(response?.message);
       window.location.reload();
     } catch (error) {
-      toast.error("Error confirming sale. Please try again.");
+      toast.error(error?.response?.data?.message);
     } finally {
       setIsLoading(false);
       setDialogOpen(false);
@@ -76,11 +78,11 @@ const ConfirmTheAcceptance = (props) => {
           </p>
           <ul className="list-unstyled list-inline">
             <li
-              className={
-                props?.item?.staffWatchActivityDetails?.admin_deal_done === 1
-                  ? "pointer-events-none"
-                  : ""
-              }
+            // className={
+            //   props?.item?.staffWatchActivityDetails?.admin_deal_done === 1
+            //     ? "pointer-events-none"
+            //     : ""
+            // }
             >
               <button
                 className={`btn ${
@@ -89,10 +91,10 @@ const ConfirmTheAcceptance = (props) => {
                     : "dark_yellow"
                 }`}
                 onClick={handleOpenDialog}
-                disabled={
-                  isLoading ||
-                  props?.item?.staffWatchActivityDetails?.admin_deal_done === 1
-                }
+                // disabled={
+                //   isLoading ||
+                //   props?.item?.staffWatchActivityDetails?.admin_deal_done === 1
+                // }
               >
                 {isLoading ? "Processing..." : "Confirm Sold"}
               </button>
@@ -107,6 +109,7 @@ const ConfirmTheAcceptance = (props) => {
         handleConfirm={handleConfirmSold}
         title="Confirm Sold"
         content="Are you sure you want to confirm the sale?"
+        loading={isLoading}
       />
     </div>
   );

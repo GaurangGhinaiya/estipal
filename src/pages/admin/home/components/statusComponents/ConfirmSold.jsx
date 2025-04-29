@@ -1,3 +1,5 @@
+//checked
+
 import React, { useState } from "react";
 import UrgentImage from "../../../../../assets/images/icons/Urgent 1.png";
 import axiosInstance from "../../../../../services";
@@ -16,12 +18,12 @@ const ConfirmSold = (props) => {
       const watchId = props?.item?.watch_details?.watch_id;
       const url = `/adminActivity/confirmPaidEst?watch_id=${watchId}`;
 
-      await axiosInstance.post(url);
+      const response = await axiosInstance.post(url);
 
-      toast.success("Commission payment confirmed successfully!");
+      toast.success(response?.message);
       window.location.reload();
     } catch (error) {
-      toast.error("Something went wrong. Please try again.");
+      toast.error(error?.response?.data?.message);
     } finally {
       setIsLoading(false);
       setDialogOpen(false);
@@ -87,6 +89,7 @@ const ConfirmSold = (props) => {
         handleConfirm={handleConfirmPaidEstimator}
         title="Confirm Commission Payment"
         content="Are you sure you want to confirm the commission payment?"
+        loading={isLoading}
       />
     </div>
   );

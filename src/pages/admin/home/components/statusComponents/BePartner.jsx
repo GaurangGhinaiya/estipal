@@ -1,3 +1,5 @@
+// checked
+
 import React, { useState } from "react";
 import { toast } from "react-hot-toast";
 import UrgentImage from "../../../../../assets/images/icons/Urgent 1.png";
@@ -19,10 +21,10 @@ const BePartner = (props) => {
             props?.input_confirmed_price ?? props?.input_price_for_seller,
         }
       );
-      toast.success("Selling price confirmed successfully!");
+      toast.success(response?.message);
       window.location.reload();
     } catch (error) {
-      toast.error("Failed to confirm selling price. Please try again.");
+      toast.error(error?.response?.data?.message);
     } finally {
       setIsLoading(false);
       setDialogOpen(false);
@@ -95,6 +97,7 @@ const BePartner = (props) => {
         handleConfirm={handleConfirmPriceChange}
         title="Confirm Selling Price"
         content="Are you sure you want to confirm the selling price?"
+        loading={isLoading}
       />
     </>
   );
