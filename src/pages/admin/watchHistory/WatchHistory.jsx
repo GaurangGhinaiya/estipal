@@ -105,7 +105,7 @@ const WatchHistory = () => {
     if (currentPage) {
       getWatchActivityList();
     }
-  }, [currentPage, debouncedSearchTerm, status, sortOrder, sortField]);
+  }, [currentPage, debouncedSearchTerm, status, sortOrder, sortField,staffId,estimatorId,sellerId]);
 
   return (
     <div className="pb-[15px] min-h-[100vh]">
