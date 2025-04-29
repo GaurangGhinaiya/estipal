@@ -122,7 +122,7 @@ const EstimatorEdit = () => {
     country: "",
     zip: "",
     state: "",
-    req_validate: 0,
+    req_validate: 1,
     email: "",
     cnt_code: "",
     cnt_no: "",
@@ -370,7 +370,7 @@ const EstimatorEdit = () => {
                   estimatorData?.available ? "bg-[#11c71d]" : "bg-[#da3832]"
                 } rounded-[100%] w-[15px] h-[15px]`}
               ></div>
-              <p className="text-white">Online</p>
+              <p className="text-white">{estimatorData?.available ? "Online" : "Offline"}</p>
             </div>
           )}
         </div>
