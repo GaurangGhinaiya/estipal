@@ -23,7 +23,6 @@ const Login = () => {
   });
 
   const onSubmit = async (data) => {
-
     setLoading(true);
     try {
       const response = await axios.post(
@@ -33,7 +32,10 @@ const Login = () => {
       if (response?.data?.status === 200) {
         toast.success(response?.data?.message);
         localStorage.setItem("authToken", response?.data?.payload?.token);
-        localStorage.setItem("userData", JSON.stringify(response?.data?.payload?.data));
+        localStorage.setItem(
+          "userData",
+          JSON.stringify(response?.data?.payload?.data)
+        );
 
         let type;
 
@@ -102,6 +104,10 @@ const Login = () => {
                 control={control}
                 rules={{
                   required: "Password is required",
+                  minLength: {
+                    value: 6,
+                    message: "Password must be at least 6 characters long",
+                  },
                 }}
                 render={({ field }) => (
                   <input

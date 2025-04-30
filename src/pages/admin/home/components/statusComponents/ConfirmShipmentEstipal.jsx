@@ -20,8 +20,12 @@ const ConfirmShipmentEstipal = (props) => {
 
     try {
       const url = isReturn
-        ? `/sellers/confirmShipmentEstipalReturnSeller?watch_id=${props?.item?.watch_details?.watch_id}`
-        : `/sellers/confirmShipmentEstipal?watch_id=${props?.item?.watch_details?.watch_id}`;
+        ? `/sellers/confirmShipmentEstipalReturnSeller?watch_id=${
+            props?.item?.watch_details?.watch_id || props?.item?.watch_id
+          }`
+        : `/sellers/confirmShipmentEstipal?watch_id=${
+            props?.item?.watch_details?.watch_id || props?.item?.watch_id
+          }`;
 
       const requestData = isReturn
         ? { seller_id: props?.item?.user1_id }

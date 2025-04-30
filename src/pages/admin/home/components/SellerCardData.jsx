@@ -1,6 +1,5 @@
 import moment from "moment";
 import React from "react";
-
 import { sellerGetSubject } from "./SellerGetSubject";
 import AcceptEstimation from "./staffStatusComponets/AcceptEstimation";
 import ConfirmPaymentSeller from "./staffStatusComponets/ConfirmPaymentSeller";
@@ -399,25 +398,3 @@ const SellerCardData = (props) => {
 };
 
 export default SellerCardData;
-
-// (item?.type == "accept_estimation" ||
-//   item?.type == "est_counter_offer_accept" ||
-//   item?.type == "estimator_quotation" ||
-//   item?.type == "counter_offer_1" ||
-//   item?.type == "est_re-estimate" ||
-//   item?.type == "counter_offer_2" ||
-//   item?.type == "Be-Partner" ||
-//   item?.type == "confirm_selling_price" ||
-//   item?.type == "confirm_the_sale" ||
-//   item?.type == "confirm_the_issuing_of_invoice" ||
-//   item?.type == "no_sale_has_been_made" ||
-//   item?.type == "seller_invoice_new" ||
-//   item?.type == "seller_invoice" ||
-//   item?.type == "confirm_payment_seller" ||
-//   item?.type == "confirm_shipment_estipal" ||
-//   item?.type == "confirm_the_acceptance" ||
-//   item?.type == "return_to_seller" ||
-//   item?.type == "confirm_sold" ||
-//   item?.type == "Quotation for Watch" ||
-//   item?.type == "rejected" ||
-//   item?.type == "estimation_rejected") &&

@@ -15,7 +15,9 @@ const BePartner = (props) => {
 
     try {
       const response = await axiosInstance.post(
-        `/adminActivity/confirmSellingPrice?watch_id=${props?.item?.watch_details?.watch_id}`,
+        `/adminActivity/confirmSellingPrice?watch_id=${
+          props?.item?.watch_details?.watch_id || props?.item?.watch_id
+        }`,
         {
           confirmed_price:
             props?.input_confirmed_price ?? props?.input_price_for_seller,

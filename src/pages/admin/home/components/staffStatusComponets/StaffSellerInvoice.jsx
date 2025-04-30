@@ -1,5 +1,5 @@
+// checked
 import React, { useState } from "react";
-
 import UrgentImage from "../../../../../assets/images/icons/Urgent 1.png";
 import ConfirmDialog from "../../../../../components/common/ConfirmDialog";
 import axiosInstance from "../../../../../services";
@@ -16,7 +16,9 @@ const StaffSellerInvoice = (props) => {
     setIsLoading(true);
 
     try {
-      const url = `/adminActivity/sellerInvoiceNew?watch_id=${props?.item?.watch_details?.watch_id}`;
+      const url = `/adminActivity/sellerInvoiceNew?watch_id=${
+        props?.item?.watch_details?.watch_id || props?.item?.watch_id
+      }`;
       const response = await axiosInstance.post(url);
 
       toast.success(response?.message || "Shipment confirmed successfully!");

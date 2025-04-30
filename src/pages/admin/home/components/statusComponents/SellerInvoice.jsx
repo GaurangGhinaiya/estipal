@@ -15,7 +15,9 @@ const SellerInvoice = (props) => {
 
     try {
       const response = await axiosInstance.post(
-        `/sellers/confirmPaymentToSeller?watch_id=${props?.item?.watch_details?.watch_id}`,
+        `/sellers/confirmPaymentToSeller?watch_id=${
+          props?.item?.watch_details?.watch_id || props?.item?.watch_id
+        }`,
         {
           seller_id: props?.item?.user1_id,
         }

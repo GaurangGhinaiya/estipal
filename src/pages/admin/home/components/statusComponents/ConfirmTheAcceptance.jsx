@@ -20,7 +20,9 @@ const ConfirmTheAcceptance = (props) => {
     setIsLoading(true);
 
     try {
-      const url = `/adminActivity/confirmSold?watch_id=${props?.item?.watch_details?.watch_id}`;
+      const url = `/adminActivity/confirmSold?watch_id=${
+        props?.item?.watch_details?.watch_id || props?.item?.watch_id
+      }`;
       const payload = { confirmed_price: confirmedPrice };
 
       const response = await axiosInstance.post(url, payload);

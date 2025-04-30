@@ -1,10 +1,10 @@
+//checked
 import React, { useState } from "react";
 import UrgentImage from "../../../../../assets/images/icons/Urgent 1.png";
 import {
   getClassPartnerSeller,
   getClassSelfSeller,
 } from "../../../../../utils";
-
 import ConfirmDialog from "../../../../../components/common/ConfirmDialog";
 import axiosInstance from "../../../../../services";
 import toast from "react-hot-toast";
@@ -20,7 +20,9 @@ const AcceptEstimation = (props) => {
 
     try {
       const response = await axiosInstance.post(
-        `/adminActivity/sellToEstipal?watch_id=${props?.item?.watch_details?.watch_id}`
+        `/adminActivity/sellToEstipal?watch_id=${
+          props?.item?.watch_details?.watch_id || props?.item?.watch_id
+        }`
       );
       toast.success(response?.message);
       window.location.reload();
@@ -37,7 +39,9 @@ const AcceptEstimation = (props) => {
 
     try {
       const response = await axiosInstance.post(
-        `/adminActivity/bePartnerWithEstipal?watch_id=${props?.item?.watch_details?.watch_id}`
+        `/adminActivity/bePartnerWithEstipal?watch_id=${
+          props?.item?.watch_details?.watch_id || props?.item?.watch_id
+        }`
       );
       toast.success(response?.message);
       window.location.reload();

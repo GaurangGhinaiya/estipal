@@ -19,7 +19,9 @@ const ConfirmTheSale = (props) => {
 
     try {
       const response = await axiosInstance.post(
-        `/adminActivity/confirmTheIssuingOfInvoice?watch_id=${props?.item?.watch_details?.watch_id}`,
+        `/adminActivity/confirmTheIssuingOfInvoice?watch_id=${
+          props?.item?.watch_details?.watch_id || props?.item?.watch_id
+        }`,
         {
           confirmed_price: confirmedPrice,
         }

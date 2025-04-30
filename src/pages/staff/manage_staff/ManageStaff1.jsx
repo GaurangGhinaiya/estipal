@@ -2,7 +2,6 @@ import CloseIcon from "@mui/icons-material/Close";
 import { Box, Button, Modal } from "@mui/material";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
-
 import StaffLock from "../../../assets/images/icons/Stafflock.png";
 import StaffWatch from "../../../assets/images/icons/staffWatch.png";
 import CustomSwitch from "../../../components/common/CustomSwitch";
@@ -13,33 +12,6 @@ import axiosInstance from "../../../services";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { translate } from "../../../language";
-
-const history = [
-  {
-    id: "W10090",
-    online: true,
-    active: true,
-    name: "test_staff1",
-    email: "nopparat.mayawizard@gmail.com",
-    mobile_number: "632264993",
-    added_on: "24 Apr 2023",
-    sent_accepted: "7/3",
-    watches_history: true,
-    reset_password: true,
-  },
-  {
-    id: "W10091",
-    online: false,
-    active: true,
-    name: "test_staff2",
-    email: "test2@example.com",
-    mobile_number: "123456789",
-    added_on: "25 Apr 2023",
-    sent_accepted: "8/3",
-    watches_history: true,
-    reset_password: true,
-  },
-];
 
 const ManageStaff1 = () => {
   const [data, setData] = useState();

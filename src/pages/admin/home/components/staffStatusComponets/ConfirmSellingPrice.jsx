@@ -1,3 +1,4 @@
+// checked
 import React, { useState } from "react";
 import UrgentImage from "../../../../../assets/images/icons/Urgent 1.png";
 import axiosInstance from "../../../../../services";
@@ -19,7 +20,9 @@ const ConfirmSellingPrice = (props) => {
     setIsLoading(true);
 
     try {
-      const url = `/adminActivity/confirmTheSale?watch_id=${props?.item?.watch_details?.watch_id}`;
+      const url = `/adminActivity/confirmTheSale?watch_id=${
+        props?.item?.watch_details?.watch_id || props?.item?.watch_id
+      }`;
       const payload = { confirmed_price: confirmedPrice };
 
       const response = await axiosInstance.post(url, payload);
