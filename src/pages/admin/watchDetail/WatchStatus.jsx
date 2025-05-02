@@ -194,7 +194,10 @@ const WatchStatus = () => {
                 <p className="dark:text-white text-black">Warranty date</p>
                 <p className="dark:text-white text-black">
                   {watchDetailData?.imageUploadDetails?.[0]?.warentee_card_year
-                    ? convertUnixToDate(watchDetailData?.imageUploadDetails?.[0]?.warentee_card_year)
+                    ? convertUnixToDate(
+                        watchDetailData?.imageUploadDetails?.[0]
+                          ?.warentee_card_year
+                      )
                     : "-"}
                 </p>
               </div>
@@ -251,29 +254,22 @@ const WatchStatus = () => {
             <Skeleton variant="rectangular" width={200} height={200} />
           </>
         ) : (
-          watchDetailData?.watch_pic
-            ?.concat(
-              [
-                watchDetailData?.imageUploadDetails?.[0]?.box_image,
-                watchDetailData?.imageUploadDetails?.[0]?.paper_image,
-              ] || []
-            )
-            ?.map(
-              (item, index) =>
-                item && (
-                  <div key={index} onClick={() => handleOpenDialog(index)}>
-                    <img
-                      style={{
-                        border: "5px solid #1e252b",
-                        display: item ? "block" : "none",
-                      }}
-                      src={item}
-                      alt="img"
-                      className="img-border rounded-[8px] w-[200px] h-[200px] mx-auto cursor-pointer"
-                    />
-                  </div>
-                )
-            )
+          watchDetailData?.watch_pic?.map(
+            (item, index) =>
+              item && (
+                <div key={index} onClick={() => handleOpenDialog(index)}>
+                  <img
+                    style={{
+                      border: "5px solid #1e252b",
+                      display: item ? "block" : "none",
+                    }}
+                    src={item}
+                    alt="img"
+                    className="img-border rounded-[8px] w-[200px] h-[200px] mx-auto cursor-pointer"
+                  />
+                </div>
+              )
+          )
         )}
       </div>
 
