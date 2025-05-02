@@ -181,7 +181,7 @@ const CardData = (props) => {
           <div className="message_box_inner">
             <h3>
               {"Commissions to estimator has been paid ("}
-              {currency} {item?.estimator_watch_revenue?.toFixed(2)})
+              {currency} ({item?.estimator_watch_revenue?.toFixed(2)})
             </h3>
             <h3>Status: {item?.watch_status}</h3>
           </div>
