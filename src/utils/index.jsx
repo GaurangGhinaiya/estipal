@@ -16,12 +16,17 @@ export const formattedNumber = new Intl.NumberFormat("en-US", {
 });
 
 export const formatNumberOrDefault = (value) => {
-  if (value && value !== undefined && value !== null && value !== "NaN") {
+  if (
+    value &&
+    value !== undefined &&
+    value !== null &&
+    value !== "NaN" &&
+    Object.keys(value).length > 0
+  ) {
     return formattedNumber.format(value);
   }
   return formattedNumber.format(0);
 };
-
 
 export const formatCurrency = (price, currency) => {
   if (price) {
@@ -64,16 +69,24 @@ export const getClassPartnerSeller = (
   }
 };
 
-
 export const languageToCountry = {
-  en: 'us',   // English - United States
-  esp: 'es',   // Spanish - Spain
-  ita: 'it',   // Italian - Italy
-  cn: 'cn',   // Chinese - China
-  indu : 'in', //India
-  th: 'th',  // Thailand
-  jp : 'jp', // Japan,
-  pt : 'pt',   // Português
-  al : 'al',   //Albanian,
-  hb : 'hb' // Hebrew
+  en: "us", // English - United States
+  esp: "es", // Spanish - Spain
+  ita: "it", // Italian - Italy
+  cn: "cn", // Chinese - China
+  indu: "in", //India
+  th: "th", // Thailand
+  jp: "jp", // Japan,
+  pt: "pt", // Português
+  al: "al", //Albanian,
+  hb: "hb", // Hebrew
+};
+
+export const convertUnixToDate = (unixTimestamp) => {
+  return new Intl.DateTimeFormat("en-GB", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(+unixTimestamp));
 };

@@ -139,7 +139,7 @@ const translations = {
       NOSALEFOUND: "No sale has been made",
       COMPLETED: "Completed",
       CONFIRMISSUEINVOICETEXTONE:
-        "Estipal issued and invoice for the amount of ${commission_price}",
+        "Estipal issued and invoice for the amount of {commission_price}",
       NOTSOLD: "Not Sold",
       REJECTEDSALEFORSELLERTEXT:
         "Rejected Sale - watch to be returned to seller",
@@ -176,7 +176,7 @@ const translations = {
       PAIDSOLDTEXT: "Paid / Sold",
       SIGNINASTEXT: "Signed in as",
       ESTIMATEDTEXT: "Estimated",
-      
+
     },
   },
   ita: {
@@ -358,7 +358,7 @@ const translations = {
       PAIDSOLDTEXT: "Pagato/venduto",
       SIGNINASTEXT: "Accedi come",
       ESTIMATEDTEXT: "Stimato",
-      
+
     },
   },
   esp: {
@@ -538,7 +538,7 @@ const translations = {
       PAIDSOLDTEXT: "Pagado / vendido",
       SIGNINASTEXT: "Inició sesión como",
       ESTIMATEDTEXT: "Estimado",
-      
+
     },
   },
   cn: {
@@ -703,7 +703,7 @@ const translations = {
       PAIDSOLDTEXT: "已付/已售",
       SIGNINASTEXT: "登录身份",
       ESTIMATEDTEXT: "估計的",
-      
+
     },
   },
   indu: {
@@ -846,7 +846,7 @@ const translations = {
       NOSALEFOUND: "कोई बिक्री नहीं हुई है",
       COMPLETED: "पुरा होना।",
       CONFIRMISSUEINVOICETEXTONE:
-        "एस्टिपल ने ${commission_price} की राशि के लिए चालान जारी किया",
+        "एस्टिपल ने {commission_price} की राशि के लिए चालान जारी किया",
       NOTSOLD: "नहीं बिका",
       REJECTEDSALEFORSELLERTEXT:
         "अस्वीकृत बिक्री - घड़ी विक्रेता को वापस की जाएगी",
@@ -882,7 +882,7 @@ const translations = {
       PAIDSOLDTEXT: "भुगतान किया गया / बेचा गया",
       SIGNINASTEXT: "इस रूप में साइन इन किया",
       ESTIMATEDTEXT: "अनुमानित",
-      
+
     },
   },
   th: {
@@ -1059,7 +1059,7 @@ const translations = {
       PAIDSOLDTEXT: "ชำระเงินแล้ว / ขายแล้ว",
       SIGNINASTEXT: "ลงชื่อเข้าใช้ในฐานะ",
       ESTIMATEDTEXT: "ประมาณการ",
-      
+
     },
   },
   jp: {
@@ -1236,7 +1236,7 @@ const translations = {
       PAIDSOLDTEXT: "支払い済み / 販売済み",
       SIGNINASTEXT: "としてサインイン",
       ESTIMATEDTEXT: "推定",
-      
+
     },
   },
   pt: {
@@ -1415,7 +1415,7 @@ const translations = {
       PAIDSOLDTEXT: "Pago / Vendido",
       SIGNINASTEXT: "Conectado como",
       ESTIMATEDTEXT: "Estimado",
-      
+
     },
   },
   al: {
@@ -1694,7 +1694,7 @@ const translations = {
       NOSALEFOUND: "לא בוצעה מכירה",
       COMPLETED: "הושלם",
       CONFIRMISSUEINVOICETEXTONE:
-        "אסטיפל הוציאה חשבונית על סך ${commission_price}",
+        "אסטיפל הוציאה חשבונית על סך {commission_price}",
       NOTSOLD: "לא נמכר",
       REJECTEDSALEFORSELLERTEXT: "המכירה נדחתה - השעון יוחזר למוכר",
       DEALCOMPLETEDFORWATCHTEXT: "השעון נמכר והעסקה הושלמה.",
@@ -1726,7 +1726,7 @@ const translations = {
       PAIDSOLDTEXT: "שולם / נמכר",
       SIGNINASTEXT: "מחובר בתור",
       ESTIMATEDTEXT: "מוערך",
-      
+
     },
   },
 };

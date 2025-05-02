@@ -3,7 +3,7 @@ import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axiosInstance from "../../../services";
-import { formatNumberOrDefault } from "../../../utils";
+import { convertUnixToDate, formatNumberOrDefault } from "../../../utils";
 import ImageDialog from "./components/ImageDialog";
 import { translate } from "../../../language";
 
@@ -194,13 +194,7 @@ const WatchStatus = () => {
                 <p className="dark:text-white text-black">Warranty date</p>
                 <p className="dark:text-white text-black">
                   {watchDetailData?.imageUploadDetails?.[0]?.warentee_card_year
-                    ? moment
-                        .unix(
-                          watchDetailData?.imageUploadDetails?.[0]
-                            ?.warentee_card_year
-                        )
-                        .utc()
-                        .format("DD MMMM YYYY")
+                    ? convertUnixToDate(watchDetailData?.imageUploadDetails?.[0]?.warentee_card_year)
                     : "-"}
                 </p>
               </div>
