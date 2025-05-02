@@ -62,7 +62,7 @@ const ConfirmSold = (props) => {
               value={props?.item?.user1_id}
               className={
                 props?.item?.assignWatchDetails[0]?.paid === 1
-                  ? "pointer-events-none"
+                  ? "inactiveLink"
                   : ""
               }
             >

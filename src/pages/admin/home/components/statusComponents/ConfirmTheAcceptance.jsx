@@ -83,7 +83,7 @@ const ConfirmTheAcceptance = (props) => {
             <li
               className={
                 props?.item?.staffWatchActivityDetails?.admin_deal_done === 1
-                  ? "pointer-events-none"
+                  ? "inactiveLink"
                   : ""
               }
             >
