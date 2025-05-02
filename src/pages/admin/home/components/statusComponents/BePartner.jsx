@@ -23,7 +23,8 @@ const BePartner = (props) => {
             props?.input_confirmed_price ?? props?.input_price_for_seller,
         }
       );
-      toast.success(response?.message);
+      // toast.success(response?.message);
+      toast.success("Selling price confirmed successfully!");
       window.location.reload();
     } catch (error) {
       toast.error(error?.response?.data?.message);

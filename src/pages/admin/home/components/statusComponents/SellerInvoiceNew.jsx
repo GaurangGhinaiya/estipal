@@ -23,7 +23,9 @@ const SellerInvoiceNew = (props) => {
         }
       );
 
-      toast.success(response?.message);
+      // toast.success(response?.message);
+      toast.success("Payment confirmed successfully!");
+
       window.location.reload();
     } catch (error) {
       toast.error(error?.response?.data?.message);

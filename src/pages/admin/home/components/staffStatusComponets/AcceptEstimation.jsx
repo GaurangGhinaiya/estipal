@@ -24,7 +24,8 @@ const AcceptEstimation = (props) => {
           props?.item?.watch_details?.watch_id || props?.item?.watch_id
         }`
       );
-      toast.success(response?.message);
+      toast.success("Successfully sold to Estipal!");
+      // toast.success(response?.message);
       window.location.reload();
     } catch (error) {
       toast.error(error?.response?.data?.message);
@@ -43,7 +44,8 @@ const AcceptEstimation = (props) => {
           props?.item?.watch_details?.watch_id || props?.item?.watch_id
         }`
       );
-      toast.success(response?.message);
+      toast.success("Successfully became a partner with Estipal!");
+      // toast.success(response?.message);
       window.location.reload();
     } catch (error) {
       toast.error(error?.response?.data?.message);

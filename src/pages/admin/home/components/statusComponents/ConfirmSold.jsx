@@ -20,7 +20,8 @@ const ConfirmSold = (props) => {
 
       const response = await axiosInstance.post(url);
 
-      toast.success(response?.message);
+      // toast.success(response?.message);
+      toast.success("Commission payment confirmed successfully!");
       window.location.reload();
     } catch (error) {
       toast.error(error?.response?.data?.message);

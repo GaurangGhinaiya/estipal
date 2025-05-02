@@ -26,7 +26,8 @@ const ConfirmTheSale = (props) => {
           confirmed_price: confirmedPrice,
         }
       );
-      toast.success(response?.message);
+      // toast.success(response?.message);
+      toast.success("Invoice issued successfully!");
       window.location.reload();
     } catch (error) {
       toast.error(error?.response?.data?.message);

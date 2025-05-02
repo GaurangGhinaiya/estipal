@@ -70,8 +70,6 @@ const AdminPerformanceAnalysis = () => {
   }, [currentPage]);
 
   useEffect(() => {
-    setLoadingTransactions(true);
-
     if (fromDate && toDate) {
       fetchData(fromDate, toDate);
     } else fetchData();

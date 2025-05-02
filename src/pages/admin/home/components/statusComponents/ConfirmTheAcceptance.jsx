@@ -27,7 +27,8 @@ const ConfirmTheAcceptance = (props) => {
 
       const response = await axiosInstance.post(url, payload);
 
-      toast.success(response?.message);
+      // toast.success(response?.message);
+      toast.success("Watch sale confirmed successfully!");
       window.location.reload();
     } catch (error) {
       toast.error(error?.response?.data?.message);
@@ -80,11 +81,11 @@ const ConfirmTheAcceptance = (props) => {
           </p>
           <ul className="list-unstyled list-inline">
             <li
-            // className={
-            //   props?.item?.staffWatchActivityDetails?.admin_deal_done === 1
-            //     ? "pointer-events-none"
-            //     : ""
-            // }
+              className={
+                props?.item?.staffWatchActivityDetails?.admin_deal_done === 1
+                  ? "pointer-events-none"
+                  : ""
+              }
             >
               <button
                 className={`btn ${
@@ -93,10 +94,10 @@ const ConfirmTheAcceptance = (props) => {
                     : "dark_yellow"
                 }`}
                 onClick={handleOpenDialog}
-                // disabled={
-                //   isLoading ||
-                //   props?.item?.staffWatchActivityDetails?.admin_deal_done === 1
-                // }
+                disabled={
+                  isLoading ||
+                  props?.item?.staffWatchActivityDetails?.admin_deal_done === 1
+                }
               >
                 {isLoading ? "Processing..." : "Confirm Sold"}
               </button>

@@ -9,6 +9,7 @@ import { translate } from "../../../../../language";
 const ConfirmSellingPrice = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [noSaleDialogOpen, setNoSaleDialogOpen] = useState(false);
 
   const confirmedPrice = props?.input_confirmed_price
     ? props?.input_confirmed_price
@@ -26,8 +27,8 @@ const ConfirmSellingPrice = (props) => {
       const payload = { confirmed_price: confirmedPrice };
 
       const response = await axiosInstance.post(url, payload);
-
-      toast.success(response?.message);
+      // toast.success(response?.message);
+      toast.success("The sale has been successfully confirmed!");
       window.location.reload();
     } catch (error) {
       toast.error(error?.response?.data?.message);
@@ -37,12 +38,44 @@ const ConfirmSellingPrice = (props) => {
     }
   };
 
+  const handleNoSale = async () => {
+    if (isLoading) return;
+
+    setIsLoading(true);
+
+    try {
+      const url = `/staffWatchActivities/noSaleHasBeenMade`;
+      const payload = {
+        watch_id: props?.item?.watch_details?.watch_id || props?.item?.watch_id,
+      };
+
+      const response = await axiosInstance.post(url, payload);
+      toast.success("No Sale action has been successfully recorded!");
+      window.location.reload();
+    } catch (error) {
+      toast.error(
+        error?.response?.data?.message || "Failed to record No Sale action."
+      );
+    } finally {
+      setIsLoading(false);
+      setNoSaleDialogOpen(false);
+    }
+  };
+
   const handleOpenDialog = () => {
     setDialogOpen(true);
   };
 
   const handleCloseDialog = () => {
     setDialogOpen(false);
+  };
+
+  const handleOpenNoSaleDialog = () => {
+    setNoSaleDialogOpen(true);
+  };
+
+  const handleCloseNoSaleDialog = () => {
+    setNoSaleDialogOpen(false);
   };
 
   return (
@@ -94,12 +127,13 @@ const ConfirmSellingPrice = (props) => {
               </button>
             </li>
             <li
-              //   id={
-              //     new Date(props?.item?.time).getTime() + 30 * 24 * 60 * 60 * 1000 <=
-              //     Date.now()
-              //       ? "noSaleHasBeenMade"
-              //       : "noSaleHasBeenMadeMsg"
-              //   }
+              // id={
+              //   new Date(props?.item?.time).getTime() +
+              //     30 * 24 * 60 * 60 * 1000 <=
+              //   Date.now()
+              //     ? "noSaleHasBeenMade"
+              //     : "noSaleHasBeenMadeMsg"
+              // }
               name={props?.item?.watch_details.watch_id}
               value={props?.accepted_price}
               className={props?.confirm_the_sale_flag ? "inactiveLink" : ""}
@@ -112,6 +146,7 @@ const ConfirmSellingPrice = (props) => {
                       : "btn dark_yellow"
                     : "text-[#3c8dbc]"
                 }
+                onClick={handleOpenNoSaleDialog}
               >
                 {translate("NOSALEFOUND")} {/* 170 */}
               </button>
@@ -125,6 +160,15 @@ const ConfirmSellingPrice = (props) => {
         handleConfirm={handleConfirmSale}
         title="Confirm the sale"
         content=""
+        type={"staff"}
+        loading={isLoading}
+      />
+      <ConfirmDialog
+        open={noSaleDialogOpen}
+        handleClose={handleCloseNoSaleDialog}
+        handleConfirm={handleNoSale}
+        title="No Sale Found"
+        content="Are you sure you want to record this as No Sale?"
         type={"staff"}
         loading={isLoading}
       />

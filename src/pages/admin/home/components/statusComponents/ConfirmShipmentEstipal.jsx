@@ -33,7 +33,12 @@ const ConfirmShipmentEstipal = (props) => {
 
       const response = await axiosInstance.post(url, requestData);
 
-      toast.success(response?.message);
+      // toast.success(response?.message);
+      toast.success(
+        isReturn
+          ? "Shipment returned to seller successfully!"
+          : "Shipment confirmed successfully!"
+      );
       window.location.reload();
     } catch (error) {
       toast.error(error?.response?.data?.message);

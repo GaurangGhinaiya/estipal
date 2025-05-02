@@ -305,8 +305,3 @@ const CardData = (props) => {
 };
 
 export default CardData;
-
-
-
-
- 

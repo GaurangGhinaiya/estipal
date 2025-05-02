@@ -21,7 +21,8 @@ const StaffSellerInvoiceNew = (props) => {
       }`;
       const response = await axiosInstance.post(url);
 
-      toast.success(response?.message || "Shipment confirmed successfully!");
+      // toast.success(response?.message || "Shipment confirmed successfully!");
+      toast.success("Shipment confirmed successfully!");
       window.location.reload();
     } catch (error) {
       toast.error(
