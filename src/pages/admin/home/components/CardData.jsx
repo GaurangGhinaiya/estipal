@@ -180,8 +180,8 @@ const CardData = (props) => {
         return (
           <div className="message_box_inner">
             <h3>
-              {"Commissions to estimator has been paid ("}
-              {currency} ({item?.estimator_watch_revenue?.toFixed(2)})
+              {"Commissions to estimator has been paid "}
+              ({currency} {item?.estimator_watch_revenue?.toFixed(2)})
             </h3>
             <h3>Status: {item?.watch_status}</h3>
           </div>
@@ -203,7 +203,7 @@ const CardData = (props) => {
         return (
           <div className="message_box_inner">
             <h3>
-              {item?.message} ({accepted_price})
+              {item?.message} {accepted_price && `(${accepted_price})`}
             </h3>
             <h3>Status: {item?.watch_status}</h3>
           </div>

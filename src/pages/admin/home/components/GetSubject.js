@@ -150,7 +150,7 @@ export const getSubject = (
       return (
         <h3 className="m-0">
           <strong className="font-bold">Subject:</strong> {`${item?.message} `}(
-          {`${getWatchDetails()} - ${accepted_price}`})
+          {`${getWatchDetails()} ${accepted_price && accepted_price ? "- " + accepted_price : ""}`})
         </h3>
       );
   }
