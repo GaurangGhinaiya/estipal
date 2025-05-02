@@ -219,11 +219,11 @@ const ReadActivity = () => {
                     {readActivityData?.watch_details?.brand}
                   </p>
                 </div>
-                <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
+                <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex gap-[20px] justify-between border border-gray-300 dark:border-none">
                   <p className="dark:text-white text-black">
                     {translate("COLLECTION")}
                   </p>
-                  <p className="dark:text-white text-black">
+                  <p className="dark:text-white text-black items-end">
                     {readActivityData?.watch_details?.collection}
                   </p>
                 </div>
