@@ -330,7 +330,7 @@ const SellerUserCreate = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 my-[35px]">
+      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 my-[35px]">
         <div className="">
           <TextInputField
             rightTextValue=""
@@ -590,9 +590,10 @@ const SellerUserCreate = () => {
             bgColor={"#1e252b"}
             className="mb-[15px] flex sm:flex-row flex-col !items-start sm:items-center"
             onChange={handleChange}
+            wrapperValue = {true}
             component={
               <>
-                <div class="flex flex-col w-[230px] ml-auto">
+                <div class="flex flex-col w-[230px] ml-auto mr-[-5px]">
                   <div class="flex items-center !cursor-pointer mb-1">
                     <input
                       type="radio"
