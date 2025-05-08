@@ -62,7 +62,7 @@ const StaffTransactionTable = ({ data, sortField, sortOrder, handleSort }) => {
           <tr>
             <td
               colSpan={12}
-              className="px-[18px] py-[100px] text-center text-nowrap dark:text-[#ffff] text-black"
+              className="px-[18px] py-[100px] font-bold text-center text-nowrap dark:text-[#ffff] text-black"
             >
               No Data Found
             </td>
