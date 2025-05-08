@@ -16,6 +16,12 @@ const EstimatorMultiQuotation = (props) => {
   const autoSelected = props?.adminActivitiesData.some(
     (item) => item.type === "admin_notify_est_quotation"
   );
+  console.log(
+    "selectedEstimator: ",
+    selectedEstimator,
+    props?.estId,
+    autoSelected
+  );
 
   const passAllEstimator =
     props?.item?.staffEstimatorQuotationDeniedDetails?.length > 0 &&

@@ -21,7 +21,7 @@ const EstimatorPerformanceAnalysis = () => {
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("All");
-  const [groupBy, setGroupBy] = useState("All");
+  const [groupBy, setGroupBy] = useState("all");
   const userRole = localStorage.getItem("userRole");
 
   const handleSort = (key) => {
@@ -46,15 +46,15 @@ const EstimatorPerformanceAnalysis = () => {
       searchObject.estimator_watch_status = selectedStatus;
     }
 
-    if (groupBy !== "all") {
-      searchObject.group_by = groupBy;
-    }
+    // if (groupBy !== "all") {
+    //   searchObject.group_by = groupBy;
+    // }
 
     const searchValue = JSON.stringify(searchObject);
 
     try {
       const response = await axiosInstance.get(
-        `/performanceAnalysis/estimator?page=${currentPage}&records_per_page=${recordsPerPage}&search=${searchValue}&sort_order=${sortOrder}&sort_by=${sortField}`
+        `/performanceAnalysis/estimator?page=${currentPage}&records_per_page=${recordsPerPage}&search=${searchValue}&sort_order=${sortOrder}&sort_by=${sortField}&group_by=${groupBy}`
       );
 
       setSummaryData(response?.payload?.data?.summary);
@@ -126,7 +126,7 @@ const EstimatorPerformanceAnalysis = () => {
             <CircularProgress />
           </div>
         ) : summaryData?.length > 0 ? (
-          <SummaryTable data={summaryData} />
+          <SummaryTable data={summaryData} groupBy={groupBy} />
         ) : (
           <div className="py-[200px] px-4 text-center text-nowrap dark:text-[#ffff] text-black font-bold">
             No Data Found
