@@ -11,7 +11,11 @@ const TextInputField = (props) => {
       }}
       className={`w-full rounded-lg px-4 py-[12px] flex items-center ${props.className}`}
     >
-      <div className="text-sm dark:text-white text-black font-medium m-0 whitespace-nowrap min-w-[100px]">
+      <div
+        className={`text-sm dark:text-white text-black font-medium m-0 ${
+          props?.wrapperValue ? "whitespace-normal" : "whitespace-nowrap"
+        }  min-w-[100px]`}
+      >
         {props?.label}
       </div>
       <div className="flex w-full gap-[16px]">
@@ -22,7 +26,6 @@ const TextInputField = (props) => {
             {...props}
             disabled={props.disabled}
             readOnly={props.readOnly}
-           
             className={`w-full bg-transparent border-none outline-none ml-2 dark:text-white text-black placeholder-gray-400 text-right ${props.inputClass}`}
           />
         )}

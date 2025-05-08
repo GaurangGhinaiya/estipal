@@ -176,6 +176,7 @@ const translations = {
       PAIDSOLDTEXT: "Paid / Sold",
       SIGNINASTEXT: "Signed in as",
       ESTIMATEDTEXT: "Estimated",
+      OVER: "Over"
 
     },
   },
@@ -358,6 +359,7 @@ const translations = {
       PAIDSOLDTEXT: "Pagato/venduto",
       SIGNINASTEXT: "Accedi come",
       ESTIMATEDTEXT: "Stimato",
+      OVER: "Piu' di"
 
     },
   },
@@ -538,6 +540,7 @@ const translations = {
       PAIDSOLDTEXT: "Pagado / vendido",
       SIGNINASTEXT: "Inició sesión como",
       ESTIMATEDTEXT: "Estimado",
+      OVER: "Sobre"
 
     },
   },
@@ -703,7 +706,7 @@ const translations = {
       PAIDSOLDTEXT: "已付/已售",
       SIGNINASTEXT: "登录身份",
       ESTIMATEDTEXT: "估計的",
-
+      OVER: "超過"
     },
   },
   indu: {
@@ -882,6 +885,7 @@ const translations = {
       PAIDSOLDTEXT: "भुगतान किया गया / बेचा गया",
       SIGNINASTEXT: "इस रूप में साइन इन किया",
       ESTIMATEDTEXT: "अनुमानित",
+      OVER: "से अधिक"
 
     },
   },
@@ -1059,7 +1063,7 @@ const translations = {
       PAIDSOLDTEXT: "ชำระเงินแล้ว / ขายแล้ว",
       SIGNINASTEXT: "ลงชื่อเข้าใช้ในฐานะ",
       ESTIMATEDTEXT: "ประมาณการ",
-
+      OVER: "เกิน"
     },
   },
   jp: {
@@ -1236,7 +1240,7 @@ const translations = {
       PAIDSOLDTEXT: "支払い済み / 販売済み",
       SIGNINASTEXT: "としてサインイン",
       ESTIMATEDTEXT: "推定",
-
+      OVER: "終わった"
     },
   },
   pt: {
@@ -1415,7 +1419,7 @@ const translations = {
       PAIDSOLDTEXT: "Pago / Vendido",
       SIGNINASTEXT: "Conectado como",
       ESTIMATEDTEXT: "Estimado",
-
+      OVER: "Sobre"
     },
   },
   al: {
@@ -1564,6 +1568,7 @@ const translations = {
       PAIDSOLDTEXT: "تم الدفع / تم البيع",
       SIGNINASTEXT: "تسجيل الدخول كـ",
       ESTIMATEDTEXT: "تم التقدير",
+      OVER: "زيادة"
     },
   },
   hb: {
@@ -1726,6 +1731,7 @@ const translations = {
       PAIDSOLDTEXT: "שולם / נמכר",
       SIGNINASTEXT: "מחובר בתור",
       ESTIMATEDTEXT: "מוערך",
+      OVER: "מעל "
 
     },
   },

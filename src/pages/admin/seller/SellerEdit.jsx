@@ -382,7 +382,10 @@ const SellerEdit = () => {
               <Button
                 variant="contained"
                 className="!bg-[#ffff] !text-black !normal-case !py-[5px] sm:!py-[10px] sm:!px-[40px] !px-[15px] !rounded-[50px]"
-                onClick={() => setIsEditable(false)}
+                onClick={() => {
+                  setIsEditable(false);
+                  navigate("/admin/staff/staff_user");
+                }}
               >
                 Cancel
               </Button>
@@ -450,7 +453,7 @@ const SellerEdit = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 my-[35px]">
+      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 my-[35px]">
         <div className="">
           <TextInputField
             rightTextValue=""

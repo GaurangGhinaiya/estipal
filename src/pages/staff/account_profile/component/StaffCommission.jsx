@@ -40,7 +40,7 @@ const StaffCommission = (props) => {
                 type={"text"}
                 label={
                   index === commissionData.length - 1
-                    ? "Over"
+                    ? translate("OVER")
                     : translate("FROM")
                 }
                 name="from"
