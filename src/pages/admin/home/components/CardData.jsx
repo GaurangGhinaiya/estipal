@@ -12,7 +12,14 @@ import SellerInvoiceNew from "./statusComponents/SellerInvoiceNew";
 import EstimatorMultiQuotation from "./statusComponents/EstimatorMultiQuotation";
 
 const CardData = (props) => {
-  const { item, index, userRole, adminActivitiesData, currency } = props;
+  const {
+    item,
+    index,
+    userRole,
+    adminActivitiesData,
+    currency,
+    getDetailById,
+  } = props;
   let prefix = "SCA";
   if (item?.admin_group === "estimator") {
     prefix = "ECA";
@@ -95,6 +102,7 @@ const CardData = (props) => {
       confirm_the_issuing_of_invoice_flag,
       adminActivitiesData,
       currency,
+      getDetailById,
     };
     switch (item?.type) {
       case "accept_estimation":
@@ -180,8 +188,8 @@ const CardData = (props) => {
         return (
           <div className="message_box_inner">
             <h3>
-              {"Commissions to estimator has been paid "}
-              ({currency} {item?.estimator_watch_revenue?.toFixed(2)})
+              {"Commissions to estimator has been paid "}({currency}{" "}
+              {item?.estimator_watch_revenue?.toFixed(2)})
             </h3>
             <h3>Status: {item?.watch_status}</h3>
           </div>

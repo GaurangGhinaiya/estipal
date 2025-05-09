@@ -23,7 +23,7 @@ const StaffSellerInvoiceNew = (props) => {
 
       // toast.success(response?.message || "Shipment confirmed successfully!");
       toast.success("Shipment confirmed successfully!");
-      window.location.reload();
+      props.getDetailById();
     } catch (error) {
       toast.error(
         error?.response?.data?.message || "Failed to confirm shipment."

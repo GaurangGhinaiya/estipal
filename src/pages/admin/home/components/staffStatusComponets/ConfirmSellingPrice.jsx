@@ -51,7 +51,7 @@ const ConfirmSellingPrice = (props) => {
 
       const response = await axiosInstance.post(url, payload);
       toast.success("No Sale action has been successfully recorded!");
-      window.location.reload();
+      props.getDetailById();
     } catch (error) {
       toast.error(
         error?.response?.data?.message || "Failed to record No Sale action."

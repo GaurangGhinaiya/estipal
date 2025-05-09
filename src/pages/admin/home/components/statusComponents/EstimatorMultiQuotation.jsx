@@ -16,12 +16,6 @@ const EstimatorMultiQuotation = (props) => {
   const autoSelected = props?.adminActivitiesData.some(
     (item) => item.type === "admin_notify_est_quotation"
   );
-  console.log(
-    "selectedEstimator: ",
-    selectedEstimator,
-    props?.estId,
-    autoSelected
-  );
 
   const passAllEstimator =
     props?.item?.staffEstimatorQuotationDeniedDetails?.length > 0 &&
@@ -32,7 +26,7 @@ const EstimatorMultiQuotation = (props) => {
     <div className="w-full">
       <div className="overflow-x-auto">
         {" "}
-        <table className="table-auto w-full text-left">
+        <table className="table-auto w-full text-left row-border nowrap dataTable">
           <thead style={{ borderBottom: "2px solid #111111" }}>
             <tr>
               <th className="px-[18px] py-[10px] text-white  cursor-pointer">
@@ -67,13 +61,9 @@ const EstimatorMultiQuotation = (props) => {
                 <tr
                   style={{
                     borderTop:
-                      selectedEstimator == estId && autoSelected
-                        ? "1px solid #ffffff"
-                        : "",
+                      selectedEstimator == estId ? "1px solid #ffffff" : "",
                     borderBottom:
-                      selectedEstimator == estId && autoSelected
-                        ? "1px solid #ffffff"
-                        : "",
+                      selectedEstimator == estId ? "1px solid #ffffff" : "",
                   }}
                   key={estId}
                 >
@@ -126,8 +116,8 @@ const EstimatorMultiQuotation = (props) => {
                         }
 
                       ${
-                        selectedEstimator == estId
-                          ? autoSelected
+                        selectedEstimator
+                          ? selectedEstimator == estId
                             ? "dark_green"
                             : "light_grey"
                           : !passAllEstimator

@@ -25,8 +25,7 @@ const SellerInvoice = (props) => {
 
       // toast.success(response?.message);
       toast.success("Payment confirmed successfully!");
-
-      window.location.reload();
+      props.getDetailById();
     } catch (error) {
       toast.error(error?.response?.data?.message);
     } finally {
