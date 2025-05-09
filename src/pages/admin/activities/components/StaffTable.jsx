@@ -156,7 +156,9 @@ const StaffTable = ({
             return (
               <tr
                 key={index}
-                className="border-b border-[#202b34]"
+                className={`border-b border-[#202b34] ${
+                  activity?.seller_msg_read == 1 && "!font-semibold"
+                }`}
                 onClick={() =>
                   navigate(
                     `/admin/home/readActivity/${activity?.id}/${activity?.watch_id}`

@@ -280,7 +280,7 @@ const CardData = (props) => {
       className="mt-5 dark:bg-[#1E252B] bg-[#F8F8F8] dark:text-white text-black p-6 rounded-lg dark:shadow-lg shadow-none border border-gray-300 dark:border-none"
       style={{ border: "1px solid #ccc" }}
     >
-      <div className="border_bottom pb-4">
+      <div className="border_bottom">
         {getSubject(
           item,
           accepted_price,

@@ -46,7 +46,7 @@ const ConfirmSold = (props) => {
 
       <div className="select_box text-center mt-20">
         <div className="select_box_inner max-sm:!p-[10px]">
-          <p className="mb-[10px]">
+          <p className="flex max-sm:flex-col items-center gap-[10px] mb-[10px]">
             <span>
               <img
                 src={UrgentImage}
@@ -54,6 +54,9 @@ const ConfirmSold = (props) => {
                 className="w-[40px] block mx-auto"
               />
             </span>
+
+            <span className="pending_status">Pending Action:</span>
+            <span>Confirmation is required</span>
           </p>
           <ul className="list-unstyled list-inline">
             <li

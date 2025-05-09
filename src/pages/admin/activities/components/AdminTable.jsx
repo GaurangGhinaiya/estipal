@@ -105,7 +105,9 @@ const AdminTable = ({
           activitiesShowData?.map((activity, index) => (
             <tr
               key={index}
-              className="border-b border-[#202b34] cursor-pointer"
+              className={`border-b border-[#202b34] cursor-pointer ${
+                activity?.admin_msg_read == 1 && "!font-semibold"
+              }`}
               onClick={() => handleRowClick(activity?.watch_id)}
             >
               <td className="px-[18px] py-[0px] text-[#ffff] text-center">
