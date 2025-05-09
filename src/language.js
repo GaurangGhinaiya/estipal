@@ -27,7 +27,7 @@ export const useTranslate = () => {
         MODEL: languages?.find((item) => item?.id === 91)?.[savedLanguage] || "Model",
         SERIAL: languages?.find((item) => item?.id === 78)?.[savedLanguage] || "Serial",
         ADDEDBY: languages?.find((item) => item?.id === 79)?.[savedLanguage] || "Added By",
-        ADDEDON: languages?.find((item) => item?.id === 80)?.[savedLanguage] || "Added On",
+        ADDEDON: languages?.find((item) => item?.id === 13)?.[savedLanguage] || "Added On",
         WATCHHISTORY: languages?.find((item) => item?.id === 112)?.[savedLanguage] || "Watch history",
         FILTERBYSTATUS: "Filter by Status",
         TO: "to",
