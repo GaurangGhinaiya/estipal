@@ -5,7 +5,7 @@ export const useTranslate = () => {
   const savedLanguage = localStorage.getItem("Language") || "en";
 
   const translations = {
-    en: {
+    lang: {
       translation: {
         ACTIVITIES: languages?.find((item) => item?.id === 59)?.[savedLanguage] || "Activities",
         WATCHESHISTORY: languages?.find((item) => item?.id === 60)?.[savedLanguage] || "Watches History",
@@ -194,7 +194,7 @@ export const useTranslate = () => {
   };
 
   const translate = (key) => {
-    return translations?.en?.translation?.[key] || key;
+    return translations?.lang?.translation?.[key] || key;
   };
 
   return { translate, loading, error };

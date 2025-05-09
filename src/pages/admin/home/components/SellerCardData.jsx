@@ -12,7 +12,14 @@ import { SellerGetSubject } from "./SellerGetSubject";
 
 const SellerCardData = (props) => {
   const { translate } = useTranslate();
-  const { item, index, userRole, adminActivitiesData, currency } = props;
+  const {
+    item,
+    index,
+    userRole,
+    adminActivitiesData,
+    currency,
+    getDetailById,
+  } = props;
 
   let accepted_price = "";
   let accepted_price_with_commission = "";
@@ -120,6 +127,7 @@ const SellerCardData = (props) => {
       adminActivitiesData,
       currency,
       confirm_the_sale_flag,
+      getDetailById,
     };
     switch (item?.type) {
       case "accept_estimation":

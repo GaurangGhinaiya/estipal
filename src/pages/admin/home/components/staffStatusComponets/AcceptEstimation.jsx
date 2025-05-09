@@ -27,7 +27,7 @@ const AcceptEstimation = (props) => {
       );
       toast.success("Successfully sold to Estipal!");
       // toast.success(response?.message);
-      window.location.reload();
+      props.getDetailById();
     } catch (error) {
       toast.error(error?.response?.data?.message);
     } finally {

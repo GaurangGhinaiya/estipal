@@ -39,7 +39,7 @@ const ConfirmShipmentEstipal = (props) => {
           ? "Shipment returned to seller successfully!"
           : "Shipment confirmed successfully!"
       );
-      window.location.reload();
+      props.getDetailById();
     } catch (error) {
       toast.error(error?.response?.data?.message);
     } finally {

@@ -154,7 +154,7 @@ const ReadActivity = () => {
             {readActivityData?.watch_details?.brand},{" "}
             {readActivityData?.watch_details?.collection},{" "}
             {readActivityData?.watch_details?.model_no}{" "}
-            {readActivityData?.watch_details?.model_desc && "(" }
+            {readActivityData?.watch_details?.model_desc && "("}
             {readActivityData?.watch_details?.model_desc}
             {readActivityData?.watch_details?.model_desc && ")"}
           </h3>
@@ -302,6 +302,7 @@ const ReadActivity = () => {
                 userRole={userRole}
                 adminActivitiesData={readActivityData?.adminActivities}
                 currency={readActivityData?.currency}
+                getDetailById={getDetailById}
               />
             </div>
           ) : (
@@ -313,6 +314,7 @@ const ReadActivity = () => {
                 userRole={userRole}
                 adminActivitiesData={readActivityData?.adminActivities}
                 currency={readActivityData?.currency}
+                getDetailById={getDetailById}
               />
             </div>
           )

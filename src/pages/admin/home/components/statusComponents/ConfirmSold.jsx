@@ -22,7 +22,7 @@ const ConfirmSold = (props) => {
 
       // toast.success(response?.message);
       toast.success("Commission payment confirmed successfully!");
-      window.location.reload();
+      props.getDetailById();
     } catch (error) {
       toast.error(error?.response?.data?.message);
     } finally {

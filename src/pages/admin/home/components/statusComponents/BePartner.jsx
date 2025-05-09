@@ -25,7 +25,7 @@ const BePartner = (props) => {
       );
       // toast.success(response?.message);
       toast.success("Selling price confirmed successfully!");
-      window.location.reload();
+      props.getDetailById();
     } catch (error) {
       toast.error(error?.response?.data?.message);
     } finally {
