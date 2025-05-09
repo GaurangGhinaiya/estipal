@@ -1,8 +1,10 @@
 import React from "react";
 
-import { translate } from "../../../../../language";
+import { translate, useTranslate } from "../../../../../language";
 
 const StaffConfirmShipmentEstipal = (props) => {
+  const { translate } = useTranslate();
+  
   return (
     <div className="message_box_inner">
       {props?.item?.staffWatchActivityDetails?.payment_tier === 1 && (

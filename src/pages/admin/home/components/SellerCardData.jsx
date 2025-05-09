@@ -1,6 +1,5 @@
 import moment from "moment";
 import React from "react";
-import { sellerGetSubject } from "./SellerGetSubject";
 import AcceptEstimation from "./staffStatusComponets/AcceptEstimation";
 import ConfirmPaymentSeller from "./staffStatusComponets/ConfirmPaymentSeller";
 import ConfirmSellingPrice from "./staffStatusComponets/ConfirmSellingPrice";
@@ -8,9 +7,11 @@ import StaffConfirmShipmentEstipal from "./staffStatusComponets/StaffConfirmShip
 import StaffConfirmTheAcceptance from "./staffStatusComponets/StaffConfirmTheAcceptance";
 import StaffSellerInvoice from "./staffStatusComponets/StaffSellerInvoice";
 import StaffSellerInvoiceNew from "./staffStatusComponets/StaffSellerInvoiceNew";
-import { translate } from "../../../../language";
+import { useTranslate } from "../../../../language";
+import { SellerGetSubject } from "./SellerGetSubject";
 
 const SellerCardData = (props) => {
+  const { translate } = useTranslate();
   const {
     item,
     index,
@@ -370,7 +371,7 @@ const SellerCardData = (props) => {
           style={{ border: "1px solid #ccc" }}
         >
           <div className="border_bottom pb-4">
-            {sellerGetSubject(
+            {SellerGetSubject(
               item,
               accepted_price,
               getWatchDetails,

@@ -15,12 +15,13 @@ import ProfileImg from "../../../assets/images/icons/Profile.png";
 import HbFlag from "../../../assets/images/icons/hb_flag.png";
 import AlFlag from "../../../assets/images/icons/al_flag.png";
 import { languageToCountry } from "../../../utils";
-import { translate } from "../../../language";
+import { useTranslate } from "../../../language";
 
 export default function Profile() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [anchorElLang, setAnchorElLang] = React.useState(null);
   const [languageSettings, setLanguageSettings] = React.useState([]);
+  const { translate } = useTranslate();
   const [selectedLang, setSelectedLang] = React.useState(
     localStorage.getItem("Language")
   );
@@ -124,7 +125,13 @@ export default function Profile() {
                 ?.map((lang) => {
                   return (
                     <img
-                      src={lang?.countryCode === "hb" ? HbFlag  : lang?.countryCode === "al" ? AlFlag : `https://flagcdn.com/w40/${lang?.countryCode?.toLowerCase()}.png`}
+                      src={
+                        lang?.countryCode === "hb"
+                          ? HbFlag
+                          : lang?.countryCode === "al"
+                          ? AlFlag
+                          : `https://flagcdn.com/w40/${lang?.countryCode?.toLowerCase()}.png`
+                      }
                       alt="icon-profile"
                       className="w-[30px] mt-[5px] mr-[4px]"
                     />
@@ -261,7 +268,13 @@ export default function Profile() {
             >
               <ListItemIcon>
                 <img
-                  src={lang?.countryCode === "hb" ? HbFlag  : lang?.countryCode === "al" ? AlFlag : `https://flagcdn.com/w40/${lang?.countryCode?.toLowerCase()}.png`}
+                  src={
+                    lang?.countryCode === "hb"
+                      ? HbFlag
+                      : lang?.countryCode === "al"
+                      ? AlFlag
+                      : `https://flagcdn.com/w40/${lang?.countryCode?.toLowerCase()}.png`
+                  }
                   alt="icon-profile"
                   className="w-[30px] mr-[4px]"
                 />

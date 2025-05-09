@@ -1,7 +1,7 @@
 import React from "react";
 import Pagination from "@mui/material/Pagination";
 
-import { translate } from "../../language";
+import { useTranslate } from "../../language";
 
 const PaginationComponent = ({
   userRole,
@@ -11,6 +11,7 @@ const PaginationComponent = ({
   handlePageChange,
   recordsPerPage,
 }) => {
+  const { translate } = useTranslate();
   const totalPagesData = Math.ceil(totalPages / recordsPerPage);
   const startRecord = (currentPage - 1) * recordsPerPage + 1;
   const endRecord = Number(currentPage) * Number(recordsPerPage);

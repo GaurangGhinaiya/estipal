@@ -3,9 +3,10 @@ import ArrowDropUpRoundedIcon from "@mui/icons-material/ArrowDropUpRounded";
 import ArrowDropDownRoundedIcon from "@mui/icons-material/ArrowDropDownRounded";
 import moment from "moment";
 
-import { translate } from "../../../../../language";
+import { useTranslate } from "../../../../../language";
 
 const StaffTransactionTable = ({ data, sortField, sortOrder, handleSort }) => {
+  const { translate } = useTranslate();
   return (
     <table className="table-auto w-full text-left">
       <thead style={{ borderBottom: "2px solid #111111" }}>
@@ -62,7 +63,7 @@ const StaffTransactionTable = ({ data, sortField, sortOrder, handleSort }) => {
           <tr>
             <td
               colSpan={12}
-              className="px-[18px] py-[100px] text-center text-nowrap dark:text-[#ffff] text-black"
+              className="px-[18px] py-[100px] font-bold text-center text-nowrap dark:text-[#ffff] text-black"
             >
               No Data Found
             </td>

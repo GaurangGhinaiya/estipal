@@ -8,9 +8,10 @@ import {
 import ConfirmDialog from "../../../../../components/common/ConfirmDialog";
 import axiosInstance from "../../../../../services";
 import toast from "react-hot-toast";
-import { translate } from "../../../../../language";
+import { useTranslate } from "../../../../../language";
 
 const AcceptEstimation = (props) => {
+  const { translate } = useTranslate();
   const [isLoading, setIsLoading] = useState(false);
   const [sellDialogOpen, setSellDialogOpen] = useState(false);
   const [partnerDialogOpen, setPartnerDialogOpen] = useState(false);

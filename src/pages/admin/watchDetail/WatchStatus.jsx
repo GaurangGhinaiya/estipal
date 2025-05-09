@@ -5,17 +5,17 @@ import { useNavigate, useParams } from "react-router-dom";
 import axiosInstance from "../../../services";
 import { convertUnixToDate, formatNumberOrDefault } from "../../../utils";
 import ImageDialog from "./components/ImageDialog";
-import { translate } from "../../../language";
+import {useTranslate } from "../../../language";
 
 const WatchStatus = () => {
   const { id } = useParams();
-
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [watchDetailData, setWatchDetailData] = useState({});
   const [loading, setLoading] = useState(true);
   const userRole = localStorage.getItem("userRole");
+  const { translate } = useTranslate();
 
   const handleOpenDialog = (index) => {
     setSelectedIndex(index);
@@ -146,7 +146,7 @@ const WatchStatus = () => {
                 </p>
               </div>
               <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
-                <p className="dark:text-white text-black">Condition</p>
+                <p className="dark:text-white text-black">{translate("CONDITION")}</p>
                 <p className="dark:text-white text-black">
                   {getSafeValue(
                     watchDetailData?.imageUploadDetails?.[0]?.condition,
@@ -155,7 +155,7 @@ const WatchStatus = () => {
                 </p>
               </div>
               <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
-                <p className="dark:text-white text-black">Bracelet info</p>
+                <p className="dark:text-white text-black">{translate("BRACLETINFO")}</p>
                 <p className="dark:text-white text-black">
                   {getSafeValue(
                     watchDetailData?.imageUploadDetails?.[0]?.bracelet_link,
@@ -164,13 +164,13 @@ const WatchStatus = () => {
                 </p>
               </div>
               <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
-                <p className="dark:text-white text-black">Year of production</p>
+                <p className="dark:text-white text-black">{translate("YEARSOFPRODUCTION")}</p>
                 <p className="dark:text-white text-black">
                   {getSafeValue(watchDetailData?.year_of_prod, "number")}
                 </p>
               </div>
               <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
-                <p className="dark:text-white text-black">Requested price</p>
+                <p className="dark:text-white text-black">{translate("REQUESTEDPRICE")}</p>
                 <p className="dark:text-white text-black">
                   {watchDetailData?.adminDetail?.currency}{" "}
                   {formatNumberOrDefault(
@@ -191,7 +191,7 @@ const WatchStatus = () => {
                 </p>
               </div>
               <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
-                <p className="dark:text-white text-black">Warranty date</p>
+                <p className="dark:text-white text-black">{translate("WARRANTYDATE")}</p>
                 <p className="dark:text-white text-black">
                   {watchDetailData?.imageUploadDetails?.[0]?.warentee_card_year
                     ? convertUnixToDate(
@@ -202,7 +202,7 @@ const WatchStatus = () => {
                 </p>
               </div>
               <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
-                <p className="dark:text-white text-black">Box</p>
+                <p className="dark:text-white text-black">{translate("BOX")}</p>
                 <p className="dark:text-white text-black">
                   {watchDetailData?.imageUploadDetails?.[0]?.box_image
                     ? "Yes"

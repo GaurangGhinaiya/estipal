@@ -1,8 +1,8 @@
-import { translate } from "../../../../language";
+import { useTranslate } from "../../../../language";
 
 const userRole = localStorage.getItem("userRole");
 
-export const sellerGetSubject = (
+export const SellerGetSubject = (
   item,
   accepted_price,
   getWatchDetails,
@@ -11,10 +11,10 @@ export const sellerGetSubject = (
   accepted_price_with_commission,
   sold_price
 ) => {
+  const { translate } = useTranslate();
   const watchDetails = item?.watch_details || {};
-  const brandDetails = `${watchDetails.brand || ""} ${
-    watchDetails.collection || ""
-  } ${watchDetails.model_no || ""} ${watchDetails.serial_no || ""}`;
+  const brandDetails = `${watchDetails.brand || ""} ${watchDetails.collection || ""
+    } ${watchDetails.model_no || ""} ${watchDetails.serial_no || ""}`;
 
   if (item?.type === "Be-Partner") {
     // 130
@@ -31,8 +31,10 @@ export const sellerGetSubject = (
     return (
       <h3 className="m-0">
         <span className="!font-bold">{translate("SUBJECT")}:</span>{" "}
-        {translate("CONFIRMSELLINGPRICETEXT1")} {confirmed_price}.{" "}
-        {translate("CONFIRMSELLINGPRICETEXT2")} (
+        {translate("CONFIRMSELLINGPRICETEXT1").replace(
+          "{confirmed_price}",
+          confirmed_price
+        )} (
         {`${brandDetails} - ${accepted_price}`})
       </h3>
     );
@@ -49,7 +51,10 @@ export const sellerGetSubject = (
     return (
       <h3 className="m-0">
         <span className="!font-bold">{translate("SUBJECT")}:</span>{" "}
-        {translate("CONFIRMISSUEINVOICETEXT")} {commission_price} (
+        {translate("CONFIRMISSUEINVOICETEXT").replace(
+          "{commission_price}",
+          commission_price
+        )} (
         {`${brandDetails} - ${accepted_price}`})
       </h3>
     );
@@ -212,7 +217,7 @@ export const sellerGetSubject = (
   } else if (item?.type === "est_re-estimate") {
     const message =
       item?.message ===
-      "Estimator has placed his re-estimation on staff first counter offer"
+        "Estimator has placed his re-estimation on staff first counter offer"
         ? `${translate("ESTREESTIMATE1")}` // 149
         : `${translate("ESTREESTIMATE2")}`; //153
     return (

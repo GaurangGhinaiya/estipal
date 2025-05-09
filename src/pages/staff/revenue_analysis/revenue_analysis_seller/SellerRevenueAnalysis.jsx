@@ -8,7 +8,7 @@ import FilterComponent from "../../../admin/analysis/components/FilterComponent"
 import SelectStatusComponent from "./components/SelectStatusComponent";
 import StaffTransactionTable from "./components/StaffTransactionTable";
 import SummaryTable from "./components/SummaryTable";
-import { translate } from "../../../../language";
+import { useTranslate } from "../../../../language";
 
 const SellerRevenueAnalysis = () => {
   const [summaryData, setSummaryData] = useState([]);
@@ -24,6 +24,7 @@ const SellerRevenueAnalysis = () => {
   const [toDate, setToDate] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("All");
   const userRole = localStorage.getItem("userRole");
+  const { translate } = useTranslate();
 
   const handleSort = (key) => {
     const newOrder = sortField === key && sortOrder === "asc" ? "desc" : "asc";

@@ -4,9 +4,10 @@ import UrgentImage from "../../../../../assets/images/icons/Urgent 1.png";
 import ConfirmDialog from "../../../../../components/common/ConfirmDialog";
 import axiosInstance from "../../../../../services";
 import toast from "react-hot-toast";
-import { translate } from "../../../../../language";
+import { useTranslate } from "../../../../../language";
 
 const StaffSellerInvoice = (props) => {
+  const { translate } = useTranslate();
   const [isLoading, setIsLoading] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
 
@@ -48,7 +49,7 @@ const StaffSellerInvoice = (props) => {
           {/* 154 */}
           <h3>
             {translate("CONFIRMSELECTIONTIER1TEXT").replace(
-              "{props?.accepted_price_with_commission}",
+              "{accepted_price_with_commission}",
               props?.accepted_price_with_commission
             )}
           </h3>
@@ -64,7 +65,7 @@ const StaffSellerInvoice = (props) => {
           {/* 155 */}
           <h3>
             {translate("CONFIRMSELECTIONTIER2TEXT").replace(
-              "{props?.accepted_price_with_commission}",
+              "{accepted_price_with_commission}",
               props?.accepted_price_with_commission
             )}
           </h3>

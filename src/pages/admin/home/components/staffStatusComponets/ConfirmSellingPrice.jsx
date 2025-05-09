@@ -4,12 +4,13 @@ import UrgentImage from "../../../../../assets/images/icons/Urgent 1.png";
 import axiosInstance from "../../../../../services";
 import toast from "react-hot-toast";
 import ConfirmDialog from "../../../../../components/common/ConfirmDialog";
-import { translate } from "../../../../../language";
+import { useTranslate } from "../../../../../language";
 
 const ConfirmSellingPrice = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [noSaleDialogOpen, setNoSaleDialogOpen] = useState(false);
+  const { translate } = useTranslate();
 
   const confirmedPrice = props?.input_confirmed_price
     ? props?.input_confirmed_price

@@ -10,7 +10,7 @@ import useActivityData from "./hooks/useActivityData";
 
 import alarmWatchImage from "../../../assets/images/icons/Alarm_watch_light.png";
 import alarmWatchImageBlack from "../../../assets/images/icons/Alarm_watch.png";
-import { translate } from "../../../language";
+import { useTranslate } from "../../../language";
 
 export const statusOptions = [
   { label: "All", value: "All" },
@@ -44,6 +44,7 @@ const ActivitiesTable = () => {
   const [estimatorId, setEstimatorId] = useState(null);
   const debouncedSearchTerm = useDebounce(searchQuery, 500);
   const userRole = localStorage.getItem("userRole");
+  const { translate, loading, error } = useTranslate();
 
   const { activitesData, totalRecords, isLoading, getActivityData, currency } =
     useActivityData({
