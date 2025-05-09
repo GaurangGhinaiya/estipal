@@ -4,11 +4,12 @@ import UrgentImage from "../../../../../assets/images/icons/Urgent 1.png";
 import axiosInstance from "../../../../../services";
 import toast from "react-hot-toast";
 import ConfirmDialog from "../../../../../components/common/ConfirmDialog";
-import { translate } from "../../../../../language";
+import { useTranslate } from "../../../../../language";
 
 const ConfirmPaymentSeller = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const { translate } = useTranslate();
 
   const handleConfirmShipment = async () => {
     if (isLoading) return;
@@ -46,7 +47,7 @@ const ConfirmPaymentSeller = (props) => {
       {/* 157 */}
       <h3>
         {translate("CONFIRMPAYMENTSELLERONE").replace(
-          "{props?.accepted_price_with_commission}",
+          "{accepted_price_with_commission}",
           props?.accepted_price_with_commission
         )}
       </h3>

@@ -11,13 +11,14 @@ import useDebounce from "../../../components/common/UseDebounce";
 import axiosInstance from "../../../services";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { translate } from "../../../language";
+import { useTranslate } from "../../../language";
 
 const ManageStaff1 = () => {
   const [data, setData] = useState();
 
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const { translate } = useTranslate();
   const [archivedData, setArchivedData] = useState([]);
   const [editingIndex, setEditingIndex] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");

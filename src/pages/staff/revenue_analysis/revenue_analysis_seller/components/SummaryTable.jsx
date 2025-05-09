@@ -1,9 +1,10 @@
 import React from "react";
 
 import { formattedNumber } from "../../../../../utils";
-import { translate } from "../../../../../language";
+import { useTranslate } from "../../../../../language";
 
 const SummaryTable = ({ data }) => {
+  const { translate } = useTranslate();
   return (
     <table className="table-auto w-full text-left">
       <thead style={{ borderBottom: "2px solid #111111" }}>

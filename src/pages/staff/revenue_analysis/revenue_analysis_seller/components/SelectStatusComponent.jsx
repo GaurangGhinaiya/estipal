@@ -1,12 +1,13 @@
 import React from "react";
 
-import { translate } from "../../../../../language";
+import { useTranslate } from "../../../../../language";
 
 const SelectStatusComponent = ({
   selectedStatus,
   setSelectedStatus,
   setCurrentPage,
 }) => {
+    const { translate } = useTranslate();
   return (
     <div className="flex items-center space-x-2 dark:text-white text-black px-14 max-md:px-[20px]">
       <span>{translate("SELECTSTATUS")}:</span>

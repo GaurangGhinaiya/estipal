@@ -8,8 +8,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Profile from "./components/Profile";
 import LightLogo from "../../assets/images/img-logo-bar-admin.png";
 import DarkLogo from "../../assets/images/img-logo-login.png";
-
-import { translate } from "../../language";
+import { useTranslate } from "../../language";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -25,6 +24,7 @@ const Header = () => {
   const close_Revenue_Analysis_ref_mobile = useRef(null);
   const close_Performance_Analysis_ref = useRef(null);
   const close_Performance_Analysis_ref_mobile = useRef(null);
+  const { translate, loading, error } = useTranslate();
 
   const handleRevenueMenuClick = (event) => {
     setOpenRevenueMenu(!openRevenueMenu);

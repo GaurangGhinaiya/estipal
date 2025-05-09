@@ -2,11 +2,11 @@ import React, { useEffect } from "react";
 import TextInputField from "../../../../components/common/TextInputField";
 import { convertCommissionData } from "../../../admin/seller/function/convertCommissionData";
 
-import { translate } from "../../../../language";
+import { useTranslate } from "../../../../language";
 
 const StaffCommission = (props) => {
   const { isEditable, commissionData, setCommissionData, staffData } = props;
-
+  const { translate } = useTranslate();
   useEffect(() => {
     if (staffData?.commission) {
       const ConvertCommission = convertCommissionData(staffData?.commission);

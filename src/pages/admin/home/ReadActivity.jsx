@@ -6,12 +6,12 @@ import { extractImageUrls, formatNumberOrDefault } from "../../../utils";
 import CardData from "./components/CardData";
 import SellerCardData from "./components/SellerCardData";
 
-import { translate } from "../../../language";
+import { useTranslate } from "../../../language";
 
 const ReadActivity = () => {
   const navigate = useNavigate();
   const params = useParams();
-
+  const { translate } = useTranslate();
   const { id, watch_id } = params;
   const [readActivityData, setReadActivityData] = useState();
   const [isLoading, setIsLoading] = useState(true);

@@ -9,7 +9,7 @@ import { statusOptions } from "../activities/ActivitiesTable";
 import AdminUserWatchHistory from "./component/AdminUserWatchHistory";
 import StaffUserWatchHistory from "./component/StaffUserWatchHistory";
 
-import { translate } from "../../../language";
+import { useTranslate } from "../../../language";
 
 const WatchHistory = () => {
   const navigate = useNavigate();
@@ -29,6 +29,7 @@ const WatchHistory = () => {
   const userRole = localStorage.getItem("userRole");
   const [sortField, setSortField] = useState("id");
   const [sortOrder, setSortOrder] = useState("desc");
+  const { translate } = useTranslate();
 
   const handleSort = (key) => {
     const newOrder = sortField === key && sortOrder === "asc" ? "desc" : "asc";
@@ -105,7 +106,16 @@ const WatchHistory = () => {
     if (currentPage) {
       getWatchActivityList();
     }
-  }, [currentPage, debouncedSearchTerm, status, sortOrder, sortField,staffId,estimatorId,sellerId]);
+  }, [
+    currentPage,
+    debouncedSearchTerm,
+    status,
+    sortOrder,
+    sortField,
+    staffId,
+    estimatorId,
+    sellerId,
+  ]);
 
   return (
     <div className="pb-[15px] min-h-[100vh]">

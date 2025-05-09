@@ -9,7 +9,7 @@ import Checkbox from "@mui/material/Checkbox";
 
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../../../services";
-import { translate } from "../../../../language";
+import { useTranslate } from "../../../../language";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -24,6 +24,7 @@ const StaffTable = ({
 }) => {
   const [activitiesShowData, setActivitiesShowData] = useState([]);
   const navigate = useNavigate();
+  const { translate } = useTranslate();
 
   useEffect(() => {
     setActivitiesShowData(activitesData);

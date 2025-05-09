@@ -15,11 +15,12 @@ import SearchBar from "../../../components/common/SearchBar";
 import useDebounce from "../../../components/common/UseDebounce";
 import axiosInstance from "../../../services";
 import SaveIcon from "@mui/icons-material/Save";
-import { translate } from "../../../language";
+import { useTranslate } from "../../../language";
 
 const ManageStaff = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const { translate } = useTranslate();
   const [editingId, setEditingId] = useState(null); // Track the ID of the row being edited
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);

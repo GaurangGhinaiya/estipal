@@ -2,7 +2,7 @@
 import { CircularProgress } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import PaginationComponent from "../../../../components/common/PaginationComponent";
-import { translate } from "../../../../language";
+import { useTranslate } from "../../../../language";
 import axiosInstance from "../../../../services";
 import FilterComponent from "../../../admin/analysis/performance_analysis/performance_analysis_estimator/components/FilterComponent";
 import SelectStatusComponent from "./components/SelectStatusComponent";
@@ -24,6 +24,7 @@ const SellerPerformanceAnalysis = () => {
   const [groupBy, setGroupBy] = useState("all");
   const [selectedStatus, setSelectedStatus] = useState("All");
   const userRole = localStorage.getItem("userRole");
+  const { translate } = useTranslate();
 
   const handleSort = (key) => {
     const newOrder = sortField === key && sortOrder === "asc" ? "desc" : "asc";

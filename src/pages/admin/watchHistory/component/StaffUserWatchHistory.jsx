@@ -11,7 +11,7 @@ import gmailIcon from "../../../../assets/images/icons/icn-mai-light.svg";
 import gmailYellowIcon from "../../../../assets/images/icons/icn-mail-yellow.svg";
 import { useEffect, useState } from "react";
 import axiosInstance from "../../../../services";
-import { translate } from "../../../../language";
+import { useTranslate } from "../../../../language";
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 const StaffUserWatchHistory = ({
@@ -22,7 +22,7 @@ const StaffUserWatchHistory = ({
   sortOrder,
 }) => {
   const navigate = useNavigate();
-
+  const { translate } = useTranslate();
   const [watchActivityDataUpdate, setWatchActivityDataUpdate] = useState([]);
 
   useEffect(() => {

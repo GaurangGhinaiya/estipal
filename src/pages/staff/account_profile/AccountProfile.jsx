@@ -12,13 +12,14 @@ import PhoneInput, {
 } from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import TextInputField from "../../../components/common/TextInputField";
-import { translate } from "../../../language";
+import { useTranslate } from "../../../language";
 import axiosInstance from "../../../services";
 import { fetchCountryList, fetchStateList } from "../../../utils/apiUtils";
 import StaffCommission from "./component/StaffCommission";
 
 const AccountProfile = () => {
   const userRole = localStorage.getItem("userRole");
+  const { translate } = useTranslate();
   // const styles = {
   //   input: {
   //     backgroundColor: userRole === "staff" ? "#FFFFFF" : "#1e252b",

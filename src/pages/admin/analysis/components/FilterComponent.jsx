@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "@mui/material";
 
-import { translate } from "../../../../language";
+import { useTranslate } from "../../../../language";
 
 const FilterComponent = ({
   fromDate,
@@ -11,6 +11,7 @@ const FilterComponent = ({
   applyFilter,
   clearFilter,
 }) => {
+  const { translate } = useTranslate();
   return (
     <div className="flex items-start sm:items-center sm:flex-row flex-col gap-4 space-x-4 mb-1 px-4">
       <div className="flex items-center space-x-2">
