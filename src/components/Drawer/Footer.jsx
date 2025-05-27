@@ -1,6 +1,5 @@
-import React from "react";
-import { getCurrentYear } from "../../utils";
 import { useNavigate } from "react-router-dom";
+import { getCurrentYear } from "../../utils";
 
 const Footer = () => {
   const navigate = useNavigate();
