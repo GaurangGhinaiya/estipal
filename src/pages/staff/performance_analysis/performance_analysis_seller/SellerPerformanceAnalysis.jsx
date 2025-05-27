@@ -124,6 +124,7 @@ const SellerPerformanceAnalysis = () => {
   const clearFilter = () => {
     setFromDate("");
     setToDate("");
+    setGroupBy("all");
     fetchTransactionData();
     fetchSummaryData();
   };

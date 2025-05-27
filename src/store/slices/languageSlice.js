@@ -6,7 +6,6 @@ export const fetchLanguages = createAsyncThunk(
     async (_, thunkAPI) => {
         try {
             const response = await axiosInstance.get("/languages?show_all=true");
-            console.log('response: ', response);
             return response?.payload?.data;
         } catch (error) {
             return thunkAPI.rejectWithValue(error.response.data);

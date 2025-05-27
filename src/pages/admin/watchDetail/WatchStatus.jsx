@@ -119,19 +119,19 @@ const WatchStatus = () => {
                 </p>
               </div>
               <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
-                <p className="dark:text-white text-black">Brand</p>
+                <p className="dark:text-white text-black">{translate("BRAND")}</p>
                 <p className="dark:text-white text-black">
                   {getSafeValue(watchDetailData?.brand, "string")}
                 </p>
               </div>
               <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between gap-[25px] border border-gray-300 dark:border-none">
-                <p className="dark:text-white text-black">Collection</p>
+                <p className="dark:text-white text-black">{translate("COLLECTION")}</p>
                 <p className="dark:text-white text-black line-clamp-1">
                   {`${getSafeValue(watchDetailData?.collection, "string")} `}
                 </p>
               </div>
               <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center gap-[20px] flex justify-between border border-gray-300 dark:border-none">
-                <p className="dark:text-white text-black">Model</p>
+                <p className="dark:text-white text-black">{translate("MODEL")}</p>
                 <p className="dark:text-white text-black whitespace-nowrap overflow-auto hide-scrollbar">
                   {`${getSafeValue(watchDetailData?.model, "string")} ${
                     watchDetailData?.reference?.trim(" ") &&
@@ -140,7 +140,7 @@ const WatchStatus = () => {
                 </p>
               </div>
               <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
-                <p className="dark:text-white text-black">Serial Number</p>
+                <p className="dark:text-white text-black">{translate("SERIALNUMBER")}</p>
                 <p className="dark:text-white text-black">
                   {getSafeValue(watchDetailData?.serial_no, "string")}
                 </p>

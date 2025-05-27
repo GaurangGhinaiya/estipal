@@ -30,7 +30,7 @@ export const useTranslate = () => {
         ADDEDON: languages?.find((item) => item?.id === 13)?.[savedLanguage] || "Added On",
         WATCHHISTORY: languages?.find((item) => item?.id === 112)?.[savedLanguage] || "Watch history",
         FILTERBYSTATUS: "Filter by Status",
-        TO: "to",
+        TO: languages?.find((item) => item?.id === 54)?.[savedLanguage] || "to",
         STAFF: "Staff",
         ADDSTAFF: languages?.find((item) => item?.id === 2)?.[savedLanguage] || "Add Staff",
         EDITSTAFF: languages?.find((item) => item?.id === 3)?.[savedLanguage] || "Edit Staff",
@@ -59,7 +59,7 @@ export const useTranslate = () => {
         STATEPROVINCE: languages?.find((item) => item?.id === 35)?.[savedLanguage] || "State/Province",
         ZIP: languages?.find((item) => item?.id === 36)?.[savedLanguage] || "Zip",
         COUNTRY: languages?.find((item) => item?.id === 37)?.[savedLanguage] || "Country",
-        USERNAME: "Username",
+        USERNAME: languages?.find((item) => item?.id === 245)?.[savedLanguage] || "Username",
         CURRENCYOFTRADING: languages?.find((item) => item?.id === 32)?.[savedLanguage] || "Currency of trading",
         SIGNUPDATE: languages?.find((item) => item?.id === 45)?.[savedLanguage] || "Sign up date",
         TIERGROUP: languages?.find((item) => item?.id === 46)?.[savedLanguage] || "Tier group",
@@ -101,12 +101,12 @@ export const useTranslate = () => {
           "The confirmed selection is 'Sell to Estipal'. Shipment of the watch has to be arranged. Estipal will make payment of {accepted_price_with_commission} after receiving the watch",
         CONFIRMPAYMENTSELLER: languages?.find((item) => item?.id === 157)?.[savedLanguage] ||
           "Estipal confirmed the payment of {accepted_price_with_commission}. Shipment of the watch to Estipal has to be arranged",
-        CONFIRMSHIPMENTESTIPALTIER1:
-          "Shipment of the watch has been confirmed.Waiting to receive Estipal acceptance",
-        CONFIRMSHIPMENTESTIPALTIER2:
-          "Shipment of the watch has been confirmed.Waiting to receive Estipal payment and acceptance",
-        CONFIRMACCEPTANCETIER1:
-          "Acceptance of the watch has been confirmed.This deal has been completed",
+        CONFIRMSHIPMENTESTIPALTIER1: languages?.find((item) => item?.id === 161)?.[savedLanguage] ||
+          "Shipment of the watch has been confirmed. Waiting to receive Estipal acceptance",
+        CONFIRMSHIPMENTESTIPALTIER2: languages?.find((item) => item?.id === 162)?.[savedLanguage] ||
+          "Shipment of the watch has been confirmed. Waiting to receive Estipal payment and acceptance",
+        CONFIRMACCEPTANCETIER1: languages?.find((item) => item?.id === 164)?.[savedLanguage] ||
+          "Acceptance of the watch has been confirmed. This deal has been completed",
         CONFIRMACCEPTANCETIER2: languages?.find((item) => item?.id === 165)?.[savedLanguage] ||
           "Payment and acceptance of the watch has been confirmed. This deal has been completed",
         RETURNTOSELLER: languages?.find((item) => item?.id === 180)?.[savedLanguage] || "Estipal rejected the sale. The watch will be returned",
@@ -137,8 +137,8 @@ export const useTranslate = () => {
         SELECTOPTIONBELOW: languages?.find((item) => item?.id === 140)?.[savedLanguage] || "Select one of the below option",
         SELLESTIPAL: languages?.find((item) => item?.id === 141)?.[savedLanguage] || "Sell to Estipal",
         BEPARTNERWITHESTIPAL: languages?.find((item) => item?.id === 142)?.[savedLanguage] || "Be partner with Estipal",
-        CONFIRMSELLINGPRICETEXT:
-          "The selling price confirmed by Estipal is {props?.confirmed_price}. Sale is pending",
+        CONFIRMSELLINGPRICETEXT: languages?.find((item) => item?.id === 167)?.[savedLanguage] ||
+          "The selling price confirmed by Estipal is {confirmed_price}. Sale is pending",
         PENDINGSALE: languages?.find((item) => item?.id === 168)?.[savedLanguage] || "Pending Sale",
         CONFIRMTHESALE1: languages?.find((item) => item?.id === 169)?.[savedLanguage] || "Confirm the sale",
         NOSALEFOUND: languages?.find((item) => item?.id === 170)?.[savedLanguage] || "No sale has been made",
@@ -170,7 +170,7 @@ export const useTranslate = () => {
         PAIDPENDINGSHIPPING: languages?.find((item) => item?.id === 158)?.[savedLanguage] || "Paid / Pending Shipping",
         SHIPPINGCOMPPENDINGESTIPALACCTEXT: languages?.find((item) => item?.id === 161)?.[savedLanguage] ||
           "Shipment of the watch has been confirmed. Waiting to receive Estipal acceptance",
-        SHIPPEDTEXT: "Shipped",
+        SHIPPEDTEXT: languages?.find((item) => item?.id === 163)?.[savedLanguage] || "Shipped",
         SHIPPINGCOMPPENDINGPAYMENTESTIPALACCTEXT: languages?.find((item) => item?.id === 162)?.[savedLanguage] ||
           "Shipment of the watch has been confirmed. Waiting to receive Estipal payment and acceptance",
         SHIPPENTPENDINGPAYMENTTEXT: languages?.find((item) => item?.id === 183)?.[savedLanguage] || "Shipped / Pending Payment",

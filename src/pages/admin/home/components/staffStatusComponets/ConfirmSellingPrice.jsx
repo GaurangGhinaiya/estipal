@@ -84,7 +84,7 @@ const ConfirmSellingPrice = (props) => {
       {/* 167 */}
       <h3>
         {translate("CONFIRMSELLINGPRICETEXT").replace(
-          "{props?.confirmed_price}",
+          "{confirmed_price}",
           props?.confirmed_price
         )}
       </h3>
