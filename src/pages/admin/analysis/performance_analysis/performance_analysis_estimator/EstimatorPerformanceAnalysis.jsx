@@ -82,6 +82,7 @@ const EstimatorPerformanceAnalysis = () => {
   }, [selectedStatus, sortOrder, sortField]);
 
   useEffect(() => {
+    setLoadingSummary(true);
     fetchData(fromDate, toDate);
   }, [groupBy]);
 
@@ -97,6 +98,7 @@ const EstimatorPerformanceAnalysis = () => {
     fetchData();
     setLoadingSummary(true);
     setLoadingTransactions(true);
+    setGroupBy("all");
   };
 
   return (

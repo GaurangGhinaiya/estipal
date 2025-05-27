@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { CircularProgress, Tooltip } from "@mui/material";
-import ArrowDropUpRoundedIcon from "@mui/icons-material/ArrowDropUpRounded";
 import ArrowDropDownRoundedIcon from "@mui/icons-material/ArrowDropDownRounded";
-import moment from "moment";
+import ArrowDropUpRoundedIcon from "@mui/icons-material/ArrowDropUpRounded";
 import GradeIcon from "@mui/icons-material/Grade";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
+import { CircularProgress, Tooltip } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
-
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axiosInstance from "../../../../services";
 import { useTranslate } from "../../../../language";
+import axiosInstance from "../../../../services";
+import { convertUnixToDateTime } from "../../../../utils";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -158,7 +157,7 @@ const StaffTable = ({
               <tr
                 key={index}
                 className={`border-b border-[#202b34] ${
-                  activity?.seller_msg_read == 1 && "!font-semibold"
+                  !activity?.seller_msg_read && "!font-semibold"
                 }`}
                 onClick={() =>
                   navigate(
@@ -196,9 +195,21 @@ const StaffTable = ({
                   />
                 </td>
                 <td className="px-[18px] py-[10px] dark:text-[#ffffff] text-black text-center whitespace-nowrap">
-                  {activity?.admin_group == "staff"
+                  {/* {activity?.admin_group == "staff"
                     ? activity?.from_name
-                    : activity?.admin_group}
+                    : activity?.admin_group} */}
+
+                  {activity.admin_group === "staff"
+                    ? activity.from_name.charAt(0).toUpperCase() +
+                      activity.from_name.slice(1)
+                    : activity.admin_group === "Estipal-Administrator"
+                    ? "Estipal-Administrator"
+                    : activity.admin_group === "estimator"
+                    ? "Estimator"
+                    : activity.admin_group === "seller"
+                    ? "Merchant"
+                    : activity.admin_group.charAt(0).toUpperCase() +
+                      activity.admin_group.slice(1)}
                 </td>
 
                 <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap cursor-pointer">
@@ -243,13 +254,13 @@ const StaffTable = ({
                   {activity?.staffWatchActivityDetails?.watch_status}
                 </td>
                 <td className="px-[18px] py-[10px] dark:text-[#ffff] text-black text-center whitespace-nowrap">
-                  {`${
-                    activity.created_on
-                      ? moment
-                          .unix(activity.created_on)
-                          .format("MMMM D, YYYY h:mm A")
-                      : "-"
-                  }`}
+                  {activity.created_on
+                    ? convertUnixToDateTime(activity.created_on)
+                    : "-"}
+                  {/* {format(
+                    new Date(activity.created_on * 1000),
+                    "MMMM d, yyyy hh:mm a"
+                  )} */}
                 </td>
               </tr>
             );

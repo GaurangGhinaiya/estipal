@@ -90,7 +90,7 @@ const StaffUserWatchHistory = ({
               isSortable: true,
             },
             {
-              key: "compnay_name",
+              key: "username",
               label: `${translate("ADDEDBY")}`,
               isSortable: true,
             },

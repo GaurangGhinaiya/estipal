@@ -26,8 +26,8 @@ const AdminTable = ({
     setActivitiesShowData(activitesData);
   }, [activitesData]);
 
-  const handleRowClick = (watchId) => {
-    navigate(`/admin/home/readActivity/${watchId}`);
+  const handleRowClick = (watchId, id) => {
+    navigate(`/admin/home/readActivity/${id}/${watchId}`);
     window.scrollTo(0, 0);
   };
 
@@ -106,9 +106,9 @@ const AdminTable = ({
             <tr
               key={index}
               className={`border-b border-[#202b34] cursor-pointer ${
-                activity?.admin_msg_read == 1 && "!font-semibold"
+                !activity?.admin_msg_read && "!font-semibold"
               }`}
-              onClick={() => handleRowClick(activity?.watch_id)}
+              onClick={() => handleRowClick(activity?.watch_id, activity?.id)}
             >
               <td className="px-[18px] py-[0px] text-[#ffff] text-center">
                 <div className="w-[35px]">

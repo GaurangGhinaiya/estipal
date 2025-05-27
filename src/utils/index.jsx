@@ -92,3 +92,15 @@ export const convertUnixToDate = (unixTimestamp) => {
     timeZone: "UTC",
   }).format(new Date(+unixTimestamp));
 };
+
+export const convertUnixToDateTime = (unixTimestamp) => {
+  return new Intl.DateTimeFormat("en-gb", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    hourCycle: "h12",
+    timeZone: "UTC",
+  }).format(new Date(+unixTimestamp * 1000));
+};

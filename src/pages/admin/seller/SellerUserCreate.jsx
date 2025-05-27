@@ -290,7 +290,7 @@ const SellerUserCreate = () => {
       });
 
       if (response?.status === 200) {
-        const message = "Estimator added successfully!";
+        const message = "Seller added successfully!";
         toast.success(message);
         navigate("/admin/staff/staff_user");
       }
@@ -590,7 +590,7 @@ const SellerUserCreate = () => {
             bgColor={"#1e252b"}
             className="mb-[15px] flex sm:flex-row flex-col !items-start sm:items-center"
             onChange={handleChange}
-            wrapperValue = {true}
+            wrapperValue={true}
             component={
               <>
                 <div class="flex flex-col w-[230px] ml-auto mr-[-5px]">
