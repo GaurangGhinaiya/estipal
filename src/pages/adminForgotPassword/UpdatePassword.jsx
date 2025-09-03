@@ -55,7 +55,7 @@ const UpdatePassword = () => {
           <div className="title text-center">Reset Password</div>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="form-group !mb-4">
-              <label htmlFor="password">* Password</label>
+              <label htmlFor="password">Password *</label>
               <Controller
                 name="password"
                 control={control}
@@ -84,7 +84,7 @@ const UpdatePassword = () => {
             </div>
 
             <div className="form-group !mb-4">
-              <label htmlFor="confirm_password">* Confirm Password</label>
+              <label htmlFor="confirm_password">Confirm Password *</label>
               <Controller
                 name="confirm_password"
                 control={control}
