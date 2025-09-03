@@ -1,4 +1,4 @@
-import { Button, CircularProgress } from "@mui/material";
+import { Button, CircularProgress, Tooltip } from "@mui/material";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -63,7 +63,11 @@ const StaffUser = () => {
 
   return (
     <div className="p-[15px] min-h-[100vh]">
-      <div className={`px-0 sm:px-[15px] ${userRole === "staff" ? "pt-8" : "pt-2"} flex justify-between flex-wrap`}>
+      <div
+        className={`px-0 sm:px-[15px] ${
+          userRole === "staff" ? "pt-8" : "pt-2"
+        } flex justify-between flex-wrap`}
+      >
         <h1 className="text-[30px] font-medium mb-4 px-0 sm:px-[15px] font-sans text-white">
           Merchants & Staff
         </h1>
@@ -172,53 +176,62 @@ const StaffUser = () => {
                   </td>
                   <td className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap">
                     <div className="flex gap-[10px]">
-                      <div
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          navigate(
-                            `/admin/watch_details/watch_history/?seller_id=${item?.admin_seller_id}`
-                          );
-                        }}
-                        className="cursor-pointer w-[30px] h-[30px]"
+                      <Tooltip title="Watches History" placement="top-start">
+                        <div
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            navigate(
+                              `/admin/watch_details/watch_history/?seller_id=${item?.admin_seller_id}`
+                            );
+                          }}
+                          className="cursor-pointer w-[30px] h-[30px]"
+                        >
+                          <img
+                            alt="start"
+                            id="star"
+                            className="w-[30px] h-[30px]"
+                            style={{ filter: "invert(1)" }}
+                            src={WatchHistoryImage}
+                          />
+                        </div>{" "}
+                      </Tooltip>
+                      <Tooltip title="Activities" placement="top-start">
+                        <div
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            navigate(`/admin`);
+                          }}
+                          className="cursor-pointer w-[30px] h-[30px]"
+                        >
+                          <img
+                            alt="revanue"
+                            style={{ filter: "invert(1)" }}
+                            src={revenueImage}
+                            className="w-[30px] h-[30px]"
+                          />
+                        </div>
+                      </Tooltip>
+                      <Tooltip
+                        title="Performance Analysis (Merchant)"
+                        placement="top-start"
                       >
-                        <img
-                          alt="start"
-                          id="star"
-                          className="w-[30px] h-[30px]"
-                          style={{ filter: "invert(1)" }}
-                          src={WatchHistoryImage}
-                        />
-                      </div>
-                      <div
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          navigate(`/admin`);
-                        }}
-                        className="cursor-pointer w-[30px] h-[30px]"
-                      >
-                        <img
-                          alt="revanue"
-                          style={{ filter: "invert(1)" }}
-                          src={revenueImage}
-                          className="w-[30px] h-[30px]"
-                        />
-                      </div>
-                      <div
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          navigate(
-                            `/admin/analysis/performance_analysis/seller/${item?.admin_seller_id}`
-                          );
-                        }}
-                        className="cursor-pointer w-[30px] h-[30px]"
-                      >
-                        <img
-                          alt="performance"
-                          className="w-[30px] h-[30px]"
-                          style={{ filter: "invert(1)" }}
-                          src={performanceImage}
-                        />
-                      </div>
+                        <div
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            navigate(
+                              `/admin/analysis/performance_analysis/seller/${item?.admin_seller_id}`
+                            );
+                          }}
+                          className="cursor-pointer w-[30px] h-[30px]"
+                        >
+                          <img
+                            alt="performance"
+                            className="w-[30px] h-[30px]"
+                            style={{ filter: "invert(1)" }}
+                            src={performanceImage}
+                          />
+                        </div>
+                      </Tooltip>
                     </div>
                   </td>
                 </tr>

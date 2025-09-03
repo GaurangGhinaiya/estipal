@@ -1,4 +1,4 @@
-import { Button, CircularProgress } from "@mui/material";
+import { Button, CircularProgress, Tooltip } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import PaginationComponent from "../../../components/common/PaginationComponent";
@@ -248,7 +248,9 @@ const Estimators = () => {
                   </td>
 
                   <td className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap">
-                    <div className="flex gap-[10px]">
+                  
+                        <div className="flex gap-[10px]">
+                            <Tooltip title="Watches History" placement="top-start">
                       <img
                         alt="star"
                         id="star"
@@ -262,7 +264,8 @@ const Estimators = () => {
                             `/admin/watch_details/watch_history?estimator_id=${item?.id}`
                           )
                         }
-                      />
+                      /></Tooltip>
+                       <Tooltip title="Activities" placement="top-start">
                       <img
                         alt="revanue"
                         width="30px"
@@ -271,7 +274,11 @@ const Estimators = () => {
                         className="cursor-pointer"
                         src={revenueImage}
                         onClick={() => navigate(`/admin`)}
-                      />
+                      /></Tooltip>
+                      <Tooltip
+                                              title="Performance Analysis (Merchant)"
+                                              placement="top-start"
+                                            >
                       <img
                         alt="performance"
                         width="30px"
@@ -284,7 +291,7 @@ const Estimators = () => {
                             `/admin/analysis/performance_analysis/estimator`
                           )
                         }
-                      />
+                      /></Tooltip>
                     </div>
                   </td>
                 </tr>
