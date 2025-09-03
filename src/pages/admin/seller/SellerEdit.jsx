@@ -604,7 +604,7 @@ const SellerEdit = () => {
                           className="w-[100px] object-cover rounded"
                         />
                       </div>
-                    ) : (
+                    ) : formData?.companyLogoPreview ? (
                       <div className="mt-2">
                         <img
                           src={
@@ -621,6 +621,8 @@ const SellerEdit = () => {
                           className="w-[100px] object-cover rounded"
                         />
                       </div>
+                    ) : (
+                      ""
                     )}
                   </div>
                 </div>
@@ -645,7 +647,7 @@ const SellerEdit = () => {
                     />
                   </div>
                 ) : (
-                  ""
+                  <div className="text-white pt-[10px]">No Logo Uploaded</div>
                 )}
               </div>
             )}
