@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import axiosInstance from "../../../services";
 import { convertUnixToDate, formatNumberOrDefault } from "../../../utils";
 import ImageDialog from "./components/ImageDialog";
-import {useTranslate } from "../../../language";
+import { useTranslate } from "../../../language";
 
 const WatchStatus = () => {
   const { id } = useParams();
@@ -119,19 +119,25 @@ const WatchStatus = () => {
                 </p>
               </div>
               <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
-                <p className="dark:text-white text-black">{translate("BRAND")}</p>
+                <p className="dark:text-white text-black">
+                  {translate("BRAND")}
+                </p>
                 <p className="dark:text-white text-black">
                   {getSafeValue(watchDetailData?.brand, "string")}
                 </p>
               </div>
               <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between gap-[25px] border border-gray-300 dark:border-none">
-                <p className="dark:text-white text-black">{translate("COLLECTION")}</p>
+                <p className="dark:text-white text-black">
+                  {translate("COLLECTION")}
+                </p>
                 <p className="dark:text-white text-black line-clamp-1">
                   {`${getSafeValue(watchDetailData?.collection, "string")} `}
                 </p>
               </div>
               <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center gap-[20px] flex justify-between border border-gray-300 dark:border-none">
-                <p className="dark:text-white text-black">{translate("MODEL")}</p>
+                <p className="dark:text-white text-black">
+                  {translate("MODEL")}
+                </p>
                 <p className="dark:text-white text-black whitespace-nowrap overflow-auto hide-scrollbar">
                   {`${getSafeValue(watchDetailData?.model, "string")} ${
                     watchDetailData?.reference?.trim(" ") &&
@@ -140,13 +146,17 @@ const WatchStatus = () => {
                 </p>
               </div>
               <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
-                <p className="dark:text-white text-black">{translate("SERIALNUMBER")}</p>
+                <p className="dark:text-white text-black">
+                  {translate("SERIALNUMBER")}
+                </p>
                 <p className="dark:text-white text-black">
                   {getSafeValue(watchDetailData?.serial_no, "string")}
                 </p>
               </div>
               <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
-                <p className="dark:text-white text-black">{translate("CONDITION")}</p>
+                <p className="dark:text-white text-black">
+                  {translate("CONDITION")}
+                </p>
                 <p className="dark:text-white text-black">
                   {getSafeValue(
                     watchDetailData?.imageUploadDetails?.[0]?.condition,
@@ -155,7 +165,9 @@ const WatchStatus = () => {
                 </p>
               </div>
               <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
-                <p className="dark:text-white text-black">{translate("BRACLETINFO")}</p>
+                <p className="dark:text-white text-black">
+                  {translate("BRACLETINFO")}
+                </p>
                 <p className="dark:text-white text-black">
                   {getSafeValue(
                     watchDetailData?.imageUploadDetails?.[0]?.bracelet_link,
@@ -164,13 +176,17 @@ const WatchStatus = () => {
                 </p>
               </div>
               <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
-                <p className="dark:text-white text-black">{translate("YEARSOFPRODUCTION")}</p>
+                <p className="dark:text-white text-black">
+                  {translate("YEARSOFPRODUCTION")}
+                </p>
                 <p className="dark:text-white text-black">
                   {getSafeValue(watchDetailData?.year_of_prod, "number")}
                 </p>
               </div>
               <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
-                <p className="dark:text-white text-black">{translate("REQUESTEDPRICE")}</p>
+                <p className="dark:text-white text-black">
+                  {translate("REQUESTEDPRICE")}
+                </p>
                 <p className="dark:text-white text-black">
                   {watchDetailData?.adminDetail?.currency}{" "}
                   {formatNumberOrDefault(
@@ -191,7 +207,9 @@ const WatchStatus = () => {
                 </p>
               </div>
               <div className="dark:bg-[#1e252b] bg-white py-[12px] px-[24px] rounded items-center flex justify-between border border-gray-300 dark:border-none">
-                <p className="dark:text-white text-black">{translate("WARRANTYDATE")}</p>
+                <p className="dark:text-white text-black">
+                  {translate("WARRANTYDATE")}
+                </p>
                 <p className="dark:text-white text-black">
                   {watchDetailData?.imageUploadDetails?.[0]?.warentee_card_year
                     ? convertUnixToDate(
@@ -318,11 +336,11 @@ const WatchStatus = () => {
                           }`}
                         >
                           {" "}
-                          {item?.estimatorDetail.company_name +
+                          {item?.estimatorDetail?.company_name +
                             " - " +
-                            item?.estimatorDetail.first_name +
+                            item?.estimatorDetail?.first_name +
                             " " +
-                            item?.estimatorDetail.last_name}
+                            item?.estimatorDetail?.last_name}
                         </td>
                         <td
                           className={`px-[14px] py-[10px] dark:text-[#ffff] text-black whitespace-nowrap ${
@@ -374,6 +392,7 @@ const WatchStatus = () => {
                   ?.slice()
                   .reverse()
                   .map((item, index) => {
+                    console.log("item: ", item);
                     const currency =
                       userRole === "staff"
                         ? watchDetailData?.sellerDetail?.currency
@@ -436,7 +455,7 @@ const WatchStatus = () => {
                               {currency +
                                 " " +
                                 formatNumberOrDefault(
-                                  item?.watch_details?.estimated_price_seller
+                                  item?.watch_details?.request_price
                                 )}
                             </td>
                           </tr>
@@ -467,7 +486,7 @@ const WatchStatus = () => {
                               {currency +
                                 " " +
                                 formatNumberOrDefault(
-                                  item?.watch_details?.seller_display_counter
+                                  item?.watch_details?.request_price
                                 )}
                             </td>
                           </tr>
@@ -529,7 +548,7 @@ const WatchStatus = () => {
                               {currency +
                                 " " +
                                 formatNumberOrDefault(
-                                  item?.watch_details?.estimated_price_seller
+                                  item?.watch_details?.request_price
                                 )}
                             </td>
                           </tr>
@@ -577,7 +596,7 @@ const WatchStatus = () => {
                               {item?.company_name || item?.from_name
                                 ? (item?.company_name ?? "") +
                                   (item?.company_name == "" ||
-                                  !item?.company_name ||
+                                  !item?.company_name || 
                                   item?.from_name == ""
                                     ? ""
                                     : " - ") +

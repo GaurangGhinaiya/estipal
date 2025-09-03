@@ -19,13 +19,13 @@ export const formattedNumber = new Intl.NumberFormat("en-US", {
 
 export const formatNumberOrDefault = (value) => {
   if (
-    value &&
     value !== undefined &&
     value !== null &&
     value !== "NaN" &&
-    Object.keys(value).length > 0
+    !isNaN(value) &&
+    value !== ""
   ) {
-    return formattedNumber.format(value);
+    return formattedNumber.format(Number(value));
   }
   return formattedNumber.format(0);
 };

@@ -129,6 +129,7 @@ const SellerPerformanceAnalysis = () => {
     setToDate("");
     fetchTransactionData();
     fetchSummaryData();
+    setGroupBy("all");
   };
 
   return (
