@@ -160,7 +160,7 @@ const Header = () => {
               className="text-white !normal-case !text-[14px] !p-[0] !m-[0]"
               sx={{
                 color: "white",
-                fontWeight: pathname.includes("/admin/estimator/estimator_user")
+                fontWeight: pathname.includes("/admin/estimator/estimator_user")|| pathname.includes("/admin/estimator/estimator_edit/")
                   ? "bold"
                   : "normal",
               }}
@@ -427,7 +427,7 @@ const Header = () => {
                 className="text-white !normal-case !text-left !justify-start !text-[14px] !px-[15px] !m-[0] !font-bold"
                 sx={{
                   color: "white",
-                  backgroundColor: pathname.includes("/admin/staff/staff_user") || pathname.includes("/admin/seller/seller_user_create")
+                  backgroundColor: pathname.includes("/admin/staff/staff_user") || pathname.includes("/admin/seller/seller_user_create")||   pathname.startsWith("/admin/seller/seller_edit")
                     ? "#131a1f"
                     : "transparent",
                   fontWeight: "bold",
@@ -447,7 +447,7 @@ const Header = () => {
                   color: "white",
                   backgroundColor: pathname.includes(
                     "/admin/estimator/estimator_user"
-                  )
+                  )|| pathname.includes("/estimator/estimator_edit/")
                     ? "#131a1f"
                     : "transparent",
                   fontWeight: "bold",
