@@ -604,7 +604,8 @@ const SellerEdit = () => {
                           className="w-[100px] object-cover rounded"
                         />
                       </div>
-                    ) : formData?.companyLogoPreview ? (
+                    ) : formData?.companyLogoPreview &&
+                      formData?.companyLogoPreview?.trim() !== "" ? (
                       <div className="mt-2">
                         <img
                           src={
@@ -629,7 +630,8 @@ const SellerEdit = () => {
               </div>
             ) : (
               <div className="flex items-start justify-end w-full pb-2 px-2">
-                {formData?.companyLogoPreview ? (
+                {formData?.companyLogoPreview &&
+                formData?.companyLogoPreview?.trim() !== "" ? (
                   <div className="mt-2">
                     <img
                       src={
