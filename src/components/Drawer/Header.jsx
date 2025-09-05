@@ -210,7 +210,7 @@ const Header = () => {
                 Revenue Analysis <ArrowDropDownIcon />
               </button>
               {openRevenueMenu && (
-                <div className="absolute bg-[#0060aa] border border-white mt-3 rounded-lg">
+                <div className="absolute right-[6px] bg-[#0060aa] border border-white mt-3 rounded-lg">
                   <button
                     className="block rounded-lg px-4 py-2 hover:bg-[#b3c1c5]"
                     onClick={() => {
@@ -274,7 +274,7 @@ const Header = () => {
                 Performance Analysis <ArrowDropDownIcon />
               </button>
               {openPerformanceMenu && (
-                <div className="absolute bg-[#0060aa] border border-white mt-3 rounded-lg">
+                <div className="absolute right-[6px] bg-[#0060aa] border border-white mt-3 rounded-lg">
                   <button
                     className="block rounded-lg px-4 py-2 hover:bg-[#b3c1c5]"
                     onClick={() => {
