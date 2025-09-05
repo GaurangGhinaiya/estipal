@@ -1,5 +1,5 @@
 import { Button } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import PhoneInput, {
   formatPhoneNumber,
@@ -201,6 +201,8 @@ const SellerUserCreate = () => {
     loadId();
   }, []);
 
+  const fileInputRef = useRef(null);
+
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -244,7 +246,7 @@ const SellerUserCreate = () => {
 
     for (const field in fieldNames) {
       if (!formData[field]) {
-        toast.error(`${fieldNames[field]} field is required.`);
+        toast.error(`${fieldNames[field]} is required.`);
         return false;
       }
 
@@ -435,10 +437,23 @@ const SellerUserCreate = () => {
               <div className="flex justify-end w-full">
                 <div className="w-fit">
                   <input
+                    ref={fileInputRef}
                     type="file"
                     onChange={handleFileUpload}
-                    className="w-full bg-transparent border-none outline-none ml-2 text-white placeholder-gray-400 text-right"
+                    className="w-full bg-transparent border-none outline-none ml-2 text-white placeholder-gray-400 text-right hidden"
                   />
+
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => fileInputRef.current.click()}
+                      className="bg-white py-[2px] px-[6px] text-black font-medium rounded-sm"
+                    >
+                      Upload
+                    </button>
+                    <p className="text-white font-medium">
+                      {formData?.seller_logo?.name || "No file selected"}
+                    </p>
+                  </div>
 
                   <div>
                     {localCompanyLogoPreview && (
