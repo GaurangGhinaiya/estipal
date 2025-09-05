@@ -247,6 +247,16 @@ const SellerUserCreate = () => {
         toast.error(`${fieldNames[field]} field is required.`);
         return false;
       }
+
+      if (field === "email") {
+        const value = formData[field];
+        // validate email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(value)) {
+          toast.error("Invalid email address");
+          return false;
+        }
+      }
     }
 
     if (!phone) {
@@ -638,7 +648,7 @@ const SellerUserCreate = () => {
             rightTextValue=""
             value={formData.email}
             name="email"
-            type="text"
+            type="email"
             label="Email"
             placeholder="Email"
             bgColor={"#1e252b"}

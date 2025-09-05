@@ -291,8 +291,17 @@ const EstimatorEdit = () => {
     };
     for (const field in fieldNames) {
       if (!formData[field]) {
-        toast.error(`${fieldNames[field]} field is required.`);
+        toast.error(`${fieldNames[field]} is required.`);
         return false;
+      }
+      if (field === "email") {
+        const value = formData[field];
+        // validate email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(value)) {
+          toast.error("Invalid email address");
+          return false;
+        }
       }
     }
     if (!phone) {
