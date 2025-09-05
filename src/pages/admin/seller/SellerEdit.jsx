@@ -193,6 +193,12 @@ const SellerEdit = () => {
       });
 
       setLocalCompanyLogoPreview(URL.createObjectURL(file));
+    } else {
+      setFormData({
+        ...formData,
+        seller_logo: "",
+      });
+      setLocalCompanyLogoPreview("");
     }
   };
 
@@ -253,7 +259,7 @@ const SellerEdit = () => {
 
     for (const field in fieldNames) {
       if (!formData[field]) {
-        toast.error(`${fieldNames[field]} field is required.`);
+        toast.error(`${fieldNames[field]} is required.`);
         return false;
       }
     }
