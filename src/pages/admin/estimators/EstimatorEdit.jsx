@@ -379,7 +379,9 @@ const EstimatorEdit = () => {
                   estimatorData?.available ? "bg-[#11c71d]" : "bg-[#da3832]"
                 } rounded-[100%] w-[15px] h-[15px]`}
               ></div>
-              <p className="text-white">{estimatorData?.available ? "Online" : "Offline"}</p>
+              <p className="text-white">
+                {estimatorData?.available ? "Online" : "Offline"}
+              </p>
             </div>
           )}
         </div>
@@ -431,43 +433,45 @@ const EstimatorEdit = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 my-[35px]">
-        <div className="flex justify-start sm:justify-center">
-          <Button
-            variant="contained"
-            className="!bg-[#3c8dbc] !normal-case !py-[10px] !px-[40px] !rounded-[50px] whitespace-nowrap"
-            onClick={() =>
-              navigate(
-                `/admin/watch_details/watch_history?estimator_id=${estimatorData?.id}`
-              )
-            }
-          >
-            View estimated watches
-          </Button>
+      {actionType !== "add" && (
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 my-[35px]">
+          <div className="flex justify-start sm:justify-center">
+            <Button
+              variant="contained"
+              className="!bg-[#3c8dbc] !normal-case !py-[10px] !px-[40px] !rounded-[50px] whitespace-nowrap"
+              onClick={() =>
+                navigate(
+                  `/admin/watch_details/watch_history?estimator_id=${estimatorData?.id}`
+                )
+              }
+            >
+              View estimated watches
+            </Button>
+          </div>
+          <div className="flex justify-start sm:justify-center">
+            <Button
+              variant="contained"
+              className="!bg-[#3c8dbc] !normal-case !py-[10px] !px-[40px] !rounded-[50px] whitespace-nowrap"
+              onClick={() =>
+                navigate("/admin/analysis/revenue_analysis/estimator")
+              }
+            >
+              View revenue analysis
+            </Button>
+          </div>
+          <div className="flex justify-start sm:justify-center">
+            <Button
+              variant="contained"
+              className="!bg-[#3c8dbc] !normal-case !py-[10px] !px-[40px] !rounded-[50px] whitespace-nowrap"
+              onClick={() =>
+                navigate("/admin/analysis/performance_analysis/estimator")
+              }
+            >
+              View performance analysis
+            </Button>
+          </div>
         </div>
-        <div className="flex justify-start sm:justify-center">
-          <Button
-            variant="contained"
-            className="!bg-[#3c8dbc] !normal-case !py-[10px] !px-[40px] !rounded-[50px] whitespace-nowrap"
-            onClick={() =>
-              navigate("/admin/analysis/revenue_analysis/estimator")
-            }
-          >
-            View revenue analysis
-          </Button>
-        </div>
-        <div className="flex justify-start sm:justify-center">
-          <Button
-            variant="contained"
-            className="!bg-[#3c8dbc] !normal-case !py-[10px] !px-[40px] !rounded-[50px] whitespace-nowrap"
-            onClick={() =>
-              navigate("/admin/analysis/performance_analysis/estimator")
-            }
-          >
-            View performance analysis
-          </Button>
-        </div>
-      </div>
+      )}
 
       <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 lg:gap-4 mt-[35px]">
         <div className="">
