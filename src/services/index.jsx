@@ -3,7 +3,7 @@ import axios from "axios";
 
 // Create an Axios instance
 const axiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_API_BASE_URL, // Replace with your API base URL
+  baseURL: import.meta.env.VITE_API_BASE_URL, // Replace with your API base URL
   //   timeout: 10000, // Timeout in milliseconds
 });
 

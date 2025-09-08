@@ -117,7 +117,7 @@ const SellerUserCreate = () => {
     setLoading(true);
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_PUBLIC_BASE_URL}/file`,
+        `${import.meta.env.VITE_API_PUBLIC_BASE_URL}/file`,
         formDataToSend
       );
       if (response?.status === 200) {

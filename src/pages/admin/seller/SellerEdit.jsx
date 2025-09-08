@@ -170,7 +170,7 @@ const SellerEdit = () => {
     setLoading(true);
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_PUBLIC_BASE_URL}/file`,
+        `${import.meta.env.VITE_API_PUBLIC_BASE_URL}/file`,
         formDataToSend
       );
       if (response?.status === 200) {
@@ -341,7 +341,7 @@ const SellerEdit = () => {
     setConfirmDialogLoading(true);
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_BASE_URL}/sellers/forgetPassword`,
+        `${import.meta.env.VITE_API_BASE_URL}/sellers/forgetPassword`,
         {
           email: sellerData?.email,
           type: "seller",
@@ -622,7 +622,7 @@ const SellerEdit = () => {
                               "https://cdn.estipal.com/dev"
                             )
                               ? formData?.companyLogoPreview
-                              : `${process.env.REACT_APP_IMAGE_BASE_URL}/${formData?.companyLogoPreview}`
+                              : `${import.meta.env.VITE_IMAGE_BASE_URL}/${formData?.companyLogoPreview}`
                           }
                           alt="Uploaded Logo"
                           className="w-[100px] object-cover rounded"
@@ -648,7 +648,7 @@ const SellerEdit = () => {
                           "https://cdn.estipal.com/dev"
                         )
                           ? formData?.companyLogoPreview
-                          : `${process.env.REACT_APP_IMAGE_BASE_URL}/${formData?.companyLogoPreview}`
+                          : `${import.meta.env.VITE_IMAGE_BASE_URL}/${formData?.companyLogoPreview}`
                       }
                       alt="Uploaded Logo"
                       className="w-[100px] object-cover rounded"

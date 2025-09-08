@@ -133,7 +133,7 @@ const AccountProfile = () => {
     setLoading(true);
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_PUBLIC_BASE_URL}/file`,
+        `${import.meta.env.VITE_API_PUBLIC_BASE_URL}/file`,
         formDataToSend
       );
       if (response?.status === 200) {
@@ -402,7 +402,7 @@ const AccountProfile = () => {
                                   "https://cdn.estipal.com/dev"
                                 )
                               ? formData?.companyLogoPreview
-                              : `${process.env.REACT_APP_IMAGE_BASE_URL}/${formData?.companyLogoPreview}`
+                              : `${import.meta.env.VITE_IMAGE_BASE_URL}/${formData?.companyLogoPreview}`
                           }
                           alt="Uploaded Logo"
                           className="max-w-[100px] max-h-[100px]"
@@ -427,7 +427,7 @@ const AccountProfile = () => {
                           "https://cdn.estipal.com/dev"
                         )
                           ? formData?.companyLogoPreview
-                          : `${process.env.REACT_APP_IMAGE_BASE_URL}/${formData?.companyLogoPreview}`
+                          : `${import.meta.env.VITE_IMAGE_BASE_URL}/${formData?.companyLogoPreview}`
                       }
                       alt="Uploaded Logo"
                       className="max-w-[100px] max-h-[100px]"

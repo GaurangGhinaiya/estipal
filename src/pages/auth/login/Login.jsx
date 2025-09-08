@@ -26,8 +26,9 @@ const Login = () => {
     setLoading(true);
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_PUBLIC_BASE_URL}/login`,
-        data
+        `${import.meta.env.VITE_API_PUBLIC_BASE_URL}/login`,
+        data,
+         { headers: { "Content-Type": "application/json" } }
       );
       if (response?.data?.status === 200) {
         toast.success(response?.data?.message);
