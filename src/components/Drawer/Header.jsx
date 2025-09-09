@@ -210,9 +210,9 @@ const Header = () => {
                 Revenue Analysis <ArrowDropDownIcon />
               </button>
               {openRevenueMenu && (
-                <div className="absolute right-[6px] bg-[#0060aa] border border-white mt-3 rounded-lg">
+                <div className="w-[95%] absolute right-[6px] bg-[#0060aa] border border-white mt-3 rounded-lg">
                   <button
-                    className="block rounded-lg px-4 py-2 hover:bg-[#b3c1c5]"
+                    className="w-full text-start block rounded-lg px-4 py-2 hover:bg-[#fff] hover:text-black"
                     onClick={() => {
                       navigate("/admin/analysis/revenue_analysis/admin");
                       setOpenRevenueMenu(false);
@@ -221,7 +221,7 @@ const Header = () => {
                     Merchant
                   </button>
                   <button
-                    className="block rounded-lg  px-4 py-2 hover:bg-[#b3c1c5]"
+                    className="w-full text-start block rounded-lg  px-4 py-2 hover:bg-[#fff] hover:text-black"
                     onClick={() => {
                       navigate("/admin/analysis/revenue_analysis/estimator");
                       setOpenRevenueMenu(false);
@@ -274,9 +274,9 @@ const Header = () => {
                 Performance Analysis <ArrowDropDownIcon />
               </button>
               {openPerformanceMenu && (
-                <div className="absolute right-[6px] bg-[#0060aa] border border-white mt-3 rounded-lg">
+                <div className="w-[95%] absolute right-[6px] bg-[#0060aa] border border-white mt-3 rounded-lg">
                   <button
-                    className="block rounded-lg px-4 py-2 hover:bg-[#b3c1c5]"
+                    className="w-full text-start block rounded-lg px-4 py-2 hover:bg-[#fff] hover:text-black"
                     onClick={() => {
                       navigate("/admin/analysis/performance_analysis/admin");
                       setOpenPerformanceMenu(false);
@@ -285,7 +285,7 @@ const Header = () => {
                     Merchant
                   </button>
                   <button
-                    className="block rounded-lg  px-4 py-2 hover:bg-[#b3c1c5]"
+                    className="w-full text-start block rounded-lg  px-4 py-2 hover:bg-[#fff] hover:text-black"
                     onClick={() => {
                       navigate(
                         "/admin/analysis/performance_analysis/estimator"
@@ -507,7 +507,7 @@ const Header = () => {
                   Revenue Analysis <ArrowDropDownIcon />
                 </button>
                 {openRevenueMenu && (
-                  <div className="z-20 absolute top-[19px] left-[55px] bg-[#0060aa] border border-white mt-3 rounded-lg">
+                  <div className="w-[140px] z-20 absolute top-[19px] left-[14px] bg-[#0060aa] border border-white mt-3 rounded-lg">
                     <button
                       className="block rounded-lg px-4 py-2 hover:bg-[#b3c1c5]"
                       onClick={(e) => {
@@ -579,7 +579,7 @@ const Header = () => {
                   Performance Analysis <ArrowDropDownIcon />
                 </button>
                 {openPerformanceMenu && (
-                  <div className="absolute top-[19px] left-[84px] bg-[#0060aa] border border-white mt-3 rounded-lg z-20">
+                  <div className="w-[170px] absolute top-[19px] left-[14px] bg-[#0060aa] border border-white mt-3 rounded-lg z-20">
                     <button
                       className="block rounded-lg px-4 py-2 hover:bg-[#b3c1c5]"
                       onClick={() => {
