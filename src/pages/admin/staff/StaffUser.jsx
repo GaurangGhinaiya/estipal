@@ -1,15 +1,17 @@
 import { Button, CircularProgress, Tooltip } from "@mui/material";
 import moment from "moment";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { useLocation, useNavigate } from "react-router-dom";
+import revenueImage from "../../../assets/images/icons/Revenue.png";
+import WatchHistoryImage from "../../../assets/images/icons/Watch history 2.png";
+import performanceImage from "../../../assets/images/icons/performance.png";
 import PaginationComponent from "../../../components/common/PaginationComponent";
 import SearchBar from "../../../components/common/SearchBar";
 import useDebounce from "../../../components/common/UseDebounce";
+import { useTranslate } from "../../../language";
 import axiosInstance from "../../../services/index";
-import WatchHistoryImage from "../../../assets/images/icons/Watch history 2.png";
-import revenueImage from "../../../assets/images/icons/Revenue.png";
-import performanceImage from "../../../assets/images/icons/performance.png";
-
+import SubStaffModal from "./SubStaffModal";
 const StaffUser = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -17,11 +19,16 @@ const StaffUser = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOrder, setSortOrder] = useState("asc");
   const [currentPage, setCurrentPage] = useState(null);
+  const [currentPagesub, setCurrentPageSub] = useState(1);
   const [recordsPerPage, setRecordsPerPage] = useState(10);
   const [totalRecords, setTotalRecords] = useState(0);
+
   const [isLoading, setIsLoading] = useState(false);
   const userRole = localStorage.getItem("userRole");
+  const [Modalopen, setModalopen] = useState(false);
   const debouncedSearchTerm = useDebounce(searchQuery, 500);
+  const [openID, setopenID] = useState(null);
+  console.log("openID: ", openID);
 
   const getStaffUserData = async (page) => {
     setIsLoading(true);
@@ -59,6 +66,28 @@ const StaffUser = () => {
     setCurrentPage(page);
     let url = `?page=${page}`;
     navigate(url);
+  };
+
+  const recordsPerPagesub = 10;
+  const staffList =
+    data?.find((item) => item?.admin_seller_id === openID)?.adminUserDetails || [];
+
+  const totalPagessub = Math.ceil(staffList.length / recordsPerPagesub);
+
+  const safeCurrentPage = Math.min(Math.max(currentPagesub, 1), totalPagessub);
+
+  const startIndex = (safeCurrentPage - 1) * recordsPerPagesub;
+
+  const endIndex = startIndex + recordsPerPagesub;
+
+
+  const currentItems = staffList.slice(startIndex, endIndex);
+
+
+  const handlePageChangesub = (page) => {
+    const validPage = Math.min(Math.max(page, 1), totalPagessub);
+ 
+    setCurrentPageSub(validPage);
   };
 
   return (
@@ -133,108 +162,149 @@ const StaffUser = () => {
               </tr>
             ) : data?.length > 0 ? (
               data?.map((item, index) => (
-                <tr
-                  onClick={() =>
-                    navigate(`/admin/seller/seller_edit/${item?.id}`)
-                  }
-                  key={index}
-                  className="border-b border-[#202b34]"
-                >
-                  <td className="px-[18px] py-[0px] text-[#ffff] text-center">
-                    <div className="require_vaild_list text-center">
-                      <span
-                        className={`${item?.active ? "dot-green" : "dot-red"}`}
-                      ></span>
-                    </div>
-                  </td>
+                <>
+                  <tr
+                    onClick={() =>
+                      !Modalopen
+                        ? navigate(`/admin/seller/seller_edit/${item?.id}`)
+                        : ""
+                    }
+                    key={index}
+                    className="border-b border-[#202b34]"
+                  >
+                    <td className="px-[18px] py-[0px] text-[#ffff] text-center">
+                      <div className="require_vaild_list text-center">
+                        <span
+                          className={`${
+                            item?.active ? "dot-green" : "dot-red"
+                          }`}
+                        ></span>
+                      </div>
+                    </td>
 
-                  <td className="px-[18px] py-[12px] text-[#ffff] text-center cursor-pointer">
-                    SCA{item?.admin_seller_id}
-                  </td>
-                  <td className="px-[18px] py-[12px] text-[#ffff] cursor-pointer">
-                    <div className="whitespace-nowrap text-center">
-                      {item?.cmp_name}
-                    </div>
-                  </td>
-                  <td className="px-[18px] py-[12px] text-[#ffff] whitespace-nowrap text-center cursor-pointer">
-                    {item?.first_name + " " + item?.last_name}
-                  </td>
-                  <td className="px-[18px] py-[12px] text-[#ffff] whitespace-nowrap text-center cursor-pointer">
-                    {item?.email}
-                  </td>
-                  <td className="px-[18px] py-[12px] text-[#ffff] text-center cursor-pointer">
-                    {item?.username}
-                  </td>
-                  <td className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap cursor-pointer">
-                    {moment.unix(item?.created_on).format(" DD MMM YYYY")}
-                  </td>
-                  <td className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap cursor-pointer">
-                    {item?.staff}
-                  </td>
-                  <td className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap cursor-pointer">
-                    {item?.sent} / {item?.accepted}
-                  </td>
-                  <td className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap">
-                    <div className="flex gap-[10px]">
-                      <Tooltip title="Watches History" placement="top-start">
-                        <div
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            navigate(
-                              `/admin/watch_details/watch_history/?seller_id=${item?.admin_seller_id}`
-                            );
-                          }}
-                          className="cursor-pointer w-[30px] h-[30px]"
-                        >
-                          <img
-                            alt="start"
-                            id="star"
-                            className="w-[30px] h-[30px]"
-                            style={{ filter: "invert(1)" }}
-                            src={WatchHistoryImage}
-                          />
-                        </div>{" "}
-                      </Tooltip>
-                      <Tooltip title="Activities" placement="top-start">
-                        <div
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            navigate(`/admin`);
-                          }}
-                          className="cursor-pointer w-[30px] h-[30px]"
-                        >
-                          <img
-                            alt="revanue"
-                            style={{ filter: "invert(1)" }}
-                            src={revenueImage}
-                            className="w-[30px] h-[30px]"
-                          />
-                        </div>
-                      </Tooltip>
-                      <Tooltip
-                        title="Performance Analysis (Merchant)"
-                        placement="top-start"
+                    <td className="px-[18px] py-[12px] text-[#ffff] text-center cursor-pointer">
+                      SCA{item?.admin_seller_id}
+                    </td>
+                    <td className="px-[18px] py-[12px] text-[#ffff] cursor-pointer">
+                      <div className="whitespace-nowrap text-center">
+                        {item?.cmp_name}
+                      </div>
+                    </td>
+                    <td className="px-[18px] py-[12px] text-[#ffff] whitespace-nowrap text-center cursor-pointer">
+                      {item?.first_name + " " + item?.last_name}
+                    </td>
+                    <td className="px-[18px] py-[12px] text-[#ffff] whitespace-nowrap text-center cursor-pointer">
+                      {item?.email}
+                    </td>
+                    <td className="px-[18px] py-[12px] text-[#ffff] text-center cursor-pointer">
+                      {item?.username}
+                    </td>
+                    <td className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap cursor-pointer">
+                      {moment.unix(item?.created_on).format(" DD MMM YYYY")}
+                    </td>
+                    <Tooltip
+                      title="Click this number to display the staff list for this seller"
+                      placement="top-start"
+                    >
+                      <td
+                        className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap cursor-pointer"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setopenID(item?.admin_seller_id);
+                          setCurrentPageSub(1);
+                          setModalopen(true);
+                        }}
                       >
-                        <div
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            navigate(
-                              `/admin/analysis/performance_analysis/seller/${item?.admin_seller_id}`
-                            );
-                          }}
-                          className="cursor-pointer w-[30px] h-[30px]"
+                        {item?.staff}
+                      </td>
+                    </Tooltip>
+                    <td className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap cursor-pointer">
+                      {item?.sent} / {item?.accepted}
+                    </td>
+                    <td className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap">
+                      <div className="flex gap-[10px]">
+                        <Tooltip title="Watches History" placement="top-start">
+                          <div
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              navigate(
+                                `/admin/watch_details/watch_history/?seller_id=${item?.admin_seller_id}`
+                              );
+                            }}
+                            className="cursor-pointer w-[30px] h-[30px]"
+                          >
+                            <img
+                              alt="start"
+                              id="star"
+                              className="w-[30px] h-[30px]"
+                              style={{ filter: "invert(1)" }}
+                              src={WatchHistoryImage}
+                            />
+                          </div>{" "}
+                        </Tooltip>
+                        <Tooltip title="Activities" placement="top-start">
+                          <div
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              navigate(`/admin`);
+                            }}
+                            className="cursor-pointer w-[30px] h-[30px]"
+                          >
+                            <img
+                              alt="revanue"
+                              style={{ filter: "invert(1)" }}
+                              src={revenueImage}
+                              className="w-[30px] h-[30px]"
+                            />
+                          </div>
+                        </Tooltip>
+                        <Tooltip
+                          title="Performance Analysis (Merchant)"
+                          placement="top-start"
                         >
-                          <img
-                            alt="performance"
-                            className="w-[30px] h-[30px]"
-                            style={{ filter: "invert(1)" }}
-                            src={performanceImage}
-                          />
-                        </div>
-                      </Tooltip>
-                    </div>
-                  </td>
-                </tr>
+                          <div
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              navigate(
+                                `/admin/analysis/performance_analysis/seller/${item?.admin_seller_id}`
+                              );
+                            }}
+                            className="cursor-pointer w-[30px] h-[30px]"
+                          >
+                            <img
+                              alt="performance"
+                              className="w-[30px] h-[30px]"
+                              style={{ filter: "invert(1)" }}
+                              src={performanceImage}
+                            />
+                          </div>
+                        </Tooltip>
+                      </div>
+                    </td>
+                  </tr>
+                  {Modalopen && openID == item?.admin_seller_id && (
+                    <tr>
+                      <td colSpan={12} className="p-0">
+                        {/* 👇 Your details table goes inside this cell */}
+                        <SubStaffModal
+                          currentPage={currentPage}
+                          getStaffUserData={getStaffUserData}
+                          openID={openID}
+                          data={data}
+                          setData={setData}
+                          setModalopen={setModalopen}
+                          Modalopen={Modalopen}
+                          handlePageChangesub={handlePageChangesub}
+                          currentItems={currentItems}
+                          setCurrentPageSub={setCurrentPageSub}
+                          currentPagesub={currentPagesub}
+                          staffList={staffList}
+                          recordsPerPagesub={recordsPerPagesub}
+                        />
+                      </td>
+                    </tr>
+                  )}
+                </>
               ))
             ) : (
               <tr>
@@ -249,6 +319,7 @@ const StaffUser = () => {
           </tbody>
         </table>{" "}
       </div>
+
       <PaginationComponent
         currentPage={currentPage}
         totalPages={totalRecords}
