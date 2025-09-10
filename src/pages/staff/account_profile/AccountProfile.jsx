@@ -272,7 +272,13 @@ const AccountProfile = () => {
             <Button
               variant="contained"
               className="!bg-[#ffff] !text-black !normal-case !py-[5px] sm:!py-[10px] sm:!px-[40px] !px-[15px] !rounded-[50px]"
-              onClick={() => setIsEditable(false)}
+              onClick={() => {setIsEditable(false)
+             setFormData((prev) => ({
+          ...prev,
+          new_password: "",
+          retype_password: "",
+        }));
+              }}
             >
               {translate("CANCEL")}
             </Button>
