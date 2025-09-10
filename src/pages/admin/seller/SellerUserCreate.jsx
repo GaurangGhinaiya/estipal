@@ -212,6 +212,12 @@ const SellerUserCreate = () => {
       });
 
       setLocalCompanyLogoPreview(URL.createObjectURL(file));
+    } else {
+      setFormData({
+        ...formData,
+        seller_logo: "",
+      });
+      setLocalCompanyLogoPreview("");
     }
   };
 

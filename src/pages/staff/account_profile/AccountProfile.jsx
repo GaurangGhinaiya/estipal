@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Button } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { LoadingButton } from "@mui/lab";
 import axios from "axios";
@@ -75,6 +75,8 @@ const AccountProfile = () => {
     setFormData({ ...formData, [name]: value });
   };
 
+  const fileInputRef = useRef(null);
+
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -83,6 +85,12 @@ const AccountProfile = () => {
         seller_logo: file,
       });
       setLocalCompanyLogoPreview(URL.createObjectURL(file));
+    } else {
+      setFormData({
+        ...formData,
+        seller_logo: "",
+      });
+      setLocalCompanyLogoPreview("");
     }
   };
 
@@ -272,12 +280,13 @@ const AccountProfile = () => {
             <Button
               variant="contained"
               className="!bg-[#ffff] !text-black !normal-case !py-[5px] sm:!py-[10px] sm:!px-[40px] !px-[15px] !rounded-[50px]"
-              onClick={() => {setIsEditable(false)
-             setFormData((prev) => ({
-          ...prev,
-          new_password: "",
-          retype_password: "",
-        }));
+              onClick={() => {
+                setIsEditable(false);
+                setFormData((prev) => ({
+                  ...prev,
+                  new_password: "",
+                  retype_password: "",
+                }));
               }}
             >
               {translate("CANCEL")}
@@ -389,13 +398,28 @@ const AccountProfile = () => {
                 <div className="w-fit">
                   <input
                     type="file"
+                    ref={fileInputRef}
                     onChange={handleFileUpload}
                     accept=".png, .jpg, .jpeg, .svg"
-                    className="w-full bg-transparent border-none outline-none ml-2 dark:text-white text-black placeholder-gray-400 text-right whitespace-pre-wrap px-2"
+                    className="hidden w-full bg-transparent border-none outline-none ml-2 dark:text-white text-black placeholder-gray-400 text-right whitespace-pre-wrap px-2"
                   />
 
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => fileInputRef.current.click()}
+                      className="bg-white py-[2px] px-[6px] text-black font-medium rounded-[4px] border border-black"
+                    >
+                      Upload
+                    </button>
+                    <p className="text-black font-medium">
+                      {formData?.seller_logo?.name || "No file selected"}
+                    </p>
+                  </div>
+
                   <div>
-                    {formData?.companyLogoPreview || localCompanyLogoPreview ? (
+                    {(formData?.companyLogoPreview &&
+                      formData?.companyLogoPreview?.trim() !== "") ||
+                    localCompanyLogoPreview ? (
                       <div className="mt-2">
                         <img
                           src={
@@ -408,7 +432,9 @@ const AccountProfile = () => {
                                   "https://cdn.estipal.com/dev"
                                 )
                               ? formData?.companyLogoPreview
-                              : `${import.meta.env.VITE_IMAGE_BASE_URL}/${formData?.companyLogoPreview}`
+                              : `${import.meta.env.VITE_IMAGE_BASE_URL}/${
+                                  formData?.companyLogoPreview
+                                }`
                           }
                           alt="Uploaded Logo"
                           className="max-w-[100px] max-h-[100px]"
@@ -422,7 +448,8 @@ const AccountProfile = () => {
               </div>
             ) : (
               <div className="flex items-start justify-end w-full pb-2 px-2">
-                {formData?.companyLogoPreview ? (
+                {formData?.companyLogoPreview &&
+                formData?.companyLogoPreview?.trim() !== "" ? (
                   <div className="mt-2">
                     <img
                       src={
@@ -433,7 +460,9 @@ const AccountProfile = () => {
                           "https://cdn.estipal.com/dev"
                         )
                           ? formData?.companyLogoPreview
-                          : `${import.meta.env.VITE_IMAGE_BASE_URL}/${formData?.companyLogoPreview}`
+                          : `${import.meta.env.VITE_IMAGE_BASE_URL}/${
+                              formData?.companyLogoPreview
+                            }`
                       }
                       alt="Uploaded Logo"
                       className="max-w-[100px] max-h-[100px]"
