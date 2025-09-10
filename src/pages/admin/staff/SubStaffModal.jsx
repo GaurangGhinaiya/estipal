@@ -451,75 +451,76 @@ function SubStaffModal({
                     </td>
                   </tr>
                 ))
+              ) : isAddMode ? (
+                <>
+                  <tr className="">
+                    <td className="px-[18px] py-[10px] text-center">
+                      <span className="dot-red" />
+                    </td>
+                    <td className="px-[18px] py-[10px] text-center">
+                      <CustomSwitch name="active" checked={newStaff?.active} />
+                    </td>
+                    <td className="px-[18px] py-[10px] text-center">
+                      <input
+                        type="text"
+                        name="username"
+                        value={newStaff?.username}
+                        onChange={(e) =>
+                          setNewStaff({
+                            ...newStaff,
+                            username: e.target.value,
+                          })
+                        }
+                        required
+                        placeholder={`${translate("NAME")}`}
+                        className="p-2 border border-gray-300 rounded"
+                      />
+                    </td>
+                    <td className="px-[18px] py-[10px] text-center">
+                      <input
+                        type="email"
+                        name="email"
+                        value={newStaff?.email}
+                        onChange={(e) =>
+                          setNewStaff({
+                            ...newStaff,
+                            email: e.target.value,
+                          })
+                        }
+                        placeholder={`${translate("EMAIL")}`}
+                        className="p-2 border border-gray-300 rounded"
+                      />
+                    </td>
+                    <td className="px-[18px] py-[10px] text-center">
+                      <input
+                        type="text"
+                        name="cnt_no"
+                        value={newStaff?.cnt_no}
+                        onChange={(e) =>
+                          setNewStaff({
+                            ...newStaff,
+                            cnt_no: e.target.value,
+                          })
+                        }
+                        placeholder={`${translate("MOBILENUMBER")}`}
+                        className="p-2 border border-gray-300 rounded"
+                      />
+                    </td>
+                    <td className="px-[18px] py-[10px] text-center text-white ">
+                      {moment.unix(newStaff?.added_on).format("DD MMM YYYY")}
+                    </td>
+                    <td className="px-[18px] py-[10px] text-center text-white">
+                      {newStaff?.sent_accepted}
+                    </td>
+                  </tr>
+                </>
               ) : (
                 <tr>
                   <td
                     colSpan={12}
-                    className="py-[200px] px-4 text-center text-nowrap dark:text-[#ffff] text-black font-bold"
+                    className="py-[50px] px-4 text-center text-nowrap dark:text-[#ffff] text-black font-bold"
                   >
                     No Data Found
-                  </td>
-                </tr>
-              )}
-              {isAddMode && (
-                <tr className="">
-                  <td className="px-[18px] py-[10px] text-center">
-                    <span className="dot-red" />
-                  </td>
-                  <td className="px-[18px] py-[10px] text-center">
-                    <CustomSwitch name="active" checked={newStaff?.active} />
-                  </td>
-                  <td className="px-[18px] py-[10px] text-center">
-                    <input
-                      type="text"
-                      name="username"
-                      value={newStaff?.username}
-                      onChange={(e) =>
-                        setNewStaff({
-                          ...newStaff,
-                          username: e.target.value,
-                        })
-                      }
-                      required
-                      placeholder={`${translate("NAME")}`}
-                      className="p-2 border border-gray-300 rounded"
-                    />
-                  </td>
-                  <td className="px-[18px] py-[10px] text-center">
-                    <input
-                      type="email"
-                      name="email"
-                      value={newStaff?.email}
-                      onChange={(e) =>
-                        setNewStaff({
-                          ...newStaff,
-                          email: e.target.value,
-                        })
-                      }
-                      placeholder={`${translate("EMAIL")}`}
-                      className="p-2 border border-gray-300 rounded"
-                    />
-                  </td>
-                  <td className="px-[18px] py-[10px] text-center">
-                    <input
-                      type="text"
-                      name="cnt_no"
-                      value={newStaff?.cnt_no}
-                      onChange={(e) =>
-                        setNewStaff({
-                          ...newStaff,
-                          cnt_no: e.target.value,
-                        })
-                      }
-                      placeholder={`${translate("MOBILENUMBER")}`}
-                      className="p-2 border border-gray-300 rounded"
-                    />
-                  </td>
-                  <td className="px-[18px] py-[10px] text-center text-white ">
-                    {moment.unix(newStaff?.added_on).format("DD MMM YYYY")}
-                  </td>
-                  <td className="px-[18px] py-[10px] text-center text-white">
-                    {newStaff?.sent_accepted}
                   </td>
                 </tr>
               )}

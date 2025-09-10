@@ -70,7 +70,8 @@ const StaffUser = () => {
 
   const recordsPerPagesub = 10;
   const staffList =
-    data?.find((item) => item?.admin_seller_id === openID)?.adminUserDetails || [];
+    data?.find((item) => item?.admin_seller_id === openID)?.adminUserDetails ||
+    [];
 
   const totalPagessub = Math.ceil(staffList.length / recordsPerPagesub);
 
@@ -80,13 +81,11 @@ const StaffUser = () => {
 
   const endIndex = startIndex + recordsPerPagesub;
 
-
   const currentItems = staffList.slice(startIndex, endIndex);
-
 
   const handlePageChangesub = (page) => {
     const validPage = Math.min(Math.max(page, 1), totalPagessub);
- 
+
     setCurrentPageSub(validPage);
   };
 
@@ -204,7 +203,18 @@ const StaffUser = () => {
                     </td>
                     <Tooltip
                       title="Click this number to display the staff list for this seller"
-                      placement="top-start"
+                      placement="left"
+                      arrow
+                      PopperProps={{
+                        modifiers: [
+                          {
+                            name: "preventOverflow",
+                            options: {
+                              boundary: "scrollParent", // keeps it inside the parent row
+                            },
+                          },
+                        ],
+                      }}
                     >
                       <td
                         className="px-[18px] py-[12px] text-[#ffff] text-center whitespace-nowrap cursor-pointer"
