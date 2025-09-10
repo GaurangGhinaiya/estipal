@@ -121,7 +121,11 @@ const Header = () => {
             className="text-white !normal-case !text-[14px] !p-[0] !m-[0] "
             sx={{
               color: "white",
-              fontWeight: pathname === "/admin" ? "bold" : "normal",
+              fontWeight:
+                pathname === "/admin" ||
+                pathname.includes("/admin/home/readActivity")
+                  ? "bold"
+                  : "normal",
             }}
             onClick={() => navigate("/admin")}
           >
@@ -131,11 +135,11 @@ const Header = () => {
             className="text-white !normal-case !text-[14px] !p-[0] !m-[0]"
             sx={{
               color: "white",
-              fontWeight: pathname.includes(
-                "/admin/watch_details/watch_history"
-              )
-                ? "bold"
-                : "normal",
+              fontWeight:
+                pathname.includes("/admin/watch_details/watch_history") ||
+                pathname.includes("/admin/watch_details/watch_status")
+                  ? "bold"
+                  : "normal",
             }}
             onClick={() => navigate("/admin/watch_details/watch_history")}
           >
@@ -146,9 +150,12 @@ const Header = () => {
               className="text-white !normal-case !text-[14px] !p-[0] !m-[0]"
               sx={{
                 color: "white",
-                fontWeight: pathname.includes("/admin/staff/staff_user")|| pathname.includes("/admin/seller/seller_user_create")||     pathname.startsWith("/admin/seller/seller_edit")
-                  ? "bold"
-                  : "normal",
+                fontWeight:
+                  pathname.includes("/admin/staff/staff_user") ||
+                  pathname.includes("/admin/seller/seller_user_create") ||
+                  pathname.startsWith("/admin/seller/seller_edit")
+                    ? "bold"
+                    : "normal",
               }}
               onClick={() => navigate("/admin/staff/staff_user")}
             >
@@ -160,9 +167,11 @@ const Header = () => {
               className="text-white !normal-case !text-[14px] !p-[0] !m-[0]"
               sx={{
                 color: "white",
-                fontWeight: pathname.includes("/admin/estimator/estimator_user")|| pathname.includes("/admin/estimator/estimator_edit/")
-                  ? "bold"
-                  : "normal",
+                fontWeight:
+                  pathname.includes("/admin/estimator/estimator_user") ||
+                  pathname.includes("/admin/estimator/estimator_edit/")
+                    ? "bold"
+                    : "normal",
               }}
               onClick={() => navigate("/admin/estimator/estimator_user")}
             >
@@ -210,9 +219,9 @@ const Header = () => {
                 Revenue Analysis <ArrowDropDownIcon />
               </button>
               {openRevenueMenu && (
-                <div className="absolute right-[6px] bg-[#0060aa] border border-white mt-3 rounded-lg">
+                <div className="w-[95%] absolute right-[6px] bg-[#0060aa] border border-white mt-3 rounded-lg">
                   <button
-                    className="block rounded-lg px-4 py-2 hover:bg-[#b3c1c5]"
+                    className="w-full text-start block rounded-lg px-4 py-2 hover:bg-[#fff] hover:text-black"
                     onClick={() => {
                       navigate("/admin/analysis/revenue_analysis/admin");
                       setOpenRevenueMenu(false);
@@ -221,7 +230,7 @@ const Header = () => {
                     Merchant
                   </button>
                   <button
-                    className="block rounded-lg  px-4 py-2 hover:bg-[#b3c1c5]"
+                    className="w-full text-start block rounded-lg  px-4 py-2 hover:bg-[#fff] hover:text-black"
                     onClick={() => {
                       navigate("/admin/analysis/revenue_analysis/estimator");
                       setOpenRevenueMenu(false);
@@ -274,9 +283,9 @@ const Header = () => {
                 Performance Analysis <ArrowDropDownIcon />
               </button>
               {openPerformanceMenu && (
-                <div className="absolute right-[6px] bg-[#0060aa] border border-white mt-3 rounded-lg">
+                <div className="w-[95%] absolute right-[6px] bg-[#0060aa] border border-white mt-3 rounded-lg">
                   <button
-                    className="block rounded-lg px-4 py-2 hover:bg-[#b3c1c5]"
+                    className="w-full text-start block rounded-lg px-4 py-2 hover:bg-[#fff] hover:text-black"
                     onClick={() => {
                       navigate("/admin/analysis/performance_analysis/admin");
                       setOpenPerformanceMenu(false);
@@ -285,7 +294,7 @@ const Header = () => {
                     Merchant
                   </button>
                   <button
-                    className="block rounded-lg  px-4 py-2 hover:bg-[#b3c1c5]"
+                    className="w-full text-start block rounded-lg  px-4 py-2 hover:bg-[#fff] hover:text-black"
                     onClick={() => {
                       navigate(
                         "/admin/analysis/performance_analysis/estimator"
@@ -395,7 +404,10 @@ const Header = () => {
                 color: "white",
                 fontWeight: "bold",
                 backgroundColor:
-                  pathname === "/admin" ? "#131a1f" : "transparent",
+                  pathname === "/admin" ||
+                  pathname.includes("/admin/home/readActivity")
+                    ? "#131a1f"
+                    : "transparent",
               }}
               onClick={() => {
                 navigate("/admin");
@@ -408,11 +420,11 @@ const Header = () => {
               className="text-white !normal-case !text-left !justify-start !text-[14px] !px-[15px] !m-[0] !font-bold"
               sx={{
                 color: "white",
-                backgroundColor: pathname.includes(
-                  "/admin/watch_details/watch_history"
-                )
-                  ? "#131a1f"
-                  : "transparent",
+                backgroundColor:
+                  pathname.includes("/admin/watch_details/watch_history") ||
+                  pathname.includes("/admin/watch_details/watch_status")
+                    ? "#131a1f"
+                    : "transparent",
                 fontWeight: "bold",
               }}
               onClick={() => {
@@ -427,9 +439,12 @@ const Header = () => {
                 className="text-white !normal-case !text-left !justify-start !text-[14px] !px-[15px] !m-[0] !font-bold"
                 sx={{
                   color: "white",
-                  backgroundColor: pathname.includes("/admin/staff/staff_user") || pathname.includes("/admin/seller/seller_user_create")||   pathname.startsWith("/admin/seller/seller_edit")
-                    ? "#131a1f"
-                    : "transparent",
+                  backgroundColor:
+                    pathname.includes("/admin/staff/staff_user") ||
+                    pathname.includes("/admin/seller/seller_user_create") ||
+                    pathname.startsWith("/admin/seller/seller_edit")
+                      ? "#131a1f"
+                      : "transparent",
                   fontWeight: "bold",
                 }}
                 onClick={() => {
@@ -445,11 +460,11 @@ const Header = () => {
                 className="text-white !normal-case !text-left !justify-start !text-[14px] !px-[15px] !m-[0] !font-bold"
                 sx={{
                   color: "white",
-                  backgroundColor: pathname.includes(
-                    "/admin/estimator/estimator_user"
-                  )|| pathname.includes("/estimator/estimator_edit/")
-                    ? "#131a1f"
-                    : "transparent",
+                  backgroundColor:
+                    pathname.includes("/admin/estimator/estimator_user") ||
+                    pathname.includes("/estimator/estimator_edit/")
+                      ? "#131a1f"
+                      : "transparent",
                   fontWeight: "bold",
                 }}
                 onClick={() => {
@@ -507,7 +522,7 @@ const Header = () => {
                   Revenue Analysis <ArrowDropDownIcon />
                 </button>
                 {openRevenueMenu && (
-                  <div className="z-20 absolute top-[19px] left-[55px] bg-[#0060aa] border border-white mt-3 rounded-lg">
+                  <div className="w-[140px] z-20 absolute top-[19px] left-[14px] bg-[#0060aa] border border-white mt-3 rounded-lg">
                     <button
                       className="block rounded-lg px-4 py-2 hover:bg-[#b3c1c5]"
                       onClick={(e) => {
@@ -579,7 +594,7 @@ const Header = () => {
                   Performance Analysis <ArrowDropDownIcon />
                 </button>
                 {openPerformanceMenu && (
-                  <div className="absolute top-[19px] left-[84px] bg-[#0060aa] border border-white mt-3 rounded-lg z-20">
+                  <div className="w-[170px] absolute top-[19px] left-[14px] bg-[#0060aa] border border-white mt-3 rounded-lg z-20">
                     <button
                       className="block rounded-lg px-4 py-2 hover:bg-[#b3c1c5]"
                       onClick={() => {
