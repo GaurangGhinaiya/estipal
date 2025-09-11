@@ -473,17 +473,18 @@ const BrandList = () => {
         {/* Box 2: Collections */}
         {selectedBrand && (
           <div className="bg-[#1E252B] p-4 rounded-lg overflow-hidden">
-            <div className="flex justify-between flex-col md:flex-row">
-              <div>
+            <div className="flex justify-end mb-2">
                 <IoCloseCircleOutline
-                  color="white"
+                  color="red"
                   size={20}
                   onClick={(e) => {
                     setSelectedCollection(null);
                     setSelectedBrand(null);
                   }}
                   className="cursor-pointer"
-                />
+                /></div>
+            <div className="flex justify-between flex-col md:flex-row">
+              <div>
                 <h2 className="text-xl font-semibold text-white mb-4">
                   Collections
                 </h2>
@@ -567,14 +568,16 @@ const BrandList = () => {
         {/* Box 3: Models */}
         {selectedCollection && (
           <div className="bg-[#1E252B] p-4 rounded-lg overflow-hidden">
-            <div className="flex justify-between flex-wrap">
-              <div>
-                <IoCloseCircleOutline
-                  color="white"
+            <div className="flex justify-end mb-2">
+                 <IoCloseCircleOutline
+                  color="red"
                   size={20}
                   onClick={() => setSelectedCollection(null)}
                   className="cursor-pointer"
-                />
+                /></div>
+            <div className="flex justify-between flex-wrap">
+              <div>
+              
                 <h2 className="text-xl font-semibold text-white mb-4">
                   Models
                 </h2>
