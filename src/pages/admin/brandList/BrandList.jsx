@@ -188,7 +188,7 @@ const BrandList = () => {
   }, []);
 
   const handleBrandSubmit = async (value) => {
-    if (value == "") {
+    if (value?.trim() == "") {
       toast.error("Brand is required!");
       return;
     }
@@ -256,7 +256,7 @@ const BrandList = () => {
   }, [selectedBrand]);
 
   const handleCollectionSave = async (value) => {
-    if (value == "") {
+    if (value?.trim() == "") {
       toast.error("Collection is required!");
       return;
     }
@@ -331,11 +331,11 @@ const BrandList = () => {
   }, [selectedCollection]);
 
   const handleModelSave = async (serialDesc, serialNo) => {
-    if (serialNo == "") {
+    if (serialNo?.trim() == "") {
       toast.error("Model type is required!");
       return;
     }
-    if (serialDesc == "") {
+    if (serialDesc?.trim() == "") {
       toast.error("Reference is required!");
       return;
     }
@@ -401,7 +401,9 @@ const BrandList = () => {
         {/* Box 1: Brands */}
         <div className="bg-[#1E252B] p-4 rounded-lg overflow-hidden">
           <div className="flex justify-between flex-col md:flex-row py-[2px]">
-            <h2 className="text-xl font-semibold text-white mb-4 px-[8px]">Brands</h2>
+            <h2 className="text-xl font-semibold text-white mb-4 px-[8px]">
+              Brands
+            </h2>
             <div className="flex mb-4">
               <input
                 type="text"
