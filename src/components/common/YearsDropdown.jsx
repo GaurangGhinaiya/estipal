@@ -54,13 +54,21 @@ const YearDropdown = ({ selectedYears, setSelectedYears, disabled }) => {
         sx={{
           backgroundColor: "#1e252b",
           color: "white",
+          border: disabled ? "1px solid grey" : "1px solid white",
           "& .Mui-disabled": {
             color: "white !important",
             "-webkit-text-fill-color": "white !important",
             opacity: "0.7 !important",
           },
-          "& .css-lohd6h-MuiSvgIcon-root-MuiSelect-icon": {
-            color: disabled ? "grey" : "white",
+          "& .MuiSelect-icon": {
+            color: disabled ? "grey" : "white", // 👈 use stable MUI class
+          },
+          // remove MUI default outline
+          "& .MuiOutlinedInput-notchedOutline": {
+            border: "none",
+          },
+          "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+            border: "none",
           },
         }}
         size="small"

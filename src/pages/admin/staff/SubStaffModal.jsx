@@ -249,6 +249,7 @@ function SubStaffModal({
             </div>
           )}
           <CancelIcon
+            className="cursor-pointer"
             sx={{ color: "white" }}
             onClick={() => {
               setCurrentPageSub(1);
@@ -451,8 +452,10 @@ function SubStaffModal({
                     </td>
                   </tr>
                 ))
+              ) : isAddMode ? (
+                <td></td>
               ) : (
-               isAddMode? <td></td>: <tr>
+                <tr>
                   <td
                     colSpan={12}
                     className="py-[50px] px-4 text-center text-nowrap dark:text-[#ffff] text-black font-bold"

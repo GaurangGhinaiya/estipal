@@ -57,9 +57,18 @@ const ActivitiesTable = () => {
     });
 
   const handleSort = (key) => {
-    const newOrder = sortField === key && sortOrder === "asc" ? "desc" : "asc";
-    setSortField(key);
-    setSortOrder(newOrder);
+    if (sortField !== key) {
+      // first click on new field → asc
+      setSortField(key);
+      setSortOrder("asc");
+    } else if (sortOrder === "asc") {
+      // second click → desc
+      setSortOrder("desc");
+    } else if (sortOrder === "desc") {
+      // third click → reset
+      setSortField(null);
+      setSortOrder("asc");
+    }
   };
 
   useEffect(() => {
