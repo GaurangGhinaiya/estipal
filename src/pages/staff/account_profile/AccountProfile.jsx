@@ -794,6 +794,7 @@ const AccountProfile = () => {
                 placeholder={`${translate("NEWPASSWORD")}`}
                 type="password"
                 readOnly={!isEditable}
+                disabled={!isEditable}
                 name="new_password"
                 value={formData?.new_password}
                 className=""
@@ -806,6 +807,7 @@ const AccountProfile = () => {
                 type="password"
                 value={formData?.retype_password}
                 readOnly={!isEditable}
+                disabled={!isEditable}
                 name="retype_password"
                 onChange={handleChange}
                 className="mb-[15px]"

@@ -189,7 +189,7 @@ const BrandList = () => {
 
   const handleBrandSubmit = async (value) => {
     if (value?.trim() == "") {
-      toast.error("Brand is required!");
+      toast.error("Brand name is required !");
       return;
     }
 
@@ -257,7 +257,7 @@ const BrandList = () => {
 
   const handleCollectionSave = async (value) => {
     if (value?.trim() == "") {
-      toast.error("Collection is required!");
+      toast.error("Collection name is required !");
       return;
     }
     const isEdit = !!iSEditCollectionData?.id;
