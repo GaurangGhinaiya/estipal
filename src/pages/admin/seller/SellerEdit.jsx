@@ -5,11 +5,9 @@ import axios from "axios";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import PhoneInput, {
-  formatPhoneNumber,
-  getCountryCallingCode,
-} from "react-phone-number-input";
-import "react-phone-number-input/style.css";
+import PhoneInput from "react-phone-input-2";
+
+import "react-phone-input-2/lib/material.css";
 import { useNavigate, useParams } from "react-router-dom";
 import ConfirmDialog from "../../../components/common/ConfirmDialog";
 import CustomSwitch from "../../../components/common/CustomSwitch";
@@ -153,12 +151,13 @@ const SellerEdit = () => {
   };
 
   useEffect(() => {
-    const formattedPhone = formatPhoneNumber(phone);
-    const dialCode = getCountryCallingCode(selectPhoneCountry);
-
+    let formattedPhone = phone.replace(/\D/g, ""); // digits only
+    if (selectPhoneCountry && formattedPhone.startsWith(selectPhoneCountry)) {
+      formattedPhone = formattedPhone.slice(selectPhoneCountry.length);
+    }
     setFormData((prev) => ({
       ...prev,
-      cnt_code: dialCode,
+      cnt_code: selectPhoneCountry,
       cnt_no: formattedPhone,
     }));
   }, [phone, selectPhoneCountry]);
@@ -885,32 +884,52 @@ const SellerEdit = () => {
             label="Mobile Number"
             readOnly={!isEditable}
             bgColor={"#1e252b"}
-            className="mb-[15px] text-black dark:text-white"
+            className="mb-[15px] "
             onChange={handleChange}
             component={
-              <div className="flex justify-end w-full">
+              <div className="flex justify-end w-full  text-white  ">
                 {isEditable ? (
-                  <PhoneInput
-                    international
-                    defaultCountry="IN"
-                    countryCallingCodeEditable={false}
-                    className="mt-1 block w-auto rounded-md p-3 max-sm:flex-wrap"
-                    placeholder="Enter phone number"
-                    style={{
-                      backgroundColor: "#1e252b",
-                    }}
-                    value={phone}
-                    onChange={(value) => {
-                      setPhone(value);
-                    }}
-                    onCountryChange={(v) => {
-                      if (v) {
-                        setSelectPhoneCountry(v);
-                      } else {
-                        setSelectPhoneCountry("IN");
-                      }
-                    }}
-                  />
+                  // <PhoneInput
+                  //   international
+                  //   defaultCountry="IN"
+                  //   countryCallingCodeEditable={false}
+                  //   className="mt-1 block w-auto rounded-md p-3 max-sm:flex-wrap"
+                  //   placeholder="Enter phone number"
+                  //   style={{
+                  //     backgroundColor: "#1e252b",
+                  //   }}
+                  //   value={phone}
+                  //   onChange={(value) => {
+                  //     setPhone(value);
+                  //   }}
+                  //   onCountryChange={(v) => {
+                  //     if (v) {
+                  //       setSelectPhoneCountry(v);
+                  //     } else {
+                  //       setSelectPhoneCountry("IN");
+                  //     }
+                  //   }}
+                  // /> 
+                   <PhoneInput
+                                      buttonClass="!border-none"
+                                      inputClass="w-full p-3 bg-white text-black 
+            dark:bg-[#283641] dark:text-white     focus:outline-none"
+                                      countryCodeEditable={false}
+                                      country="in" // default India
+                                      value={phone}
+                                      onChange={(value, country) => {
+                                        // Remove leading 0 (optional)
+                                        const nationalNumber = value.replace(/^0+/, "");
+                                        console.log("nationalNumber: ", nationalNumber);
+                                        setPhone(nationalNumber);
+                                        setSelectPhoneCountry(country.dialCode);
+                                        // setFormData((prev) => ({
+                                        //   ...prev,
+                                        //   cnt_code: country.dialCode,
+                                        //   cnt_no: nationalNumber,
+                                        // }));
+                                      }}
+                                    />
                 ) : (
                   <p>{phone}</p>
                 )}

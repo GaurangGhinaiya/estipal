@@ -1,11 +1,14 @@
 import { Button } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
-import PhoneInput, {
-  formatPhoneNumber,
-  getCountryCallingCode,
-} from "react-phone-number-input";
-import "react-phone-number-input/style.css";
+// import PhoneInput, {
+//   formatPhoneNumber,
+//   getCountryCallingCode,
+// } from "react-phone-number-input";
+import PhoneInput from "react-phone-input-2";
+
+import "react-phone-input-2/lib/material.css";
+
 import { useNavigate } from "react-router-dom";
 import CustomSwitch from "../../../components/common/CustomSwitch";
 import TextInputField from "../../../components/common/TextInputField";
@@ -177,12 +180,13 @@ const SellerUserCreate = () => {
   };
 
   useEffect(() => {
-    const formattedPhone = formatPhoneNumber(phone);
-    const dialCode = getCountryCallingCode(selectPhoneCountry);
-
+    let formattedPhone = phone.replace(/\D/g, ""); // digits only
+    if (selectPhoneCountry && formattedPhone.startsWith(selectPhoneCountry)) {
+      formattedPhone = formattedPhone.slice(selectPhoneCountry.length);
+    }
     setFormData((prev) => ({
       ...prev,
-      cnt_code: dialCode,
+      cnt_code: selectPhoneCountry,
       cnt_no: formattedPhone,
     }));
   }, [phone, selectPhoneCountry]);
@@ -682,30 +686,25 @@ const SellerUserCreate = () => {
             type="text"
             label="Mobile Number"
             bgColor={"#1e252b"}
-            className="mb-[15px] text-black dark:text-white"
+            className="mb-[15px]"
             onChange={handleChange}
             component={
-              <div className="flex justify-end w-full">
+              <div className="flex justify-end w-full    ">
                 {isEditable ? (
-                  <PhoneInput
-                    international
-                    defaultCountry="IN"
-                    countryCallingCodeEditable={false}
-                    className="mt-1 block w-auto rounded-md p-3 max-sm:flex-wrap !bg-[#283641]"
-                    placeholder="Enter phone number"
-                    style={{
-                      backgroundColor: "#1e252b",
-                    }}
+                   <PhoneInput
+                    buttonClass="!border-none"
+                    inputClass="w-full p-3   bg-white text-black 
+            dark:bg-[#283641] dark:text-white  focus:outline-none"
+                    countryCodeEditable={false}
+                    country="in" // default India
                     value={phone}
-                    onChange={(value) => {
-                      setPhone(value);
-                    }}
-                    onCountryChange={(v) => {
-                      if (v) {
-                        setSelectPhoneCountry(v);
-                      } else {
-                        setSelectPhoneCountry("IN");
-                      }
+                    onChange={(value, country) => {
+                      // Remove leading 0 (optional)
+                      const nationalNumber = value.replace(/^0+/, "");
+                      console.log("nationalNumber: ", nationalNumber);
+                      setPhone(nationalNumber);
+                      setSelectPhoneCountry(country.dialCode);
+                      
                     }}
                   />
                 ) : (

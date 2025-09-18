@@ -2,11 +2,15 @@ import { LoadingButton } from "@mui/lab";
 import { Button } from "@mui/material";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
-import PhoneInput, {
-  formatPhoneNumber,
-  getCountryCallingCode,
-} from "react-phone-number-input";
-import "react-phone-number-input/style.css";
+// import PhoneInput, {
+//   formatPhoneNumber,
+//   getCountryCallingCode,
+// } from "react-phone-number-input";
+import { getCountryCallingCode } from "libphonenumber-js";
+import PhoneInput from "react-phone-input-2";
+
+import "react-phone-input-2/lib/material.css";
+// import "react-phone-number-input/style.css";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import CustomSwitch from "../../../components/common/CustomSwitch";
 import SupportedBrandsDropdown from "../../../components/common/SupportedBrandsDropdown";
@@ -24,6 +28,7 @@ import AvailabilitySchedule from "./components/AvailabilitySchedule";
 import toast from "react-hot-toast";
 import axios from "axios";
 import ConfirmDialog from "../../../components/common/ConfirmDialog";
+import { fromJSON } from "postcss";
 
 const EstimatorEdit = () => {
   const navigate = useNavigate();
@@ -170,12 +175,13 @@ const EstimatorEdit = () => {
   }, [selectCountry]);
 
   useEffect(() => {
-    const formattedPhone = formatPhoneNumber(phone);
-    const dialCode = getCountryCallingCode(selectPhoneCountry);
-
+    let formattedPhone = phone.replace(/\D/g, ""); // digits only
+    if (selectPhoneCountry && formattedPhone.startsWith(selectPhoneCountry)) {
+      formattedPhone = formattedPhone.slice(selectPhoneCountry.length);
+    }
     setFormData((prev) => ({
       ...prev,
-      cnt_code: dialCode,
+      cnt_code: selectPhoneCountry,
       cnt_no: formattedPhone,
     }));
   }, [phone, selectPhoneCountry]);
@@ -188,6 +194,7 @@ const EstimatorEdit = () => {
             `/estimator/detail?id=${id}`
           );
           const estimator = response.payload?.data;
+          console.log(estimator?.cnt_no);
 
           setFormData({
             ...formData,
@@ -698,30 +705,29 @@ const EstimatorEdit = () => {
             placeholder="Mobile Number"
             readOnly={!isEditable}
             bgColor={"#1e252b"}
-            className="mb-[15px] text-black dark:text-white"
+            className="mb-[15px] text-white"
             onChange={handleChange}
             component={
-              <div className="flex justify-end w-full">
+              <div className="flex justify-end w-full    ">
                 {isEditable ? (
                   <PhoneInput
-                    international
-                    defaultCountry="IN"
-                    countryCallingCodeEditable={false}
-                    className={`mt-1 block w-auto bg-[#1e252b] rounded-md p-3 max-sm:flex-wrap `}
-                    placeholder="Enter phone number"
-                    style={{
-                      backgroundColor: "#1e252b",
-                    }}
+                    buttonClass="!border-none"
+                    inputClass="  bg-white text-black 
+            dark:bg-[#283641] dark:text-white    focus:outline-none"
+                    countryCodeEditable={false}
+                    country="in" // default India
                     value={phone}
-                    onChange={(value) => {
-                      setPhone(value);
-                    }}
-                    onCountryChange={(v) => {
-                      if (v) {
-                        setSelectPhoneCountry(v);
-                      } else {
-                        setSelectPhoneCountry("IN");
-                      }
+                    onChange={(value, country) => {
+                      // Remove leading 0 (optional)
+                      const nationalNumber = value.replace(/^0+/, "");
+                      console.log("nationalNumber: ", nationalNumber);
+                      setPhone(nationalNumber);
+                      setSelectPhoneCountry(country.dialCode);
+                      // setFormData((prev) => ({
+                      //   ...prev,
+                      //   cnt_code: country.dialCode,
+                      //   cnt_no: nationalNumber,
+                      // }));
                     }}
                   />
                 ) : (

@@ -6,11 +6,9 @@ import { LoadingButton } from "@mui/lab";
 import axios from "axios";
 import moment from "moment";
 import toast from "react-hot-toast";
-import PhoneInput, {
-  formatPhoneNumber,
-  getCountryCallingCode,
-} from "react-phone-number-input";
-import "react-phone-number-input/style.css";
+import PhoneInput from "react-phone-input-2";
+
+import "react-phone-input-2/lib/material.css";
 import TextInputField from "../../../components/common/TextInputField";
 import { useTranslate } from "../../../language";
 import axiosInstance from "../../../services";
@@ -220,16 +218,17 @@ const AccountProfile = () => {
     getDetailById();
   }, [userData?.id]);
 
-  useEffect(() => {
-    const formattedPhone = formatPhoneNumber(phone);
-    const dialCode = getCountryCallingCode(selectPhoneCountry);
-
-    setFormData((prev) => ({
-      ...prev,
-      cnt_code: dialCode,
-      cnt_no: formattedPhone,
-    }));
-  }, [phone, selectPhoneCountry]);
+   useEffect(() => {
+      let formattedPhone = phone.replace(/\D/g, ""); // digits only
+      if (selectPhoneCountry && formattedPhone.startsWith(selectPhoneCountry)) {
+        formattedPhone = formattedPhone.slice(selectPhoneCountry.length);
+      }
+      setFormData((prev) => ({
+        ...prev,
+        cnt_code: selectPhoneCountry,
+        cnt_no: formattedPhone,
+      }));
+    }, [phone, selectPhoneCountry]);
 
   useEffect(() => {
     const loadCountries = async () => {
@@ -680,36 +679,41 @@ const AccountProfile = () => {
             name="cnt_no"
             type="text"
             label={`${translate("MOBILENUMBER")}`}
-            bgColor={"#ffffff"}
+            // bgColor={"#ffffff"}
             border={"1px solid #E5E7EB"}
             readOnly={!isEditable}
-            className="mb-[15px]"
+            className="mb-[15px] !bg-white"
             onChange={handleChange}
             component={
               <div className="flex justify-end w-full">
                 {isEditable ? (
-                  <div className="staffAccount-profile flex justify-end w-full">
+                  <div className="staffAccount-profile flex justify-end w-full    bg-white dark:bg-[#283641]  rounded-md">
                     <PhoneInput
-                      international
-                      defaultCountry="IN"
-                      countryCallingCodeEditable={false}
-                      className="mt-1 block w-auto rounded-md p-3 max-sm:flex-wrap"
-                      placeholder="Enter phone number"
-                      style={{
-                        backgroundColor: "#F8F8F8",
-                      }}
-                      value={phone}
-                      onChange={(value) => {
-                        setPhone(value);
-                      }}
-                      onCountryChange={(v) => {
-                        if (v) {
-                          setSelectPhoneCountry(v);
-                        } else {
-                          setSelectPhoneCountry("IN");
-                        }
-                      }}
-                    />
+                    buttonClass="!border-none"
+ inputStyle={{
+    backgroundColor: "#fff",
+    color:"black",
+    border: "1px solid #E5E7EB",
+    outline: "none",
+    boxShadow: "none"
+  }}
+                    inputClass="w-full p-3  !bg-white  focus:outline-none"
+                    countryCodeEditable={false}
+                    country="in" // default India
+                    value={phone}
+                    onChange={(value, country) => {
+                      // Remove leading 0 (optional)
+                      const nationalNumber = value.replace(/^0+/, "");
+                      console.log("nationalNumber: ", nationalNumber);
+                      setPhone(nationalNumber);
+                      setSelectPhoneCountry(country.dialCode);
+                      // setFormData((prev) => ({
+                      //   ...prev,
+                      //   cnt_code: country.dialCode,
+                      //   cnt_no: nationalNumber,
+                      // }));
+                    }}
+                  />
                   </div>
                 ) : (
                   <p>{phone}</p>
