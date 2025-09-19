@@ -186,6 +186,12 @@ const SellerEdit = () => {
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
+      if (!file.type.startsWith("image/")) {
+      alert("Please upload an image file only (jpg, png, gif, etc.)");
+      // Reset input
+      e.target.value = "";
+      return;
+    }
       setFormData({
         ...formData,
         seller_logo: file,
@@ -605,6 +611,7 @@ const SellerEdit = () => {
                       <div className="mt-2">
                         <img
                           src={localCompanyLogoPreview}
+                           accept="image/*"   
                           alt="Uploaded Logo"
                           className="w-[100px] object-cover rounded"
                         />

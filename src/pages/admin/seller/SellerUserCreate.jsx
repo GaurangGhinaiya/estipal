@@ -207,23 +207,34 @@ const SellerUserCreate = () => {
 
   const fileInputRef = useRef(null);
 
-  const handleFileUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setFormData({
-        ...formData,
-        seller_logo: file,
-      });
+const handleFileUpload = (e) => {
+  const file = e.target.files[0];
 
-      setLocalCompanyLogoPreview(URL.createObjectURL(file));
-    } else {
-      setFormData({
-        ...formData,
-        seller_logo: "",
-      });
-      setLocalCompanyLogoPreview("");
+  if (file) {
+    
+    // Check if file type starts with "image/"
+    if (!file.type.startsWith("image/")) {
+      alert("Please upload an image file only (jpg, png, gif, etc.)");
+      // Reset input
+      e.target.value = "";
+      return;
     }
-  };
+
+    setFormData({
+      ...formData,
+      seller_logo: file,
+    });
+
+    setLocalCompanyLogoPreview(URL.createObjectURL(file));
+  } else {
+    setFormData({
+      ...formData,
+      seller_logo: "",
+    });
+    setLocalCompanyLogoPreview("");
+  }
+};
+
 
   const handleCountryChange = (e) => {
     const country = e.target.value;
@@ -441,7 +452,7 @@ const SellerUserCreate = () => {
           <TextInputField
             rightTextValue=""
             label="Company Logo"
-            bgColor={"#1e252b"}
+            bgColor={"#1e252b"}Add Merchant
             className="mb-[15px]"
             component={
               <div className="flex justify-end w-full">
@@ -449,6 +460,7 @@ const SellerUserCreate = () => {
                   <input
                     ref={fileInputRef}
                     type="file"
+                     accept="image/*"   
                     onChange={handleFileUpload}
                     className="w-full bg-transparent border-none outline-none ml-2 text-white placeholder-gray-400 text-right hidden"
                   />
