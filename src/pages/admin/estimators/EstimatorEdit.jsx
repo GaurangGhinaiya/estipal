@@ -827,8 +827,8 @@ const EstimatorEdit = () => {
       </div>
 
       <h3 className="text-[white] text-[24px] mb-2">Management</h3>
-      <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-4 ">
-        <div>
+      <div className="grid  lg:gap-4 ">
+        <div className="flex lg:gap-4 ">
           <TextInputField
             rightTextValue=""
             label="Provide estimate in"
@@ -862,7 +862,7 @@ const EstimatorEdit = () => {
             }
           />
 
-          <TextInputField
+          {/* <TextInputField
             value={formData.bank_swift}
             name="bank_swift"
             rightTextValue=""
@@ -881,10 +881,10 @@ const EstimatorEdit = () => {
                 />
               </div>
             }
-          />
-        </div>
+          /> */}
+        {/* </div>
 
-        <div>
+        <div> */}
           <TextInputField
             value={formData.commission}
             name="commission"
@@ -928,7 +928,7 @@ const EstimatorEdit = () => {
           />
         </div>
 
-        <div>
+        {/* <div>
           <TextInputField
             name="swiftCode"
             rightTextValue=""
@@ -949,14 +949,14 @@ const EstimatorEdit = () => {
               </div>
             }
           />
-        </div>
+        </div> */}
       </div>
-
+{/* 
       <AvailabilitySchedule
         availabilitySchedule={availabilitySchedule}
         setAvailabilitySchedule={setAvailabilitySchedule}
         isEditable={isEditable}
-      />
+      /> */}
 
       <ConfirmDialog
         open={confirmDialogOpen}
